@@ -1,4 +1,8 @@
-
+<div>
+    <h1>
+        Login
+    </h1>
+</div>
 
 
 <form action="login_validation.php" id="login" name="login" method="POST">
@@ -12,5 +16,13 @@
     </div>
     
     <button id="logBtn" type="submit" name="loginbtt"  class="btn btn-log"><span class="fa fa-sign-in fa-fw" aria-hidden="true"></span> Login</button>
+    
+    <div class="form-group">
+        <p><a href="forgotPassword.php">Forgot Password</a></p>
+    </div>
+    
+    <div class="form-group">
+        <p>Don't have an account? <a href="registraition.php"> Sign-up here</a></p>
+    </div>
     
 </form>
