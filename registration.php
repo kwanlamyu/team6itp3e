@@ -9,10 +9,9 @@
     </h1>
 </div>
 
-<form id="registerStudent" name="registraition" action="registraition.php" method="POST">
+<form id="registerStudent" name="registration" action="registration.php" method="POST">
     <?php include('reg_validation.php'); ?>
     
-
     <div class="form-group">
         <label for="reguserid">Username</label>
         <input type="text" class="form-control" id="reguserid" name="reguserid" placeholder="Enter a username" <?php
@@ -54,6 +53,11 @@
     </div>
 
     <button type="submit" name="registerButton" id="registerButton" class="btn btn-log" ><span class="fa fa-handshake-o fa-fw" aria-hidden="true"></span> Register</button>
+
+    <div class="form-group">
+        <p>Already have an account? <a href="login.php">Login here</a></p>
+    </div>
+
 </form>
 
 
