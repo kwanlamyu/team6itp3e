@@ -25,7 +25,7 @@ catch(PDOException $e){
 ?>
 
 <?php 
-/*
+
 // Phoebe local DB
 session_start();
 
@@ -41,5 +41,4 @@ try {
 } catch (PDOException $e) {
     echo $e->getMessage();
 }
-*/
 ?>

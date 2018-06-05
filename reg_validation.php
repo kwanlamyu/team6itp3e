@@ -138,9 +138,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 echo '<div class="alert alert-warning mmbsm" role="alert">Error: ' . $sql . '<br>' . $connection->error . '</div>';
             }
-
-            $connection->close();
         }
+        
+        
+        header('Location: login.php'); 
+
     }
 }
 ?>
