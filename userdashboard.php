@@ -1,8 +1,7 @@
 
 <?php include 'header.php';?>
 
-<?php include 'navigationbar.php';?>
+<?php include 'navigation_superadmin.php';?>
 
-<?php include 'samplecontents.php';?>
 
 <?php include 'footer.php';?>
