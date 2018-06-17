@@ -1,3 +1,5 @@
+<?php include 'header.php';?>
+<?php include 'navigation_superadmin.php';?>
 <div class="m-content">
 						<!--Begin::Section-->
 						<div class="m-portlet">
@@ -2716,3 +2718,4 @@
 						<!--End::Section-->
 					</div>
 				</div>
+				<?php include 'footer.php';?>
