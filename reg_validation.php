@@ -1,8 +1,8 @@
 <?php
 
 require_once 'db.php';
-$unameErr = $emailErr = $passErr = $cpassErr = $checkErr = $twopassErr = "";
-$uname = $email = $pass = $cpass = $emailvalid = "";
+$unameErr = $emailErr = $passErr = $cpassErr = $checkErr = $twopassErr = $companynameErr = $uennumberErr = "";
+$uname = $email = $pass = $cpass = $emailvalid = $companyname = $uen ="";
 $valid = TRUE; //this var scope ok
 function test_input($data) {
     $data = trim($data);
@@ -73,17 +73,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             }
         }
+        
+//        if (empty($_POST["companyname"])) {
+//            $companynameErr = "* Company Name is required";
+//            $valid = FALSE;
+//        } else{
+//            $companyname =($_POST["companyname"]);
+//        }
+//        
+//        $companyregex = '/^(\d{9}[a-zA-Z \-_])|^((18|19|20)\d{2}\d{6}[a-zA-z \-_])|^((T|S|R)\d{2}(LP|LL|FC|PF|RF|MQ|MM|NB|CC|CS|MB|FM|GS|GA|GB|DP|CP|NR|CM|CD|MD|HS|VH|CH|MH|CL|XL|CX|RP|TU|TC|FB|FN|PA|PB|SS|MC|SM)\d{4}[a-zA-Z \-_])$/';
+//        if (empty($_POST["uennumber"])) {
+//            $uennumberErr = "* UEN/ACRA No. is required";
+//            $valid = FALSE;
+//        } else{
+//            $companyuen = ($_POST["uennumber"]);
+//            if (!preg_match($companyregex, $companyuen)){
+//                $emailErr = "* Invalid UEN/ACRA format/number";
+//                $valid = FALSE;
+//            }
+//        }
+        
+        
         if ($valid == TRUE) {
 //            $hashpass = SHA1($pass);
 //            $hashcpass = SHA1($cpass);
             if ($uname !== "") {
             
-                $sql = $DB_con->prepare("INSERT INTO user(username, email, password, role_id)
+                $userSql = $DB_con->prepare("INSERT INTO user(username, email, password, role_id)
                                VALUES ('$uname', '$email', '$pass', '2')");
                 
             } 
-            if ($sql->execute()) {
-                echo "after sql execute";
+            if ($userSql->execute()) {
+                //prepare statement to insert into DB company name and UEN to
+//                $accountSql = $DB_con->prepare("INSERT INTO account(UEN, companyName, fileNumber, dateOfCreation, user_username)
+//                               VALUES ('$uen', '$companyname', '000000', NOW(), '$uname')");
+                
+                ////echo "after sql execute";
                 //send email to registering party
                 //redirect to choosing a plan
                 //after choose plan redirect to login page
