@@ -11,16 +11,15 @@ and open the template in the editor.
 body{
     align: center;
     background-color: #FFFFFF;
-    margin-left: 50px;
-    margin-right: 50px;
-    padding-left: 20px;
-    padding-right: 20px;
+    margin-left: 27%;
+    padding-left: inherit;
+    padding-right: inherit;
 
 }
 
 .card{
     box-shadow: 5px 5px 5px #DEDCDE;
-    width: 100%;
+    width: 700px;
     margin-left: 10px;
     margin-right: 90px;
     padding-left: 30px;

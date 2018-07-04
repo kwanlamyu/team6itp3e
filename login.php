@@ -65,7 +65,7 @@
             </div>
         </div>
 
-        <div class="row offset-lg-1">
+        <div class="row">
             <div class="card">
                 <div class="card-body">
                     <form action="login_validation.php" id="login" name="login" method="POST">
