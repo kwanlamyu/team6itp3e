@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
         }
         
-        $regex = '/^[-a-z0-9~!$%^&*=+}{\'?]+(\.[-a-z0-9~!$%^&*=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i';
+        $regex = '/^[-a-z0-9_~!$%^&*=+}{\'?]+(\.[-a-z0-9_~!$%^&*=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i';
         if (empty($_POST["email"])) {
             $emailErr = "* Email is required";
             $valid = FALSE;
@@ -78,21 +78,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } 
             if ($sql->execute()) {
                 echo "after sql execute";
-                echo "account successfully created";
-                //send email to registering party
-                //redirect to choosing a plan
-                //after choose plan redirect to login page
-                //                        
+                echo'
+                    <h2>Success</h2><hr>
+                    <p>Accountant account successfully created</p><br>
+                    <p><a href="create_accountant.php">Add another account</a></p><br>
+                    <p><a href="client_dashboard.php">Return to dashboard</a></p>                                
+                ';
+                
+                
             } else {
                 echo '<div class="alert alert-warning mmbsm" role="alert">Error: ' . $sql . '<br>' . $connection->error . '</div>';
             }
         }
-        //header('Location: login.php'); 
+        header('Location: create_accountant.php'); 
     }
 }
 
 
 ?>
-
+<!--     Modal 
+    <div class="modal fade" id="alertModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">User Successfully Created</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <h4>User Successfully Created</h4>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>-->
 
 
