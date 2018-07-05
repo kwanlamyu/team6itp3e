@@ -1,0 +1,4 @@
+Revenue,
+Other Income,
+Exchange Gain - Trade,
+Exchange Gain - Non-trade

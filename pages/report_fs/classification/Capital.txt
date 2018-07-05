@@ -1,0 +1,3 @@
+Share Capital,
+Retained Profits,
+Accumulated Losses
