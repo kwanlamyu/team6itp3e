@@ -23,11 +23,11 @@
 		<!--end::Web font -->
         <!--begin::Base Styles -->  
         <!--begin::Page Vendors -->
-		<link href="assets/vendors/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="../../assets/vendors/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
 		<!--end::Page Vendors -->
-		<link href="assets/vendors/base/vendors.bundle.css" rel="stylesheet" type="text/css" />
-		<link href="assets/demo/demo7/base/style.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="../../assets/vendors/base/vendors.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="../../assets/theme/metronic/base/style.bundle.css" rel="stylesheet" type="text/css" />
 		<!--end::Base Styles -->
-		<link rel="shortcut icon" href="assets/demo/demo7/media/img/logo/favicon.ico" />
+		<link rel="shortcut icon" href="../../assets/app/media/img/logos/favicon.ico" />
 	</head>
 	<!-- end::Head -->
