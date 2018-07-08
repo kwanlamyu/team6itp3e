@@ -52,6 +52,7 @@ foreach ($tempUniqueCategoryArray as $insert) {
 }
 ?>
 
+<!--
 <html>
     <body>
 
@@ -60,6 +61,7 @@ foreach ($tempUniqueCategoryArray as $insert) {
 
     </body>
 </html>
+-->
 
 <script type="text/javascript">
     var accountArray = <?php echo json_encode($accountArray); ?>;
@@ -108,7 +110,7 @@ foreach ($tempUniqueCategoryArray as $insert) {
 //------------------------------------------------------------------------------------------
 
     // Creation of form
-    var formElement = "<form id='form' name='passDataForm' method='post' action='tempReal.php'>\n\
+    var formElement = "<form id='form' name='passDataForm' method='post' action='temp_real.php'>\n\
                     <b>Category:</b> <input type='text' name='category' value='" + categoryArray[counter] + "' id='categoryLooper'><br>\n\
                     ";
 

@@ -142,7 +142,7 @@
 //    }
 //}
 
-require_once 'db.php';
+require_once '../db_connection/db.php';
 $unameErr = $emailErr = $passErr = $cpassErr = $checkErr = $twopassErr = "";
 $uname = $email = $pass = $cpass = $emailvalid = "";
 $valid = TRUE; //this var scope ok
@@ -268,7 +268,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         
         
-        header('Location: login.php'); 
+        header('Location: ../user_login/index.php'); 
 
     }
 }

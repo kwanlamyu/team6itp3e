@@ -399,7 +399,7 @@ for ($k = 0; $k < count($defaultArray); $k++) {
 // KOKHOE
 // =============================================================================
 // open txt file that contains all known administrative expenses category
-$assetsArray = fopen("classification/Assets.txt", "r") or die("Unable to open file!");
+$assetsArray = fopen("../../pages/report_fs/classification/Assets.txt", "r") or die("Unable to open file!");
 $assetsString = "";
 while (!feof($assetsArray)) {
     $assetsString .= fgetc($assetsArray);
@@ -411,7 +411,7 @@ for ($i = 0; $i < count($assetsArray); $i++) {
 }
 
 // open txt file that contains all known capital category
-$capitalArray = fopen("classification/Capital.txt", "r") or die("Unable to open file!");
+$capitalArray = fopen("../../pages/report_fs/classification/Capital.txt", "r") or die("Unable to open file!");
 $capitalString = "";
 while (!feof($capitalArray)) {
     $capitalString .= fgetc($capitalArray);
@@ -423,7 +423,7 @@ for ($i = 0; $i < count($capitalArray); $i++) {
 }
 
 // open txt file that contains all known liabilities category
-$liabilitiesArray = fopen("classification/Liabilities.txt", "r") or die("Unable to open file!");
+$liabilitiesArray = fopen("../../pages/report_fs/classification/Liabilities.txt", "r") or die("Unable to open file!");
 $liabilitiesString = "";
 while (!feof($liabilitiesArray)) {
     $liabilitiesString .= fgetc($liabilitiesArray);
@@ -435,7 +435,7 @@ for ($i = 0; $i < count($liabilitiesArray); $i++) {
 }
 
 // open txt file that contains all known current assets category
-$currentAssetsArray = fopen("classification/Current Assets.txt", "r") or die("Unable to open file!");
+$currentAssetsArray = fopen("../../pages/report_fs/classification/Current Assets.txt", "r") or die("Unable to open file!");
 $currentAssetsString = "";
 while (!feof($currentAssetsArray)) {
     $currentAssetsString .= fgetc($currentAssetsArray);
@@ -447,7 +447,7 @@ for ($i = 0; $i < count($currentAssetsArray); $i++) {
 }
 
 // open txt file that contains all known liabilities category
-$tradeLiabilitiesArray = fopen("classification/Trade and other payables.txt", "r") or die("Unable to open file!");
+$tradeLiabilitiesArray = fopen("../../pages/report_fs/classification/Trade and other payables.txt", "r") or die("Unable to open file!");
 $tradeLiabilitiesString = "";
 while (!feof($tradeLiabilitiesArray)) {
     $tradeLiabilitiesString .= fgetc($tradeLiabilitiesArray);
@@ -459,7 +459,7 @@ for ($i = 0; $i < count($tradeLiabilitiesArray); $i++) {
 }
 
 // open txt file that contains all known administrative expenses category
-$incomeArray = fopen("classification/Income.txt", "r") or die("Unable to open file!");
+$incomeArray = fopen("../../pages/report_fs/classification/Income.txt", "r") or die("Unable to open file!");
 $incomeString = "";
 while (!feof($incomeArray)) {
     $incomeString .= fgetc($incomeArray);
@@ -471,7 +471,7 @@ for ($i = 0; $i < count($incomeArray); $i++) {
 }
 
 // open txt file that contains all known administrative expenses category
-$expensesArray = fopen("classification/Expenses.txt", "r") or die("Unable to open file!");
+$expensesArray = fopen("../../pages/report_fs/classification/Expenses.txt", "r") or die("Unable to open file!");
 $expensesString = "";
 while (!feof($expensesArray)) {
     $expensesString .= fgetc($expensesArray);
@@ -482,7 +482,7 @@ for ($i = 0; $i < count($expensesArray); $i++) {
     $expensesArray[$i] = trim($expensesArray[$i]);
 }
 
-// arrays based on classifications
+// arrays based on ../../pages/report_fs/classifications
 $assetsDebit = array();
 $assetsCredit = array();
 $capitalAmount = array();
@@ -3457,16 +3457,16 @@ $section->addText("On disposal of an item of plant and equipment, the difference
                 </li>
                 <br>
                 <ol type='i'>
-                    <li>Classification
+                    <li>../../pages/report_fs/classification
                         <?php
-                        $section->addListItem("Classification", 5, $fontstyleName, $romanListingStyle);
+                        $section->addListItem("../../pages/report_fs/classification", 5, $fontstyleName, $romanListingStyle);
                         ?>
                     </li>
                     <br>
-                    <p>The classification of financial assets depends on the purpose for which the assets were acquired. Management determines the classification of its financial
+                    <p>The ../../pages/report_fs/classification of financial assets depends on the purpose for which the assets were acquired. Management determines the ../../pages/report_fs/classification of its financial
                         assets at initial recognition.
                         <?php
-                        $section->addText("The classification of financial assets depends on the purpose for which the assets were acquired. Management determines the classification of its financial assets at initial recognition."
+                        $section->addText("The ../../pages/report_fs/classification of financial assets depends on the purpose for which the assets were acquired. Management determines the ../../pages/report_fs/classification of its financial assets at initial recognition."
                                 , $fontstyleName);
                         ?>
                     </p>

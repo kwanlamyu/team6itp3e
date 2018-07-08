@@ -1,18 +1,9 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title></title>
-    </head>
-    <body>
 
+<?php include '../general/header.php';?>
+<?php include '../general/navigation_superadmin.php';?>
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
         <?php
-        $target_dir = "uploads/";
+        $target_dir = "../../pages/report_fs/uploads/";
         $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
         $uploadOk = 1;
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
@@ -20,7 +11,19 @@ and open the template in the editor.
         // Check if file already exists
         if (file_exists($target_file)) {
             unlink($target_file);
-            echo "Existing file deleted. ";
+            echo ' <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+											<div class="m-alert__icon">
+												<i class="flaticon-exclamation-1"></i>
+												<span></span>
+											</div>
+											<div class="m-alert__text">
+												Existing file deleted.
+											</div>
+											<div class="m-alert__close">
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+											</div>
+										</div>
+			';
         }
 
         if ($imageFileType != "csv" && $imageFileType != "xlsx") {
@@ -40,7 +43,7 @@ and open the template in the editor.
         }
 
         // open txt file that contains all known administrative expenses category
-        $expenseCategories = fopen("classification/Expenses.txt", "r") or die("Unable to open file!");
+        $expenseCategories = fopen("../../pages/report_fs/classification/Expenses.txt", "r") or die("Unable to open file!");
         $expenseString = "";
         while (!feof($expenseCategories)) {
             $expenseString .= fgetc($expenseCategories);
@@ -51,7 +54,7 @@ and open the template in the editor.
             $expenseArray[$i] = trim($expenseArray[$i]);
         }
 
-        $assetsCategories = fopen("classification/Assets.txt", "r") or die("Unable to open file!");
+        $assetsCategories = fopen("../../pages/report_fs/classification/Assets.txt", "r") or die("Unable to open file!");
         $assetsString = "";
         while (!feof($assetsCategories)) {
             $assetsString .= fgetc($assetsCategories);
@@ -62,7 +65,7 @@ and open the template in the editor.
             $assetsArray[$i] = trim($assetsArray[$i]);
         }
 
-        $capitalsCategories = fopen("classification/Capital.txt", "r") or die("Unable to open file!");
+        $capitalsCategories = fopen("../../pages/report_fs/classification/Capital.txt", "r") or die("Unable to open file!");
         $capitalsString = "";
         while (!feof($capitalsCategories)) {
             $capitalsString .= fgetc($capitalsCategories);
@@ -73,7 +76,7 @@ and open the template in the editor.
             $capitalsArray[$i] = trim($capitalsArray[$i]);
         }
 
-        $liabilitiesCategories = fopen("classification/Liabilities.txt", "r") or die("Unable to open file!");
+        $liabilitiesCategories = fopen("../../pages/report_fs/classification/Liabilities.txt", "r") or die("Unable to open file!");
         $liabilitiesString = "";
         while (!feof($liabilitiesCategories)) {
             $liabilitiesString .= fgetc($liabilitiesCategories);
@@ -84,7 +87,7 @@ and open the template in the editor.
             $liabilitiesArray[$i] = trim($liabilitiesArray[$i]);
         }
 
-        $nonCurrentAssetsCategories = fopen("classification/Non-current Assets.txt", "r") or die("Unable to open file!");
+        $nonCurrentAssetsCategories = fopen("../../pages/report_fs/classification/Non-current Assets.txt", "r") or die("Unable to open file!");
         $nonCurrentAssetsString = "";
         while (!feof($nonCurrentAssetsCategories)) {
             $nonCurrentAssetsString .= fgetc($nonCurrentAssetsCategories);
@@ -95,7 +98,7 @@ and open the template in the editor.
             $nonCurrentAssetsArray[$i] = trim($nonCurrentAssetsArray[$i]);
         }
 
-        $incomeCategories = fopen("classification/Income.txt", "r") or die("Unable to open file!");
+        $incomeCategories = fopen("../../pages/report_fs/classification/Income.txt", "r") or die("Unable to open file!");
         $incomeString = "";
         while (!feof($incomeCategories)) {
             $incomeString .= fgetc($incomeCategories);
@@ -110,7 +113,7 @@ and open the template in the editor.
         $monthIdentifier = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
         // open txt file that contains all known administrative expenses category
-        $adminExpenseCategories = fopen("classification/Administrative Expenses.txt", "r") or die("Unable to open file!");
+        $adminExpenseCategories = fopen("../../pages/report_fs/classification/Administrative Expenses.txt", "r") or die("Unable to open file!");
         $adminExpenseString = "";
         while (!feof($adminExpenseCategories)) {
             $adminExpenseString .= fgetc($adminExpenseCategories);
@@ -122,7 +125,7 @@ and open the template in the editor.
         }
 
         // open txt file that contains all known administrative expenses category
-        $distriMarketingExpenseCategories = fopen("classification/Distribution and Marketing Expenses.txt", "r") or die("Unable to open file!");
+        $distriMarketingExpenseCategories = fopen("../../pages/report_fs/classification/Distribution and Marketing Expenses.txt", "r") or die("Unable to open file!");
         $distriMarketingExpenseString = "";
         while (!feof($distriMarketingExpenseCategories)) {
             $distriMarketingExpenseString .= fgetc($distriMarketingExpenseCategories);
@@ -134,7 +137,7 @@ and open the template in the editor.
         }
 
         // open txt file that contains all known income tax category
-        $taxPayableCategories = fopen("classification/Tax Payable.txt", "r") or die("Unable to open file!");
+        $taxPayableCategories = fopen("../../pages/report_fs/classification/Tax Payable.txt", "r") or die("Unable to open file!");
         $taxPayableString = "";
         while (!feof($taxPayableCategories)) {
             $taxPayableString .= fgetc($taxPayableCategories);
@@ -497,9 +500,8 @@ and open the template in the editor.
             ?>
             <input type="submit" value="Submit">
         </form>
-    </body>
-</html>
-
+	
+	
 <script type="text/javascript">
     function updateCategory() {
       var numberOfYears = <?php echo count($trialBalanceArray);?>;
@@ -514,3 +516,7 @@ and open the template in the editor.
       }
     }
 </script>
+</div>
+</div>
+<?php include '../general/footer_content.php';?>
+	<?php include '../general/footer.php';?>
