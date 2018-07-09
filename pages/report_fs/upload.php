@@ -27,7 +27,18 @@
         }
 
         if ($imageFileType != "csv" && $imageFileType != "xlsx") {
-            echo "Sorry, only spreadsheets are allowed";
+            echo '<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+											<div class="m-alert__icon">
+												<i class="flaticon-exclamation-1"></i>
+												<span></span>
+											</div>
+											<div class="m-alert__text">
+												Sorry, only spreadsheets are allowed.
+											</div>
+											<div class="m-alert__close">
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+											</div>
+										</div>';
             $uploadOk = 0;
         }
         // Check if $uploadOk is set to 0 by an error
@@ -36,9 +47,32 @@
         // if everything is ok, try to upload file
         } else {
             if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded.";
+                echo 
+				'<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-success alert-dismissible fade show" role="alert">
+											<div class="m-alert__icon">
+												<i class="flaticon-exclamation-1"></i>
+												<span></span>
+											</div>
+											<div class="m-alert__text">
+												The file ' . basename($_FILES["fileToUpload"]["name"]) . ' has been uploaded."
+											</div>
+											<div class="m-alert__close">
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+											</div>
+										</div>';
             } else {
-                echo "Sorry, there was an error uploading your file.";
+                echo '<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+											<div class="m-alert__icon">
+												<i class="flaticon-exclamation-1"></i>
+												<span></span>
+											</div>
+											<div class="m-alert__text">
+												Sorry, there was an error uploading your file.
+											</div>
+											<div class="m-alert__close">
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+											</div>
+										</div>';
             }
         }
 
