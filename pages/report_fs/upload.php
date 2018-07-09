@@ -1,7 +1,49 @@
 
 <?php include '../general/header.php';?>
-<?php include '../general/navigation_superadmin.php';?>
+<?php include '../general/navigation_clientadmin.php';?>
 <div class="m-grid__item m-grid__item--fluid m-wrapper">
+<div class="m-subheader ">
+						<div class="d-flex align-items-center">
+							<div class="mr-auto">
+								<h3 class="m-subheader__title m-subheader__title--separator">
+									Financial Statement
+								</h3>
+								<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+									<li class="m-nav__item m-nav__item--home">
+										<a href="#" class="m-nav__link m-nav__link--icon">
+											<i class="m-nav__link-icon la la-home"></i>
+										</a>
+									</li>
+									<li class="m-nav__separator">
+										-
+									</li>
+									<li class="m-nav__item">
+										<a href="" class="m-nav__link">
+											<span class="m-nav__link-text">
+												Generate Report
+											</span>
+										</a>
+									</li>
+									<li class="m-nav__separator">
+										-
+									</li>
+									<li class="m-nav__item">
+										<a href="" class="m-nav__link">
+											<span class="m-nav__link-text">
+												Financial Statement
+											</span>
+										</a>
+									</li>
+								</ul>
+								
+							</div>
+							</div>
+						</div>
+						<div class="m-content">
+							<div class="row">
+							<div class="col-lg-12">
+							
+							<!--begin::Error Msg-->
         <?php
         $target_dir = "../../pages/report_fs/uploads/";
         $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
@@ -11,7 +53,7 @@
         // Check if file already exists
         if (file_exists($target_file)) {
             unlink($target_file);
-            echo ' <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+            echo ' <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show " role="alert">
 											<div class="m-alert__icon">
 												<i class="flaticon-exclamation-1"></i>
 												<span></span>
@@ -54,7 +96,7 @@
 												<span></span>
 											</div>
 											<div class="m-alert__text">
-												The file ' . basename($_FILES["fileToUpload"]["name"]) . ' has been uploaded."
+												The file ' . basename($_FILES["fileToUpload"]["name"]) . ' has been uploaded.
 											</div>
 											<div class="m-alert__close">
 												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
@@ -77,7 +119,18 @@
         }
 
         // open txt file that contains all known administrative expenses category
-        $expenseCategories = fopen("../../pages/report_fs/classification/Expenses.txt", "r") or die("Unable to open file!");
+        $expenseCategories = fopen("../../pages/report_fs/classification/Expenses.txt", "r") or die('<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+											<div class="m-alert__icon">
+												<i class="flaticon-exclamation-1"></i>
+												<span></span>
+											</div>
+											<div class="m-alert__text">
+												Unable to open file.
+											</div>
+											<div class="m-alert__close">
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+											</div>
+										</div>');
         $expenseString = "";
         while (!feof($expenseCategories)) {
             $expenseString .= fgetc($expenseCategories);
@@ -88,7 +141,18 @@
             $expenseArray[$i] = trim($expenseArray[$i]);
         }
 
-        $assetsCategories = fopen("../../pages/report_fs/classification/Assets.txt", "r") or die("Unable to open file!");
+        $assetsCategories = fopen("../../pages/report_fs/classification/Assets.txt", "r") or die('<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+											<div class="m-alert__icon">
+												<i class="flaticon-exclamation-1"></i>
+												<span></span>
+											</div>
+											<div class="m-alert__text">
+												Unable to open file.
+											</div>
+											<div class="m-alert__close">
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+											</div>
+										</div>');
         $assetsString = "";
         while (!feof($assetsCategories)) {
             $assetsString .= fgetc($assetsCategories);
@@ -99,7 +163,18 @@
             $assetsArray[$i] = trim($assetsArray[$i]);
         }
 
-        $capitalsCategories = fopen("../../pages/report_fs/classification/Capital.txt", "r") or die("Unable to open file!");
+        $capitalsCategories = fopen("../../pages/report_fs/classification/Capital.txt", "r") or die('<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+											<div class="m-alert__icon">
+												<i class="flaticon-exclamation-1"></i>
+												<span></span>
+											</div>
+											<div class="m-alert__text">
+												Unable to open file.
+											</div>
+											<div class="m-alert__close">
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+											</div>
+										</div>');
         $capitalsString = "";
         while (!feof($capitalsCategories)) {
             $capitalsString .= fgetc($capitalsCategories);
@@ -110,7 +185,18 @@
             $capitalsArray[$i] = trim($capitalsArray[$i]);
         }
 
-        $liabilitiesCategories = fopen("classification/Current Liabilities.txt", "r") or die("Unable to open file!");
+        $liabilitiesCategories = fopen("classification/Current Liabilities.txt", "r") or die('<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+											<div class="m-alert__icon">
+												<i class="flaticon-exclamation-1"></i>
+												<span></span>
+											</div>
+											<div class="m-alert__text">
+												Unable to open file.
+											</div>
+											<div class="m-alert__close">
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+											</div>
+										</div>');
         $liabilitiesString = "";
         while (!feof($liabilitiesCategories)) {
             $liabilitiesString .= fgetc($liabilitiesCategories);
@@ -122,7 +208,18 @@
         }
 
         // open txt file that contains all known non-current liabilities category
-        $nonCurrentLiabilitiesArray = fopen("classification/Non-current Liabilities.txt", "r") or die("Unable to open file!");
+        $nonCurrentLiabilitiesArray = fopen("classification/Non-current Liabilities.txt", "r") or die('<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+											<div class="m-alert__icon">
+												<i class="flaticon-exclamation-1"></i>
+												<span></span>
+											</div>
+											<div class="m-alert__text">
+												Unable to open file.
+											</div>
+											<div class="m-alert__close">
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+											</div>
+										</div>');
         $nonCurrentLiabilitiesString = "";
         while (!feof($nonCurrentLiabilitiesArray)) {
             $nonCurrentLiabilitiesString .= fgetc($nonCurrentLiabilitiesArray);
@@ -134,7 +231,18 @@
         }
 
         // open txt file that contains all known liabilities that have current and non-current category
-        $bothLiabilitiesArray = fopen("classification/Both Liabilities.txt", "r") or die("Unable to open file!");
+        $bothLiabilitiesArray = fopen("classification/Both Liabilities.txt", "r") or die('<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+											<div class="m-alert__icon">
+												<i class="flaticon-exclamation-1"></i>
+												<span></span>
+											</div>
+											<div class="m-alert__text">
+												Unable to open file.
+											</div>
+											<div class="m-alert__close">
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+											</div>
+										</div>');
         $bothLiabilitiesString = "";
         while (!feof($bothLiabilitiesArray)) {
             $bothLiabilitiesString .= fgetc($bothLiabilitiesArray);
@@ -145,7 +253,18 @@
             $bothLiabilitiesArray[$i] = trim($bothLiabilitiesArray[$i]);
         }
 
-        $nonCurrentAssetsCategories = fopen("../../pages/report_fs/classification/Non-current Assets.txt", "r") or die("Unable to open file!");
+        $nonCurrentAssetsCategories = fopen("../../pages/report_fs/classification/Non-current Assets.txt", "r") or die('<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+											<div class="m-alert__icon">
+												<i class="flaticon-exclamation-1"></i>
+												<span></span>
+											</div>
+											<div class="m-alert__text">
+												Unable to open file.
+											</div>
+											<div class="m-alert__close">
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+											</div>
+										</div>');
         $nonCurrentAssetsString = "";
         while (!feof($nonCurrentAssetsCategories)) {
             $nonCurrentAssetsString .= fgetc($nonCurrentAssetsCategories);
@@ -156,7 +275,18 @@
             $nonCurrentAssetsArray[$i] = trim($nonCurrentAssetsArray[$i]);
         }
 
-        $incomeCategories = fopen("../../pages/report_fs/classification/Income.txt", "r") or die("Unable to open file!");
+        $incomeCategories = fopen("../../pages/report_fs/classification/Income.txt", "r") or die('<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+											<div class="m-alert__icon">
+												<i class="flaticon-exclamation-1"></i>
+												<span></span>
+											</div>
+											<div class="m-alert__text">
+												Unable to open file.
+											</div>
+											<div class="m-alert__close">
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+											</div>
+										</div>');
         $incomeString = "";
         while (!feof($incomeCategories)) {
             $incomeString .= fgetc($incomeCategories);
@@ -171,7 +301,18 @@
         $monthIdentifier = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
         // open txt file that contains all known administrative expenses category
-        $adminExpenseCategories = fopen("../../pages/report_fs/classification/Administrative Expenses.txt", "r") or die("Unable to open file!");
+        $adminExpenseCategories = fopen("../../pages/report_fs/classification/Administrative Expenses.txt", "r") or die('<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+											<div class="m-alert__icon">
+												<i class="flaticon-exclamation-1"></i>
+												<span></span>
+											</div>
+											<div class="m-alert__text">
+												Unable to open file.
+											</div>
+											<div class="m-alert__close">
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+											</div>
+										</div>');
         $adminExpenseString = "";
         while (!feof($adminExpenseCategories)) {
             $adminExpenseString .= fgetc($adminExpenseCategories);
@@ -183,7 +324,18 @@
         }
 
         // open txt file that contains all known administrative expenses category
-        $distriMarketingExpenseCategories = fopen("../../pages/report_fs/classification/Distribution and Marketing Expenses.txt", "r") or die("Unable to open file!");
+        $distriMarketingExpenseCategories = fopen("../../pages/report_fs/classification/Distribution and Marketing Expenses.txt", "r") or die('<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+											<div class="m-alert__icon">
+												<i class="flaticon-exclamation-1"></i>
+												<span></span>
+											</div>
+											<div class="m-alert__text">
+												Unable to open file.
+											</div>
+											<div class="m-alert__close">
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+											</div>
+										</div>');
         $distriMarketingExpenseString = "";
         while (!feof($distriMarketingExpenseCategories)) {
             $distriMarketingExpenseString .= fgetc($distriMarketingExpenseCategories);
@@ -195,7 +347,20 @@
         }
 
         // open txt file that contains all known income tax category
-        $taxPayableCategories = fopen("../../pages/report_fs/classification/Tax Payable.txt", "r") or die("Unable to open file!");
+        $taxPayableCategories = fopen("../../pages/report_fs/classification/Tax Payable.txt", "r") or die('<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+											<div class="m-alert__icon">
+												<i class="flaticon-exclamation-1"></i>
+												<span></span>
+											</div>
+											<div class="m-alert__text">
+												Unable to open file.
+											</div>
+											<div class="m-alert__close">
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+											</div>
+										</div>');
+										
+										//end::Error Msg
         $taxPayableString = "";
         while (!feof($taxPayableCategories)) {
             $taxPayableString .= fgetc($taxPayableCategories);
@@ -354,7 +519,11 @@
           array_push($yearlyUndefinedRows[$activeSheet],$undefinedRows);
         }
 
-        echo $companyName  . "<br/>";
+		//begin::Company Name
+        echo 'how to echo here sigh'. $companyName  . "<br/>";
+		
+		
+		
         for ($i = 0; $i < count($trialBalanceArray); $i++){
           echo "<hr/>";
           echo $endedAtArray[$i] . "<br/>";
@@ -574,6 +743,9 @@
       }
     }
 </script>
+</div>
+</div>
+</div>
 </div>
 </div>
 <?php include '../general/footer_content.php';?>

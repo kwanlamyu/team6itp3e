@@ -1,6 +1,6 @@
 
 <?php include '../general/header.php';?>
-<?php include '../general/navigation_superadmin.php';?>
+<?php include '../general/navigation_clientadmin.php';?>
 
 <div class="m-grid__item m-grid__item--fluid m-wrapper">
 	<!-- BEGIN: Subheader -->
@@ -45,7 +45,7 @@
 							<!--begin::Portlet-->
 							<div class="m-content">
 							<div class="row">
-							<div class="col-lg-12">
+							<div class="col-lg-12"> 
 							<div class="m-portlet m-portlet--tab">
 								<div class="m-portlet__head">
 									<div class="m-portlet__head-caption">
