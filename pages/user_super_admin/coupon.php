@@ -1,5 +1,5 @@
 <?php
-require_once 'db.php';
+require_once 'db_coupon.php';
 
 if (isset($_POST['registerCoupon'])) {
     $type = $_POST['couponType'];
@@ -9,27 +9,27 @@ if (isset($_POST['registerCoupon'])) {
     if ($type == "") {
         $error[] = "Please select a coupon type. ";
     }
-    
+
     if ($value == "") {
         $error[] = "Please enter a discount value / percentage. ";
     }
-    
+
     if (!is_numeric($value) || !is_numeric($maxUse)) {
         $error[] = "Please enter a valid number. ";
     }
-    
+
     if ($maxUse == "") {
         $error[] = "Please enter the maximum number of uses. ";
     }
 
-    // Generate the coupon code 
+    // Generate the coupon code
     $chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     $result = "";
     for ($i = 0; $i < 6; $i++) {
         $result .= $chars[mt_rand(0, strlen($chars) - 1)];
     }
 
-    // Retrieve all of the registered coupon code 
+    // Retrieve all of the registered coupon code
     $select = $DB_con->prepare("SELECT code FROM coupon");
     $select->execute();
     $couponCode = $select->fetchAll();
@@ -51,7 +51,7 @@ if (isset($_POST['registerCoupon'])) {
         $recurring = 0;
         $numberOfUses = 0;
 
-        // Insert into database 
+        // Insert into database
         $insertCoupon = $DB_con->prepare("INSERT INTO coupon (code, recurring, maxUses, numberOfUses, value, couponType_id) VALUES(:code, :recurring, :maxUses, :numberOfUses, :value, :couponType_id);");
         $insertCoupon->bindParam(':code', $result);
         $insertCoupon->bindParam(':recurring', $recurring);
@@ -67,7 +67,7 @@ if (isset($_POST['registerCoupon'])) {
 <html>
     <body>
         <form name='couponForm' method='post'>
-            Type of coupon: 
+            Type of coupon:
             <select name="couponType">
                 <option value="1">Fixed Price</option>
                 <option value="2">Percentage</option>
@@ -93,6 +93,6 @@ if (isset($_POST['registerCoupon'])) {
             ?>
 
 
-        </form> 
+        </form>
     </body>
 </html>

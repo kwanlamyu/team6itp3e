@@ -110,7 +110,7 @@
             $capitalsArray[$i] = trim($capitalsArray[$i]);
         }
 
-        $liabilitiesCategories = fopen("../../pages/report_fs/classification/Liabilities.txt", "r") or die("Unable to open file!");
+        $liabilitiesCategories = fopen("classification/Current Liabilities.txt", "r") or die("Unable to open file!");
         $liabilitiesString = "";
         while (!feof($liabilitiesCategories)) {
             $liabilitiesString .= fgetc($liabilitiesCategories);
@@ -119,6 +119,30 @@
         $liabilitiesArray = explode(",", $liabilitiesString);
         for ($i = 0; $i < count($liabilitiesArray); $i++) {
             $liabilitiesArray[$i] = trim($liabilitiesArray[$i]);
+        }
+
+        // open txt file that contains all known non-current liabilities category
+        $nonCurrentLiabilitiesArray = fopen("classification/Non-current Liabilities.txt", "r") or die("Unable to open file!");
+        $nonCurrentLiabilitiesString = "";
+        while (!feof($nonCurrentLiabilitiesArray)) {
+            $nonCurrentLiabilitiesString .= fgetc($nonCurrentLiabilitiesArray);
+        }
+        fclose($nonCurrentLiabilitiesArray);
+        $nonCurrentLiabilitiesArray = explode(",", $nonCurrentLiabilitiesString);
+        for ($i = 0; $i < count($nonCurrentLiabilitiesArray); $i++) {
+            $nonCurrentLiabilitiesArray[$i] = trim($nonCurrentLiabilitiesArray[$i]);
+        }
+
+        // open txt file that contains all known liabilities that have current and non-current category
+        $bothLiabilitiesArray = fopen("classification/Both Liabilities.txt", "r") or die("Unable to open file!");
+        $bothLiabilitiesString = "";
+        while (!feof($bothLiabilitiesArray)) {
+            $bothLiabilitiesString .= fgetc($bothLiabilitiesArray);
+        }
+        fclose($bothLiabilitiesArray);
+        $bothLiabilitiesArray = explode(",", $bothLiabilitiesString);
+        for ($i = 0; $i < count($bothLiabilitiesArray); $i++) {
+            $bothLiabilitiesArray[$i] = trim($bothLiabilitiesArray[$i]);
         }
 
         $nonCurrentAssetsCategories = fopen("../../pages/report_fs/classification/Non-current Assets.txt", "r") or die("Unable to open file!");
@@ -410,7 +434,7 @@
 
         ?>
 
-        <form action="nextPage.php" method="post" onsubmit="updateCategory()">
+        <form action="next_page.php" method="post" onsubmit="updateCategory()">
           <!-- Yoo yee's required data here -->
           <div class="form-group">
               <label for="companyName">Company Name: </label>
@@ -534,8 +558,8 @@
             ?>
             <input type="submit" value="Submit">
         </form>
-	
-	
+
+
 <script type="text/javascript">
     function updateCategory() {
       var numberOfYears = <?php echo count($trialBalanceArray);?>;

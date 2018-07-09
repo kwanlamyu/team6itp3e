@@ -1,8 +1,8 @@
-<?php include 'conn.php';?>
+<?php include '../db_connection/conn.php';?>
 
-<?php include 'header.php';?>
+<?php include '../general/header.php';?>
 
-<?php include 'navigation_superadmin.php';?>
+<?php include '../general/navigation_superadmin.php';?>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
@@ -49,7 +49,7 @@
     var filter = input.value.toUpperCase();
     var table = document.getElementById("userTable");
     var tr = table.getElementsByTagName("tr");
-	
+
     for (var i = 1; i < tr.length; i++) {
 		var tds = tr[i].getElementsByTagName("td");
         var firstCol = tds[0].textContent.toUpperCase();
@@ -58,9 +58,9 @@
             tr[i].style.display = "";
         } else {
             tr[i].style.display = "none";
-        }      
+        }
     }
-	
+
 	}
 </script>
 

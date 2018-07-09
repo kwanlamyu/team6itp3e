@@ -5,7 +5,7 @@
  * and open the template in the editor.
  */
 
-// KOKHOE 
+// KOKHOE
 $data = $_POST['data'];
 $numberOfSheets = $_POST['numberOfYears'];
 $years = $_POST['years'];
@@ -37,7 +37,7 @@ $valueArray = array();
 $categoryArray = array();
 
 for ($aa = 0; $aa < $numberOfSheets; $aa++) {
-    // Loop Category 
+    // Loop Category
     for ($ab = 0; $ab < count($data[$aa]); $ab++) {
         array_push($categoryArray, $data[$aa][$ab][2]);
         array_push($accountArray, $aa . $data[$aa][$ab][0]);
@@ -201,7 +201,7 @@ foreach ($tempUniqueCategoryArray as $insert) {
         document.getElementById('inputField').innerHTML += "Manual Accounts: <input type='text' id='mAccount" + count + "'> \n\
                                                             Values: <input type='text' id='mValue" + count + "'> ";
 
-        
+
         for (t = 0; t < yearsCount; t++) {
             document.getElementById('inputField').innerHTML += "<input type='radio' name='" + c + "' id='date" + (count) + t + "' value='" + years[t] + "'>" + years[t];
         }
@@ -226,7 +226,7 @@ foreach ($tempUniqueCategoryArray as $insert) {
         counter++;
         document.getElementById('categoryLooper').value = categoryArray[counter];
 
-        // Display helping keys  
+        // Display helping keys
         if (document.getElementById('categoryLooper').value === "Income Taxes") {
             for (g = 0; g < incomeTaxArray.length; g++) {
                 document.getElementById('incomeTax').innerHTML += "<input type='radio' name='subIncomeTax' id='subIncomeTax" + g + "' value='" + incomeTaxArray[g] + "'> " + incomeTaxArray[g] + "<br>";
@@ -253,7 +253,7 @@ foreach ($tempUniqueCategoryArray as $insert) {
     var clickNext = document.getElementById('nextBtn');
     clickNext.onclick = function () {
 
-        // Trying to store with * to separate the category (package) 
+        // Trying to store with * to separate the category (package)
         storeCategory.push("*");
         storeCategory.push(document.getElementById('categoryLooper').value);
 
@@ -279,11 +279,11 @@ foreach ($tempUniqueCategoryArray as $insert) {
         document.getElementById("test").innerHTML += document.getElementById("passData").value + "<br>";
         // Reset the form - clear all checked checkbox and input field
         document.getElementById("form").reset();
-        // Change the data displayed for category 
+        // Change the data displayed for category
         counter++;
         document.getElementById('categoryLooper').value = categoryArray[counter];
 
-        // Display helping keys  
+        // Display helping keys
         if (document.getElementById('categoryLooper').value === "Income Taxes") {
             for (e = 0; e < incomeTaxKeyWords.length; e++) {
                 document.getElementById('helpingWords').innerHTML += incomeTaxKeyWords[e] + "<br>";
