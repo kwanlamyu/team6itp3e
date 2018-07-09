@@ -2,5 +2,4 @@ Trade Payables,
 GST Payables,
 Accruals,
 Amount owing to a Shareholder,
-Current Income Tax Liabilities,
-Borrowings
+Current Income Tax Liabilities

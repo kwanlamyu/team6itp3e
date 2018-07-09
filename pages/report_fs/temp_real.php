@@ -423,7 +423,7 @@ for ($i = 0; $i < count($capitalArray); $i++) {
 }
 
 // open txt file that contains all known liabilities category
-$liabilitiesArray = fopen("../../pages/report_fs/classification/Liabilities.txt", "r") or die("Unable to open file!");
+$liabilitiesArray = fopen("classification/Current Liabilities.txt", "r") or die("Unable to open file!");
 $liabilitiesString = "";
 while (!feof($liabilitiesArray)) {
     $liabilitiesString .= fgetc($liabilitiesArray);
@@ -432,6 +432,30 @@ fclose($liabilitiesArray);
 $liabilitiesArray = explode(",", $liabilitiesString);
 for ($i = 0; $i < count($liabilitiesArray); $i++) {
     $liabilitiesArray[$i] = trim($liabilitiesArray[$i]);
+}
+
+// open txt file that contains all known non-current liabilities category
+$nonCurrentLiabilitiesArray = fopen("classification/Non-current Liabilities.txt", "r") or die("Unable to open file!");
+$nonCurrentLiabilitiesString = "";
+while (!feof($nonCurrentLiabilitiesArray)) {
+    $nonCurrentLiabilitiesString .= fgetc($nonCurrentLiabilitiesArray);
+}
+fclose($nonCurrentLiabilitiesArray);
+$nonCurrentLiabilitiesArray = explode(",", $nonCurrentLiabilitiesString);
+for ($i = 0; $i < count($nonCurrentLiabilitiesArray); $i++) {
+    $nonCurrentLiabilitiesArray[$i] = trim($nonCurrentLiabilitiesArray[$i]);
+}
+
+// open txt file that contains all known liabilities that have current and non-current category
+$bothLiabilitiesArray = fopen("classification/Both Liabilities.txt", "r") or die("Unable to open file!");
+$bothLiabilitiesString = "";
+while (!feof($bothLiabilitiesArray)) {
+    $bothLiabilitiesString .= fgetc($bothLiabilitiesArray);
+}
+fclose($bothLiabilitiesArray);
+$bothLiabilitiesArray = explode(",", $bothLiabilitiesString);
+for ($i = 0; $i < count($bothLiabilitiesArray); $i++) {
+    $bothLiabilitiesArray[$i] = trim($bothLiabilitiesArray[$i]);
 }
 
 // open txt file that contains all known current assets category
