@@ -520,7 +520,14 @@
         }
 
 		//begin::Company Name
-        echo 'how to echo here sigh'. $companyName  . "<br/>";
+        echo '<!--begin::Portlet--> <div class="m-portlet m-portlet--full-height">
+									<div class="m-portlet__head">
+										<div class="m-portlet__head-caption">
+											<div class="m-portlet__head-title">
+												<h3 class="m-portlet__head-text">'. $companyName  . '</h3>
+											</div>
+										</div>
+									</div>';
 		
 		
 		
@@ -743,6 +750,7 @@
       }
     }
 </script>
+</div>
 </div>
 </div>
 </div>
