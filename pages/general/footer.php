@@ -15,6 +15,7 @@
         <!--begin::Page Snippets -->
 		<script src="../../assets/app/js/dashboard.js" type="text/javascript"></script>
 		<script src="../../assets/app/js/login.js" type="text/javascript"></script>
+		<script src="../../../assets/app/js/dropzone.js" type="text/javascript"></script>
 		<!--end::Page Snippets -->
 	</body>
 	<!-- end::Body -->

@@ -1,6 +1,4 @@
-
-    <!-- end::Body -->
-	<body  class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-light m-aside-left--fixed m-aside-left--offcanvas m-aside-left--minimize m-brand--minimize m-footer--push m-aside--offcanvas-default"  >
+<body  class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-light m-aside-left--fixed m-aside-left--offcanvas m-aside-left--minimize m-brand--minimize m-footer--push m-aside--offcanvas-default"  >
 		<!-- begin:: Page -->
 		<div class="m-grid m-grid--hor m-grid--root m-page">
 			<!-- BEGIN: Header -->
@@ -1927,57 +1925,3 @@
 				</div>
 				<div class="m-aside-menu-overlay"></div>
 				<!-- END: Left Aside -->
-				<div class="m-grid__item m-grid__item--fluid m-wrapper">
-					<!-- BEGIN: Subheader -->
-					<div class="m-subheader ">
-						<div class="d-flex align-items-center">
-							<div class="mr-auto">
-								<h3 class="m-subheader__title m-subheader__title--separator">
-									Dashboard
-								</h3>
-								<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
-									<li class="m-nav__item m-nav__item--home">
-										<a href="#" class="m-nav__link m-nav__link--icon">
-											<i class="m-nav__link-icon la la-home"></i>
-										</a>
-									</li>
-									<li class="m-nav__separator">
-										-
-									</li>
-									<li class="m-nav__item">
-										<a href="" class="m-nav__link">
-											<span class="m-nav__link-text">
-												Dashboard
-											</span>
-										</a>
-									</li>
-									<li class="m-nav__separator">
-										-
-									</li>
-									<li class="m-nav__item">
-										<a href="" class="m-nav__link">
-											<span class="m-nav__link-text">
-												Generate Reports
-											</span>
-										</a>
-									</li>
-								</ul>
-							</div>
-							<div>
-								<span class="m-subheader__daterange" id="m_dashboard_daterangepicker">
-									<span class="m-subheader__daterange-label">
-										<span class="m-subheader__daterange-title"></span>
-										<span class="m-subheader__daterange-date m--font-brand"></span>
-									</span>
-									<a href="#" class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill">
-										<i class="la la-angle-down"></i>
-									</a>
-								</span>
-							</div>
-						</div>
-					</div>
-					<!-- END: Subheader -->
-					
-			</div>
-			<!-- end:: Body -->
-

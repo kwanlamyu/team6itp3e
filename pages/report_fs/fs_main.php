@@ -1,6 +1,6 @@
 
 <?php include '../general/header.php';?>
-<?php include '../general/navigation_clientadmin.php';?>
+<?php include '../general/navigation_accountant.php';?>
 
 <div class="m-grid__item m-grid__item--fluid m-wrapper">
 	<!-- BEGIN: Subheader -->
@@ -42,6 +42,8 @@
 							</div>
 						</div>
 						
+						
+						
 							<!--begin::Portlet-->
 							<div class="m-content">
 							<div class="row">
@@ -72,9 +74,15 @@
 										Select files to upload:
 										
 											<div class="m-input-icon m-input-icon--left m-input-icon--right">
-												<input type="file" class="btn btn-metal" name="fileToUpload" id="fileToUpload" accept=".xlsx">
+											
+											<input type="file" class="m-dropzone dropzone m-dropzone--success" name="m-dropzone-three" id="m-dropzone-three" accept=".xlsx" >
 												
 											</div>
+											
+											
+									
+											
+											
 										</div>
 										<div class="m-form__actions">
 											<input type="submit" class="btn btn-accent" value="Upload File" name="submit">

@@ -46,7 +46,7 @@
 							<!--begin::Error Msg-->
         <?php
         $target_dir = "../../pages/report_fs/uploads/";
-        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+        $target_file = $target_dir . basename($_FILES["m-dropzone-three"]["name"]);
         $uploadOk = 1;
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
@@ -88,7 +88,7 @@
             echo "Sorry, your file was not uploaded.";
         // if everything is ok, try to upload file
         } else {
-            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+            if (move_uploaded_file($_FILES["m-dropzone-three"]["tmp_name"], $target_file)) {
                 echo
 				'<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-success alert-dismissible fade show" role="alert">
 											<div class="m-alert__icon">
@@ -96,7 +96,7 @@
 												<span></span>
 											</div>
 											<div class="m-alert__text">
-												The file ' . basename($_FILES["fileToUpload"]["name"]) . ' has been uploaded.
+												The file ' . basename($_FILES["m-dropzone-three"]["name"]) . ' has been uploaded.
 											</div>
 											<div class="m-alert__close">
 												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
@@ -527,19 +527,35 @@
 												<h3 class="m-portlet__head-text">'. $companyName  . '</h3>
 											</div>
 										</div>
-									</div>';
+									</div><div class="m-portlet__body">';
 
-
-
+       //begin::Accordion
         for ($i = 0; $i < count($trialBalanceArray); $i++){
-          echo "<hr/>";
-          echo $endedAtArray[$i] . "<br/>";
+		  echo '<div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_'. $i .'" role="tablist">	
+											<div class="m-accordion__item m-accordion__item--info">
+											
+												<div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_'.$i.'_item_1_head" data-toggle="collapse" href="#m_accordion_'.$i.'_item_1_body" aria-expanded="  false">
+													<span class="m-accordion__item-icon">
+														<i class="fa flaticon-user-ok"></i>
+													</span>
+													<span class="m-accordion__item-title">';
+													
+          echo $endedAtArray[$i];
+		  
+		  echo '</span>
+													<span class="m-accordion__item-mode"></span>
+												</div>
+												
+												<div class="m-accordion__item-body collapse" id="m_accordion_'.$i.'_item_1_body" class=" " role="tabpanel" aria-labelledby="m_accordion_'.$i.'_item_1_head" data-parent="#m_accordion_'.$i.'">
+													<div class="m-accordion__item-content">';
+													
           $yearlyArray = $trialBalanceArray[$i][1];
           for ($x = 0; $x < count($yearlyUndefinedRows[$i][1]);$x++){
             $contextPrinted = false;
-            echo "<hr/>";
+            
             $rows = $yearlyArray[$yearlyUndefinedRows[$i][1][$x]];
             $currentRowCounter = $yearlyUndefinedRows[$i][1][$x];
+			echo "<hr/>";
             if (($currentRowCounter + 2) > count($yearlyArray)){
               for ($k = $currentRowCounter - 2; $k < $currentRowCounter; $k++){
                 $previousRow = $yearlyArray[$k];
@@ -598,29 +614,96 @@
               }
             }
           }
+		  echo'</div>
+												</div>
+											</div>
+										</div>';
+								//end::Accordion
         }
+		
+		//begin::Modified
         if (count($modifiedCategoryArray) > 0){
-          echo "The following categories were replaced:<br/>";
+          echo '<div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_m" role="tablist"><div class="m-accordion__item m-accordion__item--info">
+											
+												<div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_m_item_1_head" data-toggle="collapse" href="#m_accordion_m_item_1_body" aria-expanded="  false">
+													<span class="m-accordion__item-icon">
+														<i class="fa flaticon-user-ok"></i>
+													</span>
+													<span class="m-accordion__item-title">Replaced Categories</span>
+													<span class="m-accordion__item-mode"></span>
+												</div>
+												<div class="m-accordion__item-body collapse" id="m_accordion_m_item_1_body" class=" " role="tabpanel" aria-labelledby="m_accordion_5_item_1_head" data-parent="#m_accordion_m">
+													<div class="m-accordion__item-content"><p>';
+		echo '<table class="table table-bordered m-table m-table--border-success">
+											<thead>
+												<tr>
+													<th>
+														#
+													</th>
+													<th>
+														Previous Name
+													</th>
+													<th>
+														Replaced Name
+													</th>
+												</tr>
+											</thead>
+											<tbody>';
+												for ($i = 0; $i < count($modifiedCategoryArray);$i++){
+														$tempStr = explode(",", $modifiedCategoryArray[$i]);
+													echo '<tr>';
+													echo '<th scope="row">'.$i.'</th>';
+													echo '<td>'.$tempStr[0].'</td>';
+													echo '<td>'.$tempStr[1].'</td>';
+													echo '</tr>';
+												}	
+												echo '</tbody>
+										</table>';
+		/* Old Code for Reference
           for ($i = 0; $i < count($modifiedCategoryArray);$i++){
             $tempStr = explode(",", $modifiedCategoryArray[$i]);
-            echo $tempStr[0] . " --> " . $tempStr[1] . "<br/>";
+            echo $tempStr[0] . ' --> ' . $tempStr[1] . '<br>';
           }
+		  */
+		  echo '
+														</p>
+													</div>
+												</div>
+												
+											</div>
+											</div>';
         }
 
 
         ?>
 
-        <form action="next_page.php" method="post" onsubmit="updateCategory()">
-          <!-- Yoo yee's required data here -->
-          <div class="form-group">
-              <label for="companyName">Company Name: </label>
-              <input type="text" class="form-control" id="companyName" name="companyName" placeholder="Enter Company Name" value="<?php echo $companyName?>"/>
-          </div>
-
-          <div class="form-group">
-              <label for="companyregID">Company Registration Number: </label>
-              <input type="text" class="form-control" id="companyregID" name="companyregID" placeholder="Enter Company Registration Number"/>
-          </div>
+		<br>
+        <form action="next_page.php" method="post" onsubmit="updateCategory()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+		 
+		
+		<div class="m-portlet__body">
+		<!-- Yok yee's required data here -->
+		<div class="form-group m-form__group row">
+								<label for="companyName" class="col-lg-2 col-form-label">
+									Company Name
+								</label>
+								<div class="col-lg-3">
+									<input class="form-control m-input" type="text" id="companyName" name="companyName" value="<?php echo $companyName?>">
+									<span class="m-form__help">
+										Please enter company name
+									</span>
+								</div>
+								<label for="companyregID"class="col-lg-2 col-form-label">
+									Company Registration No.
+								</label>
+								<div class="col-lg-3">
+									<input class="form-control m-input" type="text" id="companyregID" name="companyregID">
+									<span class="m-form__help">
+										Please enter company registration number
+									</span>
+								</div>
+							</div>
+		  </div>
 
           <?php
           $month = substr($endedAtArray[0], 0, -5);
@@ -726,7 +809,7 @@
                 }
             }
             ?>
-            <input type="submit" value="Submit">
+            <input type="submit" value="Submit" class="btn btn-brand">
         </form>
 
 
@@ -744,6 +827,7 @@
       }
     }
 </script>
+</div>
 </div>
 </div>
 </div>

@@ -135,9 +135,9 @@
 						
 						<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  m-menu-submenu-toggle="click" m-menu-link-redirect="1">
 								<a  href="javascript:;" class="m-menu__link m-menu__toggle">
-									<i class="m-menu__link-icon flaticon-users"></i>
+									<i class="m-menu__link-icon flaticon-plus"></i>
 									<span class="m-menu__link-text">
-										Accounts
+										Report
 									</span>
 									<i class="m-menu__ver-arrow la la-angle-right"></i>
 								</a>
@@ -147,120 +147,30 @@
 										<li class="m-menu__item  m-menu__item--parent" aria-haspopup="true"  m-menu-link-redirect="1">
 											<span class="m-menu__link">
 												<span class="m-menu__link-text">
-													Accounts
+													Create Report
 												</span>
 											</span>
 										</li>
 										<li class="m-menu__item " aria-haspopup="true"  m-menu-link-redirect="1">
+											<a  href="../user_super_admin/userdashboard.php" class="m-menu__link ">
+												<i class="m-menu__link-icon la la-commenting"></i>
+												<span class="m-menu__link-text">
+												 Financial Statement 
+												</span>
+											</a>
+										</li>
+										
+										<li class="m-menu__item " aria-haspopup="true"  m-menu-link-redirect="1">
 											<a  href="#" class="m-menu__link ">
 												<i class="m-menu__link-icon la la-commenting"></i>
 												<span class="m-menu__link-text">
-													Password Reset
+												 Tax Computation
 												</span>
 											</a>
 										</li>
 									</ul>
 								</div>
-							</li>
-						
-							
-							<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  m-menu-submenu-toggle="click" m-menu-link-redirect="1">
-								<a  href="javascript:;" class="m-menu__link m-menu__toggle">
-									<i class="m-menu__link-icon flaticon-squares-4"></i>
-									<span class="m-menu__link-text">
-										Template
-									</span>
-									<i class="m-menu__ver-arrow la la-angle-right"></i>
-								</a>
-								<div class="m-menu__submenu ">
-									<span class="m-menu__arrow"></span>
-									<ul class="m-menu__subnav">
-										<li class="m-menu__item  m-menu__item--parent" aria-haspopup="true"  m-menu-link-redirect="1">
-											<span class="m-menu__link">
-												<span class="m-menu__link-text">
-													Template
-												</span>
-											</span>
-										</li>
-										<li class="m-menu__item " aria-haspopup="true"  m-menu-link-redirect="1">
-											<a  href="#" class="m-menu__link ">
-												<i class="m-menu__link-icon la la-commenting"></i>
-												<span class="m-menu__link-text">
-													Master Template
-												</span>
-											</a>
-										</li>
-									</ul>
-								</div>
-							</li>
-							
-							<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  m-menu-submenu-toggle="click" m-menu-link-redirect="1">
-								<a  href="javascript:;" class="m-menu__link m-menu__toggle">
-									<i class="m-menu__link-icon flaticon-bag"></i>
-									<span class="m-menu__link-text">
-										Licenses 
-									</span>
-									<i class="m-menu__ver-arrow la la-angle-right"></i>
-								</a>
-								<div class="m-menu__submenu ">
-									<span class="m-menu__arrow"></span>
-									<ul class="m-menu__subnav">
-										<li class="m-menu__item  m-menu__item--parent" aria-haspopup="true"  m-menu-link-redirect="1">
-											<span class="m-menu__link">
-												<span class="m-menu__link-text">
-													Licenses
-												</span>
-											</span>
-										</li>
-										<li class="m-menu__item " aria-haspopup="true"  m-menu-link-redirect="1">
-											<a  href="#" class="m-menu__link ">
-												<i class="m-menu__link-icon la la-commenting"></i>
-												<span class="m-menu__link-text">
-													Manage Licenses
-												</span>
-											</a>
-										</li>
-									</ul>
-								</div>
-							</li>
-							
-							<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  m-menu-submenu-toggle="click" m-menu-link-redirect="1">
-								<a  href="javascript:;" class="m-menu__link m-menu__toggle">
-									<i class="m-menu__link-icon flaticon-gift"></i>
-									<span class="m-menu__link-text">
-										Coupons
-									</span>
-									<i class="m-menu__ver-arrow la la-angle-right"></i>
-								</a>
-								<div class="m-menu__submenu ">
-									<span class="m-menu__arrow"></span>
-									<ul class="m-menu__subnav">
-										<li class="m-menu__item  m-menu__item--parent" aria-haspopup="true"  m-menu-link-redirect="1">
-											<span class="m-menu__link">
-												<span class="m-menu__link-text">
-													Coupons
-												</span>
-											</span>
-										</li>
-										<li class="m-menu__item " aria-haspopup="true"  m-menu-link-redirect="1">
-											<a  href="../user_super_admin/coupon_admin.php" class="m-menu__link ">
-												<i class="m-menu__link-icon la la-commenting"></i>
-												<span class="m-menu__link-text">
-													Add New Coupon
-												</span>
-											</a>
-										</li>
-										<li class="m-menu__item " aria-haspopup="true"  m-menu-link-redirect="1">
-											<a  href="#" class="m-menu__link ">
-												<i class="m-menu__link-icon la la-commenting"></i>
-												<span class="m-menu__link-text">
-													Modify Existing
-												</span>
-											</a>
-										</li>
-									</ul>
-								</div>
-							</li>
+							</li>	
 	
 						</ul>
 					</div>
