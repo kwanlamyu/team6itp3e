@@ -42,7 +42,7 @@ for ($aa = 0; $aa < $numberOfSheets; $aa++) {
     }
 }
 
-$uniqueCategoryArray = array("Trade and other payables", "Income Taxes", "Trade and other receivables", "Profit Before Income Tax", "Share Capital", "Employee Compensation", "Borrowings");
+$uniqueCategoryArray = array("Other Income", "Profit Before Income Tax", "Finance Expense", "Employee Compensation", "Income Taxes", "Trade and other payables", "Borrowings", "Trade and other receivables");
 $tempUniqueCategoryArray = array_unique($categoryArray);
 foreach ($tempUniqueCategoryArray as $insert) {
     array_push($uniqueCategoryArray, $insert);
