@@ -35,14 +35,14 @@
 										</a>
 									</li>
 								</ul>
-								
+
 							</div>
 							</div>
 						</div>
 						<div class="m-content">
 							<div class="row">
 							<div class="col-lg-12">
-							
+
 							<!--begin::Error Msg-->
         <?php
         $target_dir = "../../pages/report_fs/uploads/";
@@ -89,7 +89,7 @@
         // if everything is ok, try to upload file
         } else {
             if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                echo 
+                echo
 				'<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-success alert-dismissible fade show" role="alert">
 											<div class="m-alert__icon">
 												<i class="flaticon-exclamation-1"></i>
@@ -359,7 +359,7 @@
 												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
 											</div>
 										</div>');
-										
+
 										//end::Error Msg
         $taxPayableString = "";
         while (!feof($taxPayableCategories)) {
@@ -528,9 +528,9 @@
 											</div>
 										</div>
 									</div>';
-		
-		
-		
+
+
+
         for ($i = 0; $i < count($trialBalanceArray); $i++){
           echo "<hr/>";
           echo $endedAtArray[$i] . "<br/>";
@@ -633,12 +633,12 @@
           $yearEnded = substr($endedAtArray[0], -4);
           $numberOfDaysInMonth = cal_days_in_month(CAL_GREGORIAN, $monthInNumber, $yearEnded);
           $date = date_create("$yearEnded-$monthInNumber-$numberOfDaysInMonth");
-          
+
           $previousyearEnded = substr($endedAtArray[0], -4);
           $previousnumberOfDaysInMonth = cal_days_in_month(CAL_GREGORIAN, $monthInNumber, $previousyearEnded);
           $previousyearEnded = $previousyearEnded - 1;
-          $previousdate = date_create("$previousyearEnded-$monthInNumber-$previousnumberOfDaysInMonth"); 
-                   
+          $previousdate = date_create("$previousyearEnded-$monthInNumber-$previousnumberOfDaysInMonth");
+
           $today = date("Y-m-d");
           $separatedDate = explode("-", $today);
           $todayObject = date_create("$separatedDate[0]-$separatedDate[1]-$separatedDate[2]");
@@ -646,7 +646,7 @@
           ?>
           <hr/>
           <div class="form-group">
-              <label for="yearEnd">Year Ended In: </label>
+              <label for="yearEnd">Financial Year Ended: </label>
               <input type="date" class="form-control" id="yearEnd" name="yearEnd" value="<?php echo date_format($date,"Y-m-d");?>"/>
           </div>
 
