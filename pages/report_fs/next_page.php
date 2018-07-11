@@ -27,9 +27,6 @@ $thirdBalanceDate = $_POST["thirdBalanceDate"];
 $companyPA = $_POST["companyPA"];
 $companyAddress = $_POST["companyAddress"];
 $frsDate = $_POST['frsDate'];
-$firstDate = $_POST['firstDate'];
-$secondDate = $_POST['secondDate'];
-$thirdDate = $_POST['thirdDate'];
 $currency = $_POST['currency'];
 
 $accountArray = array();
@@ -93,9 +90,6 @@ foreach ($tempUniqueCategoryArray as $insert) {
     var companyPA = "<?php echo $companyPA; ?>";
     var companyAddress = "<?php echo $companyAddress; ?>";
     var frsDate = "<?php echo $frsDate; ?>";
-    var firstDate = "<?php echo $firstDate; ?>";
-    var secondDate = "<?php echo $secondDate; ?>";
-    var thirdDate = "<?php echo $thirdDate; ?>";
     var currency = "<?php echo $currency; ?>";
 
     var counter = 0;
@@ -157,9 +151,6 @@ foreach ($tempUniqueCategoryArray as $insert) {
                     <input type='hidden' name='companyPA' value='" + companyPA + "'/>\n\
                     <input type='hidden' name='companyAddress' value='" + companyAddress + "'/>\n\
                     <input type='hidden' name='frsDate' value='" + frsDate + "'/>\n\
-                    <input type='hidden' name='firstDate' value='" + firstDate + "'/>\n\
-                    <input type='hidden' name='secondDate' value='" + secondDate + "'/>\n\
-                    <input type='hidden' name='thirdDate' value='" + thirdDate + "'/>\n\
                     <input type='hidden' name='currency' value='" + currency + "'/>";
 
     for (var r = 0; r < data.length; r++) {

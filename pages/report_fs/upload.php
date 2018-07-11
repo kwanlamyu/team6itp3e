@@ -633,6 +633,15 @@
           $yearEnded = substr($endedAtArray[0], -4);
           $numberOfDaysInMonth = cal_days_in_month(CAL_GREGORIAN, $monthInNumber, $yearEnded);
           $date = date_create("$yearEnded-$monthInNumber-$numberOfDaysInMonth");
+          
+          $previousyearEnded = substr($endedAtArray[0], -4);
+          $previousnumberOfDaysInMonth = cal_days_in_month(CAL_GREGORIAN, $monthInNumber, $previousyearEnded);
+          $previousyearEnded = $previousyearEnded - 1;
+          $previousdate = date_create("$previousyearEnded-$monthInNumber-$previousnumberOfDaysInMonth"); 
+                   
+          $today = date("Y-m-d");
+          $separatedDate = explode("-", $today);
+          $todayObject = date_create("$separatedDate[0]-$separatedDate[1]-$separatedDate[2]");
 
           ?>
           <hr/>
@@ -672,13 +681,13 @@
           </div>
 
           <div class="form-group">
-              <label for="secondBalanceDate">Second Balance Date: </label>
-              <input type="date" class="form-control" id="secondBalanceDate" name="secondBalanceDate"/>
+              <label for="secondBalanceDate">Previous financial year ended date: </label>
+              <input type="date" class="form-control" id="secondBalanceDate" name="secondBalanceDate" value="<?php echo date_format($previousdate,"Y-m-d");?>"/>
           </div>
 
           <div class="form-group">
-              <label for="thirdBalanceDate">Third Balance Date: </label>
-              <input type="date" class="form-control" id="thirdBalanceDate" name="thirdBalanceDate"/>
+              <label for="thirdBalanceDate">Financial year ended date: </label>
+              <input type="date" class="form-control" id="thirdBalanceDate" name="thirdBalanceDate" value="<?php echo date_format($date,"Y-m-d");?>"/>
           </div>
 
           <div class="form-group">
@@ -694,21 +703,6 @@
           <div class="form-group">
               <label for="frsDate">Date Company Adopted FRS: </label>
               <input type="date" class="form-control" id="frsDate" name="frsDate"/>
-          </div>
-
-          <div class="form-group">
-              <label for="firstDate">First Date: </label>
-              <input type="date" class="form-control" id="firstDate" name="firstDate"/>
-          </div>
-
-          <div class="form-group">
-              <label for="secondDate">Second Date:: </label>
-              <input type="date" class="form-control" id="secondDate" name="secondDate"/>
-          </div>
-
-          <div class="form-group">
-              <label for="thirdDate">Third Date:: </label>
-              <input type="date" class="form-control" id="thirdDate" name="thirdDate"/>
           </div>
 
           <div class="form-group">
