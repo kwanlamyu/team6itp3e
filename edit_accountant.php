@@ -90,7 +90,7 @@ include'db.php';
                 </div>
                 <div class="modal-body">
                     <form id="editAccountant" name="editAccountant" action="edit_validation.php" method="POST">
-                        <div class="form-group">
+                        <div class="form-group" style="display: none;">
                             <label for="accountantid">Username</label>
                             <input type="text" class="form-control" id="accountantid" name="accountantid">                            
                         </div>

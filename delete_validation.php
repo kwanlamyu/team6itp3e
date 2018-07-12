@@ -29,7 +29,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "DELETE FROM user WHERE username='$uname' AND role_id=3";
         $statement = $DB_con->prepare($sql);
         $statement->execute();
-        echo "Record deleted successfully";
         
         echo'
             <body>

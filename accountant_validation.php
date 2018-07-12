@@ -79,10 +79,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($sql->execute()) {
                 echo "after sql execute";
                 echo'
-                    <h2>Success</h2><hr>
-                    <p>Accountant account successfully created</p><br>
-                    <p><a href="create_accountant.php">Add another account</a></p><br>
-                    <p><a href="client_dashboard.php">Return to dashboard</a></p>                                
+                    <body>
+                        <div class="row">
+                            <div class"card">
+                                <div class="card-body">
+                                    <h2>Success</h2><hr>
+                                    <p>Accountant account successfully updated</p><br>
+                                    <p><a href="create_accountant.php">Add another account</a></p><br>
+                                    <p><a href="client_dashboard.php">Return to dashboard</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    <body>                                
                 ';
                 
                 

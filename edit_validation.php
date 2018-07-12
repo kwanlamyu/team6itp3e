@@ -112,8 +112,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
            
             if ($statement->execute()) {
-//                echo "after sql execute <br>";
-                echo "after sql execute";
                 echo'
                     <body>
                         <div class="row">

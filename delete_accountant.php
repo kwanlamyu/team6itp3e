@@ -93,9 +93,20 @@ include'db.php';
                 <div class="modal-body">
                     <p> Are you sure you want to delete this user</p>
                     <form id="editAccountant" name="deleteAccountant" action="delete_validation.php" method="POST">
-                        <div class="form-group" style="display: none;">
+                        
+                        <div class="form-group">
                             <label for="accountantid">Username</label>
+                            <input type="text" class="form-control" id="viewid" name="viewid" disabled>                               
+                        </div>
+                        
+                        <div class="form-group" style="display: none;">
+                            <label for="accountantid">Username</label>     
                             <input type="text" class="form-control" id="accountantid" name="accountantid">                            
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="viewemail" name="viewemail" disabled>                               
                         </div>
 
                         <div class="form-group" style="display: none;">
@@ -131,8 +142,10 @@ include'db.php';
     function updateUsername(x){
         var username = document.getElementById("accountant_username" + x).innerHTML;
         document.getElementById('accountantid').value = username;
+        document.getElementById('viewid').value = username;
         var email = document.getElementById("accountant_email" + x).innerHTML;
         document.getElementById('accountantemail').value = email;
+        document.getElementById('viewemail').value = email;
         var pass = document.getElementById("accountant_password" + x).innerHTML;
         document.getElementById('accountantpassword').value = pass;
         
