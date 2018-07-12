@@ -18,14 +18,17 @@ foreach ($data as $userData) {
         if($userData['role_id']=='1'){
             echo'Welcome Super Admin';
             //redirect to Super Admin Dash
+            header('Location: ../user_super_admin/userdashboard.php');
         }
         elseif($userData['role_id']=='2'){
             echo'Welcome Client Admin';
             //redirect to Client Admin Dash
+            header('Location: ../user_login/index.php');
         }
         elseif($userData['role_id']=='3'){
             echo'Welcome Standard User';
             //redirect to Accountant Dash
+            header('Location: ../user_login/index.php');
         }
         else{
             echo'User type not found';
