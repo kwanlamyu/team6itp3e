@@ -1,3 +1,5 @@
+<?php include '../general/header.php';?>
+<?php include '../general/navigation_accountant.php';?>
 <?php
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -49,7 +51,7 @@ foreach ($tempUniqueCategoryArray as $insert) {
 }
 ?>
 
-<!--
+
 <html>
     <body>
 
@@ -58,8 +60,6 @@ foreach ($tempUniqueCategoryArray as $insert) {
 
     </body>
 </html>
--->
-
 <script type="text/javascript">
     var accountArray = <?php echo json_encode($accountArray); ?>;
     var accountArrayCount = <?php echo count($accountArray); ?>;
@@ -292,3 +292,5 @@ foreach ($tempUniqueCategoryArray as $insert) {
 //------------------------------------------------------------------------------------------
 
 </script>
+<?php include '../general/footer_content.php';?>
+	<?php include '../general/footer.php';?>
