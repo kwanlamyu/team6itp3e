@@ -55,9 +55,9 @@
 								
 							
 								<div class="form-group m-form__group">
-									<input class="form-control m-input" id="reguserid" type="text" placeholder="Fullname" name="fullname" <?php
-										if (!empty($_POST['reguserid'])) {
-											echo "value=\"" . $_POST["reguserid"] . "\"";
+									<input class="form-control m-input" id="fullname" type="text" placeholder="Fullname" name="fullname" <?php
+										if (!empty($_POST['fullname'])) {
+											echo "value=\"" . $_POST["fullname"] . "\"";
 										}
 									?>>
 									<span class="error"><?php echo $unameErr; ?></span>
