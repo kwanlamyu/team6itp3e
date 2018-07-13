@@ -23,7 +23,7 @@ foreach ($data as $userData) {
         elseif($userData['role_id']=='2'){
             echo'Welcome Client Admin';
             //redirect to Client Admin Dash
-            header('Location: ../user_login/index.php');
+            header('Location: ../user_client_admin/client_admin_dashboard.php');
         }
         elseif($userData['role_id']=='3'){
             echo'Welcome Standard User';

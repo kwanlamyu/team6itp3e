@@ -1,5 +1,5 @@
 <?php include '../general/header.php';?>
-<?php include '../general/navigation_superadmin.php';?>
+<?php include '../general/navigation_clientadmin.php';?>
 
 <div class="m-grid__item m-grid__item--fluid m-wrapper">
 	<!-- BEGIN: Subheader -->
