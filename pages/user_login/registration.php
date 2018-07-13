@@ -9,7 +9,7 @@
     </h1>
 </div>
 
-<form id="registerStudent" name="registration" action="registration.php" method="POST">
+<form id="register" name="registration" action="registration.php" method="POST">
     <?php include('reg_validation.php'); ?>
     
     <div class="form-group">

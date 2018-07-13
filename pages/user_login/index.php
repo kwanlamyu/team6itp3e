@@ -13,7 +13,7 @@
 						</div>
 						
 						<div class="m-login__signin">
-							<form class="m-login__form m-form" action="login_validation.php">
+							<form class="m-login__form m-form" action="login_validation.php" method="POST">
 								<div class="form-group m-form__group">
 									<input class="form-control m-input"   type="text" placeholder="Username" name="username" id="userid" autocomplete="off">
 								</div>
@@ -51,13 +51,13 @@
 								</div>
 							</div>
 							<?php include('../user_login/register_validation.php'); ?>
-							<form id="registerStudent" name="registration" class="m-login__form m-form" action="registration.php" method="POST">
+                                                    <form id="register" name="registration" class="m-login__form m-form" action="register_validation.php" method="POST">
 								
 							
 								<div class="form-group m-form__group">
-									<input class="form-control m-input" id="reguserid" type="text" placeholder="Fullname" name="fullname" <?php
-										if (!empty($_POST['reguserid'])) {
-											echo "value=\"" . $_POST["reguserid"] . "\"";
+									<input class="form-control m-input" id="fullname" type="text" placeholder="Fullname" name="fullname" <?php
+										if (!empty($_POST['fullname'])) {
+											echo "value=\"" . $_POST["fullname"] . "\"";
 										}
 									?>>
 									<span class="error"><?php echo $unameErr; ?></span>

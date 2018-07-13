@@ -153,13 +153,13 @@ function test_input($data) {
     return $data;
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['registerButton'])) {
+    if (isset($_POST['m_login_signup_submit'])) {
 //        echo "post reg button <br>";
-        if (empty($_POST["reguserid"])) {
+        if (empty($_POST["fullname"])) {
             $unameErr = '* User name is required';
             
         } else {
-            $uname = ($_POST["reguserid"]);
+            $uname = ($_POST["fullname"]);
 //            echo "else statement <br>";
             $query = "SELECT COUNT(*) FROM user WHERE username = '".$uname."'";
 //            echo "pre-query execution <br>";
