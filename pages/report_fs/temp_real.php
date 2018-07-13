@@ -5,8 +5,8 @@
 //ob_start();
 //include 'header.php';
 // PHPWord depedency
-//require_once __DIR__ . '\..\..\vendor\autoload.php';
-require_once 'C:\xampp\htdocs\phpWordsItp\vendor\autoload.php';
+require_once __DIR__ . '\..\..\vendor\autoload.php';
+//require_once 'C:\xampp\htdocs\phpWordsItp\vendor\autoload.php';
 $phpWord = new \PhpOffice\PhpWord\PhpWord();
 //Default font style
 $phpWord->setDefaultFontName('Arial');
@@ -3075,6 +3075,11 @@ $section->addText("These notes form an integral part of and should be read in co
 $section->addTextBreak(1);
 
 $section = $phpWord->addSection();
+$section->addText(strtoupper($companyName), $fontStyleBlack);
+
+$section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
+$section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+
 $section->addListItem(htmlspecialchars('GENERAL INFORMATION'), 0, $fontstyleName, $nestedListStyle);
 
 $section->addText("The Company is incorporated and domiciled in Singapore."
@@ -3402,12 +3407,6 @@ $section->addListItem("Critical judgements in applying the Company’s accountin
 $section->addText("In the process of applying the Company’s accounting policies, the directors are of the opinion that there is no application of critical judgement on the amounts recognised in the financial statements."
         , $fontstyleName, $paragraphStyle);
 
-$section = $phpWord->addSection();
-$section->addText(strtoupper($companyName), $fontStyleBlack);
-
-$section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-$section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
-
 //==============================================================================
 // PHOEBE START HERE
 //==============================================================================
@@ -3474,8 +3473,6 @@ foreach ($fullArray as $key1 => $value1) { // [ Bank Balances] => Array of value
                                 // Display the category heading
                                 $table1->addRow();
                                 $table1->addCell($firstCellValueNotes)->addText(ucwords($key2));
-
-                                print_r($value2);
 
                                 foreach ($value2 as $key3 => $value3) { // [December 2015] => 54684.19
                                     // if don't need dash, just print everything out
@@ -3779,8 +3776,6 @@ if (!empty($incomeTaxArray)) {
 
     $table1->addRow();
     $table1->addCell($firstCellValue)->addText("Effects of:");
-
-    print_r($incomeTaxArray);
 
     foreach ($incomeTaxArray as $key => $value) {
         if ($key != "Current income tax expenses") {
@@ -4902,19 +4897,6 @@ if (in_array("Plant and Equipment", $categoryArray)) {
         }
     }
 }
-
-
-$section = $phpWord->addSection();
-$section->addText(strtoupper($companyName), $fontStyleBlack);
-
-$section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-$section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
-
-$section->addListItem("TRADE AND OTHER PAYABLES ", 0, $fontstyleName, $nestedListStyle);
-
-$section->addListItem("BORROWINGS ", 0, $fontstyleName, $nestedListStyle);
-
-$section->addListItem("SHARE CAPITAL ", 0, $fontstyleName, $nestedListStyle);
 
 $section = $phpWord->addSection();
 $section->addText(strtoupper($companyName), $fontStyleBlack);
