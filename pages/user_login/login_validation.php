@@ -28,7 +28,7 @@ foreach ($data as $userData) {
         elseif($userData['role_id']=='3'){
             echo'Welcome Standard User';
             //redirect to Accountant Dash
-            header('Location: ../user_login/index.php');
+            header('Location: ../user_client_admin/client_admin_dashboard.php');
         }
         else{
             echo'User type not found';
