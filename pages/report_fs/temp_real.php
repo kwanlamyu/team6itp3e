@@ -347,10 +347,10 @@ foreach ($fullArray as $key => $value) {
             // "income tax paid" exist in income tax array
             if (stripos(array_keys($incomeTaxArray)[$i], 'income') !== false) {
                 if (stripos(array_keys($incomeTaxArray)[$i], 'tax') !== false) {
-                if (stripos(array_keys($incomeTaxArray)[$i], 'tax') !== false) {
-                $string = "exist";
-            }
-            }
+                    if (stripos(array_keys($incomeTaxArray)[$i], 'tax') !== false) {
+                        $string = "exist";
+                    }
+                }
             }
         }
 
@@ -363,8 +363,6 @@ foreach ($fullArray as $key => $value) {
     if ($key === "Trade and other payables") {
         $tradePayableArray = $value;
     }
-
-
 
     if ($key === "Borrowings") {
         $borrowingArray = $value;
@@ -430,8 +428,6 @@ foreach ($fullArray as $key => $value) {
         $shareCapitalArray = $value;
     }
 }
-
-print_r($borrowingArray);
 
 // For storing all of the heading
 $displayedCategory = array();
@@ -975,7 +971,6 @@ for ($i = 0; $i < $numberOfSheets; $i++) {
         }
     }
 
-
     $dateStart = date_create("$currentYear-$startMonth-1");
     $dateEnd = date_create("$currentYear-$numberedMonth-$numberOfDaysInMonth");
     $dateArray = array();
@@ -1007,421 +1002,168 @@ $yearEndString = $yearEndArray[2] . " " . $monthIdentifier[$yearEndMonth - 1] . 
 //==============================================================================
 // YOKYEE START HERE
 //==============================================================================
-// Creating the new document
-// Temporary shifted to top
-// $phpWord = new \PhpOffice\PhpWord\PhpWord();
-?>
 
-<?php
-// //Default font style
-// $phpWord->setDefaultFontName('Arial');
-// $phpWord->setDefaultFontSize(11);
-//
-// //Create font style
-// $fontStyleBigBlack = 'ArialBlack14';
-// $fontStyleBlack = 'ArialBlack11';
-// $fontstyleName = 'Arial11';
-// $fontstyleUnderline = 'Arial11Underline';
-// $phpWord->addFontStyle($fontStyleBigBlack, array('name' => 'Arial', 'size' => 14, 'bold' => true)
-// );
-// $phpWord->addFontStyle($fontStyleBlack, array('name' => 'Arial', 'size' => 11, 'bold' => true)
-// );
-// $phpWord->addFontStyle($fontstyleName, array('name' => 'Arial', 'size' => 11, 'bold' => false)
-// );
-//
-// //Create listing style
-// $listingStyle = 'multilevel';
-// $phpWord->addNumberingStyle(
-//         $listingStyle, array(
-//     'type' => 'multilevel',
-//     'levels' => array(
-//         array('format' => 'decimal', 'text' => '%1.', 'left' => 360, 'hanging' => 360, 'tabPos' => 360),
-//         array('format' => 'lowerRoman', 'text' => '(%2)', 'left' => 1000, 'hanging' => 360, 'tabPos' => 720),
-//         array('format' => 'lowerLetter', 'text' => '%3)', 'left' => 360, 'hanging' => 360, 'tabPos' => 720),
-//         array('format' => 'lowerLetter', 'text' => '(%4)', 'left' => 360, 'hanging' => 360, 'tabPos' => 720),
-//         array('format' => 'lowerLetter', 'text' => '(%5)', 'left' => 360, 'hanging' => 360, 'tabPos' => 720),
-//         array('format' => 'lowerLetter', 'text' => '(%6)', 'left' => 360, 'hanging' => 360, 'tabPos' => 720),
-//     )
-//         )
-// );
-//
-// $nestedListStyle = 'nestedlevel';
-// $phpWord->addNumberingStyle(
-//         $nestedListStyle, array(
-//     'type' => 'multilevel',
-//     'levels' => array(
-//         array('format' => 'decimal', 'text' => '%1.', 'left' => 360, 'hanging' => 360, 'tabPos' => 360),
-//         array('format' => 'decimal', 'text' => '%1.%2', 'left' => 360, 'hanging' => 360, 'tabPos' => 360),
-//         array('format' => 'decimal', 'text' => '%1.%2', 'left' => 360, 'hanging' => 360, 'tabPos' => 360, 'start' => 2)
-//     )
-//         )
-// );
-//
-// $romanListingStyle = 'romanlevel';
-// $phpWord->addNumberingStyle(
-//         $romanListingStyle, array(
-//     'type' => 'multilevel',
-//     'levels' => array(
-//         array('format' => 'lowerRoman', 'text' => '(%1)', 'left' => 1000, 'hanging' => 360, 'tabPos' => 720),
-//         array('format' => 'lowerRoman', 'text' => '(%2)', 'left' => 1000, 'hanging' => 360, 'tabPos' => 720),
-//         array('format' => 'lowerRoman', 'text' => '(%3)', 'left' => 1000, 'hanging' => 360, 'tabPos' => 720),
-//         array('format' => 'lowerRoman', 'text' => '(%4)', 'left' => 1000, 'hanging' => 360, 'tabPos' => 720),
-//         array('format' => 'lowerRoman', 'text' => '(%5)', 'left' => 1000, 'hanging' => 360, 'tabPos' => 720),
-//         array('format' => 'lowerRoman', 'text' => '(%6)', 'left' => 1000, 'hanging' => 360, 'tabPos' => 720),
-//         array('format' => 'lowerRoman', 'text' => '(%7)', 'left' => 1000, 'hanging' => 360, 'tabPos' => 720),
-//     )
-//         )
-// );
-//
-// //Create Paragraph style
-// $paragraphStyle = 'justifiedParagraph';
-// $phpWord->addParagraphStyle($paragraphStyle, array('align' => 'both', 'spaceAfter' => 100));
-?>
-
-<body>
-    <?php
-//    $section = $phpWord->addSection();
-//
-//    $section->addListItem("2.2", 2, $fontstyleName, $nestedListStyle);
-//    $section->addListItem("2.2", 2, $fontstyleName, $nestedListStyle);
-//    $section->addListItem("2.2", 2, $fontstyleName, $nestedListStyle);
-    ?>
-    <h1>Cover Page</h1><!-- Temporary-->
-    <div name="coverPage">
-        <b><?php echo strtoupper($companyName); ?></b>
-        <br/>
-        <p><b><?php echo "(Company registration number: " . $companyregID . ")"; ?></p></b>
-    <b><p>UNAUDITED FINANCIAL STATEMENTS</p></b>
-    <b><?php echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))); ?></b>
-
-    <?php
-    $section = $phpWord->addSection();
+$section = $phpWord->addSection();
 //$section->addTextBreak([8], [$fontstyleName], [null]);
-    $section->addText('<w:br/><w:br/><w:br/><w:br/><w:br/><w:br/><w:br/><w:br/><w:br/>', $fontstyleName);
-    $section->addText(strtoupper($companyName) .
-            "<w:br/>(Company registration number: " . $companyregID . ")", $fontStyleBigBlack);
-    $section->addText("UNAUDITED FINANCIAL STATEMENTS", $fontStyleBigBlack);
-    $section->addText("FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBigBlack);
-    ?>
+$section->addText('<w:br/><w:br/><w:br/><w:br/><w:br/><w:br/><w:br/><w:br/><w:br/>', $fontstyleName);
+$section->addText(strtoupper($companyName) .
+        "<w:br/>(Company registration number: " . $companyregID . ")", $fontStyleBigBlack);
+$section->addText("UNAUDITED FINANCIAL STATEMENTS", $fontStyleBigBlack);
+$section->addText("FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBigBlack);
 
-</div>
 
-<br>
-<hr> <!-- Temporary-->
-<h1> Page 1</h1><!-- Temporary-->
-<div name="firstPage">
-    <b><?php echo strtoupper($companyName); ?></b>
-    <br/>
-    <?php
+$section = $phpWord->addSection();
+$section->addText(strtoupper($companyName), $fontStyleBlack);
+
+if ($noOfDirectors > 1) {
+    $section->addText("DIRECTORS' STATEMENT<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
+    $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+} else {
+    $section->addText("DIRECTOR'S STATEMENT<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
+    $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+}
+
+if ($noOfDirectors > 1) {
+    $section->addText("The directors present this statement to the member together with the unaudited financial statements of " . strtoupper($companyName)
+            . " (“the Company”) for the financial year ended " . date('d F Y', strtotime($yearEnd)) . ".", $fontstyleName, $paragraphStyle);
+} else {
+    $section->addText("The director present this statement to the member together with the unaudited financial statements of " . strtoupper($companyName)
+            . " (“the Company”) for the financial year ended " . date('d F Y', strtotime($yearEnd)) . ".", $fontstyleName, $paragraphStyle);
+}
+
+if ($noOfDirectors > 1) {
+
+    $section->addListItem("OPINION OF THE DIRECTORS", 0, $fontstyleName, $listingStyle);
+} else {
+
+    $section->addListItem("OPINION OF THE DIRECTOR", 0, $fontstyleName, $listingStyle);
+}
+
+$section->addListItem("the accompanying financial statements of the Company are drawn up so as to give a true and fair view of the financial position of the Company as at "
+        . date('d F Y', strtotime($yearEnd)) . " and the financial performance, changes in equity and cash flows of the Company for the financial year covered by the financial statements; and"
+        , 0, $fontstyleName, $romanListingStyle);
+
+$section->addListItem("at the date of this statement there are reasonable grounds to believe that the Company will be able to pay its debts as and when they fall due."
+        , 0, $fontstyleName, $romanListingStyle);
+
+if ($noOfDirectors > 1) {
+    $section->addListItem("DIRECTORS", 0, $fontstyleName, $listingStyle);
+} else {
+    $section->addListItem("DIRECTOR", 0, $fontstyleName, $listingStyle);
+}
+
+if ($noOfDirectors > 1) {
+
+    $section->addText("The directors of the Company in office at the date of this statement are as follows:", $fontstyleName, $paragraphStyle);
+} else {
+
+    $section->addText("The director of the Company in office at the date of this statement are as follows:", $fontstyleName, $paragraphStyle);
+}
+
+if ($directorName1ApptDate != null) {
+    $section->addText($directorName1 . "   appointed on " . date('d F Y', strtotime($directorName1ApptDate)), $fontstyleName, $paragraphStyle);
+} else {
+    $section->addText($directName1);
+}
+
+if ($noOfDirectors > 1) {
+    $section->addListItem("ARRANGEMENTS TO ENABLE DIRECTORS TO ACQUIRE SHARES AND DEBENTURES", 0, $fontstyleName, $listingStyle, $paragraphStyle);
+} else {
+    $section->addListItem("ARRANGEMENTS TO ENABLE DIRECTOR TO ACQUIRE SHARES AND DEBENTURES", 0, $fontstyleName, $listingStyle, $paragraphStyle);
+}
+
+if ($noOfDirectors > 1) {
+    $section->addText("Neither at the end of nor at any time during the financial year was the Company a party to any arrangement whose object was to enable the directors of the Company to acquire benefits by means of the acquisition of shares in, or debentures of, the Company or any other body corporate."
+            , $fontstyleName);
+} else {
+    $section->addText("Neither at the end of nor at any time during the financial year was the Company a party to any arrangement whose object was to enable the director of the Company to acquire benefits by means of the acquisition of shares in, or debentures of, the Company or any other body corporate."
+            , $fontstyleName);
+}
+
+if ($noOfDirectors > 1) {
+    $section->addListItem("DIRECTORS' INTERESTS IN SHARES OR DEBENTURES", 0, $fontstyleName, $listingStyle, $paragraphStyle);
+} else {
+    $section->addListItem("DIRECTOR'S INTERESTS IN SHARES OR DEBENTURES", 0, $fontstyleName, $listingStyle, $paragraphStyle);
+}
+
+if ($noOfDirectors > 1) {
+    $section->addText("According to the register of directors’ shareholdings, none of the directors holding office at the end of the financial year had any interest in the shares or debentures of the Company or its related corporations, except as follows: "
+            , $fontstyleName);
+} else {
+    $section->addText("According to the register of director’s shareholdings, none of the director holding office at the end of the financial year had any interest in the shares or debentures of the Company or its related corporations, except as follows: "
+            , $fontstyleName);
+}
+
+if ($noOfDirectors > 1) {
+    echo "directors'";
+} else {
+    echo "director's";
+}
+
+$section->addText('<w:br/>', $fontstyleName);
+
+$textrun = $section->addTextRun();
+$textrun->addText(htmlspecialchars("The Company"), array('underline' => 'single'));
+$section->addText('<w:br/>' . $directorName1, $fontstyleName);
+
     $section = $phpWord->addSection();
     $section->addText(strtoupper($companyName), $fontStyleBlack);
-    ?>
-    <b><?php
+
         if ($noOfDirectors > 1) {
-            echo "DIRECTORS'STATEMENTS";
-            echo "<br>";
-            echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd)));
             $section->addText("DIRECTORS' STATEMENT<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
             $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
         } else {
-            echo "DIRECTOR'S STATEMENTS";
-            echo "<br>";
-            echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd)));
             $section->addText("DIRECTOR'S STATEMENT<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
             $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
         }
-        ?></b>
-    <hr>
-    <br>
-    <br>
-    <textarea>The <?php
-        if ($noOfDirectors > 1) {
-            echo "directors";
-            $section->addText("The directors present this statement to the member together with the unaudited financial statements of " . strtoupper($companyName)
-                    . " (“the Company”) for the financial year ended " . date('d F Y', strtotime($yearEnd)) . ".", $fontstyleName, $paragraphStyle);
-        } else {
-            echo "director";
-            $section->addText("The director present this statement to the member together with the unaudited financial statements of " . strtoupper($companyName)
-                    . " (“the Company”) for the financial year ended " . date('d F Y', strtotime($yearEnd)) . ".", $fontstyleName, $paragraphStyle);
-        }
-        ?> present this statement to the member together with the unaudited financial statements of
-        <?php echo strtoupper($companyName) ?> (“the Company”) for the financial year ended <?php echo date('d F Y', strtotime($yearEnd)) . "."; ?></textarea>
-    <br>
-    <ol>
 
-        <li>OPINION OF THE <?php
             if ($noOfDirectors > 1) {
-                echo "DIRECTORS";
-                $section->addListItem("OPINION OF THE DIRECTORS", 0, $fontstyleName, $listingStyle);
-            } else {
-                echo "DIRECTOR";
-                $section->addListItem("OPINION OF THE DIRECTOR", 0, $fontstyleName, $listingStyle);
-            }
-            ?></li>
-        <ol type="i">
-            <br>
-            <li>the accompanying financial statements of the Company are drawn up so as to give a true and fair view of the
-                financial position of the Company as at <?php echo date('d F Y', strtotime($yearEnd)); ?> and the financial performance, changes in equity and
-                cash flows of the Company for the financial year covered by the financial statements; and
-
-                <?php
-                $section->addListItem("the accompanying financial statements of the Company are drawn up so as to give a true and fair view of the financial position of the Company as at "
-                        . date('d F Y', strtotime($yearEnd)) . " and the financial performance, changes in equity and cash flows of the Company for the financial year covered by the financial statements; and"
-                        , 0, $fontstyleName, $romanListingStyle);
-                ?>
-
-            </li>
-            <br>
-            <li>at the date of this statement there are reasonable grounds to believe that the Company will be able to pay its debts as and when they fall due.
-
-                <?php
-                $section->addListItem("at the date of this statement there are reasonable grounds to believe that the Company will be able to pay its debts as and when they fall due."
-                        , 0, $fontstyleName, $romanListingStyle);
-                ?>
-
-            </li>
-            <br>
-        </ol>
-        <li><?php
-            if ($noOfDirectors > 1) {
-                echo "DIRECTORS";
-                $section->addListItem("DIRECTORS", 0, $fontstyleName, $listingStyle);
-            } else {
-                echo "DIRECTOR";
-                $section->addListItem("DIRECTOR", 0, $fontstyleName, $listingStyle);
-            }
-            ?></li>
-        <br>
-        <p>
-            The <?php
-            if ($noOfDirectors > 1) {
-                echo "directors";
-                $section->addText("The directors of the Company in office at the date of this statement are as follows:", $fontstyleName, $paragraphStyle);
-            } else {
-                echo "director";
-                $section->addText("The director of the Company in office at the date of this statement are as follows:", $fontstyleName, $paragraphStyle);
-            }
-            ?> of the Company in office at the date of this statement are as follows:
-        </p>
-        <br>
-        <br>
-        <p>
-            <?php
-            if ($directorName1ApptDate != null) {
-                echo $directorName1 . " appointed on " . date('d F Y', strtotime($directorName1ApptDate));
-                $section->addText($directorName1 . "   appointed on " . date('d F Y', strtotime($directorName1ApptDate)), $fontstyleName, $paragraphStyle);
-            } else {
-                echo $directorName1;
-                $section->addText($directName1);
-            }
-            ?>
-        </p>
-        <br>
-        <br>
-        <li>ARRANGEMENTS TO ENABLE <?php
-            if ($noOfDirectors > 1) {
-                echo "DIRECTORS";
-                $section->addListItem("ARRANGEMENTS TO ENABLE DIRECTORS TO ACQUIRE SHARES AND DEBENTURES", 0, $fontstyleName, $listingStyle, $paragraphStyle);
-            } else {
-                echo "DIRECTOR";
-                $section->addListItem("ARRANGEMENTS TO ENABLE DIRECTOR TO ACQUIRE SHARES AND DEBENTURES", 0, $fontstyleName, $listingStyle, $paragraphStyle);
-            }
-            ?>  TO ACQUIRE SHARES AND DEBENTURES</li>
-        <br>
-        <p>Neither at the end of nor at any time during the financial year was the Company a party to any arrangement whose object was to enable the <?php
-            if ($noOfDirectors > 1) {
-                echo "directors";
-                $section->addText("Neither at the end of nor at any time during the financial year was the Company a party to any arrangement whose object was to enable the directors of the Company to acquire benefits by means of the acquisition of shares in, or debentures of, the Company or any other body corporate."
-                        , $fontstyleName);
-            } else {
-                echo "director";
-                $section->addText("Neither at the end of nor at any time during the financial year was the Company a party to any arrangement whose object was to enable the director of the Company to acquire benefits by means of the acquisition of shares in, or debentures of, the Company or any other body corporate."
-                        , $fontstyleName);
-            }
-            ?> of the Company to acquire benefits by means of the acquisition of shares in, or debentures of, the Company or any other body corporate.
-        </p>
-        <li><?php
-            if ($noOfDirectors > 1) {
-                echo "DIRECTORS'";
-                $section->addListItem("DIRECTORS' INTERESTS IN SHARES OR DEBENTURES", 0, $fontstyleName, $listingStyle, $paragraphStyle);
-            } else {
-                echo "DIRECTOR'S";
-                $section->addListItem("DIRECTOR'S INTERESTS IN SHARES OR DEBENTURES", 0, $fontstyleName, $listingStyle, $paragraphStyle);
-            }
-            ?> INTERESTS IN SHARES OR DEBENTURES</li>
-        <br>
-        <p>According to the register of <?php
-            if ($noOfDirectors > 1) {
-                echo "directors'";
-                $section->addText("According to the register of directors’ shareholdings, none of the directors holding office at the end of the financial year had any interest in the shares or debentures of the Company or its related corporations, except as follows: "
-                        , $fontstyleName);
-            } else {
-                echo "director's";
-                $section->addText("According to the register of director’s shareholdings, none of the director holding office at the end of the financial year had any interest in the shares or debentures of the Company or its related corporations, except as follows: "
-                        , $fontstyleName);
-            }
-            ?> shareholdings, none of the
-            <?php
-            if ($noOfDirectors > 1) {
-                echo "directors'";
-            } else {
-                echo "director's";
-            }
-            ?> holding office at the end of the
-            financial year had any interest in the shares or debentures of the Company or its related corporations, <?php
-            if ($director1Share != " ") {
-                echo "except as follows:";
-            }
-            ?> </p>
-        <?php
-        $section->addText('<w:br/>', $fontstyleName);
-        ?>
-        <br>
-        <br>
-        <p><u>The Company</u>
-            <br>
-            <?php
-            echo $directorName1;
-            $textrun = $section->addTextRun();
-            $textrun->addText(htmlspecialchars("The Company"), array('underline' => 'single'));
-            $section->addText('<w:br/>' . $directorName1, $fontstyleName);
-            ?>
-        </p>
-    </ol>
-    <br>
-    <br>
-
-</div>
-<h1> Page 2</h1><!-- Temporary-->
-<div name="secondPage">
-    <b><?php echo strtoupper($companyName); ?></b>
-    <br/>
-    <?php
-    $section = $phpWord->addSection();
-    $section->addText(strtoupper($companyName), $fontStyleBlack);
-    ?>
-    <b><?php
-        if ($noOfDirectors > 1) {
-            echo "DIRECTORS'STATEMENTS";
-            echo "<br>";
-            echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
-            $section->addText("DIRECTORS' STATEMENT<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-            $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
-        } else {
-            echo "DIRECTOR'S STATEMENTS";
-            echo "<br>";
-            echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
-            $section->addText("DIRECTOR'S STATEMENT<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-            $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
-        }
-        ?></b>
-    <hr>
-    <br>
-    <br>
-    <ol start="5">
-        <li><?php
-            if ($noOfDirectors > 1) {
-                echo "DIRECTORS'";
                 $section->addListItem("DIRECTORS' CONTRACTUAL BENEFITS", 0, $fontstyleName, $listingStyle, $paragraphStyle);
             } else {
-                echo "DIRECTOR'S";
                 $section->addListItem("DIRECTORS' CONTRACTUAL BENEFITS", 0, $fontstyleName, $listingStyle, $paragraphStyle);
             }
-            ?> CONTRACTUAL BENEFITS</li>
-        <br>
-        <p>Since the end of the previous financial period, no director has received or become entitled to receive a benefit which is required to be disclosed
-            under the Singapore Companies Act, by reason of a contract made by the Company or a related corporation with the directors or with a firm of which
-            he is a member, or with a Company in which he has a substantial financial interest, except as disclosed in the financial statements.
-            <?php
+          
+        
+        
             $section->addText("Since the end of the previous financial period, no director has received or become entitled to receive a benefit which is required to be disclosed under the Singapore Companies Act, by reason of a contract made by the Company or a related corporation with the directors or with a firm of which he is a member, or with a Company in which he has a substantial financial interest, except as disclosed in the financial statements."
                     , $fontstyleName, $paragraphStyle);
             $section->addTextBreak(1);
-            ?>
-        </p>
-        <br>
-        <li>OPTIONS GRANTED
-            <?php
+
             $section->addListItem("OPTIONS GRANTED", 0, $fontstyleName, $listingStyle, $paragraphStyle);
-            ?>
-        </li>
-        <br>
-        <p>No options were granted during the financial year to subscribe for unissued shares of the Company.
-            <?php
+            
             $section->addText("No options were granted during the financial year to subscribe for unissued shares of the Company."
                     , $fontstyleName, $paragraphStyle);
             $section->addTextBreak(1);
-            ?>
-        </p>
-        <br>
-        <li>OPTIONS EXERCISED
-            <?php
+           
             $section->addListItem("OPTIONS EXERCISED", 0, $fontstyleName, $listingStyle, $paragraphStyle);
-            ?>
-        </li>
-        <br>
-        <p>No shares were issued during the financial year by virtue of the exercise of options to take up unissued shares of the Company.
-            <?php
+           
             $section->addText("No shares were issued during the financial year by virtue of the exercise of options to take up unissued shares of the Company."
                     , $fontstyleName, $paragraphStyle);
             $section->addTextBreak(1);
-            ?>
-        </p>
-        <br>
-        <li>OPTIONS OUTSTANDING
-            <?php
+
             $section->addListItem("OPTIONS OUTSTANDING", 0, $fontstyleName, $listingStyle, $paragraphStyle);
-            ?>
-        </li>
-        <br>
-        <p>There were no unissued shares of the Company under option at the end of the financial year.
-            <?php
+
             $section->addText("There were no unissued shares of the Company under option at the end of the financial year."
                     , $fontstyleName, $paragraphStyle);
             $section->addTextBreak(1);
-            ?>
-        </p>
-        <br>
-    </ol>
-    <p><?php
+   
         if ($noOfDirectors >= 2) {
-            echo "On behalf of the directors";
             $section->addText("On behalf of the directors"
                     , $fontstyleName, $paragraphStyle);
         }
-        ?></p>
-    <br>
-    <br>
-    <p>
-        <?php
-        echo $directorName1;
+       
         $section->addTextBreak(1);
-//$section->addLine(['weight' => 0.5, 'width' => 100, 'height' => 0]); //Need to add line here
-        $section->addText($directorName1 . "<w:br/>Director"
+ $section->addText($directorName1 . "<w:br/>Director"
                 , $fontstyleName, $paragraphStyle);
-        ?>
-        <br>
-        Director
-    </p>
-    <br>
-    <p>
-        <?php
-        echo "Singapore, " . (date('F d Y', strtotime($todayDate)));
+        
         $section->addText("Singapore, " . (date('F d Y', strtotime($todayDate)))
                 , $fontstyleName, $paragraphStyle);
-        ?>
-    </p>
-</div>
-<h1> Page 3</h1>
-<div name="thirdPage">
-    <b><?php echo strtoupper($companyName); ?></b>
-    <br/>
-    <?php
+        
 // =============================================================================
 // KOKHOE
 // =============================================================================
 // These point on is the 4 statements
 // P&L
-    echo "<hr/>";
     $section = $phpWord->addSection();
     $tempIncomeCategories = array();
     for ($i = 0; $i < count($incomeAmount); $i++) {
@@ -2240,7 +1982,7 @@ $yearEndString = $yearEndArray[2] . " " . $monthIdentifier[$yearEndMonth - 1] . 
             }
         }
     }
-    
+
 // $borderBottomAndLeftRight = array('borderBottomSize' => 1, 'borderBottomColor' => '#000000', 'borderLeftSize' => 1, 'borderBottomColor' => '#000000', 'borderRightSize' => 1, 'borderRightColor' => '#000000');
 
     for ($i = 0; $i < count($tempOtherLiabilities); $i++) {
@@ -3434,153 +3176,76 @@ $yearEndString = $yearEndArray[2] . " " . $monthIdentifier[$yearEndMonth - 1] . 
 
 // End of 4 STATEMENTS
     ?>
-    <b><?php
-        echo "STATEMENT OF CASH FLOWS";
-        echo "<br>";
-        echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
-        ?></b>
-    <hr>
-    <br>
-    <br>
-    <p><b>Cash flows from operating activities:</b><br>
-        Profit  before income tax<br>
-        Adjustment for:<br>
-        &emsp;Depreciation<br>
-        &emsp;Interest on bank borrowings<br>
-    </p>
-    <p>Change in working capital:<br>
-        &emsp;Trade and other receivables<br>
-        &emsp;Trade and other payables
-    </p>
-    <p>Cash generated from  operations</p>
-    <p>Income tax paid</p>
-    <p><b>Net cash generated from  operating activities</b></p>
-    <br>
-    <p><b>Cash flows from investing activities</b><br>
-        Additions to plant  and equipment
-    </p>
-    <p><b>Net cash used in  investing activities</b><br>
-        Proceeds from issuance of ordinary shares<br>
-        (Advances)/repayment  from a shareholder<br>
-        Proceeds from borrowings<br>
-        Repayments of borrowings<br>
-        Interest paid<br>
-    </p>
-    <p><b>Net cash (used in)/generated  from financing activities</b></p>
-    <p>Net increase  in cash and cash equivalents<br>
-        Cash and cash equivalents at beginning of the financial year/period
-    </p>
-    <p><b>Cash and cash equivalents at end of the financial year/period</b></p>
-    <br>
-    <br>
-    <p><i>The accompanying accounting policies and explanatory notes form an integral part of the financial statements.</i></p>
 </div>
-<h1>Page 7</h1>
 <div name="seventhPage">
-    <b><?php echo strtoupper($companyName); ?></b>
-    <br/>
-    <!--</b>-->
-    <hr>
-    <br>
-    <br>
-    <p>These notes form an integral part of and should be read in conjunction with the accompanying financial statements.
+    <?php
+    $section->addText("These notes form an integral part of and should be read in conjunction with the accompanying financial statements."
+            , $fontstyleName, $paragraphStyle);
+    $section->addTextBreak(1);
+    ?>
+    <?php
+    $section = $phpWord->addSection();
+    $section->addListItem(htmlspecialchars('GENERAL INFORMATION'), 0, $fontstyleName, $nestedListStyle);
+    ?>
+    <?php
+    $section->addText("The Company is incorporated and domiciled in Singapore."
+            , $fontstyleName, $paragraphStyle);
+    ?>
+    <?php
+    $section->addText("The Company’s principal activities are those to carry-on the businesses of " . $companyPA
+            , $fontstyleName, $paragraphStyle);
+    ?>
+    <?php
+    $section->addText("The Company’s registered office is at " . $companyAddress
+            , $fontstyleName, $paragraphStyle);
+    ?>
+    <?php
+    $section->addText("The financial statements of the Company for the financial year ended " . date('F d Y', strtotime($yearEnd)) . " were authorised for issue in accordance with a resolution of the directors on the date of Statement by Directors."
+            , $fontstyleName, $paragraphStyle);
+    ?>
+
+    <?php
+    $section->addListItem(htmlspecialchars('BASIS OF PREPARATION AND SUMMARY OF SIGNIFICANT ACCOUNTING POLICIES'), 0, $fontstyleName, $nestedListStyle);
+    ?>
+
+
+    <?php
+    $section->addListItem(htmlspecialchars('Basis of preparation'), 1, $fontstyleName, $nestedListStyle);
+    ?>
+    <?php
+    $section->addListItem("Basis of accounting", 2, $fontstyleName, $listingStyle);
+    ?>
+
+    <?php
+    $section->addText("The financial statements are prepared in accordance with Singapore Financial Reporting Standards (“FRS”). The financial statements have been prepared under the historical cost convention, except as disclosed in the accounting policies below."
+            , $fontstyleName, $paragraphStyle);
+    ?>
+    <p>The preparation of these financial statements in conformity with FRS requires management to exercise its judgement in the process of applying the
+        Company’s accounting policies. It also requires the use of certain critical accounting estimates and assumptions. The areas involving a higher degree of
+        judgement or complexity,or areas where assumptions and estimates are significant to the financial statements, are disclosed in Note 3
         <?php
-        $section->addText("These notes form an integral part of and should be read in conjunction with the accompanying financial statements."
+        $section->addText("The preparation of these financial statements in conformity with FRS requires management to exercise its judgement in the process of applying the Company’s accounting policies. It also requires the use of certain critical accounting estimates and assumptions. The areas involving a higher degree of judgement or complexity,or areas where assumptions and estimates are significant to the financial statements, are disclosed in Note 3"
                 , $fontstyleName, $paragraphStyle);
-        $section->addTextBreak(1);
         ?>
     </p>
+
+    <li>Adoption of new and revised Singapore Financial Reporting Standards
+        <?php
+        $section->addListItem("Adoption of new and revised Singapore Financial Reporting Standards", 2, $fontstyleName, $listingStyle);
+        ?>
+    </li>
     <br>
-    <p>
-    <ol>
-        <li>GENERAL INFORMATION
-            <?php
-            $section = $phpWord->addSection();
-            $section->addListItem(htmlspecialchars('GENERAL INFORMATION'), 0, $fontstyleName, $nestedListStyle);
-            ?>
-        </li>
-        <br>
-        <p>The Company is incorporated and domiciled in Singapore.
-            <?php
-            $section->addText("The Company is incorporated and domiciled in Singapore."
-                    , $fontstyleName, $paragraphStyle);
-            ?>
-        </p>
-        <p>The Company’s principal activities are those to carry-on the businesses of
-            <?php
-            echo $companyPA;
-            $section->addText("The Company’s principal activities are those to carry-on the businesses of " . $companyPA
-                    , $fontstyleName, $paragraphStyle);
-            ?>
-        </p>
-        <p>The Company’s registered office is at
-            <?php
-            echo $companyAddress;
-            $section->addText("The Company’s registered office is at " . $companyAddress
-                    , $fontstyleName, $paragraphStyle);
-            ?>
-        </p>
-        <p>The financial statements of the Company for the financial year ended <?php echo date('F d Y', strtotime($yearEnd)) ?>
-            were authorised for issue in accordance with a resolution of the directors on the date of Statement by Directors.
-            <?php
-            $section->addText("The financial statements of the Company for the financial year ended " . date('F d Y', strtotime($yearEnd)) . " were authorised for issue in accordance with a resolution of the directors on the date of Statement by Directors."
-                    , $fontstyleName, $paragraphStyle);
-            ?>
-        </p>
-
-        <li>BASIS OF PREPARATION AND SUMMARY OF SIGNIFICANT ACCOUNTING POLICIES
-            <?php
-            $section->addListItem(htmlspecialchars('BASIS OF PREPARATION AND SUMMARY OF SIGNIFICANT ACCOUNTING POLICIES'), 0, $fontstyleName, $nestedListStyle);
-            ?>
-        </li>
-        <br>
-        <ol type='i'>
-            <li>Basis of preparation
-                <?php
-                $section->addListItem(htmlspecialchars('Basis of preparation'), 1, $fontstyleName, $nestedListStyle);
-                ?>
-            </li>
-            <br>
-            <ol type='a'>
-                <li>Basis of accounting
-                    <?php
-                    $section->addListItem("Basis of accounting", 2, $fontstyleName, $listingStyle);
-                    ?>
-                </li>
-                <br>
-                <p>The financial statements are prepared in accordance with Singapore Financial Reporting Standards (“FRS”).
-                    The financial statements have been prepared under the historical cost convention, except as disclosed in the accounting policies below.
-                    <?php
-                    $section->addText("The financial statements are prepared in accordance with Singapore Financial Reporting Standards (“FRS”). The financial statements have been prepared under the historical cost convention, except as disclosed in the accounting policies below."
-                            , $fontstyleName, $paragraphStyle);
-                    ?>
-                </p>
-                <p>The preparation of these financial statements in conformity with FRS requires management to exercise its judgement in the process of applying the
-                    Company’s accounting policies. It also requires the use of certain critical accounting estimates and assumptions. The areas involving a higher degree of
-                    judgement or complexity,or areas where assumptions and estimates are significant to the financial statements, are disclosed in Note 3
-                    <?php
-                    $section->addText("The preparation of these financial statements in conformity with FRS requires management to exercise its judgement in the process of applying the Company’s accounting policies. It also requires the use of certain critical accounting estimates and assumptions. The areas involving a higher degree of judgement or complexity,or areas where assumptions and estimates are significant to the financial statements, are disclosed in Note 3"
-                            , $fontstyleName, $paragraphStyle);
-                    ?>
-                </p>
-
-                <li>Adoption of new and revised Singapore Financial Reporting Standards
-                    <?php
-                    $section->addListItem("Adoption of new and revised Singapore Financial Reporting Standards", 2, $fontstyleName, $listingStyle);
-                    ?>
-                </li>
-                <br>
-                <p>On <?php echo date('F d Y', strtotime($frsDate)); ?> the Company adopted the new or amended FRS and Interpretations to FRS (“INT FRS”) that are mandatory for application for the financial year.
-                    The adoption of these new or amended FRS and INT FRS did not result insubstantial changes of the Company’s accounting policies and had no material effect on the
-                    amounts reported for the current or prior financial period.
-                    <?php
-                    $section->addText("On " . date('F d Y', strtotime($frsDate)) . " the Company adopted the new or amended FRS and Interpretations to FRS (“INT FRS”) that are mandatory for application for the financial year. The adoption of these new or amended FRS and INT FRS did not result insubstantial changes of the Company’s accounting policies and had no material effect on the amounts reported for the current or prior financial period."
-                            , $fontstyleName, $paragraphStyle);
-                    ?>
-                </p>
-            </ol>
-        </ol>
-    </ol>
+    <p>On <?php echo date('F d Y', strtotime($frsDate)); ?> the Company adopted the new or amended FRS and Interpretations to FRS (“INT FRS”) that are mandatory for application for the financial year.
+        The adoption of these new or amended FRS and INT FRS did not result insubstantial changes of the Company’s accounting policies and had no material effect on the
+        amounts reported for the current or prior financial period.
+        <?php
+        $section->addText("On " . date('F d Y', strtotime($frsDate)) . " the Company adopted the new or amended FRS and Interpretations to FRS (“INT FRS”) that are mandatory for application for the financial year. The adoption of these new or amended FRS and INT FRS did not result insubstantial changes of the Company’s accounting policies and had no material effect on the amounts reported for the current or prior financial period."
+                , $fontstyleName, $paragraphStyle);
+        ?>
+    </p>
+</ol>
+</ol>
+</ol>
 </p>
 <br>
 <br>
@@ -3594,12 +3259,12 @@ $yearEndString = $yearEndArray[2] . " " . $monthIdentifier[$yearEndMonth - 1] . 
     $section->addText(strtoupper($companyName), $fontStyleBlack);
     ?>
     <b><?php
-    echo "NOTES TO THE FINANCIAL STATEMENTS";
-    echo "<br>";
-    echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
-    $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-    $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
-    ?></b>
+        echo "NOTES TO THE FINANCIAL STATEMENTS";
+        echo "<br>";
+        echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
+        $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
+        $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+        ?></b>
     <hr>
     <br>
     <br>
@@ -3733,12 +3398,12 @@ $yearEndString = $yearEndArray[2] . " " . $monthIdentifier[$yearEndMonth - 1] . 
     $section->addText(strtoupper($companyName), $fontStyleBlack);
     ?>
     <b><?php
-    echo "NOTES TO THE FINANCIAL STATEMENTS";
-    echo "<br>";
-    echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
-    $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-    $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
-    ?></b>
+        echo "NOTES TO THE FINANCIAL STATEMENTS";
+        echo "<br>";
+        echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
+        $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
+        $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+        ?></b>
     <hr>
     <br>
     <br>
@@ -3849,12 +3514,12 @@ $yearEndString = $yearEndArray[2] . " " . $monthIdentifier[$yearEndMonth - 1] . 
     $section->addText(strtoupper($companyName), $fontStyleBlack);
     ?>
     <b><?php
-    echo "NOTES TO THE FINANCIAL STATEMENTS";
-    echo "<br>";
-    echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
-    $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-    $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
-    ?></b>
+        echo "NOTES TO THE FINANCIAL STATEMENTS";
+        echo "<br>";
+        echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
+        $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
+        $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+        ?></b>
     <hr>
     <br>
     <br>
@@ -3967,12 +3632,12 @@ $yearEndString = $yearEndArray[2] . " " . $monthIdentifier[$yearEndMonth - 1] . 
     $section->addText(strtoupper($companyName), $fontStyleBlack);
     ?>
     <b><?php
-    echo "NOTES TO THE FINANCIAL STATEMENTS";
-    echo "<br>";
-    echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
-    $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-    $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
-    ?></b>
+        echo "NOTES TO THE FINANCIAL STATEMENTS";
+        echo "<br>";
+        echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
+        $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
+        $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+        ?></b>
     <hr>
     <br>
     <br>
@@ -4083,12 +3748,12 @@ $yearEndString = $yearEndArray[2] . " " . $monthIdentifier[$yearEndMonth - 1] . 
     $section->addText(strtoupper($companyName), $fontStyleBlack);
     ?>
     <b><?php
-    echo "NOTES TO THE FINANCIAL STATEMENTS";
-    echo "<br>";
-    echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
-    $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-    $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
-    ?></b>
+        echo "NOTES TO THE FINANCIAL STATEMENTS";
+        echo "<br>";
+        echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
+        $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
+        $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+        ?></b>
     <hr>
     <br>
     <br>
@@ -4212,12 +3877,12 @@ $yearEndString = $yearEndArray[2] . " " . $monthIdentifier[$yearEndMonth - 1] . 
     $section->addText(strtoupper($companyName), $fontStyleBlack);
     ?>
     <b><?php
-    echo "NOTES TO THE FINANCIAL STATEMENTS";
-    echo "<br>";
-    echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
-    $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-    $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
-    ?></b>
+        echo "NOTES TO THE FINANCIAL STATEMENTS";
+        echo "<br>";
+        echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
+        $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
+        $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+        ?></b>
     <hr>
     <br>
     <br>
@@ -4330,12 +3995,12 @@ $yearEndString = $yearEndArray[2] . " " . $monthIdentifier[$yearEndMonth - 1] . 
     $section->addText(strtoupper($companyName), $fontStyleBlack);
     ?>
     <b><?php
-    echo "NOTES TO THE FINANCIAL STATEMENTS";
-    echo "<br>";
-    echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
-    $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-    $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
-    ?></b>
+        echo "NOTES TO THE FINANCIAL STATEMENTS";
+        echo "<br>";
+        echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
+        $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
+        $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+        ?></b>
     <hr>
     <br>
     <br>
@@ -4440,8 +4105,8 @@ $yearEndString = $yearEndArray[2] . " " . $monthIdentifier[$yearEndMonth - 1] . 
     <?php
     $section = $phpWord->addSection();
     $section->addText(strtoupper($companyName), $fontStyleBlack);
-    
-    
+
+
 //==============================================================================
 // PHOEBE START HERE
 //==============================================================================
@@ -5943,1313 +5608,1313 @@ $yearEndString = $yearEndArray[2] . " " . $monthIdentifier[$yearEndMonth - 1] . 
 //    echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
 //    $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
 //    $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
-    ?>
-    
-    
-    <b><?php
-    echo "NOTES TO THE FINANCIAL STATEMENTS";
-    echo "<br>";
-    echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
-    $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-    $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
-    ?></b>
-    <hr>
-    <br>
-    <br>
-    <ol start='4'>
-        <li>OTHER INCOME
-            <?php
-            $section->addListItem("OTHER INCOME", 0, $fontstyleName, $nestedListStyle);
-            ?>
-        </li>
-        <br>
-        <p>Realised exchange gain - trade</p>
-        <p>Unrealised exchange gain</p>
-
-        <li>PROFIT BEFORE INCOME TAX
-            <?php
-            $section->addListItem("PROFIT BEFORE INCOME TAX", 0, $fontstyleName, $nestedListStyle);
-            ?>
-        </li>
-        <br>
-        <p>This is determined after charging: <br>
-            Depreciation of plant and equipment (Note 11)<br>
-            Employee’s compensation (Note 7)<br>
-            Realised exchange loss - trade</p>
-
-        <li>FINANCE EXPENSE
-            <?php
-            $section->addListItem("FINANCE EXPENSE", 0, $fontstyleName, $nestedListStyle);
-            ?>
-        </li>
-        <br>
-        <p>Interest expense on bank borrowings</p>
-
-        <li>EMPLOYEE COMPENSATION
-            <?php
-            $section->addListItem("EMPLOYEE COMPENSATION", 0, $fontstyleName, $nestedListStyle);
-            ?>
-        </li>
-        <br>
-        <p>Director’s remuneration <br>
-            Salaries <br>
-            Other benefits</p>
-    </ol>
-    <br>
-    <br>
-</div>
-<h1> Page 16</h1>
-<div name='sixteenPage'>
-    <b><?php echo strtoupper($companyName); ?></b>
-    <br/>
-    <?php
-    $section = $phpWord->addSection();
-    $section->addText(strtoupper($companyName), $fontStyleBlack);
-    ?>
-    <b><?php
-    echo "NOTES TO THE FINANCIAL STATEMENTS";
-    echo "<br>";
-    echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
-    $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-    $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
-    ?></b>
-    <hr>
-    <br>
-    <br>
-    <ol start='8'>
-        <li>INCOME TAXES
-            <?php
-            $section->addListItem("INCOME TAXES", 0, $fontstyleName, $nestedListStyle);
-            ?>
-        </li>
-        <br>
-        <ol type='a'>
-            <li>Income tax expense</li><br>
-            <p>Tax expense attributable to profit is made up of:<br>
-                Current income tax expenses<br>
-                Under provision in prior year</p>
-            <p>The tax expense on profit differs from the amount that would arise using the Singapore standard rate of income tax as follows:</p>
-            <p>Profit  before income tax</p>
-
-            <p>Tax calculated at tax rate of 17% (2015: 17%)<br>
-                Effects of:<br>
-                - expenses not deductible for tax purposes<br>
-                - income not subject to tax <br>
-                - deferred tax liabilities not recognised <br>
-                - Capital and PIC enhanced allowances <br>
-                - tax exemption <br>
-                - CIT rebate <br>
-                - under provision in prior year</p>
-            <p>Tax expense</p>
-
-            <li>Movement in current income tax liabilities:</li><br>
-            <p>Beginning of financial year <br>
-                Income tax paid<br>
-                Current year tax expense<br>
-                Under provision in prior year<br>
-                End of financial year</p>
-        </ol>
-    </ol>
-    <br>
-    <br>
-</div>
-<h1> Page 17</h1>
-<div name='seventeenPage'>
-    <b><?php echo strtoupper($companyName); ?></b>
-    <br/>
-    <?php
-    $section = $phpWord->addSection();
-    $section->addText(strtoupper($companyName), $fontStyleBlack);
-    ?>
-    <b><?php
-    echo "NOTES TO THE FINANCIAL STATEMENTS";
-    echo "<br>";
-    echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
-    $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-    $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
-    ?></b>
-    <hr>
-    <br>
-    <br>
-    <ol start='9'>
-        <li>TRADE AND OTHER RECEIVABLES
-            <?php
-            $section->addListItem("TRADE AND OTHER RECEIVABLES", 0, $fontstyleName, $nestedListStyle);
-            ?>
-        </li>
-        <br>
-        <p>Trade receivables</p>
-        <p>Deposits <br>
-            Prepayments <br>
-            Amount owing from a shareholder</p>
-        <p>The amount owing from a shareholder is unsecured, non-trade, interest free and repayable on demand.</p>
-
-        <li>PLANT AND EQUIPMENT
-            <?php
-            $section->addListItem("PLANT AND EQUIPMENT ", 0, $fontstyleName, $nestedListStyle);
-            ?>
-        </li>
-        <br>
-        <p><b>Cost:</b><br>
-            As at <?php echo date('F d Y', strtotime($firstBalanceDate)) ?><br>
-            Additions<br>
-            As at <?php echo date('F d Y', strtotime($secondBalanceDate)) ?><br>
-            Additions<br>
-            As at <?php echo date('F d Y', strtotime($thirdBalanceDate)) ?><br>
-        </p>
-        <p><b>Accumulated depreciation:</b><br>
-            As at <?php echo date('F d Y', strtotime($firstBalanceDate)) ?><br>
-            Charge for the financial period<br>
-            As at <?php echo date('F d Y', strtotime($secondBalanceDate)) ?><br>
-            Charge for the financial year<br>
-            As at <?php echo date('F d Y', strtotime($thirdBalanceDate)) ?><br>
-        </p>
-        <p><b>Net book value:</b><br>
-            As at <?php echo date('F d Y', strtotime($thirdBalanceDate)) ?><br>
-            As at <?php echo date('F d Y', strtotime($secondBalanceDate)) ?><br>
-        </p>
-    </ol>
-    <br>
-    <br>
-</div>
-<h1> Page 18</h1>
-<div name='eighteenPage'>
-    <b><?php echo strtoupper($companyName); ?></b>
-    <br/>
-    <?php
-    $section = $phpWord->addSection();
-    $section->addText(strtoupper($companyName), $fontStyleBlack);
-    ?>
-    <b><?php
-    echo "NOTES TO THE FINANCIAL STATEMENTS";
-    echo "<br>";
-    echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
-    $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-    $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
-    ?></b>
-    <hr>
-    <br>
-    <br>
-    <ol start='11'>
-        <li>TRADE AND OTHER PAYABLES
-            <?php
-            $section->addListItem("TRADE AND OTHER PAYABLES ", 0, $fontstyleName, $nestedListStyle);
-            ?>
-        </li>
-        <br>
-        <p>Trade payables</p>
-        <p><u>Other payables</u><br>
-            GST payables<br>
-            Accruals<br>
-            Amount owing to a shareholder</p>
-
-        <li>BORROWINGS
-            <?php
-            $section->addListItem("BORROWINGS ", 0, $fontstyleName, $nestedListStyle);
-            ?>
-        </li>
-        <br>
-        <p>As at beginning of financial year</p>
-        <p>Proceeds from borrowings<br>
-            Less: Repayment of borrowings</p>
-        <p>As at end of financial year</p>
-        <p>Current<br>
-            Non-current</p>
-
-        <li>SHARE CAPITAL
-            <?php
-            $section->addListItem("SHARE CAPITAL ", 0, $fontstyleName, $nestedListStyle);
-            ?>
-        </li>
-        <br>
-        <p>Issued and fully paid:<br>
-            At beginning of financial year<br>
-            Issuance of ordinary shares</p>
-        <p>At end of financial  year/period</p>
-        <p>All issued ordinary shares are fully paid. The newly issued shares rank pari passu in all respects with the previously issued shares. There is no par value for the ordinary share. The holder of the ordinary share
-            is entitled to receive dividends as and when declared by the Company.</p>
-    </ol>
-    <br>
-    <br>
-</div>
-<h1> Page 19</h1>
-<div name='nineteenPage'>
-    <b><?php echo strtoupper($companyName); ?></b>
-    <br/>
-    <?php
-    $section = $phpWord->addSection();
-    $section->addText(strtoupper($companyName), $fontStyleBlack);
-    ?>
-    <b><?php
-    echo "NOTES TO THE FINANCIAL STATEMENTS";
-    echo "<br>";
-    echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
-    $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-    $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
-    ?></b>
-    <hr>
-    <br>
-    <br>
-    <ol start='14'>
-        <li>FINANCIAL RISK MANAGEMENT
-            <?php
-            $section->addListItem("FINANCIAL RISK MANAGEMENT ", 0, $fontstyleName, $nestedListStyle);
-            ?>
-        </li>
-        <br>
-        <p>The Company’s activities expose it to a variety of financial risks. The Company’s overall business strategies, tolerance risk and general risk management philosophy are determined by directors in accordance with
-            prevailing economic and operating conditions.
-            <?php
-            $section->addText("The Company’s activities expose it to a variety of financial risks. The Company’s overall business strategies, tolerance risk and general risk management philosophy are determined by directors in accordance with prevailing economic and operating conditions."
-                    , $fontstyleName, $paragraphStyle);
-            ?>
-        </p>
-
-        <p><u>Currency risk</u>
-            <?php
-            $textrun = $section->addTextRun();
-            $textrun->addText(htmlspecialchars("Currency risk"), array('underline' => 'single'));
-            ?>
-        </p>
-        <p>The Company’s exposure to foreign exchange risk is minimal as transactions are predominantly denominated in <?php echo $currency; ?>, being the functional currency of the Company.
-            <?php
-            $section->addText("The Company’s exposure to foreign exchange risk is minimal as transactions are predominantly denominated in " . $currency . ", being the functional currency of the Company."
-                    , $fontstyleName, $paragraphStyle);
-            ?>
-        </p>
-
-        <p><u>Interest rate risk</u>
-            <?php
-            $textrun = $section->addTextRun();
-            $textrun->addText(htmlspecialchars("Interest rate risk"), array('underline' => 'single'));
-            ?>
-        </p>
-        <p>Cash flow interest rate risk is the risk that the future cash flows of a financial instrument will fluctuate because of changes in market interest rates. Fair value interest rate risk is the risk that the fair
-            value of a financial instrument will fluctuate due to changes in market interest rates. As the Company has no significant interest bearing assets or liabilities, the Company’s income and operating cash flows
-            are substantially independent of changes in market interest rates.
-            <?php
-            $section->addText("Cash flow interest rate risk is the risk that the future cash flows of a financial instrument will fluctuate because of changes in market interest rates. Fair value interest rate risk is the risk that the fair value of a financial instrument will fluctuate due to changes in market interest rates. As the Company has no significant interest bearing assets or liabilities, the Company’s income and operating cash flows are substantially independent of changes in market interest rates."
-                    , $fontstyleName, $paragraphStyle);
-            ?>
-        </p>
-
-        <p><u>Liquidity risk</u>
-            <?php
-            $textrun = $section->addTextRun();
-            $textrun->addText(htmlspecialchars("Liquidity risk"), array('underline' => 'single'));
-            ?>
-        </p>
-        <p>Prudent liquidity management implies maintaining sufficient cash and the availability of funding through an adequate amount of committed credit facilities. The Company maintains sufficient cash balances to
-            provide flexibility in meeting its day to day funding requirements. Cash and cash equivalents are placed with credit worthy institutions.
-            <?php
-            $section->addText("Prudent liquidity management implies maintaining sufficient cash and the availability of funding through an adequate amount of committed credit facilities. The Company maintains sufficient cash balances to provide flexibility in meeting its day to day funding requirements. Cash and cash equivalents are placed with credit worthy institutions."
-                    , $fontstyleName, $paragraphStyle);
-            ?>
-        </p>
-        <p>The Company’s financial liabilities are due less than 1 year based on the remaining period from the reporting date to the contractual maturity date.  Balances due within 12 months equal their carrying balances
-            as the impact of discounting is not significant.
-            <?php
-            $section->addText("The Company’s financial liabilities are due less than 1 year based on the remaining period from the reporting date to the contractual maturity date.  Balances due within 12 months equal their carrying balances as the impact of discounting is not significant."
-                    , $fontstyleName, $paragraphStyle);
-            ?>
-        </p>
-
-        <p><u>Fair value measurements</u>
-            <?php
-            $textrun = $section->addTextRun();
-            $textrun->addText(htmlspecialchars("Fair value measurements"), array('underline' => 'single'));
-            ?>
-        </p>
-        <p>The Company does not have any financial instruments as at end of the financial year which are measured at fair value. The carrying values of other receivables and other payables are assumed to approximate
-            their fair values.
-            <?php
-            $section->addText("The Company does not have any financial instruments as at end of the financial year which are measured at fair value. The carrying values of other receivables and other payables are assumed to approximate their fair values."
-                    , $fontstyleName, $paragraphStyle);
-            ?>
-        </p>
-
-        <p><u>Credit risk</u>
-            <?php
-            $textrun = $section->addTextRun();
-            $textrun->addText(htmlspecialchars("Credit risk"), array('underline' => 'single'));
-            ?>
-        </p>
-        <p>Credit risk is the risk that companies and other parties will be unable to meet their obligations to the Company resulting in financial loss to the Company. The Company manages such risks by dealing with a
-            diverse of credit-worthy counterparties to mitigate any significant concentration of credit risk. Credit policy includes assessing and evaluation of existing and new customers' credit reliability and monitoring
-            of receivable collections. The Company places its cash and cash equivalents with creditworthy institutions.
-            <?php
-            $section->addText("Credit risk is the risk that companies and other parties will be unable to meet their obligations to the Company resulting in financial loss to the Company. The Company manages such risks by dealing with a diverse of credit-worthy counterparties to mitigate any significant concentration of credit risk. Credit policy includes assessing and evaluation of existing and new customers' credit reliability and monitoring of receivable collections. The Company places its cash and cash equivalents with creditworthy institutions."
-                    , $fontstyleName, $paragraphStyle);
-            ?>
-        </p>
-    </ol>
-    <br>
-    <br>
-</div>
-<h1> Page 20</h1>
-<div name='twentyPage'>
-    <b><?php echo strtoupper($companyName); ?></b>
-    <br/>
-    <?php
-    $section = $phpWord->addSection();
-    $section->addText(strtoupper($companyName), $fontStyleBlack);
-    ?>
-    <b><?php
-    echo "NOTES TO THE FINANCIAL STATEMENTS";
-    echo "<br>";
-    echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
-    $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-    $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
-    ?></b>
-    <hr>
-    <br>
-    <br>
-    <ol start='14'>
-        <li>FINANCIAL RISK MANAGEMENT (CONT’D)
-            <?php
-            $section->addListItem("FINANCIAL RISK MANAGEMENT (CONT’D)", 0, $fontstyleName, $listingStyle, $paragraphStyle);
-            ?>
-        </li>
-        <br>
-        <p><u>Credit risk (Cont’d)</u>
-            <?php
-            $textrun = $section->addTextRun();
-            $textrun->addText(htmlspecialchars("Credit risk (Cont’d)"), array('underline' => 'single'));
-            ?>
-        </p>
-        <p>The maximum exposure to credit risk in the event that the counterparties fail to perform the obligations as at the end of the financial period in relation to each class of financial assets is the carrying
-            amount of these assets in the statement of financial position.
-            <?php
-            $section->addText("The maximum exposure to credit risk in the event that the counterparties fail to perform the obligations as at the end of the financial period in relation to each class of financial assets is the carrying amount of these assets in the statement of financial position."
-                    , $fontstyleName, $paragraphStyle);
-            ?>
-        </p>
-        <p>The credit risk for receivables based on the information provided to key management is as follows:
-            <?php
-            $section->addText("The credit risk for receivables based on the information provided to key management is as follows:"
-                    , $fontstyleName, $paragraphStyle);
-            ?>
-        </p>
-
-        <ol type='i'>
-            <li>Financial assets that are neither past due nor impaired
-                <?php
-                $section->addListItem("Financial assets that are neither past due nor impaired", 1, $fontstyleName, $listingStyle, $paragraphStyle);
-                ?>
-            </li>
-            <br>
-            <p>Bank deposits that are neither past due nor impaired are mainly deposits with banks with high credit-ratings assigned by international credit-rating agencies. Other receivables that are neither past due
-                nor impaired are substantially companies with a good collection track record with the Company.
-                <?php
-                $section->addText("Bank deposits that are neither past due nor impaired are mainly deposits with banks with high credit-ratings assigned by international credit-rating agencies. Other receivables that are neither past due nor impaired are substantially companies with a good collection track record with the Company."
-                        , $fontstyleName, $paragraphStyle);
-                ?>
-            </p>
-
-            <li>Financial assets that are past due and/or impaired
-                <?php
-                $section->addListItem("Financial assets that are past due and/or impaired", 1, $fontstyleName, $listingStyle, $paragraphStyle);
-                ?>
-            </li>
-            <br>
-            <p>There is no other class of financial assets that is past due and/or impaired.
-                <?php
-                $section->addText("There is no other class of financial assets that is past due and/or impaired."
-                        , $fontstyleName, $paragraphStyle);
-                ?>
-            </p>
-            <br>
-        </ol>
-
-        <p><u>Capital risk</u>
-            <?php
-            $textrun = $section->addTextRun();
-            $textrun->addText(htmlspecialchars("Capital risk"), array('underline' => 'single'));
-            ?>
-        </p>
-        <p>The Company’s objectives when managing capital are:
-            <?php
-            $section->addText("The Company’s objectives when managing capital are:", $fontstyleName, $paragraphStyle);
-            ?>
-        </p>
-
-        <!-- need to add in phpWords unordered list-->
-        <ul>
-            <li>to safeguard the Company’s ability to continue as a going concern, so that it can continue to provide returns for shareholders and benefits for other stakeholders, and</li>
-            <li>to provide an adequate return to shareholders by pricing products and services commensurately with the level of risk.</li>
-        </ul>
-
-        <p>The capital structure of the Company consists primarily of equity, comprising issued share capital.
-            <?php
-            $section->addText("The capital structure of the Company consists primarily of equity, comprising issued share capital."
-                    , $fontstyleName);
-            ?>
-        </p>
-        <p>The Company manages its capital structure and makes adjustment to it in light of changes in economic conditions. It may maintain or adjust its capital structure through the payment of dividends, return of capital
-            or issue of new shares.
-            <?php
-            $section->addText("The Company manages its capital structure and makes adjustment to it in light of changes in economic conditions. It may maintain or adjust its capital structure through the payment of dividends, return of capital or issue of new shares."
-                    , $fontstyleName);
-            ?>
-        </p>
-
-        <li>RELATED PARTY TRANSACTIONS
-            <?php
-            $section->addListItem("RELATED PARTY TRANSACTIONS ", 0, $fontstyleName, $nestedListStyle);
-            ?>
-        </li>
-        <br>
-        <p>Related parties comprise mainly of companies which are controlled or significantly influenced by the Company’s key management personnel and their close family members.
-            <?php
-            $section->addText("Related parties comprise mainly of companies which are controlled or significantly influenced by the Company’s key management personnel and their close family members."
-                    , $fontstyleName);
-            ?>
-        </p>
-        <p>Key management personnel of the Company are those persons having the authority and responsibility for planning, directing and controlling activities of the Company.  The directors and executive officers of the
-            Company are considered as key management personnel of the Company.
-            <?php
-            $section->addText("Key management personnel of the Company are those persons having the authority and responsibility for planning, directing and controlling activities of the Company.  The directors and executive officers of the Company are considered as key management personnel of the Company."
-                    , $fontstyleName);
-            ?>
-        </p>
-    </ol>
-    <br>
-    <br>
-</div>
-<h1> Page 21</h1>
-<div name='twentyonePage'>
-    <b><?php echo strtoupper($companyName); ?></b>
-    <br/>
-    <?php
-    $section = $phpWord->addSection();
-    $section->addText(strtoupper($companyName), $fontStyleBlack);
-    ?>
-    <b><?php
-    echo "NOTES TO THE FINANCIAL STATEMENTS";
-    echo "<br>";
-    echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
-    $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-    $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
-    ?></b>
-    <hr>
-    <br>
-    <br>
-    <ol start='15'>
-        <li>RELATED PARTY TRANSACTIONS (CONT’D)
-            <?php
-            $section->addListItem("RELATED PARTY TRANSACTIONS (CONT’D)", 0, $fontstyleName, $listingStyle, $paragraphStyle);
-            ?>
-        </li>
-        <br>
-        <p>The inter-company balances are unsecured and interest-free, unless stated otherwise, and are subject to the normal credit terms of the respective parties and are
-            repayable on demand.
-            <?php
-            $section->addText("The inter-company balances are unsecured and interest-free, unless stated otherwise, and are subject to the normal credit terms of the respective parties and are repayable on demand."
-                    , $fontstyleName, $paragraphStyle);
-            ?>
-        </p>
-
-        <p><u>Key management personnel compensation</u>
-            <?php
-            $textrun = $section->addTextRun();
-            $textrun->addText(htmlspecialchars("Key management personnel compensation"), array('underline' => 'single'));
-            ?>
-        </p>
-        <p>Director’s remuneration
-            <?php
-            $section->addText("Director’s remuneration", $fontstyleName);
-            ?>
-        </p>
-
-        <li>NEW OR REVISED ACCOUNTING STANDARDS AND INTERPRETATIONS
-            <?php
-            $section->addListItem("NEW OR REVISED ACCOUNTING STANDARDS AND INTERPRETATIONS", 0, $fontstyleName, $nestedListStyle);
-            ?>
-        </li>
-        <br>
-        <p>Certain new standards, amendments and interpretations to existing standards have been published and are mandatory for the Company’s accounting periods beginning on
-            or after 1 January 2017  or later periods and which the Company has not early adopted.
-            <?php
-            $section->addText("Certain new standards, amendments and interpretations to existing standards have been published and are mandatory for the Company’s accounting periods beginning on or after 1 January 2017  or later periods and which the Company has not early adopted."
-                    , $fontstyleName);
-            ?>
-        </p>
-        <p>The management anticipates that the adoption of the new amendments to FRS in the future periods will not have a material impact on the financial statements of the
-            Company and of the Company in the period of their initial adoption.
-            <?php
-            $section->addText("The management anticipates that the adoption of the new amendments to FRS in the future periods will not have a material impact on the financial statements of the Company and of the Company in the period of their initial adoption."
-                    , $fontstyleName);
-            ?>
-        </p>
-
-        <li>COMPARATIVE FIGURES
-            <?php
-            $section->addListItem("COMPARATIVE FIGURES ", 0, $fontstyleName, $nestedListStyle);
-            ?>
-        </li>
-        <br>
-        <p>The management anticipates that the adoption of the new amendments to FRS in the future periods will not have a material impact on the financial statements of the
-            Company and of the Company in the period of their initial adoption.
-            <?php
-            $section->addText("The management anticipates that the adoption of the new amendments to FRS in the future periods will not have a material impact on the financial statements of the Company and of the Company in the period of their initial adoption."
-                    , $fontstyleName, $paragraphStyle);
-            ?>
-        </p>
-
-        <li>COMPARATIVE FIGURES
-            <?php
-            $section->addListItem("COMPARATIVE FIGURES ", 0, $fontstyleName, $nestedListStyle);
-            ?>
-        </li>
-        <br>
-        <p>The financial statements cover the financial period since incorporation on 1 July 2014 to 31 December 2015. This being the first set of financial statements,
-            there are no comparative.
-            <?php
-            $section->addText("The financial statements cover the financial period since incorporation on 1 July 2014 to 31 December 2015. This being the first set of financial statements,there are no comparative."
-                    , $fontstyleName, $paragraphStyle);
-            ?>
-        </p>
-    </ol>
-    <br>
-    <br>
-    <p>-------------------------------- End of unaudited financial statements --------------------------------
-        <?php
-        $section->addText("End of unaudited financial statements", $fontstyleName, $paragraphStyle);
         ?>
-    </p>
-</div>
-<h1> Page 22</h1>
-<div name='twentytwoPage'>
-    <center><b><?php echo strtoupper($companyName); ?></b>
-        <br/>
-        <?php
+
+
+        <b><?php
+            echo "NOTES TO THE FINANCIAL STATEMENTS";
+            echo "<br>";
+            echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
+            $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
+            $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+            ?></b>
+        <hr>
+        <br>
+        <br>
+        <ol start='4'>
+            <li>OTHER INCOME
+                <?php
+                $section->addListItem("OTHER INCOME", 0, $fontstyleName, $nestedListStyle);
+                ?>
+            </li>
+            <br>
+            <p>Realised exchange gain - trade</p>
+            <p>Unrealised exchange gain</p>
+
+            <li>PROFIT BEFORE INCOME TAX
+                <?php
+                $section->addListItem("PROFIT BEFORE INCOME TAX", 0, $fontstyleName, $nestedListStyle);
+                ?>
+            </li>
+            <br>
+            <p>This is determined after charging: <br>
+                Depreciation of plant and equipment (Note 11)<br>
+                Employee’s compensation (Note 7)<br>
+                Realised exchange loss - trade</p>
+
+            <li>FINANCE EXPENSE
+                <?php
+                $section->addListItem("FINANCE EXPENSE", 0, $fontstyleName, $nestedListStyle);
+                ?>
+            </li>
+            <br>
+            <p>Interest expense on bank borrowings</p>
+
+            <li>EMPLOYEE COMPENSATION
+                <?php
+                $section->addListItem("EMPLOYEE COMPENSATION", 0, $fontstyleName, $nestedListStyle);
+                ?>
+            </li>
+            <br>
+            <p>Director’s remuneration <br>
+                Salaries <br>
+                Other benefits</p>
+        </ol>
+        <br>
+        <br>
+        </div>
+        <h1> Page 16</h1>
+        <div name='sixteenPage'>
+            <b><?php echo strtoupper($companyName); ?></b>
+            <br/>
+            <?php
+            $section = $phpWord->addSection();
+            $section->addText(strtoupper($companyName), $fontStyleBlack);
+            ?>
+            <b><?php
+                echo "NOTES TO THE FINANCIAL STATEMENTS";
+                echo "<br>";
+                echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
+                $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
+                $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+                ?></b>
+            <hr>
+            <br>
+            <br>
+            <ol start='8'>
+                <li>INCOME TAXES
+                    <?php
+                    $section->addListItem("INCOME TAXES", 0, $fontstyleName, $nestedListStyle);
+                    ?>
+                </li>
+                <br>
+                <ol type='a'>
+                    <li>Income tax expense</li><br>
+                    <p>Tax expense attributable to profit is made up of:<br>
+                        Current income tax expenses<br>
+                        Under provision in prior year</p>
+                    <p>The tax expense on profit differs from the amount that would arise using the Singapore standard rate of income tax as follows:</p>
+                    <p>Profit  before income tax</p>
+
+                    <p>Tax calculated at tax rate of 17% (2015: 17%)<br>
+                        Effects of:<br>
+                        - expenses not deductible for tax purposes<br>
+                        - income not subject to tax <br>
+                        - deferred tax liabilities not recognised <br>
+                        - Capital and PIC enhanced allowances <br>
+                        - tax exemption <br>
+                        - CIT rebate <br>
+                        - under provision in prior year</p>
+                    <p>Tax expense</p>
+
+                    <li>Movement in current income tax liabilities:</li><br>
+                    <p>Beginning of financial year <br>
+                        Income tax paid<br>
+                        Current year tax expense<br>
+                        Under provision in prior year<br>
+                        End of financial year</p>
+                </ol>
+            </ol>
+            <br>
+            <br>
+        </div>
+        <h1> Page 17</h1>
+        <div name='seventeenPage'>
+            <b><?php echo strtoupper($companyName); ?></b>
+            <br/>
+            <?php
+            $section = $phpWord->addSection();
+            $section->addText(strtoupper($companyName), $fontStyleBlack);
+            ?>
+            <b><?php
+                echo "NOTES TO THE FINANCIAL STATEMENTS";
+                echo "<br>";
+                echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
+                $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
+                $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+                ?></b>
+            <hr>
+            <br>
+            <br>
+            <ol start='9'>
+                <li>TRADE AND OTHER RECEIVABLES
+                    <?php
+                    $section->addListItem("TRADE AND OTHER RECEIVABLES", 0, $fontstyleName, $nestedListStyle);
+                    ?>
+                </li>
+                <br>
+                <p>Trade receivables</p>
+                <p>Deposits <br>
+                    Prepayments <br>
+                    Amount owing from a shareholder</p>
+                <p>The amount owing from a shareholder is unsecured, non-trade, interest free and repayable on demand.</p>
+
+                <li>PLANT AND EQUIPMENT
+                    <?php
+                    $section->addListItem("PLANT AND EQUIPMENT ", 0, $fontstyleName, $nestedListStyle);
+                    ?>
+                </li>
+                <br>
+                <p><b>Cost:</b><br>
+                    As at <?php echo date('F d Y', strtotime($firstBalanceDate)) ?><br>
+                    Additions<br>
+                    As at <?php echo date('F d Y', strtotime($secondBalanceDate)) ?><br>
+                    Additions<br>
+                    As at <?php echo date('F d Y', strtotime($thirdBalanceDate)) ?><br>
+                </p>
+                <p><b>Accumulated depreciation:</b><br>
+                    As at <?php echo date('F d Y', strtotime($firstBalanceDate)) ?><br>
+                    Charge for the financial period<br>
+                    As at <?php echo date('F d Y', strtotime($secondBalanceDate)) ?><br>
+                    Charge for the financial year<br>
+                    As at <?php echo date('F d Y', strtotime($thirdBalanceDate)) ?><br>
+                </p>
+                <p><b>Net book value:</b><br>
+                    As at <?php echo date('F d Y', strtotime($thirdBalanceDate)) ?><br>
+                    As at <?php echo date('F d Y', strtotime($secondBalanceDate)) ?><br>
+                </p>
+            </ol>
+            <br>
+            <br>
+        </div>
+        <h1> Page 18</h1>
+        <div name='eighteenPage'>
+            <b><?php echo strtoupper($companyName); ?></b>
+            <br/>
+            <?php
+            $section = $phpWord->addSection();
+            $section->addText(strtoupper($companyName), $fontStyleBlack);
+            ?>
+            <b><?php
+                echo "NOTES TO THE FINANCIAL STATEMENTS";
+                echo "<br>";
+                echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
+                $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
+                $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+                ?></b>
+            <hr>
+            <br>
+            <br>
+            <ol start='11'>
+                <li>TRADE AND OTHER PAYABLES
+                    <?php
+                    $section->addListItem("TRADE AND OTHER PAYABLES ", 0, $fontstyleName, $nestedListStyle);
+                    ?>
+                </li>
+                <br>
+                <p>Trade payables</p>
+                <p><u>Other payables</u><br>
+                    GST payables<br>
+                    Accruals<br>
+                    Amount owing to a shareholder</p>
+
+                <li>BORROWINGS
+                    <?php
+                    $section->addListItem("BORROWINGS ", 0, $fontstyleName, $nestedListStyle);
+                    ?>
+                </li>
+                <br>
+                <p>As at beginning of financial year</p>
+                <p>Proceeds from borrowings<br>
+                    Less: Repayment of borrowings</p>
+                <p>As at end of financial year</p>
+                <p>Current<br>
+                    Non-current</p>
+
+                <li>SHARE CAPITAL
+                    <?php
+                    $section->addListItem("SHARE CAPITAL ", 0, $fontstyleName, $nestedListStyle);
+                    ?>
+                </li>
+                <br>
+                <p>Issued and fully paid:<br>
+                    At beginning of financial year<br>
+                    Issuance of ordinary shares</p>
+                <p>At end of financial  year/period</p>
+                <p>All issued ordinary shares are fully paid. The newly issued shares rank pari passu in all respects with the previously issued shares. There is no par value for the ordinary share. The holder of the ordinary share
+                    is entitled to receive dividends as and when declared by the Company.</p>
+            </ol>
+            <br>
+            <br>
+        </div>
+        <h1> Page 19</h1>
+        <div name='nineteenPage'>
+            <b><?php echo strtoupper($companyName); ?></b>
+            <br/>
+            <?php
+            $section = $phpWord->addSection();
+            $section->addText(strtoupper($companyName), $fontStyleBlack);
+            ?>
+            <b><?php
+                echo "NOTES TO THE FINANCIAL STATEMENTS";
+                echo "<br>";
+                echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
+                $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
+                $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+                ?></b>
+            <hr>
+            <br>
+            <br>
+            <ol start='14'>
+                <li>FINANCIAL RISK MANAGEMENT
+                    <?php
+                    $section->addListItem("FINANCIAL RISK MANAGEMENT ", 0, $fontstyleName, $nestedListStyle);
+                    ?>
+                </li>
+                <br>
+                <p>The Company’s activities expose it to a variety of financial risks. The Company’s overall business strategies, tolerance risk and general risk management philosophy are determined by directors in accordance with
+                    prevailing economic and operating conditions.
+                    <?php
+                    $section->addText("The Company’s activities expose it to a variety of financial risks. The Company’s overall business strategies, tolerance risk and general risk management philosophy are determined by directors in accordance with prevailing economic and operating conditions."
+                            , $fontstyleName, $paragraphStyle);
+                    ?>
+                </p>
+
+                <p><u>Currency risk</u>
+                    <?php
+                    $textrun = $section->addTextRun();
+                    $textrun->addText(htmlspecialchars("Currency risk"), array('underline' => 'single'));
+                    ?>
+                </p>
+                <p>The Company’s exposure to foreign exchange risk is minimal as transactions are predominantly denominated in <?php echo $currency; ?>, being the functional currency of the Company.
+                    <?php
+                    $section->addText("The Company’s exposure to foreign exchange risk is minimal as transactions are predominantly denominated in " . $currency . ", being the functional currency of the Company."
+                            , $fontstyleName, $paragraphStyle);
+                    ?>
+                </p>
+
+                <p><u>Interest rate risk</u>
+                    <?php
+                    $textrun = $section->addTextRun();
+                    $textrun->addText(htmlspecialchars("Interest rate risk"), array('underline' => 'single'));
+                    ?>
+                </p>
+                <p>Cash flow interest rate risk is the risk that the future cash flows of a financial instrument will fluctuate because of changes in market interest rates. Fair value interest rate risk is the risk that the fair
+                    value of a financial instrument will fluctuate due to changes in market interest rates. As the Company has no significant interest bearing assets or liabilities, the Company’s income and operating cash flows
+                    are substantially independent of changes in market interest rates.
+                    <?php
+                    $section->addText("Cash flow interest rate risk is the risk that the future cash flows of a financial instrument will fluctuate because of changes in market interest rates. Fair value interest rate risk is the risk that the fair value of a financial instrument will fluctuate due to changes in market interest rates. As the Company has no significant interest bearing assets or liabilities, the Company’s income and operating cash flows are substantially independent of changes in market interest rates."
+                            , $fontstyleName, $paragraphStyle);
+                    ?>
+                </p>
+
+                <p><u>Liquidity risk</u>
+                    <?php
+                    $textrun = $section->addTextRun();
+                    $textrun->addText(htmlspecialchars("Liquidity risk"), array('underline' => 'single'));
+                    ?>
+                </p>
+                <p>Prudent liquidity management implies maintaining sufficient cash and the availability of funding through an adequate amount of committed credit facilities. The Company maintains sufficient cash balances to
+                    provide flexibility in meeting its day to day funding requirements. Cash and cash equivalents are placed with credit worthy institutions.
+                    <?php
+                    $section->addText("Prudent liquidity management implies maintaining sufficient cash and the availability of funding through an adequate amount of committed credit facilities. The Company maintains sufficient cash balances to provide flexibility in meeting its day to day funding requirements. Cash and cash equivalents are placed with credit worthy institutions."
+                            , $fontstyleName, $paragraphStyle);
+                    ?>
+                </p>
+                <p>The Company’s financial liabilities are due less than 1 year based on the remaining period from the reporting date to the contractual maturity date.  Balances due within 12 months equal their carrying balances
+                    as the impact of discounting is not significant.
+                    <?php
+                    $section->addText("The Company’s financial liabilities are due less than 1 year based on the remaining period from the reporting date to the contractual maturity date.  Balances due within 12 months equal their carrying balances as the impact of discounting is not significant."
+                            , $fontstyleName, $paragraphStyle);
+                    ?>
+                </p>
+
+                <p><u>Fair value measurements</u>
+                    <?php
+                    $textrun = $section->addTextRun();
+                    $textrun->addText(htmlspecialchars("Fair value measurements"), array('underline' => 'single'));
+                    ?>
+                </p>
+                <p>The Company does not have any financial instruments as at end of the financial year which are measured at fair value. The carrying values of other receivables and other payables are assumed to approximate
+                    their fair values.
+                    <?php
+                    $section->addText("The Company does not have any financial instruments as at end of the financial year which are measured at fair value. The carrying values of other receivables and other payables are assumed to approximate their fair values."
+                            , $fontstyleName, $paragraphStyle);
+                    ?>
+                </p>
+
+                <p><u>Credit risk</u>
+                    <?php
+                    $textrun = $section->addTextRun();
+                    $textrun->addText(htmlspecialchars("Credit risk"), array('underline' => 'single'));
+                    ?>
+                </p>
+                <p>Credit risk is the risk that companies and other parties will be unable to meet their obligations to the Company resulting in financial loss to the Company. The Company manages such risks by dealing with a
+                    diverse of credit-worthy counterparties to mitigate any significant concentration of credit risk. Credit policy includes assessing and evaluation of existing and new customers' credit reliability and monitoring
+                    of receivable collections. The Company places its cash and cash equivalents with creditworthy institutions.
+                    <?php
+                    $section->addText("Credit risk is the risk that companies and other parties will be unable to meet their obligations to the Company resulting in financial loss to the Company. The Company manages such risks by dealing with a diverse of credit-worthy counterparties to mitigate any significant concentration of credit risk. Credit policy includes assessing and evaluation of existing and new customers' credit reliability and monitoring of receivable collections. The Company places its cash and cash equivalents with creditworthy institutions."
+                            , $fontstyleName, $paragraphStyle);
+                    ?>
+                </p>
+            </ol>
+            <br>
+            <br>
+        </div>
+        <h1> Page 20</h1>
+        <div name='twentyPage'>
+            <b><?php echo strtoupper($companyName); ?></b>
+            <br/>
+            <?php
+            $section = $phpWord->addSection();
+            $section->addText(strtoupper($companyName), $fontStyleBlack);
+            ?>
+            <b><?php
+                echo "NOTES TO THE FINANCIAL STATEMENTS";
+                echo "<br>";
+                echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
+                $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
+                $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+                ?></b>
+            <hr>
+            <br>
+            <br>
+            <ol start='14'>
+                <li>FINANCIAL RISK MANAGEMENT (CONT’D)
+                    <?php
+                    $section->addListItem("FINANCIAL RISK MANAGEMENT (CONT’D)", 0, $fontstyleName, $listingStyle, $paragraphStyle);
+                    ?>
+                </li>
+                <br>
+                <p><u>Credit risk (Cont’d)</u>
+                    <?php
+                    $textrun = $section->addTextRun();
+                    $textrun->addText(htmlspecialchars("Credit risk (Cont’d)"), array('underline' => 'single'));
+                    ?>
+                </p>
+                <p>The maximum exposure to credit risk in the event that the counterparties fail to perform the obligations as at the end of the financial period in relation to each class of financial assets is the carrying
+                    amount of these assets in the statement of financial position.
+                    <?php
+                    $section->addText("The maximum exposure to credit risk in the event that the counterparties fail to perform the obligations as at the end of the financial period in relation to each class of financial assets is the carrying amount of these assets in the statement of financial position."
+                            , $fontstyleName, $paragraphStyle);
+                    ?>
+                </p>
+                <p>The credit risk for receivables based on the information provided to key management is as follows:
+                    <?php
+                    $section->addText("The credit risk for receivables based on the information provided to key management is as follows:"
+                            , $fontstyleName, $paragraphStyle);
+                    ?>
+                </p>
+
+                <ol type='i'>
+                    <li>Financial assets that are neither past due nor impaired
+                        <?php
+                        $section->addListItem("Financial assets that are neither past due nor impaired", 1, $fontstyleName, $listingStyle, $paragraphStyle);
+                        ?>
+                    </li>
+                    <br>
+                    <p>Bank deposits that are neither past due nor impaired are mainly deposits with banks with high credit-ratings assigned by international credit-rating agencies. Other receivables that are neither past due
+                        nor impaired are substantially companies with a good collection track record with the Company.
+                        <?php
+                        $section->addText("Bank deposits that are neither past due nor impaired are mainly deposits with banks with high credit-ratings assigned by international credit-rating agencies. Other receivables that are neither past due nor impaired are substantially companies with a good collection track record with the Company."
+                                , $fontstyleName, $paragraphStyle);
+                        ?>
+                    </p>
+
+                    <li>Financial assets that are past due and/or impaired
+                        <?php
+                        $section->addListItem("Financial assets that are past due and/or impaired", 1, $fontstyleName, $listingStyle, $paragraphStyle);
+                        ?>
+                    </li>
+                    <br>
+                    <p>There is no other class of financial assets that is past due and/or impaired.
+                        <?php
+                        $section->addText("There is no other class of financial assets that is past due and/or impaired."
+                                , $fontstyleName, $paragraphStyle);
+                        ?>
+                    </p>
+                    <br>
+                </ol>
+
+                <p><u>Capital risk</u>
+                    <?php
+                    $textrun = $section->addTextRun();
+                    $textrun->addText(htmlspecialchars("Capital risk"), array('underline' => 'single'));
+                    ?>
+                </p>
+                <p>The Company’s objectives when managing capital are:
+                    <?php
+                    $section->addText("The Company’s objectives when managing capital are:", $fontstyleName, $paragraphStyle);
+                    ?>
+                </p>
+
+                <!-- need to add in phpWords unordered list-->
+                <ul>
+                    <li>to safeguard the Company’s ability to continue as a going concern, so that it can continue to provide returns for shareholders and benefits for other stakeholders, and</li>
+                    <li>to provide an adequate return to shareholders by pricing products and services commensurately with the level of risk.</li>
+                </ul>
+
+                <p>The capital structure of the Company consists primarily of equity, comprising issued share capital.
+                    <?php
+                    $section->addText("The capital structure of the Company consists primarily of equity, comprising issued share capital."
+                            , $fontstyleName);
+                    ?>
+                </p>
+                <p>The Company manages its capital structure and makes adjustment to it in light of changes in economic conditions. It may maintain or adjust its capital structure through the payment of dividends, return of capital
+                    or issue of new shares.
+                    <?php
+                    $section->addText("The Company manages its capital structure and makes adjustment to it in light of changes in economic conditions. It may maintain or adjust its capital structure through the payment of dividends, return of capital or issue of new shares."
+                            , $fontstyleName);
+                    ?>
+                </p>
+
+                <li>RELATED PARTY TRANSACTIONS
+                    <?php
+                    $section->addListItem("RELATED PARTY TRANSACTIONS ", 0, $fontstyleName, $nestedListStyle);
+                    ?>
+                </li>
+                <br>
+                <p>Related parties comprise mainly of companies which are controlled or significantly influenced by the Company’s key management personnel and their close family members.
+                    <?php
+                    $section->addText("Related parties comprise mainly of companies which are controlled or significantly influenced by the Company’s key management personnel and their close family members."
+                            , $fontstyleName);
+                    ?>
+                </p>
+                <p>Key management personnel of the Company are those persons having the authority and responsibility for planning, directing and controlling activities of the Company.  The directors and executive officers of the
+                    Company are considered as key management personnel of the Company.
+                    <?php
+                    $section->addText("Key management personnel of the Company are those persons having the authority and responsibility for planning, directing and controlling activities of the Company.  The directors and executive officers of the Company are considered as key management personnel of the Company."
+                            , $fontstyleName);
+                    ?>
+                </p>
+            </ol>
+            <br>
+            <br>
+        </div>
+        <h1> Page 21</h1>
+        <div name='twentyonePage'>
+            <b><?php echo strtoupper($companyName); ?></b>
+            <br/>
+            <?php
+            $section = $phpWord->addSection();
+            $section->addText(strtoupper($companyName), $fontStyleBlack);
+            ?>
+            <b><?php
+                echo "NOTES TO THE FINANCIAL STATEMENTS";
+                echo "<br>";
+                echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
+                $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
+                $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+                ?></b>
+            <hr>
+            <br>
+            <br>
+            <ol start='15'>
+                <li>RELATED PARTY TRANSACTIONS (CONT’D)
+                    <?php
+                    $section->addListItem("RELATED PARTY TRANSACTIONS (CONT’D)", 0, $fontstyleName, $listingStyle, $paragraphStyle);
+                    ?>
+                </li>
+                <br>
+                <p>The inter-company balances are unsecured and interest-free, unless stated otherwise, and are subject to the normal credit terms of the respective parties and are
+                    repayable on demand.
+                    <?php
+                    $section->addText("The inter-company balances are unsecured and interest-free, unless stated otherwise, and are subject to the normal credit terms of the respective parties and are repayable on demand."
+                            , $fontstyleName, $paragraphStyle);
+                    ?>
+                </p>
+
+                <p><u>Key management personnel compensation</u>
+                    <?php
+                    $textrun = $section->addTextRun();
+                    $textrun->addText(htmlspecialchars("Key management personnel compensation"), array('underline' => 'single'));
+                    ?>
+                </p>
+                <p>Director’s remuneration
+                    <?php
+                    $section->addText("Director’s remuneration", $fontstyleName);
+                    ?>
+                </p>
+
+                <li>NEW OR REVISED ACCOUNTING STANDARDS AND INTERPRETATIONS
+                    <?php
+                    $section->addListItem("NEW OR REVISED ACCOUNTING STANDARDS AND INTERPRETATIONS", 0, $fontstyleName, $nestedListStyle);
+                    ?>
+                </li>
+                <br>
+                <p>Certain new standards, amendments and interpretations to existing standards have been published and are mandatory for the Company’s accounting periods beginning on
+                    or after 1 January 2017  or later periods and which the Company has not early adopted.
+                    <?php
+                    $section->addText("Certain new standards, amendments and interpretations to existing standards have been published and are mandatory for the Company’s accounting periods beginning on or after 1 January 2017  or later periods and which the Company has not early adopted."
+                            , $fontstyleName);
+                    ?>
+                </p>
+                <p>The management anticipates that the adoption of the new amendments to FRS in the future periods will not have a material impact on the financial statements of the
+                    Company and of the Company in the period of their initial adoption.
+                    <?php
+                    $section->addText("The management anticipates that the adoption of the new amendments to FRS in the future periods will not have a material impact on the financial statements of the Company and of the Company in the period of their initial adoption."
+                            , $fontstyleName);
+                    ?>
+                </p>
+
+                <li>COMPARATIVE FIGURES
+                    <?php
+                    $section->addListItem("COMPARATIVE FIGURES ", 0, $fontstyleName, $nestedListStyle);
+                    ?>
+                </li>
+                <br>
+                <p>The management anticipates that the adoption of the new amendments to FRS in the future periods will not have a material impact on the financial statements of the
+                    Company and of the Company in the period of their initial adoption.
+                    <?php
+                    $section->addText("The management anticipates that the adoption of the new amendments to FRS in the future periods will not have a material impact on the financial statements of the Company and of the Company in the period of their initial adoption."
+                            , $fontstyleName, $paragraphStyle);
+                    ?>
+                </p>
+
+                <li>COMPARATIVE FIGURES
+                    <?php
+                    $section->addListItem("COMPARATIVE FIGURES ", 0, $fontstyleName, $nestedListStyle);
+                    ?>
+                </li>
+                <br>
+                <p>The financial statements cover the financial period since incorporation on 1 July 2014 to 31 December 2015. This being the first set of financial statements,
+                    there are no comparative.
+                    <?php
+                    $section->addText("The financial statements cover the financial period since incorporation on 1 July 2014 to 31 December 2015. This being the first set of financial statements,there are no comparative."
+                            , $fontstyleName, $paragraphStyle);
+                    ?>
+                </p>
+            </ol>
+            <br>
+            <br>
+            <p>-------------------------------- End of unaudited financial statements --------------------------------
+                <?php
+                $section->addText("End of unaudited financial statements", $fontstyleName, $paragraphStyle);
+                ?>
+            </p>
+        </div>
+        <h1> Page 22</h1>
+        <div name='twentytwoPage'>
+            <center><b><?php echo strtoupper($companyName); ?></b>
+                <br/>
+                <?php
 // Start of Appendix
 // Appendix 1
 
-        $section = $phpWord->addSection();
-        $section->addText(strtoupper($companyName), $fontStyleBlack, $centerAlignment);
-        $section->addText("DETAILED INCOME STATEMENT<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper($yearEndString), $fontStyleBlack, $centerAlignment);
-        $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
-        $table = $section->addTable();
-        $table->addRow();
-        $appendixFirstCell = $cellValue * ($maxColumns - count($years));
-        $table->addCell($appendixFirstCell)->addText("", $fontstyleName, $noSpace);
-        for ($i = 0; $i < count($formatedDate); $i++) {
-            $cell = $table->addCell($cellValue);
-            $dateStart = $formatedDate[$i][0];
-            $dateEnd = $formatedDate[$i][1];
-            if ($i == (count($formatedDate) - 1)) {
-                if (!empty($firstBalanceDate)) {
-                    $dateStart = date_create($firstDateArray[2] . "-" . $firstDateArray[1] . "-" . $firstDateArray[0]);
-                }
-            }
-            $cell->addText(date_format($dateStart, "d.m.Y"), $centerAlignment);
-            $cell->addText("to", $fontstyleName, $centerAlignment);
-            $cell->addText(date_format($dateEnd, "d.m.Y"), $fontstyleBottomUnderline);
-            $cell->addText("$", $fontstyleName, $centerAlignment);
-        }
-
-        $table->addRow();
-        $table->addCell($appendixFirstCell)->addText("Revenue", $fontstyleName);
-        for ($i = 0; $i < count($revenueFinal); $i++) {
-            $cell = $table->addCell($cellValue);
-            $tempValue = $revenueFinal[$i];
-            if ($tempValue == 0) {
-                $tempValue = "-";
-            } else if ($tempValue > 0) {
-                $tempValue = number_format($tempValue);
-            } else {
-                $tempValue = "(" . number_format(abs($tempValue)) . ")";
-            }
-            $cell->addText($tempValue, $fontstyleName, $centerAlignment);
-        }
-
-        for ($i = 0; $i < count($cosFinal); $i++) {
-            $cosFinal[$i] = 0 - $cosFinal[$i];
-        }
-
-        $table->addRow();
-        $table->addCell($appendixFirstCell)->addText("Less: Cost of sales", $fontstyleName, $noSpace);
-        for ($i = 0; $i < count($cosFinal); $i++) {
-            $cell = $table->addCell($cellValue, $cellBottomBorder);
-            $tempValue = $cosFinal[$i];
-            if ($tempValue == 0) {
-                $tempValue = "-";
-            } else if ($tempValue > 0) {
-                $tempValue = number_format($tempValue);
-            } else {
-                $tempValue = "(" . number_format(abs($tempValue)) . ")";
-            }
-            $cell->addText($tempValue, $fontstyleName, $centerAlignment);
-        }
-
-        $table->addRow();
-        $table->addCell($appendixFirstCell)->addText($grossString, $fontStyleBlack);
-        for ($i = 0; $i < count($profitAmount); $i++) {
-            $cell = $table->addCell($cellValue);
-            $tempValue = $profitAmount[$i];
-            if ($tempValue == 0) {
-                $tempValue = "-";
-            } else if ($tempValue > 0) {
-                $tempValue = number_format($tempValue);
-            } else {
-                $tempValue = "(" . number_format(abs($tempValue)) . ")";
-            }
-            $cell->addText($tempValue, $fontstyleName, $centerAlignment);
-        }
-
-        $table->addRow();
-        $table->addCell($appendixFirstCell);
-        $table->addRow();
-        $table->addCell($appendixFirstCell)->addText("Add: Other income", $fontstyleUnderline, $noSpace);
-        $finalTradeGain = array();
-        for ($i = 0; $i < count($tradeGain); $i++) {
-            $tempValue = 0;
-            for ($x = 0; $x < count($tradeGain[$i]); $x++) {
-                $tempValue += $tradeGain[$i][$x][1];
-            }
-            array_push($finalTradeGain, $tempValue);
-        }
-
-        $finalNonTradeGain = array();
-        for ($i = 0; $i < count($nonTradeGain); $i++) {
-            $tempValue = 0;
-            for ($x = 0; $x < count($nonTradeGain[$i]); $x++) {
-                $tempValue += $nonTradeGain[$i][$x][1];
-            }
-            array_push($finalNonTradeGain, $tempValue);
-        }
-
-        $table->addRow();
-        $table->addCell($appendixFirstCell)->addText("Exchange gain - trade", $fontstyleName, $noSpace);
-        for ($i = 0; $i < count($finalTradeGain); $i++) {
-            if (count($finalTradeGain) > 1) {
-                if ($i == 0) {
-                    $cell = $table->addCell($cellValue, $borderTopAndLeft);
-                } else if ($i == count($finalTradeGain) - 1) {
-                    $cell = $table->addCell($cellValue, $borderTopAndRight);
-                } else {
-                    $cell = $table->addCell($cellValue, $borderTop);
-                }
-            } else {
-                $cell = $table->addCell($cellValue, $allBorders);
-            }
-
-            $tempValue = $finalTradeGain[$i];
-            if ($tempValue == 0) {
-                $tempValue = "-";
-            } else if ($tempValue > 0) {
-                $tempValue = number_format($tempValue);
-            } else {
-                $tempValue = "(" . number_format(abs($tempValue)) . ")";
-            }
-            $cell->addText($tempValue, $fontstyleName, $centerAlignment);
-        }
-
-        $table->addRow();
-        $table->addCell($appendixFirstCell)->addText("Exchange gain - non-trade", $fontstyleName, $noSpace);
-        for ($i = 0; $i < count($finalNonTradeGain); $i++) {
-            if (count($finalNonTradeGain) > 1) {
-                if ($i == 0) {
-                    $cell = $table->addCell($cellValue, $borderBottomAndLeft);
-                } else if ($i == count($finalNonTradeGain) - 1) {
-                    $cell = $table->addCell($cellValue, $borderBottomAndRight);
-                } else {
-                    $cell = $table->addCell($cellValue, $cellBottomBorder);
-                }
-            } else {
-                $cell = $table->addCell($cellValue, $allBorders);
-            }
-
-            $tempValue = $finalNonTradeGain[$i];
-            if ($tempValue == 0) {
-                $tempValue = "-";
-            } else if ($tempValue > 0) {
-                $tempValue = number_format($tempValue);
-            } else {
-                $tempValue = "(" . number_format(abs($tempValue)) . ")";
-            }
-            $cell->addText($tempValue, $fontstyleName, $centerAlignment);
-        }
-
-        $table->addRow();
-        $table->addCell($appendixFirstCell);
-        for ($i = 0; $i < count($otherIncome); $i++) {
-            $cell = $table->addCell($cellValue);
-            $tempValue = $otherIncome[$i];
-            if ($tempValue == 0) {
-                $tempValue = "-";
-            } else if ($tempValue > 0) {
-                $tempValue = number_format($tempValue);
-            } else {
-                $tempValue = "(" . number_format(abs($tempValue)) . ")";
-            }
-            $cell->addText($tempValue, $fontstyleName, $centerAlignment);
-        }
-
-        $table->addRow();
-        $table->addCell($appendixFirstCell)->addText("Less: Expenses");
-        $table->addRow();
-        $cell = $table->addCell($appendixFirstCell);
-        $textRun = $cell->createTextRun();
-        $textRun->addText("Administrative expenses ", $fontstyleName, $noSpace);
-        $textRun->addText("(Appendix II)", $fontStyleItalic, $noSpace);
-        for ($i = 0; $i < count($calculatedAdminExpense); $i++) {
-            if (count($calculatedAdminExpense) > 1) {
-                if ($i == 0) {
-                    $cell = $table->addCell($cellValue, $borderTopAndLeft);
-                } else if ($i == count($calculatedAdminExpense) - 1) {
-                    $cell = $table->addCell($cellValue, $borderTopAndRight);
-                } else {
-                    $cell = $table->addCell($cellValue, $borderTop);
-                }
-            } else {
-                $cell = $table->addCell($cellValue, $allBorders);
-            }
-
-            $tempValue = $calculatedAdminExpense[$i];
-            if ($tempValue == 0) {
-                $tempValue = "-";
-            } else {
-                $tempValue = number_format(abs($tempValue));
-            }
-            $cell->addText($tempValue, $fontstyleName, $centerAlignment);
-        }
-
-        $table->addRow();
-        $cell = $table->addCell($appendixFirstCell);
-        $textRun = $cell->createTextRun();
-        $textRun->addText("Distribution and marketing expenses ", $fontstyleName, $noSpace);
-        $textRun->addText("(Appendix II)", $fontStyleItalic, $noSpace);
-        for ($i = 0; $i < count($calculatedDistriExpense); $i++) {
-            if (count($calculatedDistriExpense) > 1) {
-                if ($i == 0) {
-                    $cell = $table->addCell($cellValue, $borderLeft);
-                } else if ($i == count($calculatedDistriExpense) - 1) {
-                    $cell = $table->addCell($cellValue, $borderRight);
-                } else {
+                $section = $phpWord->addSection();
+                $section->addText(strtoupper($companyName), $fontStyleBlack, $centerAlignment);
+                $section->addText("DETAILED INCOME STATEMENT<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper($yearEndString), $fontStyleBlack, $centerAlignment);
+                $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+                $table = $section->addTable();
+                $table->addRow();
+                $appendixFirstCell = $cellValue * ($maxColumns - count($years));
+                $table->addCell($appendixFirstCell)->addText("", $fontstyleName, $noSpace);
+                for ($i = 0; $i < count($formatedDate); $i++) {
                     $cell = $table->addCell($cellValue);
+                    $dateStart = $formatedDate[$i][0];
+                    $dateEnd = $formatedDate[$i][1];
+                    if ($i == (count($formatedDate) - 1)) {
+                        if (!empty($firstBalanceDate)) {
+                            $dateStart = date_create($firstDateArray[2] . "-" . $firstDateArray[1] . "-" . $firstDateArray[0]);
+                        }
+                    }
+                    $cell->addText(date_format($dateStart, "d.m.Y"), $centerAlignment);
+                    $cell->addText("to", $fontstyleName, $centerAlignment);
+                    $cell->addText(date_format($dateEnd, "d.m.Y"), $fontstyleBottomUnderline);
+                    $cell->addText("$", $fontstyleName, $centerAlignment);
                 }
-            }
 
-            $tempValue = $calculatedDistriExpense[$i];
-            if ($tempValue == 0) {
-                $tempValue = "-";
-            } else {
-                $tempValue = number_format(abs($tempValue));
-            }
-            $cell->addText($tempValue, $fontstyleName, $centerAlignment);
-        }
+                $table->addRow();
+                $table->addCell($appendixFirstCell)->addText("Revenue", $fontstyleName);
+                for ($i = 0; $i < count($revenueFinal); $i++) {
+                    $cell = $table->addCell($cellValue);
+                    $tempValue = $revenueFinal[$i];
+                    if ($tempValue == 0) {
+                        $tempValue = "-";
+                    } else if ($tempValue > 0) {
+                        $tempValue = number_format($tempValue);
+                    } else {
+                        $tempValue = "(" . number_format(abs($tempValue)) . ")";
+                    }
+                    $cell->addText($tempValue, $fontstyleName, $centerAlignment);
+                }
 
-        for ($j = 0; $j < count($tempExpenseCategory); $j++) {
-            $table->addRow();
-            $cell = $table->addCell($appendixFirstCell);
-            $textRun = $cell->createTextRun();
-            $textRun->addText($tempExpenseCategory[$j] . " ", $fontstyleName, $noSpace);
-            $textRun->addText("(Appendix II)", $fontStyleItalic, $noSpace);
+                for ($i = 0; $i < count($cosFinal); $i++) {
+                    $cosFinal[$i] = 0 - $cosFinal[$i];
+                }
 
-            for ($i = 0; $i < count($tempExpenseArray[$j]); $i++) {
-                if (count($tempExpenseCategory) > 1) {
-                    if ($j == count($tempExpenseCategory) - 1) {
+                $table->addRow();
+                $table->addCell($appendixFirstCell)->addText("Less: Cost of sales", $fontstyleName, $noSpace);
+                for ($i = 0; $i < count($cosFinal); $i++) {
+                    $cell = $table->addCell($cellValue, $cellBottomBorder);
+                    $tempValue = $cosFinal[$i];
+                    if ($tempValue == 0) {
+                        $tempValue = "-";
+                    } else if ($tempValue > 0) {
+                        $tempValue = number_format($tempValue);
+                    } else {
+                        $tempValue = "(" . number_format(abs($tempValue)) . ")";
+                    }
+                    $cell->addText($tempValue, $fontstyleName, $centerAlignment);
+                }
+
+                $table->addRow();
+                $table->addCell($appendixFirstCell)->addText($grossString, $fontStyleBlack);
+                for ($i = 0; $i < count($profitAmount); $i++) {
+                    $cell = $table->addCell($cellValue);
+                    $tempValue = $profitAmount[$i];
+                    if ($tempValue == 0) {
+                        $tempValue = "-";
+                    } else if ($tempValue > 0) {
+                        $tempValue = number_format($tempValue);
+                    } else {
+                        $tempValue = "(" . number_format(abs($tempValue)) . ")";
+                    }
+                    $cell->addText($tempValue, $fontstyleName, $centerAlignment);
+                }
+
+                $table->addRow();
+                $table->addCell($appendixFirstCell);
+                $table->addRow();
+                $table->addCell($appendixFirstCell)->addText("Add: Other income", $fontstyleUnderline, $noSpace);
+                $finalTradeGain = array();
+                for ($i = 0; $i < count($tradeGain); $i++) {
+                    $tempValue = 0;
+                    for ($x = 0; $x < count($tradeGain[$i]); $x++) {
+                        $tempValue += $tradeGain[$i][$x][1];
+                    }
+                    array_push($finalTradeGain, $tempValue);
+                }
+
+                $finalNonTradeGain = array();
+                for ($i = 0; $i < count($nonTradeGain); $i++) {
+                    $tempValue = 0;
+                    for ($x = 0; $x < count($nonTradeGain[$i]); $x++) {
+                        $tempValue += $nonTradeGain[$i][$x][1];
+                    }
+                    array_push($finalNonTradeGain, $tempValue);
+                }
+
+                $table->addRow();
+                $table->addCell($appendixFirstCell)->addText("Exchange gain - trade", $fontstyleName, $noSpace);
+                for ($i = 0; $i < count($finalTradeGain); $i++) {
+                    if (count($finalTradeGain) > 1) {
+                        if ($i == 0) {
+                            $cell = $table->addCell($cellValue, $borderTopAndLeft);
+                        } else if ($i == count($finalTradeGain) - 1) {
+                            $cell = $table->addCell($cellValue, $borderTopAndRight);
+                        } else {
+                            $cell = $table->addCell($cellValue, $borderTop);
+                        }
+                    } else {
+                        $cell = $table->addCell($cellValue, $allBorders);
+                    }
+
+                    $tempValue = $finalTradeGain[$i];
+                    if ($tempValue == 0) {
+                        $tempValue = "-";
+                    } else if ($tempValue > 0) {
+                        $tempValue = number_format($tempValue);
+                    } else {
+                        $tempValue = "(" . number_format(abs($tempValue)) . ")";
+                    }
+                    $cell->addText($tempValue, $fontstyleName, $centerAlignment);
+                }
+
+                $table->addRow();
+                $table->addCell($appendixFirstCell)->addText("Exchange gain - non-trade", $fontstyleName, $noSpace);
+                for ($i = 0; $i < count($finalNonTradeGain); $i++) {
+                    if (count($finalNonTradeGain) > 1) {
                         if ($i == 0) {
                             $cell = $table->addCell($cellValue, $borderBottomAndLeft);
-                        } else if ($i == count($tempExpenseArray[$j]) - 1) {
+                        } else if ($i == count($finalNonTradeGain) - 1) {
                             $cell = $table->addCell($cellValue, $borderBottomAndRight);
                         } else {
                             $cell = $table->addCell($cellValue, $cellBottomBorder);
                         }
                     } else {
+                        $cell = $table->addCell($cellValue, $allBorders);
+                    }
+
+                    $tempValue = $finalNonTradeGain[$i];
+                    if ($tempValue == 0) {
+                        $tempValue = "-";
+                    } else if ($tempValue > 0) {
+                        $tempValue = number_format($tempValue);
+                    } else {
+                        $tempValue = "(" . number_format(abs($tempValue)) . ")";
+                    }
+                    $cell->addText($tempValue, $fontstyleName, $centerAlignment);
+                }
+
+                $table->addRow();
+                $table->addCell($appendixFirstCell);
+                for ($i = 0; $i < count($otherIncome); $i++) {
+                    $cell = $table->addCell($cellValue);
+                    $tempValue = $otherIncome[$i];
+                    if ($tempValue == 0) {
+                        $tempValue = "-";
+                    } else if ($tempValue > 0) {
+                        $tempValue = number_format($tempValue);
+                    } else {
+                        $tempValue = "(" . number_format(abs($tempValue)) . ")";
+                    }
+                    $cell->addText($tempValue, $fontstyleName, $centerAlignment);
+                }
+
+                $table->addRow();
+                $table->addCell($appendixFirstCell)->addText("Less: Expenses");
+                $table->addRow();
+                $cell = $table->addCell($appendixFirstCell);
+                $textRun = $cell->createTextRun();
+                $textRun->addText("Administrative expenses ", $fontstyleName, $noSpace);
+                $textRun->addText("(Appendix II)", $fontStyleItalic, $noSpace);
+                for ($i = 0; $i < count($calculatedAdminExpense); $i++) {
+                    if (count($calculatedAdminExpense) > 1) {
+                        if ($i == 0) {
+                            $cell = $table->addCell($cellValue, $borderTopAndLeft);
+                        } else if ($i == count($calculatedAdminExpense) - 1) {
+                            $cell = $table->addCell($cellValue, $borderTopAndRight);
+                        } else {
+                            $cell = $table->addCell($cellValue, $borderTop);
+                        }
+                    } else {
+                        $cell = $table->addCell($cellValue, $allBorders);
+                    }
+
+                    $tempValue = $calculatedAdminExpense[$i];
+                    if ($tempValue == 0) {
+                        $tempValue = "-";
+                    } else {
+                        $tempValue = number_format(abs($tempValue));
+                    }
+                    $cell->addText($tempValue, $fontstyleName, $centerAlignment);
+                }
+
+                $table->addRow();
+                $cell = $table->addCell($appendixFirstCell);
+                $textRun = $cell->createTextRun();
+                $textRun->addText("Distribution and marketing expenses ", $fontstyleName, $noSpace);
+                $textRun->addText("(Appendix II)", $fontStyleItalic, $noSpace);
+                for ($i = 0; $i < count($calculatedDistriExpense); $i++) {
+                    if (count($calculatedDistriExpense) > 1) {
                         if ($i == 0) {
                             $cell = $table->addCell($cellValue, $borderLeft);
-                        } else if ($i == count($tempExpenseArray[$j]) - 1) {
+                        } else if ($i == count($calculatedDistriExpense) - 1) {
                             $cell = $table->addCell($cellValue, $borderRight);
                         } else {
                             $cell = $table->addCell($cellValue);
                         }
                     }
-                } else {
-                    if (count($tempExpenseArray[$j]) > 1) {
-                        if ($i == 0) {
-                            $cell = $table->addCell($cellValue, $borderBottomAndLeft);
-                        } else if ($i == (count($tempExpenseArray[$j]) - 1)) {
-                            $cell = $table->addCell($cellValue, $borderBottomAndRight);
+
+                    $tempValue = $calculatedDistriExpense[$i];
+                    if ($tempValue == 0) {
+                        $tempValue = "-";
+                    } else {
+                        $tempValue = number_format(abs($tempValue));
+                    }
+                    $cell->addText($tempValue, $fontstyleName, $centerAlignment);
+                }
+
+                for ($j = 0; $j < count($tempExpenseCategory); $j++) {
+                    $table->addRow();
+                    $cell = $table->addCell($appendixFirstCell);
+                    $textRun = $cell->createTextRun();
+                    $textRun->addText($tempExpenseCategory[$j] . " ", $fontstyleName, $noSpace);
+                    $textRun->addText("(Appendix II)", $fontStyleItalic, $noSpace);
+
+                    for ($i = 0; $i < count($tempExpenseArray[$j]); $i++) {
+                        if (count($tempExpenseCategory) > 1) {
+                            if ($j == count($tempExpenseCategory) - 1) {
+                                if ($i == 0) {
+                                    $cell = $table->addCell($cellValue, $borderBottomAndLeft);
+                                } else if ($i == count($tempExpenseArray[$j]) - 1) {
+                                    $cell = $table->addCell($cellValue, $borderBottomAndRight);
+                                } else {
+                                    $cell = $table->addCell($cellValue, $cellBottomBorder);
+                                }
+                            } else {
+                                if ($i == 0) {
+                                    $cell = $table->addCell($cellValue, $borderLeft);
+                                } else if ($i == count($tempExpenseArray[$j]) - 1) {
+                                    $cell = $table->addCell($cellValue, $borderRight);
+                                } else {
+                                    $cell = $table->addCell($cellValue);
+                                }
+                            }
                         } else {
-                            $cell = $table->addCell($cellValue, $cellBottomBorder);
+                            if (count($tempExpenseArray[$j]) > 1) {
+                                if ($i == 0) {
+                                    $cell = $table->addCell($cellValue, $borderBottomAndLeft);
+                                } else if ($i == (count($tempExpenseArray[$j]) - 1)) {
+                                    $cell = $table->addCell($cellValue, $borderBottomAndRight);
+                                } else {
+                                    $cell = $table->addCell($cellValue, $cellBottomBorder);
+                                }
+                            }
                         }
+
+
+                        $tempValue = $tempExpenseArray[$j][$i];
+                        if ($tempValue == 0) {
+                            $tempValue = "-";
+                        } else {
+                            $tempValue = number_format(abs($tempValue));
+                        }
+                        $cell->addText($tempValue, $fontstyleName, $centerAlignment);
                     }
                 }
 
-
-                $tempValue = $tempExpenseArray[$j][$i];
-                if ($tempValue == 0) {
-                    $tempValue = "-";
-                } else {
-                    $tempValue = number_format(abs($tempValue));
+                $table->addRow();
+                $table->addCell($appendixFirstCell);
+                for ($i = 0; $i < count($totalExpenses); $i++) {
+                    $cell = $table->addCell($cellValue, $cellBottomBorder);
+                    $tempValue = $totalExpenses[$i];
+                    if ($tempValue == 0) {
+                        $tempValue = "-";
+                    } else if ($tempValue > 0) {
+                        $tempValue = number_format($tempValue);
+                    } else {
+                        $tempValue = "(" . number_format(abs($tempValue)) . ")";
+                    }
+                    $cell->addText($tempValue, $fontstyleName, $centerAlignment);
                 }
-                $cell->addText($tempValue, $fontstyleName, $centerAlignment);
-            }
-        }
 
-        $table->addRow();
-        $table->addCell($appendixFirstCell);
-        for ($i = 0; $i < count($totalExpenses); $i++) {
-            $cell = $table->addCell($cellValue, $cellBottomBorder);
-            $tempValue = $totalExpenses[$i];
-            if ($tempValue == 0) {
-                $tempValue = "-";
-            } else if ($tempValue > 0) {
-                $tempValue = number_format($tempValue);
-            } else {
-                $tempValue = "(" . number_format(abs($tempValue)) . ")";
-            }
-            $cell->addText($tempValue, $fontstyleName, $centerAlignment);
-        }
-
-        $table->addRow();
-        $table->addCell($appendixFirstCell)->addText($beforeTaxString, $fontStyleBlack);
-        for ($i = 0; $i < count($beforeIncomeTax); $i++) {
-            $cell = $table->addCell($cellValue, array('borderBottomSize' => 18, 'borderBottomColor' => '#000000'));
-            $tempValue = $beforeIncomeTax[$i];
-            if ($tempValue == 0) {
-                $tempValue = "-";
-            } else if ($tempValue > 0) {
-                $tempValue = number_format($tempValue);
-            } else {
-                $tempValue = "(" . number_format(abs($tempValue)) . ")";
-            }
-            $cell->addText($tempValue, $fontstyleName, $centerAlignment);
-        }
-        ?>
-        <b><?php
-        echo "DETAILED INCOME STATEMENT";
-        echo "<br>";
-        echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
-        $section->addText("DETAILED INCOME STATEMENT<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-        $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
-        ?></b>
-        <hr>
-        <br>
-        <br></center>
-    <p>Revenue</p>
-    <p>Less: Cost of sales<br>
-        <b>Gross profit</b></p>
-    <p><u>Add: Other income:</u><br>
-        Exchange gain - trade<br>
-        Exchange gain - non-trade</p>
-    <p><u>Less: Expenses</u>
-        Administrative expenses (Appendix II)<br>
-        Distribution and marketing expenses (Appendix II)<br>
-        Finance expense (Appendix II)</p>
-    <p><b>Profit before income  tax</b></p>
-    <br>
-    <br>
-    <p><center>Does not form part of the unaudited financial statements </center></p>
-</div>
-<h1> Page 23</h1>
-<div name='twentythreePage'>
-    <center><b><?php echo strtoupper($companyName); ?></b>
-        <br/>
-        <?php
+                $table->addRow();
+                $table->addCell($appendixFirstCell)->addText($beforeTaxString, $fontStyleBlack);
+                for ($i = 0; $i < count($beforeIncomeTax); $i++) {
+                    $cell = $table->addCell($cellValue, array('borderBottomSize' => 18, 'borderBottomColor' => '#000000'));
+                    $tempValue = $beforeIncomeTax[$i];
+                    if ($tempValue == 0) {
+                        $tempValue = "-";
+                    } else if ($tempValue > 0) {
+                        $tempValue = number_format($tempValue);
+                    } else {
+                        $tempValue = "(" . number_format(abs($tempValue)) . ")";
+                    }
+                    $cell->addText($tempValue, $fontstyleName, $centerAlignment);
+                }
+                ?>
+                <b><?php
+                    echo "DETAILED INCOME STATEMENT";
+                    echo "<br>";
+                    echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
+                    $section->addText("DETAILED INCOME STATEMENT<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
+                    $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+                    ?></b>
+                <hr>
+                <br>
+                <br></center>
+            <p>Revenue</p>
+            <p>Less: Cost of sales<br>
+                <b>Gross profit</b></p>
+            <p><u>Add: Other income:</u><br>
+                Exchange gain - trade<br>
+                Exchange gain - non-trade</p>
+            <p><u>Less: Expenses</u>
+                Administrative expenses (Appendix II)<br>
+                Distribution and marketing expenses (Appendix II)<br>
+                Finance expense (Appendix II)</p>
+            <p><b>Profit before income  tax</b></p>
+            <br>
+            <br>
+            <p><center>Does not form part of the unaudited financial statements </center></p>
+        </div>
+        <h1> Page 23</h1>
+        <div name='twentythreePage'>
+            <center><b><?php echo strtoupper($companyName); ?></b>
+                <br/>
+                <?php
 // Appendix 2
-        $section = $phpWord->addSection();
-        $section->addText(strtoupper($companyName), $fontStyleBlack, $centerAlignment);
-        $section->addText("DETAILED INCOME STATEMENT<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper($yearEndString), $fontStyleBlack, $centerAlignment);
-        $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
-        $table = $section->addTable();
-        $table->addRow();
-        $appendixFirstCell = $cellValue * ($maxColumns - count($years));
-        $table->addCell($appendixFirstCell)->addText("", $fontstyleName, $noSpace);
-        for ($i = 0; $i < count($formatedDate); $i++) {
-            $cell = $table->addCell($cellValue);
-            $dateStart = $formatedDate[$i][0];
-            $dateEnd = $formatedDate[$i][1];
-            if ($i == (count($formatedDate) - 1)) {
-                if (!empty($firstBalanceDate)) {
-                    $dateStart = date_create($firstDateArray[2] . "-" . $firstDateArray[1] . "-" . $firstDateArray[0]);
+                $section = $phpWord->addSection();
+                $section->addText(strtoupper($companyName), $fontStyleBlack, $centerAlignment);
+                $section->addText("DETAILED INCOME STATEMENT<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper($yearEndString), $fontStyleBlack, $centerAlignment);
+                $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+                $table = $section->addTable();
+                $table->addRow();
+                $appendixFirstCell = $cellValue * ($maxColumns - count($years));
+                $table->addCell($appendixFirstCell)->addText("", $fontstyleName, $noSpace);
+                for ($i = 0; $i < count($formatedDate); $i++) {
+                    $cell = $table->addCell($cellValue);
+                    $dateStart = $formatedDate[$i][0];
+                    $dateEnd = $formatedDate[$i][1];
+                    if ($i == (count($formatedDate) - 1)) {
+                        if (!empty($firstBalanceDate)) {
+                            $dateStart = date_create($firstDateArray[2] . "-" . $firstDateArray[1] . "-" . $firstDateArray[0]);
+                        }
+                    }
+                    $cell->addText(date_format($dateStart, "d.m.Y"), $centerAlignment);
+                    $cell->addText("to", $fontstyleName, $centerAlignment);
+                    $cell->addText(date_format($dateEnd, "d.m.Y"), $fontstyleBottomUnderline);
+                    $cell->addText("$", $fontstyleName, $centerAlignment);
                 }
-            }
-            $cell->addText(date_format($dateStart, "d.m.Y"), $centerAlignment);
-            $cell->addText("to", $fontstyleName, $centerAlignment);
-            $cell->addText(date_format($dateEnd, "d.m.Y"), $fontstyleBottomUnderline);
-            $cell->addText("$", $fontstyleName, $centerAlignment);
-        }
 
-        $finalAdminAccountName = array();
-        $finalAdminAccountAmount = array();
-        for ($i = 0; $i < count($adminAccount); $i++) {
-            for ($x = 0; $x < count($adminAccount[$i]); $x++) {
-                // $finalAdminAccountAmount[$x] = array();
-                $tempValue = 0;
-                $key = false;
-                for ($j = 0; $j < count($finalAdminAccountName); $j++) {
-                    $currentAccount = $finalAdminAccountName[$j];
-                    if (stripos($currentAccount, $adminAccount[$i][$x][0]) !== false || stripos($adminAccount[$i][$x][0], $currentAccount) !== false) {
-                        $key = $j;
-                        break;
+                $finalAdminAccountName = array();
+                $finalAdminAccountAmount = array();
+                for ($i = 0; $i < count($adminAccount); $i++) {
+                    for ($x = 0; $x < count($adminAccount[$i]); $x++) {
+                        // $finalAdminAccountAmount[$x] = array();
+                        $tempValue = 0;
+                        $key = false;
+                        for ($j = 0; $j < count($finalAdminAccountName); $j++) {
+                            $currentAccount = $finalAdminAccountName[$j];
+                            if (stripos($currentAccount, $adminAccount[$i][$x][0]) !== false || stripos($adminAccount[$i][$x][0], $currentAccount) !== false) {
+                                $key = $j;
+                                break;
+                            }
+                        }
+                        if (!is_bool($key)) {
+                            if (isset($finalAdminAccountAmount[$key][$i])) {
+                                $tempValue = $finalAdminAccountAmount[$key][$i];
+                            }
+                            $finalAdminAccountAmount[$key][$i] = $tempValue += $adminAccount[$i][$x][1];
+                        } else {
+                            array_push($finalAdminAccountName, $adminAccount[$i][$x][0]);
+                            if (stripos($finalAdminAccountName[$x], $adminAccount[$i][$x][0]) !== false) {
+                                $tempValue += $adminAccount[$i][$x][1];
+                                $finalAdminAccountAmount[$x][$i] = $tempValue;
+                            } else {
+                                $finalAdminAccountAmount[count($finalAdminAccountAmount)][$i] = $adminAccount[$i][$x][1];
+                            }
+                        }
                     }
                 }
-                if (!is_bool($key)) {
-                    if (isset($finalAdminAccountAmount[$key][$i])) {
-                        $tempValue = $finalAdminAccountAmount[$key][$i];
+
+                for ($i = 0; $i < count($finalAdminAccountAmount); $i++) {
+                    for ($x = 0; $x < count($years); $x++) {
+                        if (!isset($finalAdminAccountAmount[$i][$x])) {
+                            $finalAdminAccountAmount[$i][$x] = 0;
+                        } else {
+                            $finalAdminAccountAmount[$i][$x] = round($finalAdminAccountAmount[$i][$x]);
+                        }
                     }
-                    $finalAdminAccountAmount[$key][$i] = $tempValue += $adminAccount[$i][$x][1];
-                } else {
-                    array_push($finalAdminAccountName, $adminAccount[$i][$x][0]);
-                    if (stripos($finalAdminAccountName[$x], $adminAccount[$i][$x][0]) !== false) {
-                        $tempValue += $adminAccount[$i][$x][1];
-                        $finalAdminAccountAmount[$x][$i] = $tempValue;
+                }
+
+                $table->addRow();
+                $table->addCell($appendixFirstCell)->addText("Administrative expenses", $fontstyleBottomUnderline);
+                for ($i = 0; $i < count($finalAdminAccountAmount); $i++) {
+                    $table->addRow();
+                    $table->addCell($appendixFirstCell)->addText(htmlspecialchars($finalAdminAccountName[$i]), $fontstyleName, $noSpace);
+                    for ($x = 0; $x < count($finalAdminAccountAmount[$i]); $x++) {
+                        if (count($finalAdminAccountName) > 1) {
+                            if ($i == count($finalAdminAccountAmount) - 1) {
+                                if ($x == count($finalAdminAccountAmount[$i]) - 1) {
+                                    $cell = $table->addCell($cellValue, $borderBottomAndRight);
+                                } else if ($x == 0) {
+                                    $cell = $table->addCell($cellValue, $borderBottomAndLeft);
+                                } else {
+                                    $cell = $table->addCell($cellValue, $cellBottomBorder);
+                                }
+                            } else if ($i == 0) {
+                                if ($x == count($finalAdminAccountAmount[$i]) - 1) {
+                                    $cell = $table->addCell($cellValue, $borderTopAndRight);
+                                } else if ($x == 0) {
+                                    $cell = $table->addCell($cellValue, $borderTopAndLeft);
+                                } else {
+                                    $cell = $table->addCell($cellValue, $borderTop);
+                                }
+                            } else {
+                                if ($x == count($finalAdminAccountAmount[$i]) - 1) {
+                                    $cell = $table->addCell($cellValue, $borderRight);
+                                } else if ($x == 0) {
+                                    $cell = $table->addCell($cellValue, $borderLeft);
+                                } else {
+                                    $cell = $table->addCell($cellValue);
+                                }
+                            }
+                        } else {
+                            $cell = $table->addCell($cellValue, $allBorders);
+                        }
+
+                        $tempValue = $finalAdminAccountAmount[$i][$x];
+                        if ($tempValue == 0) {
+                            $tempValue = "-";
+                        } else if ($tempValue > 0) {
+                            $tempValue = number_format($tempValue);
+                        } else {
+                            $tempValue = "(" . number_format(abs($tempValue)) . ")";
+                        }
+                        $cell->addText($tempValue, $fontstyleName, $centerAlignment);
+                    }
+                }
+
+
+                for ($i = 0; $i < count($calculatedAdminExpense); $i++) {
+                    $calculatedAdminExpense[$i] = 0 - $calculatedAdminExpense[$i];
+                }
+
+                $table->addRow();
+                $table->addCell($appendixFirstCell);
+                for ($i = 0; $i < count($calculatedAdminExpense); $i++) {
+                    $cell = $table->addCell($cellValue);
+                    $tempValue = $calculatedAdminExpense[$i];
+                    if ($tempValue == 0) {
+                        $tempValue = "-";
                     } else {
-                        $finalAdminAccountAmount[count($finalAdminAccountAmount)][$i] = $adminAccount[$i][$x][1];
+                        $tempValue = "(" . number_format(abs($tempValue)) . ")";
+                    }
+                    $cell->addText($tempValue, $fontstyleName, $centerAlignment);
+                }
+
+                $finalDistriAccountName = array();
+                $finalDistriAccountAmount = array();
+                for ($i = 0; $i < count($distriAccount); $i++) {
+                    for ($x = 0; $x < count($distriAccount[$i]); $x++) {
+                        $tempValue = 0;
+                        $key = false;
+                        for ($j = 0; $j < count($finalDistriAccountName); $j++) {
+                            $currentAccount = $finalDistriAccountName[$j];
+                            if (stripos($currentAccount, $distriAccount[$i][$x][0]) !== false || stripos($distriAccount[$i][$x][0], $currentAccount) !== false) {
+                                $key = $j;
+                                break;
+                            }
+                        }
+                        if (!is_bool($key)) {
+                            if (isset($finalDistriAccountAmount[$key][$i])) {
+                                $tempValue = $finalDistriAccountAmount[$key][$i];
+                            }
+                            $finalDistriAccountAmount[$key][$i] = $tempValue += $distriAccount[$i][$x][1];
+                        } else {
+                            array_push($finalDistriAccountName, $distriAccount[$i][$x][0]);
+                            if (stripos($finalDistriAccountName[$x], $distriAccount[$i][$x][0]) !== false) {
+                                $tempValue += $distriAccount[$i][$x][1];
+                                $finalDistriAccountAmount[$x][$i] = $tempValue;
+                            } else {
+                                $finalDistriAccountAmount[count($finalDistriAccountAmount)][$i] = $distriAccount[$i][$x][1];
+                            }
+                        }
                     }
                 }
-            }
-        }
 
-        for ($i = 0; $i < count($finalAdminAccountAmount); $i++) {
-            for ($x = 0; $x < count($years); $x++) {
-                if (!isset($finalAdminAccountAmount[$i][$x])) {
-                    $finalAdminAccountAmount[$i][$x] = 0;
-                } else {
-                    $finalAdminAccountAmount[$i][$x] = round($finalAdminAccountAmount[$i][$x]);
+                $table->addRow();
+                $table->addCell($appendixFirstCell)->addText("Distribution and marketing expenses", $fontstyleBottomUnderline, $noSpace);
+
+                for ($i = 0; $i < count($finalDistriAccountAmount); $i++) {
+                    for ($x = 0; $x < count($years); $x++) {
+                        if (!isset($finalDistriAccountAmount[$i][$x])) {
+                            $finalDistriAccountAmount[$i][$x] = 0;
+                        } else {
+                            $finalDistriAccountAmount[$i][$x] = round($finalDistriAccountAmount[$i][$x]);
+                        }
+                    }
                 }
-            }
-        }
 
-        $table->addRow();
-        $table->addCell($appendixFirstCell)->addText("Administrative expenses", $fontstyleBottomUnderline);
-        for ($i = 0; $i < count($finalAdminAccountAmount); $i++) {
-            $table->addRow();
-            $table->addCell($appendixFirstCell)->addText(htmlspecialchars($finalAdminAccountName[$i]), $fontstyleName, $noSpace);
-            for ($x = 0; $x < count($finalAdminAccountAmount[$i]); $x++) {
-                if (count($finalAdminAccountName) > 1) {
-                    if ($i == count($finalAdminAccountAmount) - 1) {
-                        if ($x == count($finalAdminAccountAmount[$i]) - 1) {
-                            $cell = $table->addCell($cellValue, $borderBottomAndRight);
-                        } else if ($x == 0) {
-                            $cell = $table->addCell($cellValue, $borderBottomAndLeft);
+                for ($i = 0; $i < count($finalDistriAccountAmount); $i++) {
+                    $table->addRow();
+                    $table->addCell($appendixFirstCell)->addText(htmlspecialchars($finalDistriAccountName[$i]), $fontstyleName, $noSpace);
+                    for ($x = 0; $x < count($finalDistriAccountAmount[$i]); $x++) {
+                        if (count($finalDistriAccountName) > 1) {
+                            if ($i == count($finalDistriAccountAmount) - 1) {
+                                if ($x == count($finalDistriAccountAmount[$i]) - 1) {
+                                    $cell = $table->addCell($cellValue, $borderBottomAndRight);
+                                } else if ($x == 0) {
+                                    $cell = $table->addCell($cellValue, $borderBottomAndLeft);
+                                } else {
+                                    $cell = $table->addCell($cellValue, $cellBottomBorder);
+                                }
+                            } else if ($i == 0) {
+                                if ($x == count($finalDistriAccountAmount[$i]) - 1) {
+                                    $cell = $table->addCell($cellValue, $borderTopAndRight);
+                                } else if ($x == 0) {
+                                    $cell = $table->addCell($cellValue, $borderTopAndLeft);
+                                } else {
+                                    $cell = $table->addCell($cellValue, $borderTop);
+                                }
+                            } else {
+                                if ($x == count($finalDistriAccountAmount[$i]) - 1) {
+                                    $cell = $table->addCell($cellValue, $borderRight);
+                                } else if ($x == 0) {
+                                    $cell = $table->addCell($cellValue, $borderLeft);
+                                } else {
+                                    $cell = $table->addCell($cellValue);
+                                }
+                            }
                         } else {
-                            $cell = $table->addCell($cellValue, $cellBottomBorder);
+                            $cell = $table->addCell($cellValue, $allBorders);
                         }
-                    } else if ($i == 0) {
-                        if ($x == count($finalAdminAccountAmount[$i]) - 1) {
-                            $cell = $table->addCell($cellValue, $borderTopAndRight);
-                        } else if ($x == 0) {
-                            $cell = $table->addCell($cellValue, $borderTopAndLeft);
+
+                        $tempValue = $finalDistriAccountAmount[$i][$x];
+                        if ($tempValue == 0) {
+                            $tempValue = "-";
+                        } else if ($tempValue > 0) {
+                            $tempValue = number_format($tempValue);
                         } else {
-                            $cell = $table->addCell($cellValue, $borderTop);
+                            $tempValue = "(" . number_format(abs($tempValue)) . ")";
                         }
+                        $cell->addText($tempValue, $fontstyleName, $centerAlignment);
+                    }
+                }
+
+
+                for ($i = 0; $i < count($calculatedDistriExpense); $i++) {
+                    $calculatedDistriExpense[$i] = 0 - $calculatedDistriExpense[$i];
+                }
+
+                $table->addRow();
+                $table->addCell($appendixFirstCell);
+                for ($i = 0; $i < count($calculatedDistriExpense); $i++) {
+                    $cell = $table->addCell($cellValue);
+                    $tempValue = $calculatedDistriExpense[$i];
+                    if ($tempValue == 0) {
+                        $tempValue = "-";
                     } else {
-                        if ($x == count($finalAdminAccountAmount[$i]) - 1) {
-                            $cell = $table->addCell($cellValue, $borderRight);
-                        } else if ($x == 0) {
-                            $cell = $table->addCell($cellValue, $borderLeft);
+                        $tempValue = "(" . number_format(abs($tempValue)) . ")";
+                    }
+                    $cell->addText($tempValue, $fontstyleName, $centerAlignment);
+                }
+
+                $table->addRow();
+                $table->addCell($appendixFirstCell)->addText("Finance expenses", $fontstyleBottomUnderline, $noSpace);
+                $finalFinanceAccountName = array();
+                $finalFinanceAccountAmount = array();
+                for ($i = 0; $i < count($financeExpenseArray); $i++) {
+                    for ($x = 0; $x < count($financeExpenseArray[$i]); $x++) {
+                        $tempValue = 0;
+                        $key = false;
+                        for ($j = 0; $j < count($finalFinanceAccountName); $j++) {
+                            $currentAccount = $finalFinanceAccountName[$j];
+                            if (stripos($currentAccount, $financeExpenseArray[$i][$x][0]) !== false || stripos($financeExpenseArray[$i][$x][0], $currentAccount) !== false) {
+                                $key = $j;
+                                break;
+                            }
+                        }
+                        if (!is_bool($key)) {
+                            if (isset($finalFinanceAccountAmount[$key][$i])) {
+                                $tempValue = $finalFinanceAccountAmount[$key][$i];
+                            }
+                            $finalFinanceAccountAmount[$key][$i] = $tempValue += $financeExpenseArray[$i][$x][1];
                         } else {
-                            $cell = $table->addCell($cellValue);
+                            array_push($finalFinanceAccountName, $financeExpenseArray[$i][$x][0]);
+                            if (stripos($finalFinanceAccountName[$x], $financeExpenseArray[$i][$x][0]) !== false) {
+                                $tempValue += $financeExpenseArray[$i][$x][1];
+                                $finalFinanceAccountAmount[$x][$i] = $tempValue;
+                            } else {
+                                $finalFinanceAccountAmount[count($finalFinanceAccountAmount)][$i] = $financeExpenseArray[$i][$x][1];
+                            }
                         }
                     }
-                } else {
-                    $cell = $table->addCell($cellValue, $allBorders);
                 }
 
-                $tempValue = $finalAdminAccountAmount[$i][$x];
-                if ($tempValue == 0) {
-                    $tempValue = "-";
-                } else if ($tempValue > 0) {
-                    $tempValue = number_format($tempValue);
-                } else {
-                    $tempValue = "(" . number_format(abs($tempValue)) . ")";
-                }
-                $cell->addText($tempValue, $fontstyleName, $centerAlignment);
-            }
-        }
-
-
-        for ($i = 0; $i < count($calculatedAdminExpense); $i++) {
-            $calculatedAdminExpense[$i] = 0 - $calculatedAdminExpense[$i];
-        }
-
-        $table->addRow();
-        $table->addCell($appendixFirstCell);
-        for ($i = 0; $i < count($calculatedAdminExpense); $i++) {
-            $cell = $table->addCell($cellValue);
-            $tempValue = $calculatedAdminExpense[$i];
-            if ($tempValue == 0) {
-                $tempValue = "-";
-            } else {
-                $tempValue = "(" . number_format(abs($tempValue)) . ")";
-            }
-            $cell->addText($tempValue, $fontstyleName, $centerAlignment);
-        }
-
-        $finalDistriAccountName = array();
-        $finalDistriAccountAmount = array();
-        for ($i = 0; $i < count($distriAccount); $i++) {
-            for ($x = 0; $x < count($distriAccount[$i]); $x++) {
-                $tempValue = 0;
-                $key = false;
-                for ($j = 0; $j < count($finalDistriAccountName); $j++) {
-                    $currentAccount = $finalDistriAccountName[$j];
-                    if (stripos($currentAccount, $distriAccount[$i][$x][0]) !== false || stripos($distriAccount[$i][$x][0], $currentAccount) !== false) {
-                        $key = $j;
-                        break;
+                for ($i = 0; $i < count($finalFinanceAccountAmount); $i++) {
+                    for ($x = 0; $x < count($years); $x++) {
+                        if (!isset($finalFinanceAccountAmount[$i][$x])) {
+                            $finalFinanceAccountAmount[$i][$x] = 0;
+                        } else {
+                            $finalFinanceAccountAmount[$i][$x] = round($finalFinanceAccountAmount[$i][$x]);
+                        }
                     }
                 }
-                if (!is_bool($key)) {
-                    if (isset($finalDistriAccountAmount[$key][$i])) {
-                        $tempValue = $finalDistriAccountAmount[$key][$i];
+
+                for ($i = 0; $i < count($finalFinanceAccountAmount); $i++) {
+                    $table->addRow();
+                    $table->addCell($appendixFirstCell)->addText(htmlspecialchars($finalFinanceAccountName[$i]), $fontstyleName, $noSpace);
+                    for ($x = 0; $x < count($finalFinanceAccountAmount[$i]); $x++) {
+                        if (count($finalFinanceAccountName) > 1) {
+                            if ($i == count($finalFinanceAccountAmount) - 1) {
+                                if ($x == count($finalFinanceAccountAmount[$i]) - 1) {
+                                    $cell = $table->addCell($cellValue, $borderBottomAndRight);
+                                } else if ($x == 0) {
+                                    $cell = $table->addCell($cellValue, $borderBottomAndLeft);
+                                } else {
+                                    $cell = $table->addCell($cellValue, $cellBottomBorder);
+                                }
+                            } else if ($i == 0) {
+                                if ($x == count($finalFinanceAccountAmount[$i]) - 1) {
+                                    $cell = $table->addCell($cellValue, $borderTopAndRight);
+                                } else if ($x == 0) {
+                                    $cell = $table->addCell($cellValue, $borderTopAndLeft);
+                                } else {
+                                    $cell = $table->addCell($cellValue, $borderTop);
+                                }
+                            } else {
+                                if ($x == count($finalFinanceAccountAmount[$i]) - 1) {
+                                    $cell = $table->addCell($cellValue, $borderRight);
+                                } else if ($x == 0) {
+                                    $cell = $table->addCell($cellValue, $borderLeft);
+                                } else {
+                                    $cell = $table->addCell($cellValue);
+                                }
+                            }
+                        } else {
+                            $cell = $table->addCell($cellValue, $allBorders);
+                        }
+
+                        $tempValue = $finalFinanceAccountAmount[$i][$x];
+                        if ($tempValue == 0) {
+                            $tempValue = "-";
+                        } else if ($tempValue > 0) {
+                            $tempValue = number_format($tempValue);
+                        } else {
+                            $tempValue = "(" . number_format(abs($tempValue)) . ")";
+                        }
+                        $cell->addText($tempValue, $fontstyleName, $centerAlignment);
                     }
-                    $finalDistriAccountAmount[$key][$i] = $tempValue += $distriAccount[$i][$x][1];
-                } else {
-                    array_push($finalDistriAccountName, $distriAccount[$i][$x][0]);
-                    if (stripos($finalDistriAccountName[$x], $distriAccount[$i][$x][0]) !== false) {
-                        $tempValue += $distriAccount[$i][$x][1];
-                        $finalDistriAccountAmount[$x][$i] = $tempValue;
+                }
+
+                $finalFinanceExpense = array();
+                for ($i = 0; $i < count($totalExpenses); $i++) {
+                    $tempValue = $totalExpenses[$i];
+                    $tempValue += $calculatedAdminExpense[$i];
+                    $tempValue += $calculatedDistriExpense[$i];
+                    array_push($finalFinanceExpense, $tempValue);
+                }
+
+                $table->addRow();
+                $table->addCell($appendixFirstCell);
+                for ($i = 0; $i < count($finalFinanceExpense); $i++) {
+                    $cell = $table->addCell($cellValue);
+                    $tempValue = $finalFinanceExpense[$i];
+                    if ($tempValue == 0) {
+                        $tempValue = "-";
+                    } else if ($tempValue > 0) {
+                        $tempValue = number_format($tempValue);
                     } else {
-                        $finalDistriAccountAmount[count($finalDistriAccountAmount)][$i] = $distriAccount[$i][$x][1];
+                        $tempValue = "(" . number_format(abs($tempValue)) . ")";
                     }
+                    $cell->addText($tempValue, $fontstyleName, $centerAlignment);
                 }
-            }
-        }
+                ?>
+                <b><?php
+                    echo "DETAILED INCOME STATEMENT";
+                    echo "<br>";
+                    echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
+                    $section->addText("DETAILED INCOME STATEMENT<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
+                    $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+                    ?></b>
+                <hr>
+                <br>
+                <br></center>
+            <p><u>Administrative expenses</u><br>
+                Accounting fee<br>
+                Administrative expenses<br>
+                Bank charges<br>
+                Compilation fee<br>
+                Depreciation<br>
+                Director’s remuneration<br>
+                Director’s remuneration<br>
+                Employment pass<br>
+                Exchange loss - trade<br>
+                Freight charges<br>
+                Insurance<br>
+                Internet expenses<br>
+                Late penalty<br>
+                Nominee director fee<br>
+                Office supplies<br>
+                Postage and courier<br>
+                Professional fee<br>
+                Printing and stationery<br>
+                Rental<br>
+                Salaries<br>
+                Secretarial fee<br>
+                Skill development levy & SINDA<br>
+                Taxation fee
+            </p>
+            <p><u>Distribution and marketing expenses</u><br>
+                Travelling expenses<br>
+                Transportation<br>
+                Telephone expenses<br></p>
+            <p><u>Finance expenses</u><br>
+                Interest on bank borrowings</p>
+        </div>
 
-        $table->addRow();
-        $table->addCell($appendixFirstCell)->addText("Distribution and marketing expenses", $fontstyleBottomUnderline, $noSpace);
+        </body>
 
-        for ($i = 0; $i < count($finalDistriAccountAmount); $i++) {
-            for ($x = 0; $x < count($years); $x++) {
-                if (!isset($finalDistriAccountAmount[$i][$x])) {
-                    $finalDistriAccountAmount[$i][$x] = 0;
-                } else {
-                    $finalDistriAccountAmount[$i][$x] = round($finalDistriAccountAmount[$i][$x]);
-                }
-            }
-        }
-
-        for ($i = 0; $i < count($finalDistriAccountAmount); $i++) {
-            $table->addRow();
-            $table->addCell($appendixFirstCell)->addText(htmlspecialchars($finalDistriAccountName[$i]), $fontstyleName, $noSpace);
-            for ($x = 0; $x < count($finalDistriAccountAmount[$i]); $x++) {
-                if (count($finalDistriAccountName) > 1) {
-                    if ($i == count($finalDistriAccountAmount) - 1) {
-                        if ($x == count($finalDistriAccountAmount[$i]) - 1) {
-                            $cell = $table->addCell($cellValue, $borderBottomAndRight);
-                        } else if ($x == 0) {
-                            $cell = $table->addCell($cellValue, $borderBottomAndLeft);
-                        } else {
-                            $cell = $table->addCell($cellValue, $cellBottomBorder);
-                        }
-                    } else if ($i == 0) {
-                        if ($x == count($finalDistriAccountAmount[$i]) - 1) {
-                            $cell = $table->addCell($cellValue, $borderTopAndRight);
-                        } else if ($x == 0) {
-                            $cell = $table->addCell($cellValue, $borderTopAndLeft);
-                        } else {
-                            $cell = $table->addCell($cellValue, $borderTop);
-                        }
-                    } else {
-                        if ($x == count($finalDistriAccountAmount[$i]) - 1) {
-                            $cell = $table->addCell($cellValue, $borderRight);
-                        } else if ($x == 0) {
-                            $cell = $table->addCell($cellValue, $borderLeft);
-                        } else {
-                            $cell = $table->addCell($cellValue);
-                        }
-                    }
-                } else {
-                    $cell = $table->addCell($cellValue, $allBorders);
-                }
-
-                $tempValue = $finalDistriAccountAmount[$i][$x];
-                if ($tempValue == 0) {
-                    $tempValue = "-";
-                } else if ($tempValue > 0) {
-                    $tempValue = number_format($tempValue);
-                } else {
-                    $tempValue = "(" . number_format(abs($tempValue)) . ")";
-                }
-                $cell->addText($tempValue, $fontstyleName, $centerAlignment);
-            }
-        }
-
-
-        for ($i = 0; $i < count($calculatedDistriExpense); $i++) {
-            $calculatedDistriExpense[$i] = 0 - $calculatedDistriExpense[$i];
-        }
-
-        $table->addRow();
-        $table->addCell($appendixFirstCell);
-        for ($i = 0; $i < count($calculatedDistriExpense); $i++) {
-            $cell = $table->addCell($cellValue);
-            $tempValue = $calculatedDistriExpense[$i];
-            if ($tempValue == 0) {
-                $tempValue = "-";
-            } else {
-                $tempValue = "(" . number_format(abs($tempValue)) . ")";
-            }
-            $cell->addText($tempValue, $fontstyleName, $centerAlignment);
-        }
-
-        $table->addRow();
-        $table->addCell($appendixFirstCell)->addText("Finance expenses", $fontstyleBottomUnderline, $noSpace);
-        $finalFinanceAccountName = array();
-        $finalFinanceAccountAmount = array();
-        for ($i = 0; $i < count($financeExpenseArray); $i++) {
-            for ($x = 0; $x < count($financeExpenseArray[$i]); $x++) {
-                $tempValue = 0;
-                $key = false;
-                for ($j = 0; $j < count($finalFinanceAccountName); $j++) {
-                    $currentAccount = $finalFinanceAccountName[$j];
-                    if (stripos($currentAccount, $financeExpenseArray[$i][$x][0]) !== false || stripos($financeExpenseArray[$i][$x][0], $currentAccount) !== false) {
-                        $key = $j;
-                        break;
-                    }
-                }
-                if (!is_bool($key)) {
-                    if (isset($finalFinanceAccountAmount[$key][$i])) {
-                        $tempValue = $finalFinanceAccountAmount[$key][$i];
-                    }
-                    $finalFinanceAccountAmount[$key][$i] = $tempValue += $financeExpenseArray[$i][$x][1];
-                } else {
-                    array_push($finalFinanceAccountName, $financeExpenseArray[$i][$x][0]);
-                    if (stripos($finalFinanceAccountName[$x], $financeExpenseArray[$i][$x][0]) !== false) {
-                        $tempValue += $financeExpenseArray[$i][$x][1];
-                        $finalFinanceAccountAmount[$x][$i] = $tempValue;
-                    } else {
-                        $finalFinanceAccountAmount[count($finalFinanceAccountAmount)][$i] = $financeExpenseArray[$i][$x][1];
-                    }
-                }
-            }
-        }
-
-        for ($i = 0; $i < count($finalFinanceAccountAmount); $i++) {
-            for ($x = 0; $x < count($years); $x++) {
-                if (!isset($finalFinanceAccountAmount[$i][$x])) {
-                    $finalFinanceAccountAmount[$i][$x] = 0;
-                } else {
-                    $finalFinanceAccountAmount[$i][$x] = round($finalFinanceAccountAmount[$i][$x]);
-                }
-            }
-        }
-
-        for ($i = 0; $i < count($finalFinanceAccountAmount); $i++) {
-            $table->addRow();
-            $table->addCell($appendixFirstCell)->addText(htmlspecialchars($finalFinanceAccountName[$i]), $fontstyleName, $noSpace);
-            for ($x = 0; $x < count($finalFinanceAccountAmount[$i]); $x++) {
-                if (count($finalFinanceAccountName) > 1) {
-                    if ($i == count($finalFinanceAccountAmount) - 1) {
-                        if ($x == count($finalFinanceAccountAmount[$i]) - 1) {
-                            $cell = $table->addCell($cellValue, $borderBottomAndRight);
-                        } else if ($x == 0) {
-                            $cell = $table->addCell($cellValue, $borderBottomAndLeft);
-                        } else {
-                            $cell = $table->addCell($cellValue, $cellBottomBorder);
-                        }
-                    } else if ($i == 0) {
-                        if ($x == count($finalFinanceAccountAmount[$i]) - 1) {
-                            $cell = $table->addCell($cellValue, $borderTopAndRight);
-                        } else if ($x == 0) {
-                            $cell = $table->addCell($cellValue, $borderTopAndLeft);
-                        } else {
-                            $cell = $table->addCell($cellValue, $borderTop);
-                        }
-                    } else {
-                        if ($x == count($finalFinanceAccountAmount[$i]) - 1) {
-                            $cell = $table->addCell($cellValue, $borderRight);
-                        } else if ($x == 0) {
-                            $cell = $table->addCell($cellValue, $borderLeft);
-                        } else {
-                            $cell = $table->addCell($cellValue);
-                        }
-                    }
-                } else {
-                    $cell = $table->addCell($cellValue, $allBorders);
-                }
-
-                $tempValue = $finalFinanceAccountAmount[$i][$x];
-                if ($tempValue == 0) {
-                    $tempValue = "-";
-                } else if ($tempValue > 0) {
-                    $tempValue = number_format($tempValue);
-                } else {
-                    $tempValue = "(" . number_format(abs($tempValue)) . ")";
-                }
-                $cell->addText($tempValue, $fontstyleName, $centerAlignment);
-            }
-        }
-
-        $finalFinanceExpense = array();
-        for ($i = 0; $i < count($totalExpenses); $i++) {
-            $tempValue = $totalExpenses[$i];
-            $tempValue += $calculatedAdminExpense[$i];
-            $tempValue += $calculatedDistriExpense[$i];
-            array_push($finalFinanceExpense, $tempValue);
-        }
-
-        $table->addRow();
-        $table->addCell($appendixFirstCell);
-        for ($i = 0; $i < count($finalFinanceExpense); $i++) {
-            $cell = $table->addCell($cellValue);
-            $tempValue = $finalFinanceExpense[$i];
-            if ($tempValue == 0) {
-                $tempValue = "-";
-            } else if ($tempValue > 0) {
-                $tempValue = number_format($tempValue);
-            } else {
-                $tempValue = "(" . number_format(abs($tempValue)) . ")";
-            }
-            $cell->addText($tempValue, $fontstyleName, $centerAlignment);
-        }
-        ?>
-        <b><?php
-        echo "DETAILED INCOME STATEMENT";
-        echo "<br>";
-        echo "FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('F d Y', strtotime($yearEnd)));
-        $section->addText("DETAILED INCOME STATEMENT<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-        $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
-        ?></b>
-        <hr>
-        <br>
-        <br></center>
-    <p><u>Administrative expenses</u><br>
-        Accounting fee<br>
-        Administrative expenses<br>
-        Bank charges<br>
-        Compilation fee<br>
-        Depreciation<br>
-        Director’s remuneration<br>
-        Director’s remuneration<br>
-        Employment pass<br>
-        Exchange loss - trade<br>
-        Freight charges<br>
-        Insurance<br>
-        Internet expenses<br>
-        Late penalty<br>
-        Nominee director fee<br>
-        Office supplies<br>
-        Postage and courier<br>
-        Professional fee<br>
-        Printing and stationery<br>
-        Rental<br>
-        Salaries<br>
-        Secretarial fee<br>
-        Skill development levy & SINDA<br>
-        Taxation fee
-    </p>
-    <p><u>Distribution and marketing expenses</u><br>
-        Travelling expenses<br>
-        Transportation<br>
-        Telephone expenses<br></p>
-    <p><u>Finance expenses</u><br>
-        Interest on bank borrowings</p>
-</div>
-
-</body>
-
-<?php
+        <?php
 //include 'footer.php';
 // Saving the document as OOXML file
-$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-$objWriter->save('preview.docx');
+        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+        $objWriter->save('preview.docx');
 
 //header("Location: " . URL . "download.php"); /* Redirect browser */
 //ob_end_flush();
-?>
+        ?>
