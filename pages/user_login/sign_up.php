@@ -21,9 +21,8 @@
                                 Enter your details to create your account:
                             </div>
                         </div>
-                        <?php include('../user_login/register_validation.php'); ?>
                         <form id="register" name="registration" class="m-login__form m-form" action="register_validation.php" method="POST">
-                            <?php // include('../user_login/register_validation.php'); ?>
+                            <?php include('../user_login/register_validation.php'); ?>
 
                             <div class="form-group m-form__group">
                                 <input class="form-control m-input" id="fullname" type="text" placeholder="Fullname" name="fullname" <?php
@@ -66,7 +65,7 @@
                                 </div>
                             </div>
                             <div class="m-login__form-action">
-                                <button type="submit" id="m_login_signup_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">
+                                <button id="m_login_signup_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">
                                     Sign Up
                                 </button>
                                 &nbsp;&nbsp;

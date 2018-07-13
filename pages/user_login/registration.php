@@ -1,4 +1,4 @@
-<head>
+<!--<head>
     <style>
         .error {color: #FF0000;}
     </style>
@@ -7,7 +7,9 @@
     <h1>
         Registration
     </h1>
-</div>
+</div>-->
+
+<?php include '../general/header.php'; ?>
 
 <form id="register" name="registration" action="registration.php" method="POST">
     <?php include('reg_validation.php'); ?>
