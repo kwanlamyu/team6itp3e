@@ -76,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                VALUES ('$uname', '$email', '$pass', '3')");
             } 
             if ($sql->execute()) {
-                header('Location: create_accountant.php'); 
+                header('Location: ../user_management/create_accountant.php'); 
                 echo "after sql execute";
                 
 //                echo'
@@ -87,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //                                <h2>Success</h2><hr>
 //                                <p>Accountant account successfully updated</p><br>
 //                                <p><a href="create_accountant.php">Add another account</a></p><br>
-//                                <p><a href="client_admin_dashboard.php">Return to dashboard</a></p>
+//                                <p><a href="../client_admin_dashboard.php">Return to dashboard</a></p>
 //                            </div>
 //                        </div>
 //                    </div>

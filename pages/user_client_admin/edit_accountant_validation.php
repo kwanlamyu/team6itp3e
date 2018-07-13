@@ -111,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
            
             if ($statement->execute()) {
-                header('Location: edit_accountant.php'); 
+                header('Location: ../user_management/edit_accountant.php'); 
 //                echo'
 //                    <div class="row">
 //                        <div class"card">
@@ -119,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //                                <h2>Success</h2><hr>
 //                                <p>Accountant account successfully updated</p><br>
 //                                <p><a href="edit_accountant.php">Edit another account</a></p><br>
-//                                <p><a href="client_dashboard.php">Return to dashboard</a></p>
+//                                <p><a href="../client_admin_dashboard.php">Return to dashboard</a></p>
 //                            </div>
 //                        </div>
 //                    </div>

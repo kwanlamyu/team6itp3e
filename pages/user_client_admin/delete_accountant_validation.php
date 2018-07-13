@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "DELETE FROM user WHERE username='$uname' AND role_id=3";
         $statement = $DB_con->prepare($sql);
         $statement->execute();
-        header('Location: delete_accountant.php');
+        header('Location: ../user_management/delete_accountant.php');
         
 //        echo'
 //            <body>
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //                            <h2>Success</h2><hr>
 //                            <p>Accountant account successfully deleted</p><br>
 //                            <p><a href="delete_accountant.php">Delete another account</a></p><br>
-//                            <p><a href="client_dashboard.php">Return to dashboard</a></p>
+//                            <p><a href="../client_admin_dashboard.php">Return to dashboard</a></p>
 //                        </div>
 //                    </div>
 //                </div>
