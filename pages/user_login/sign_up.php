@@ -21,8 +21,9 @@
                                 Enter your details to create your account:
                             </div>
                         </div>
-                        <form id="register" name="registration" class="m-login__form m-form" action="register_validation.php" method="POST">
-                            <?php include('../user_login/register_validation.php'); ?>
+                        
+                        <form id="registerStudent" name="registration" class="m-login__form m-form" action="sign_up.php" method="POST">
+                            <?php include('register_validation.php'); ?>
 
                             <div class="form-group m-form__group">
                                 <input class="form-control m-input" id="fullname" type="text" placeholder="Fullname" name="fullname" <?php
@@ -41,12 +42,12 @@
                                 <span class="error"><?php echo $emailErr; ?></span>
                             </div>
                             <div class="form-group m-form__group">
-                                <input class="form-control m-input" id="regpassword" type="password" placeholder="Password" name="password">
+                                <input class="form-control m-input" id="regpassword" type="password" placeholder="Password" name="regpassword">
                                 <span class="error"><?php echo $passErr; ?></span>
                                 <span class="error"><?php echo $twopassErr; ?></span>
                             </div>
                             <div class="form-group m-form__group">
-                                <input class="form-control m-input m-login__form-input--last" id="regcpassword" type="password" placeholder="Confirm Password" name="rpassword">
+                                <input class="form-control m-input m-login__form-input--last" id="regcpassword" type="password" placeholder="Confirm Password" name="regcpassword">
                                 <span class="error"><?php echo $cpassErr; ?></span>
                                 <span class="error"><?php echo $twopassErr; ?></span>
                             </div>

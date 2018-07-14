@@ -20,7 +20,7 @@ catch(PDOException $e){
 
 ?>
 
-//<?php 
+<?php 
 //
 //// Phoebe local DB
 ////session_start();

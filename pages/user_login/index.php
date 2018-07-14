@@ -134,7 +134,7 @@
                             Don't have an account yet ?
                         </span>
                         &nbsp;&nbsp;
-                        <a href="sign_up.php" id="m_login_signup" class="m-link m-link--light m-login__account-link">
+                        <a href="registration.php" id="m_login_signup" class="m-link m-link--light m-login__account-link">
                             Sign Up
                         </a>
 <!--                        <a href="javascript:;" id="m_login_signup" class="m-link m-link--light m-login__account-link">
