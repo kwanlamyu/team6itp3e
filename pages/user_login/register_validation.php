@@ -1,9 +1,5 @@
-
-<<<<<<< HEAD
-=======
 <?php
 
->>>>>>> 28111d1935c6e79a038a0a090deb3207850a7a50
 require_once '../db_connection/db.php';
 $unameErr = $emailErr = $passErr = $cpassErr = $checkErr = $twopassErr = $companynameErr = $uennumberErr = "";
 $uname = $email = $pass = $cpass = $emailvalid = $companyname = $uen ="";
@@ -36,12 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //                
 //            }
         }
-<<<<<<< HEAD
         $regex = '/^[-a-z0-9~!$%^&*=+}{\'?]+(\.[-a-z0-9~!$%^&*=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i';
-=======
-        echo"Fullname: ".$uname."<br>";
-        $regex = '/^[-a-z0-9_~!$%^&*=+}{\'?]+(\.[-a-z0-9_~!$%^&*=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i';
->>>>>>> 28111d1935c6e79a038a0a090deb3207850a7a50
         if (empty($_POST["email"])) {
             $emailErr = "* Email is required";
             $valid = FALSE;
@@ -104,15 +95,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         
         if ($valid == TRUE) {
-            echo"after valid == TRUE<br>";
-            $hashpass = SHA1($pass);
-            $hashcpass = SHA1($cpass);
-            $query = "INSERT INTO user(username, email, password, role_id) VALUES ('$uname', '$email', '$hashpass', '2')";
-            echo $query."<br>";
-            $sql = $DB_con->prepare($query);
-            echo 'statement prepared -> $DB_con->prepare($query)<br>';
+//            $hashpass = SHA1($pass);
+//            $hashcpass = SHA1($cpass);
+            if ($uname !== "") {
             
-<<<<<<< HEAD
                 $userSql = $DB_con->prepare("INSERT INTO user(username, email, password, role_id)
                                VALUES ('$uname', '$email', '$pass', '2')");
                 
@@ -123,16 +109,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //                               VALUES ('$uen', '$companyname', '000000', NOW(), '$uname')");
                 
                 ////echo "after sql execute";
-=======
-            try{
-                $sql->execute(); 
-                echo "after sql execute";
-                header('Location: ../user_login/index.php'); 
-                
-            }  catch (Exception $e){
-                echo 'Message: ' .$e->getMessage();
-            }
->>>>>>> 28111d1935c6e79a038a0a090deb3207850a7a50
                 //send email to registering party
                 //redirect to choosing a plan
                 //after choose plan redirect to login page
@@ -169,7 +145,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //                    
 //                } 
                         
-            
+            } else {
+                echo '<div class="alert alert-warning mmbsm" role="alert">Error: ' . $sql . '<br>' . $connection->error . '</div>';
+            }
         }
         
         
@@ -177,5 +155,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     }
 }
+
 ?>
 

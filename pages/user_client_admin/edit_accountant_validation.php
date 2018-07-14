@@ -63,8 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //        echo 'Email: '.$email.'<br>';
         if (empty($_POST["accountantpassword"])) {
             //$passErr = "* Password is required";
-            //$valid = FALSE;
-            $pass ="";
+            $valid = FALSE;
         } else {
             $pass = ($_POST["accountantpassword"]);
             if ((strlen($pass) < 8) || !ctype_alnum($pass)) {
@@ -101,12 +100,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //            echo 'Username: '.$uname.' <br>';
 //            echo 'Email: '.$email.'<br>';
 //            echo 'Password: '.$pass.'<br>';
-            if ($pass == ""){
-                $sql = "UPDATE user SET email='$email' WHERE username='$uname'";
-            }else{
-                $hashpass = SHA1($pass);
-                $sql = "UPDATE user SET email='$email', password='$hashpass' WHERE username='$uname'";
-            }
+           
+            $sql = "UPDATE user SET email='$email', password='$pass' WHERE username='$uname'";
             
             $statement = $DB_con->prepare($sql);
             

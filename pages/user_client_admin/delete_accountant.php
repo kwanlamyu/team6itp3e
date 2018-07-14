@@ -25,8 +25,9 @@
                         <thead>
                         <th>User</th>
                         <th>Email</th>
+                        <th>Password</th>
                         <th>Position</th>
-                        <th>Delete Details</th>
+                        <th>Edit Details</th>
                         </thead>
                         <?php // echo'after table head';?>
 
@@ -43,6 +44,7 @@
                                 . '<td>Nil</td>'
                                 . '<td>Nil</td>'
                                 . '<td>Nil</td>'
+                                . '<td>Nil</td>'
                                 . '</tr>';
                             } else {
 //                                echo'else condition reached';
@@ -53,6 +55,7 @@
                                     . "<tr>"
                                         . "<td id='accountant_username" . $counter . "'>{$row['username']}</td>"
                                         . "<td id='accountant_email" . $counter . "'>{$row['email']}</td>"
+                                        . "<td id='accountant_password" . $counter . "'>{$row['password']}</td>"
                                         . "<td>Accountant</td>"
                                         . "<td>"
                                             . "<button type='button' name='deleteButton' id='deleteButton' class='btn btn-danger delete_data' data-toggle='modal' data-target='#deleteModal' onclick='updateUsername(" . $counter . ")'>"
@@ -85,7 +88,7 @@
                 <div class="modal-body">
                     <p> Are you sure you want to delete this user</p>
                     <form id="editAccountant" name="deleteAccountant" action="delete_accountant_validation.php" method="POST">
-                        <?php include('../user_client_admin/delete_accountant_validation.php'); ?>
+                        
                         <div class="form-group">
                             <label for="accountantid">Username</label>
                             <input type="text" class="form-control" id="viewid" name="viewid" disabled>                               
@@ -108,7 +111,7 @@
 
                         <div class="form-group" style="display: none;">
                             <label for="accountantpassword">Password</label>
-                            <input type="password" class="form-control" id="accountantpassword" name="accountantpassword" placeholder="Password">
+                            <input type="text" class="form-control" id="accountantpassword" name="accountantpassword" placeholder="Password">
                             <!--<span class="error"><?php echo $passErr; ?></span>-->
                         </div>
                         
@@ -138,8 +141,8 @@
         var email = document.getElementById("accountant_email" + x).innerHTML;
         document.getElementById('accountantemail').value = email;
         document.getElementById('viewemail').value = email;
-//        var pass = document.getElementById("accountant_password" + x).innerHTML;
-//        document.getElementById('accountantpassword').value = pass;
+        var pass = document.getElementById("accountant_password" + x).innerHTML;
+        document.getElementById('accountantpassword').value = pass;
         
     }
      

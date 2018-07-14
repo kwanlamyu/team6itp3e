@@ -4,7 +4,7 @@
     <div class="card">
         <div class="card-body">
             <form id="createAccountant" name="createAccountant" action="create_accountant_validation.php" method="POST">
-                <?php include('create_accountant_validation.php'); ?>
+                <?php include('accountant_validation.php'); ?>
 
                 <div class="form-group">
                     <label for="accountantid">Username</label>

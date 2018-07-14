@@ -3424,6 +3424,11 @@ $section->addText(strtoupper($companyName), $fontStyleBlack);
 $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper($yearEndString), $fontStyleBlack);
 $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 
+// create notes table
+$table1 = $section->addTable();
+// top row which only shows date
+$table1->addRow();
+
 // check number of unused columns.
 // max columns - number of years + 1 column for Notes
 // merge the number of unused columns for the first cell.
@@ -3431,7 +3436,9 @@ for ($i = 0; $i < ($maxColumnsNotes - ($numberOfSheets + 1)); $i++) {
     $firstCellValueNotes += $cellValueNotes;
 }
 
-
+// Displaying the heading
+$table1->addCell($firstCellValueNotes);
+$cellNotes = $table1->addCell($cellValueNotes);
 
 // Display normally
 foreach ($fullArray as $key1 => $value1) { // [ Bank Balances] => Array of values
@@ -3441,20 +3448,9 @@ foreach ($fullArray as $key1 => $value1) { // [ Bank Balances] => Array of value
                 if ($key1 !== "Income Taxes") {
                     if ($key1 !== "Trade and other payables") {
                         if ($key1 !== "Borrowings") {
-                            
                             // Display the category heading
-                            $section->addListItem(strtoupper($key1), 1, $fontstyleName, $romanListingStyle);
-                            // $table1->addRow();
-                            // $table1->addCell($firstCellValueNotes)->addText(strtoupper($key1));
-                            
-                            // create notes table
-                            $table1 = $section->addTable();
-                            // top row which only shows date
                             $table1->addRow();
-
-                            // Displaying the heading
-                            $table1->addCell($firstCellValueNotes);
-                            $cellNotes = $table1->addCell($cellValueNotes);
+                            $table1->addCell($firstCellValueNotes)->addText(strtoupper($key1));
 
                             // Create another row
                             $table1->addRow();

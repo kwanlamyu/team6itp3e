@@ -3,33 +3,32 @@ require_once '../db_connection/db.php';
 $unameErr = $emailErr = $passErr = $cpassErr = $checkErr = $twopassErr = "";
 $uname = $email = $pass = $cpass = $emailvalid = "";
 $valid = TRUE; //this var scope ok
-
 function test_input($data) {
     $data = trim($data);
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
     return $data;
 }
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['createButton'])) {
-
 //        echo "post reg button <br>";
         if (empty($_POST["accountantid"])) {
             $unameErr = '* User name is required';
-        } else {
+        } 
+        else {
             $uname = ($_POST["accountantid"]);
-            //            echo "else statement <br>";
-            $query = "SELECT COUNT(*) FROM user WHERE username = '" . $uname . "'";
-            //            echo "pre-query execution <br>";
+//            echo "else statement <br>";
+            $query = "SELECT COUNT(*) FROM user WHERE username = '".$uname."'";
+//            echo "pre-query execution <br>";
             $result = $DB_con->query($query);
-
+            
             if ($result->fetchColumn() > 0) {
                 $unameErr = "* Username has already been used";
                 $valid = FALSE;
             }
+            
         }
-
+        
         $regex = '/^[-a-z0-9_~!$%^&*=+}{\'?]+(\.[-a-z0-9_~!$%^&*=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i';
         if (empty($_POST["email"])) {
             $emailErr = "* Email is required";
@@ -74,31 +73,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($valid == TRUE) {
             if ($uname !== "") {
                 $sql = $DB_con->prepare("INSERT INTO user(username, email, password, role_id)
-                                           VALUES ('$uname', '$email', '$pass', '3')");
-            }
+                               VALUES ('$uname', '$email', '$pass', '3')");
+            } 
             if ($sql->execute()) {
-                header('Location: ../user_management/create_accountant.php');
+                header('Location: ../user_management/create_accountant.php'); 
                 echo "after sql execute";
-
-                //                echo'
-                //                    
-                //                    <div class="row">
-                //                        <div class"card">
-                //                            <div class="card-body">
-                //                                <h2>Success</h2><hr>
-                //                                <p>Accountant account successfully updated</p><br>
-                //                                <p><a href="create_accountant.php">Add another account</a></p><br>
-                //                                <p><a href="../client_admin_dashboard.php">Return to dashboard</a></p>
-                //                            </div>
-                //                        </div>
-                //                    </div>
-                //                                                    
-                //                ';
+                
+//                echo'
+//                    
+//                    <div class="row">
+//                        <div class"card">
+//                            <div class="card-body">
+//                                <h2>Success</h2><hr>
+//                                <p>Accountant account successfully updated</p><br>
+//                                <p><a href="create_accountant.php">Add another account</a></p><br>
+//                                <p><a href="../client_admin_dashboard.php">Return to dashboard</a></p>
+//                            </div>
+//                        </div>
+//                    </div>
+//                                                    
+//                ';
+                
+                
             } else {
                 echo '<div class="alert alert-warning mmbsm" role="alert">Error: ' . $sql . '<br>' . $DB_con->error . '</div>';
             }
         }
-        header('Location: create_accountant.php');
+        header('Location: create_accountant.php'); 
     }
 }
 ?>

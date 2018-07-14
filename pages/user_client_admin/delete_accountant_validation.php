@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //        echo 'Username: ' . $uname . ' <br>';
         $email = ($_POST["accountantemail"]);
 //        echo 'Email: ' . $email . '<br>';
-//        $pass = ($_POST["accountantpassword"]);
+        $pass = ($_POST["accountantpassword"]);
 //        echo 'Password: ' . $pass . '<br>';
 //        $sql = "DELETE FROM user WHERE username='$uname' AND role_id=3";
 //        $statement = $DB_con->prepare($sql);
