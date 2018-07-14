@@ -91,6 +91,20 @@ $phpWord->addNumberingStyle(
         )
 );
 
+// Phoebe's style
+$phpWord->addFontStyle('myOwnStyle', array('color' => 'FF0000'));
+$phpWord->addParagraphStyle('P-Style', array('spaceAfter' => 95));
+$phpWord->addNumberingStyle(
+        'multilevel', array(
+    'type' => 'multilevel',
+    'levels' => array(
+        array('format' => 'decimal', 'text' => '%1.', 'left' => 360, 'hanging' => 360, 'tabPos' => 360),
+        array('format' => 'upperLetter', 'text' => '%2.', 'left' => 720, 'hanging' => 360, 'tabPos' => 720),
+    ),
+        )
+);
+$predefinedMultilevel = array('listType' => \PhpOffice\PhpWord\Style\ListItem::TYPE_NUMBER_NESTED);
+
 //Create Paragraph style
 $paragraphStyle = 'justifiedParagraph';
 $phpWord->addParagraphStyle($paragraphStyle, array('align' => 'both', 'spaceAfter' => 100));
@@ -3441,15 +3455,12 @@ foreach ($fullArray as $key1 => $value1) { // [ Bank Balances] => Array of value
                 if ($key1 !== "Income Taxes") {
                     if ($key1 !== "Trade and other payables") {
                         if ($key1 !== "Borrowings") {
-                            
+
                             // Display the category heading
-                            $section->addListItem(strtoupper($key1), 1, $fontstyleName, $romanListingStyle);
-                            // $table1->addRow();
-                            // $table1->addCell($firstCellValueNotes)->addText(strtoupper($key1));
-                            
+                            $section->addListItem(strtoupper($key1), 0, $fontstyleName, $listingStyle);
+
                             // create notes table
                             $table1 = $section->addTable();
-                            // top row which only shows date
                             $table1->addRow();
 
                             // Displaying the heading
@@ -3552,8 +3563,8 @@ foreach ($fullArray as $key1 => $value1) { // [ Bank Balances] => Array of value
 if (!empty($profitBeforeIncomeTaxArray)) {
 
     // Display the category heading
-    $table1->addRow();
-    $table1->addCell($firstCellValue)->addText("PROFIT BEFORE INCOME TAX");
+    $section->addListItem("PROFIT BEFORE INCOME TAX", 0, $fontstyleName, $listingStyle);
+    $table1 = $section->addTable();
 
     // Create another row
     $table1->addRow();
@@ -3621,16 +3632,16 @@ if (!empty($profitBeforeIncomeTaxArray)) {
 }
 
 if (!empty($incomeTaxArray)) {
-
+    
     $taxExpenseKey = ['Current income tax expenses', 'Current year tax expense'];
     $provisionKey = ['Under provision in prior year'];
 
     // Display the category heading
-    $table1->addRow();
-    $table1->addCell($firstCellValue)->addText("INCOME TAXES");
-    $table1->addRow();
-    $table1->addCell($firstCellValue)->addText("(a) Income tax expense");
+    $section->addListItem(htmlspecialchars('INCOME TAXES'), 0, null, 'multilevel');
+    $table1 = $section->addTable();
 
+    $table1->addRow();
+    $table1->addCell($firstCellValue)->addListItem(htmlspecialchars('Income tax expense'), 1, null, 'multilevel');
     // Create another row
     $table1->addRow();
     $table1->addCell($firstCellValue);
@@ -3829,7 +3840,7 @@ if (!empty($incomeTaxArray)) {
     $table1->addRow();
     $table1->addCell($firstCellValue);
     $table1->addRow();
-    $table1->addCell($firstCellValue)->addText("(b) Movement in current income tax liabilities:");
+    $table1->addCell($firstCellValue)->addListItem(htmlspecialchars('Movement in current income tax liabilities:'), 1, null, 'multilevel');
 
     // Create another row
     $table1->addRow();
