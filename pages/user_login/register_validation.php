@@ -85,9 +85,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         if ($valid == TRUE) {
             echo"after valid == TRUE<br>";
-//            $hashpass = SHA1($pass);
-//            $hashcpass = SHA1($cpass);
-            $query = "INSERT INTO user(username, email, password, role_id) VALUES ('$uname', '$email', '$pass', '2')";
+            $hashpass = SHA1($pass);
+            $hashcpass = SHA1($cpass);
+            $query = "INSERT INTO user(username, email, password, role_id) VALUES ('$uname', '$email', '$hashpass', '2')";
             echo $query."<br>";
             $sql = $DB_con->prepare($query);
             echo 'statement prepared -> $DB_con->prepare($query)<br>';

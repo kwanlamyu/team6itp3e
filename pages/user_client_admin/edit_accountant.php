@@ -22,7 +22,6 @@
                     <thead>
                     <th>User</th>
                     <th>Email</th>
-                    <th>Password</th>
                     <th>Position</th>
                     <th>Edit Details</th>
                     </thead>
@@ -51,15 +50,14 @@
 
                                 echo ""
                                 . "<tr>"
-                                . "<td id='accountant_username" . $counter . "'>{$row['username']}</td>"
-                                . "<td id='accountant_email" . $counter . "'>{$row['email']}</td>"
-                                . "<td id='accountant_password" . $counter . "'>{$row['password']}</td>"
-                                . "<td>Accountant</td>"
-                                . "<td id='edit'>"
-                                . "<button type='button' name='editButton' id='editButton' class='btn btn-success edit_data'data-toggle='modal' data-target='#editModal' onclick='updateUsername(" . $counter . ")'>"
-                                . "<i class='far fa-edit'></i> Edit "
-                                . "</button>"
-                                . "</td>"
+                                    . "<td id='accountant_username" . $counter . "'>{$row['username']}</td>"
+                                    . "<td id='accountant_email" . $counter . "'>{$row['email']}</td>"
+                                    . "<td>Accountant</td>"
+                                    . "<td id='edit'>"
+                                        . "<button type='button' name='editButton' id='editButton' class='btn btn-success edit_data'data-toggle='modal' data-target='#editModal' onclick='updateUsername(" . $counter . ")'>"
+                                            . "<i class='far fa-edit'></i> Edit "
+                                        . "</button>"
+                                    . "</td>"
                                 . "</tr>\n";
                                 $counter++;
                             }
@@ -127,8 +125,6 @@
         document.getElementById('accountantid').value = username;
         var email = document.getElementById("accountant_email" + x).innerHTML;
         document.getElementById('accountantemail').value = email;
-        var pass = document.getElementById("accountant_password" + x).innerHTML;
-        document.getElementById('accountantpassword').value = pass;
 
     }
 

@@ -4,7 +4,7 @@ require_once '../db_connection/db.php';
 $username = $_POST['username'];
 $password = $_POST['password'];
 
-$query = $DB_con->prepare("SELECT username, role_id, password FROM user WHERE username = '".$username."' AND password = '".$password."'");
+$query = $DB_con->prepare("SELECT username, role_id, password FROM user WHERE username = '".$username."' AND password = SHA1('".$password."')");
 $query->execute();
 $data = $query->fetchAll();
 
