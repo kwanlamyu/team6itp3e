@@ -4,7 +4,7 @@ require_once '../db_connection/db.php';
 $username = $_POST['username'];
 $password = $_POST['password'];
 
-$query = $DB_con->prepare("SELECT username, role_id, password FROM user WHERE username = '".$username."' AND password = '".$password."'");
+$query = $DB_con->prepare("SELECT username, role_id, password FROM user WHERE username = '".$username."' AND password = SHA1('".$password."')");
 $query->execute();
 $data = $query->fetchAll();
 
@@ -26,8 +26,14 @@ foreach ($data as $userData) {
             echo'Welcome Client Admin';
 
             //redirect to Client Admin Dash
+<<<<<<< HEAD
             header('Location: ../user_super_admin/userdashboard.php');
             
+=======
+//            echo "<meta http-equiv='refresh' content='3;url=client_admin_dashboard.php'> ";
+//            echo '<span class="text-success "><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Redirecting please wait</span>';
+            header('Location: ../user_client_admin/client_admin_dashboard.php');
+>>>>>>> 28111d1935c6e79a038a0a090deb3207850a7a50
         }
         elseif($userData['role_id']=='3'){
             echo'Welcome Standard User';
