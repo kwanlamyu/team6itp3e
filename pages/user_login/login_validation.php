@@ -23,6 +23,8 @@ foreach ($data as $userData) {
         elseif($userData['role_id']=='2'){
             echo'Welcome Client Admin';
             //redirect to Client Admin Dash
+//            echo "<meta http-equiv='refresh' content='3;url=client_admin_dashboard.php'> ";
+//            echo '<span class="text-success "><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Redirecting please wait</span>';
             header('Location: ../user_client_admin/client_admin_dashboard.php');
         }
         elseif($userData['role_id']=='3'){

@@ -138,8 +138,8 @@
         var email = document.getElementById("accountant_email" + x).innerHTML;
         document.getElementById('accountantemail').value = email;
         document.getElementById('viewemail').value = email;
-        var pass = document.getElementById("accountant_password" + x).innerHTML;
-        document.getElementById('accountantpassword').value = pass;
+//        var pass = document.getElementById("accountant_password" + x).innerHTML;
+//        document.getElementById('accountantpassword').value = pass;
         
     }
      
