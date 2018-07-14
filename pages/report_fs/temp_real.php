@@ -3457,8 +3457,8 @@ foreach ($fullArray as $key1 => $value1) { // [ Bank Balances] => Array of value
                         if ($key1 !== "Borrowings") {
 
                             // Display the category heading
-                            $section->addListItem(strtoupper($key1), 0, $fontstyleName, $listingStyle);
-
+                            $section->addListItem(htmlspecialchars(strtoupper($key1)), 0, null, 'multilevel');
+                            
                             // create notes table
                             $table1 = $section->addTable();
                             $table1->addRow();
@@ -3563,7 +3563,7 @@ foreach ($fullArray as $key1 => $value1) { // [ Bank Balances] => Array of value
 if (!empty($profitBeforeIncomeTaxArray)) {
 
     // Display the category heading
-    $section->addListItem("PROFIT BEFORE INCOME TAX", 0, $fontstyleName, $listingStyle);
+    $section->addListItem(htmlspecialchars('PROFIT BEFORE INCOME TAX'), 0, null, 'multilevel');
     $table1 = $section->addTable();
 
     // Create another row
@@ -3984,7 +3984,6 @@ if (!empty($incomeTaxArray)) {
     $table1->addCell($firstCellValue);
 }
 
-
 if (!empty($tradeReceivablesArray)) {
 
     // For calculating the total value
@@ -4002,7 +4001,7 @@ if (!empty($tradeReceivablesArray)) {
     }
 
     $table1->addRow();
-    $table1->addCell($firstCellValue)->addText("TRADE AND OTHER RECEIVABLES");
+    $table1->addCell($firstCellValue)->addListItem(htmlspecialchars('TRADE AND OTHER RECEIVABLES'), 0, null, 'multilevel');
 
     // Create another row
     $table1->addRow();
@@ -4157,7 +4156,6 @@ if (!empty($tradeReceivablesArray)) {
     unset($totalArray);
 }
 
-
 if (!empty($tradePayableArray)) {
 
     // For calculating the total value
@@ -4175,7 +4173,7 @@ if (!empty($tradePayableArray)) {
     }
 
     $table1->addRow();
-    $table1->addCell($firstCellValue)->addText("TRADE AND OTHER PAYABLES");
+    $table1->addCell($firstCellValue)->addListItem(htmlspecialchars('TRADE AND OTHER PAYABLES'), 0, null, 'multilevel');
 
     // Create another row
     $table1->addRow();
@@ -4335,7 +4333,7 @@ if (!empty($tradePayableArray)) {
 if (!empty($borrowingArray)) {
 
     $table1->addRow();
-    $table1->addCell($firstCellValue)->addText("BORROWINGS");
+    $table1->addCell($firstCellValue)->addListItem(htmlspecialchars('BORROWINGS'), 0, null, 'multilevel');
 
     // Create another row
     $table1->addRow();
@@ -4557,7 +4555,7 @@ if (in_array("Share Capital", $categoryArray)) {
     $table2 = $section->addTable();
 
     $table2->addRow();
-    $table2->addCell($firstCellValue)->addText("SHARE CAPITAL");
+    $table2->addCell($firstCellValue)->addListItem(htmlspecialchars('SHARE CAPITAL'), 0, null, 'multilevel');
 
     // Create another row
     $table2->addRow();
@@ -4697,7 +4695,7 @@ if (in_array("Plant and Equipment", $categoryArray)) {
     $table2 = $section->addTable();
 
     $table2->addRow();
-    $table2->addCell($firstCellValue)->addText("PLANT AND EQUIPMENT");
+    $table2->addCell($firstCellValue)->addListItem(htmlspecialchars('PLANT AND EQUIPMENT'), 0, null, 'multilevel');
 
     // Create another row
     $table2->addRow();
