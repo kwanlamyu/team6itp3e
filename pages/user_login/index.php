@@ -14,6 +14,7 @@
 
                     <div class="m-login__signin">
                         <form class="m-login__form m-form" action="login_validation.php" method="POST">
+                            
                             <div class="form-group m-form__group">
                                 <input class="form-control m-input"   type="text" placeholder="Username" name="username" id="userid" autocomplete="off">
                             </div>
@@ -41,7 +42,7 @@
                             </div>
                         </form>
                     </div>
-<!--                    <div class="m-login__signup">
+                   <div class="m-login__signup">
                         <div class="m-login__head">
                             <h3 class="m-login__title">
                                 Sign Up
@@ -104,7 +105,7 @@
                                 </button>
                             </div>
                         </form>
-                    </div>-->
+                    </div>
                     <div class="m-login__forget-password">
                         <div class="m-login__head">
                             <h3 class="m-login__title">
@@ -134,7 +135,7 @@
                             Don't have an account yet ?
                         </span>
                         &nbsp;&nbsp;
-                        <a href="sign_up.php" id="m_login_signup" class="m-link m-link--light m-login__account-link">
+                        <a href="registration.php" id="m_login_signup" class="m-link m-link--light m-login__account-link">
                             Sign Up
                         </a>
 <!--                        <a href="javascript:;" id="m_login_signup" class="m-link m-link--light m-login__account-link">

@@ -1,26 +1,26 @@
 <?php
-/*
- * Jerome local DB
- */
-session_start();
+// /*
+ // * Jerome local DB
+ // */
+// session_start();
 
-$DBHOST = 'localhost';
-$DBNAME = 'itp-3E Accounting';
-$DBUSER = 'root';
-$DBPASS = '';
+// $DBHOST = 'localhost';
+// $DBNAME = 'itp-3E Accounting';
+// $DBUSER = 'root';
+// $DBPASS = '';
 
-try{
-    $DB_con = new PDO("mysql:host=$DBHOST;port=8889;dbname=$DBNAME",$DBUSER,$DBPASS);
-    $DB_con ->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}
-catch(PDOException $e){
-    echo $e->getMessage();
-}
+// try{
+    // $DB_con = new PDO("mysql:host=$DBHOST;port=8889;dbname=$DBNAME",$DBUSER,$DBPASS);
+    // $DB_con ->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// }
+// catch(PDOException $e){
+    // echo $e->getMessage();
+// }
 
 
-?>
+// ?> 
 
-//<?php 
+<?php 
 //
 //// Phoebe local DB
 ////session_start();
@@ -37,4 +37,26 @@ catch(PDOException $e){
 //} catch (PDOException $e) {
 //    echo $e->getMessage();
 //}
-//?>
+?>
+
+<?php
+/*
+ * joey local DB
+ */
+//session_start();
+
+$DBHOST = 'localhost';
+$DBNAME = 'ecomplyc_itp';
+$DBUSER = 'root';
+$DBPASS = '';
+
+try{
+    $DB_con = new PDO("mysql:host=$DBHOST;port=3306;dbname=$DBNAME",$DBUSER,$DBPASS);
+    $DB_con ->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+}
+catch(PDOException $e){
+    echo $e->getMessage();
+}
+
+
+?>

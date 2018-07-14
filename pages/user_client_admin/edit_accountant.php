@@ -22,7 +22,6 @@
                     <thead>
                     <th>User</th>
                     <th>Email</th>
-                    <th>Password</th>
                     <th>Position</th>
                     <th>Edit Details</th>
                     </thead>
@@ -51,15 +50,14 @@
 
                                 echo ""
                                 . "<tr>"
-                                . "<td id='accountant_username" . $counter . "'>{$row['username']}</td>"
-                                . "<td id='accountant_email" . $counter . "'>{$row['email']}</td>"
-                                . "<td id='accountant_password" . $counter . "'>{$row['password']}</td>"
-                                . "<td>Accountant</td>"
-                                . "<td id='edit'>"
-                                . "<button type='button' name='editButton' id='editButton' class='btn btn-success edit_data'data-toggle='modal' data-target='#editModal' onclick='updateUsername(" . $counter . ")'>"
-                                . "<i class='far fa-edit'></i> Edit "
-                                . "</button>"
-                                . "</td>"
+                                    . "<td id='accountant_username" . $counter . "'>{$row['username']}</td>"
+                                    . "<td id='accountant_email" . $counter . "'>{$row['email']}</td>"
+                                    . "<td>Accountant</td>"
+                                    . "<td id='edit'>"
+                                        . "<button type='button' name='editButton' id='editButton' class='btn btn-success edit_data'data-toggle='modal' data-target='#editModal' onclick='updateUsername(" . $counter . ")'>"
+                                            . "<i class='far fa-edit'></i> Edit "
+                                        . "</button>"
+                                    . "</td>"
                                 . "</tr>\n";
                                 $counter++;
                             }
@@ -85,6 +83,8 @@
             </div>
             <div class="modal-body">
                 <form id="editAccountant" name="editAccountant" action="edit_accountant_validation.php" method="POST">
+                    <?php include('../user_client_admin/edit_accountant_validation.php'); ?>
+                    
                     <div class="form-group" style="display: none;">
                         <label for="accountantid">Username</label>
                         <input type="text" class="form-control" id="accountantid" name="accountantid">                            
@@ -98,7 +98,7 @@
 
                     <div class="form-group">
                         <label for="accountantpassword">Password</label>
-                        <input type="text" class="form-control" id="accountantpassword" name="accountantpassword" placeholder="Password">
+                        <input type="password" class="form-control" id="accountantpassword" name="accountantpassword" placeholder="Password">
                         <span class="error"><?php echo $passErr; ?></span>
                     </div>
 
@@ -125,8 +125,6 @@
         document.getElementById('accountantid').value = username;
         var email = document.getElementById("accountant_email" + x).innerHTML;
         document.getElementById('accountantemail').value = email;
-        var pass = document.getElementById("accountant_password" + x).innerHTML;
-        document.getElementById('accountantpassword').value = pass;
 
     }
 

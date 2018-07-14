@@ -1,5 +1,5 @@
-<?php
 
+<?php
 
 require_once '../db_connection/db.php';
 $unameErr = $emailErr = $passErr = $cpassErr = $checkErr = $twopassErr = "";
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
         echo"Fullname: ".$uname."<br>";
-        $regex = '/^[-a-z0-9~!$%^&*=+}{\'?]+(\.[-a-z0-9~!$%^&*=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i';
+        $regex = '/^[-a-z0-9_~!$%^&*=+}{\'?]+(\.[-a-z0-9_~!$%^&*=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i';
         if (empty($_POST["email"])) {
             $emailErr = "* Email is required";
             echo"Email: ".$emailErr."<br>";
@@ -84,16 +84,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo"valid: ".$valid."<br>";
         
         if ($valid == TRUE) {
-//            $hashpass = SHA1($pass);
-//            $hashcpass = SHA1($cpass);
-            if ($uname !== "") {
+            echo"after valid == TRUE<br>";
+            $hashpass = SHA1($pass);
+            $hashcpass = SHA1($cpass);
+            $query = "INSERT INTO user(username, email, password, role_id) VALUES ('$uname', '$email', '$hashpass', '2')";
+            echo $query."<br>";
+            $sql = $DB_con->prepare($query);
+            echo 'statement prepared -> $DB_con->prepare($query)<br>';
             
-                $sql = $DB_con->prepare("INSERT INTO user(username, email, password, role_id)
-                               VALUES ('$uname', '$email', '$pass', '2')");
-                echo $sql."<br>";
-            } 
-            if ($sql->execute()) {
+            try{
+                $sql->execute(); 
                 echo "after sql execute";
+                header('Location: ../user_login/index.php'); 
+                
+            }  catch (Exception $e){
+                echo 'Message: ' .$e->getMessage();
+            }
                 //send email to registering party
                 //redirect to choosing a plan
                 //after choose plan redirect to login page
@@ -130,9 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //                    
 //                } 
                         
-            } else {
-                echo '<div class="alert alert-warning mmbsm" role="alert">Error: ' . $sql . '<br>' . $connection->error . '</div>';
-            }
+            
         }
         
         
@@ -140,6 +144,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     }
 }
-
 ?>
 

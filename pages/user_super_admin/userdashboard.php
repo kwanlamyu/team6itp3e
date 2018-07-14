@@ -39,7 +39,7 @@
                                     </div>
                                 </div>
                                 <!--BEGIN: Search -->
-                                <div class="col-lg-6 m-stack__item m-stack__item--middle m-dropdown m-dropdown--arrow m-dropdown--large m-dropdown--mobile-full-width m-dropdown--align-right m-dropdown--skin-light m-header-search m-header-search--expandable m-header-search--skin-light" id="m_quicksearch" m-quicksearch-mode="default">
+                                <div class="col-lg-6 m-header-search m-header-search--expandable m-header-search--skin-light" m-quicksearch-mode="default">
 
                                     <form class="m-header-search__form">
                                         <div class="m-header-search__wrapper">
