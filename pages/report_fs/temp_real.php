@@ -98,8 +98,8 @@ $phpWord->addNumberingStyle(
         'multilevel', array(
     'type' => 'multilevel',
     'levels' => array(
-        array('format' => 'decimal', 'text' => '%1.', 'left' => 360, 'hanging' => 360, 'tabPos' => 360),
-        array('format' => 'upperLetter', 'text' => '%2.', 'left' => 720, 'hanging' => 360, 'tabPos' => 720),
+        array('format' => 'decimal', 'text' => '%8.', 'left' => 360, 'hanging' => 360, 'tabPos' => 360),
+        array('format' => 'upperLetter', 'text' => '%9.', 'left' => 720, 'hanging' => 360, 'tabPos' => 720),
     ),
         )
 );
@@ -3446,7 +3446,6 @@ for ($i = 0; $i < ($maxColumnsNotes - ($numberOfSheets + 1)); $i++) {
 }
 
 
-
 // Display normally
 foreach ($fullArray as $key1 => $value1) { // [ Bank Balances] => Array of values
     if ($key1 !== "Profit Before Income Tax") {
@@ -3457,7 +3456,7 @@ foreach ($fullArray as $key1 => $value1) { // [ Bank Balances] => Array of value
                         if ($key1 !== "Borrowings") {
 
                             // Display the category heading
-                            $section->addListItem(htmlspecialchars(strtoupper($key1)), 0, null, 'multilevel');
+                            $section->addListItem(htmlspecialchars(strtoupper($key1)), 0, null, $nestedListStyle);
                             
                             // create notes table
                             $table1 = $section->addTable();
@@ -3563,7 +3562,7 @@ foreach ($fullArray as $key1 => $value1) { // [ Bank Balances] => Array of value
 if (!empty($profitBeforeIncomeTaxArray)) {
 
     // Display the category heading
-    $section->addListItem(htmlspecialchars('PROFIT BEFORE INCOME TAX'), 0, null, 'multilevel');
+    $section->addListItem(htmlspecialchars('PROFIT BEFORE INCOME TAX'), 0, null, $nestedListStyle);
     $table1 = $section->addTable();
 
     // Create another row
@@ -3641,7 +3640,7 @@ if (!empty($incomeTaxArray)) {
     $table1 = $section->addTable();
 
     $table1->addRow();
-    $table1->addCell($firstCellValue)->addListItem(htmlspecialchars('Income tax expense'), 1, null, 'multilevel');
+    $table1->addCell($firstCellValue)->addListItem(htmlspecialchars('Income tax expense'), 1, null, $nestedListStyle);
     // Create another row
     $table1->addRow();
     $table1->addCell($firstCellValue);
@@ -4001,7 +4000,7 @@ if (!empty($tradeReceivablesArray)) {
     }
 
     $table1->addRow();
-    $table1->addCell($firstCellValue)->addListItem(htmlspecialchars('TRADE AND OTHER RECEIVABLES'), 0, null, 'multilevel');
+    $table1->addCell($firstCellValue)->addListItem(htmlspecialchars('TRADE AND OTHER RECEIVABLES'), 0, null, $nestedListStyle);
 
     // Create another row
     $table1->addRow();
@@ -4173,7 +4172,7 @@ if (!empty($tradePayableArray)) {
     }
 
     $table1->addRow();
-    $table1->addCell($firstCellValue)->addListItem(htmlspecialchars('TRADE AND OTHER PAYABLES'), 0, null, 'multilevel');
+    $table1->addCell($firstCellValue)->addListItem(htmlspecialchars('TRADE AND OTHER PAYABLES'), 0, null, $nestedListStyle);
 
     // Create another row
     $table1->addRow();
@@ -4333,7 +4332,7 @@ if (!empty($tradePayableArray)) {
 if (!empty($borrowingArray)) {
 
     $table1->addRow();
-    $table1->addCell($firstCellValue)->addListItem(htmlspecialchars('BORROWINGS'), 0, null, 'multilevel');
+    $table1->addCell($firstCellValue)->addListItem(htmlspecialchars('BORROWINGS'), 0, null, $nestedListStyle);
 
     // Create another row
     $table1->addRow();
@@ -4555,7 +4554,7 @@ if (in_array("Share Capital", $categoryArray)) {
     $table2 = $section->addTable();
 
     $table2->addRow();
-    $table2->addCell($firstCellValue)->addListItem(htmlspecialchars('SHARE CAPITAL'), 0, null, 'multilevel');
+    $table2->addCell($firstCellValue)->addListItem(htmlspecialchars('SHARE CAPITAL'), 0, null, $nestedListStyle);
 
     // Create another row
     $table2->addRow();
@@ -4695,7 +4694,7 @@ if (in_array("Plant and Equipment", $categoryArray)) {
     $table2 = $section->addTable();
 
     $table2->addRow();
-    $table2->addCell($firstCellValue)->addListItem(htmlspecialchars('PLANT AND EQUIPMENT'), 0, null, 'multilevel');
+    $table2->addCell($firstCellValue)->addListItem(htmlspecialchars('PLANT AND EQUIPMENT'), 0, null, $nestedListStyle);
 
     // Create another row
     $table2->addRow();
