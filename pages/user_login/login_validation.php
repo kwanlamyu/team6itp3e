@@ -1,52 +1,81 @@
 <?php
+
 require_once '../db_connection/db.php';
+$unameErr = $passErr = $loginErr = "";
+$uname = $pass = "";
+$valid = TRUE;
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['m_login_signin_submit'])) {
 
-$username = $_POST['username'];
-$password = $_POST['password'];
-
-$query = $DB_con->prepare("SELECT username, role_id, password FROM user WHERE username = '".$username."' AND password = SHA1('".$password."')");
-$query->execute();
-$data = $query->fetchAll();
-
-//echo "hello world";
-//echo "<br>";
-foreach ($data as $userData) {
-
-    if (($userData['username']==$username)) {
-        echo'login sucessful';
-        echo'<br>';
-        if($userData['role_id']=='1'){
-            echo'Welcome Super Admin';
-            //redirect to Super Admin Dash
-            header('Location: ../user_super_admin/userdashboard.php');
-        }
-        elseif($userData['role_id']=='2'){
-            echo'Welcome Client Admin';
-            //redirect to Client Admin Dash
-//            echo "<meta http-equiv='refresh' content='3;url=client_admin_dashboard.php'> ";
-//            echo '<span class="text-success "><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Redirecting please wait</span>';
-            header('Location: ../user_client_admin/client_admin_dashboard.php');
-        }
-        elseif($userData['role_id']=='3'){
-            echo'Welcome Standard User';
-            //redirect to Accountant Dash
-            header('Location: ../user_client_admin/client_admin_dashboard.php');
-        }
-        else{
-            echo'User type not found';
-            //Display error message to contact System Admin
+        if (empty($_POST["username"])) {
+            $unameErr = "* User name is required";
+//            echo "username: ".$unameErr;
+//            echo '<div class="alert alert-danger mtmd" role="alert">User name is required</div>';
+            $valid = FALSE;
+        } else {
+            $uname = $_POST['username'];
+//            echo "username: ".$uname."<br>";
         }
 
-    }
-    elseif (($userData['username']==$username) && ($userData['password']!=$password)) {
+        if (empty($_POST["password"])) {
+            $passErr = "* Password is required";
+//            echo "username: ".$passErr;
+//            echo '<div class="alert alert-danger mtmd" role="alert">Password is required</div>';
+            $valid = FALSE;
+        } else {
+            $pass = $_POST['password'];
+//            echo "password: ".$pass."<br>";
+        }
 
-        echo '<div class="alert alert-danger mtmd" role="alert">Password invalid!</div>';
+//        echo "valid: " . $valid . "<br>";
+        if ($valid == TRUE) {
+            $sql = "SELECT username, role_id, password FROM user WHERE username = '" . $uname . "'";
+//            echo "sql: ".$sql."<br>";
+            $query = $DB_con->prepare($sql);
+            $query->execute();
+//            echo '$query->execute()<br>';
+            if($query->fetchColumn() == 0){
+                $unameErr = "Account invalid";
+                $passErr = "Password invalid";
+            }
 
-    }
-    else {
-    
-    echo '<div class="alert alert-danger mtmd" role="alert">Account invalid!</div>';
-    
+            $data = $query->fetchAll();
+            
+
+//            echo '$data = $query->fetchAll()<br>';
+            //echo "hello world";
+            //echo "<br>";
+//            echo "before foreach loop<br>";
+            foreach ($data as $userData) {
+//                echo "enter foreach loop<br>";
+                $hash = $userData['password'];
+//                echo $hash;
+                if (password_verify($pass, $hash)) {
+
+//                    echo "password verified";
+                    if ($userData['role_id'] == '1') {
+                        echo"Welcome Super Admin";
+                        //redirect to Super Admin Dash
+                        header('Location: ../user_super_admin/userdashboard.php');
+                    } elseif ($userData['role_id'] == '2') {
+//                        echo"Welcome Client Admin";
+                        //redirect to Client Admin Dash
+                        //echo "<meta http-equiv='refresh' content='3;url=client_admin_dashboard.php'> ";
+                        //echo '<span class="text-success "><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Redirecting please wait</span>';
+                        header('Location: ../user_client_admin/client_admin_dashboard.php');
+                    } elseif ($userData['role_id'] == '3') {
+                        echo"Welcome Standard User";
+                        //redirect to Accountant Dash
+                        header('Location: ../user_client_admin/client_admin_dashboard.php');
+                    } else {
+                        echo"User type not found";
+                        //Display error message to contact System Admin
+                    }
+                } else {
+                    $passErr = "Password invalid";
+                }
+            }
+        }
     }
 }
 ?>

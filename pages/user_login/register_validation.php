@@ -13,15 +13,15 @@ function test_input($data) {
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['m_login_signup_submit'])) {
-        echo "post reg button <br>";
+//        echo "post reg button <br>";
         if (empty($_POST["fullname"])) {
             $unameErr = '* User name is required';
             
         } else {
             $uname = ($_POST["fullname"]);
-            echo "else statement <br>";
+//            echo "else statement <br>";
             $query = "SELECT COUNT(*) FROM user WHERE username = '".$uname."'";
-            echo "pre-query execution <br>";
+//            echo "pre-query execution <br>";
             $result = $DB_con->query($query);
             
             if ($result->fetchColumn() > 0) {
@@ -29,73 +29,73 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $valid = FALSE;
             }
         }
-        echo"Fullname: ".$uname."<br>";
+//        echo"Fullname: ".$uname."<br>";
         $regex = '/^[-a-z0-9_~!$%^&*=+}{\'?]+(\.[-a-z0-9_~!$%^&*=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i';
         if (empty($_POST["email"])) {
             $emailErr = "* Email is required";
-            echo"Email: ".$emailErr."<br>";
+//            echo"Email: ".$emailErr."<br>";
             $valid = FALSE;
         } else {
             $email = test_input($_POST["email"]);
             if ((!filter_var($email, FILTER_VALIDATE_EMAIL)) || (!preg_match($regex, $email))) {
                 $emailErr = "* Invalid email format";
-                echo"Email: ".$emailErr."<br>";
+//                echo"Email: ".$emailErr."<br>";
                 $valid = FALSE;
             } else {
                 $email = ($_POST["email"]);
-                echo"Email: ".$email."<br>";
+//                echo"Email: ".$email."<br>";
             }
         }
         if (empty($_POST["regpassword"])) {
             $passErr = "* Password is required";
-            echo"Password: ".$passErr."<br>";
+//            echo"Password: ".$passErr."<br>";
             $valid = FALSE;
         } else {
             $pass = ($_POST["regpassword"]);
             if ((strlen($pass) < 8) || !ctype_alnum($pass)) {
                 $passErr = "* Password must be 8 alphanumeric long";
-                echo"Password: ".$passErr."<br>";
+//                echo"Password: ".$passErr."<br>";
                 $valid = FALSE;
             }
-            echo"Password: ".$pass."<br>";
+            //echo"Password: ".$pass."<br>";
         }
         if (empty($_POST["regcpassword"])) {
             $cpassErr = "* Password confirm is required";
-            echo"C Password: ".$cpassErr."<br>";
+//            echo"C Password: ".$cpassErr."<br>";
             $valid = FALSE;
         } else {
             $cpass = ($_POST["regcpassword"]);
             if ((strlen($cpass) < 8) || !ctype_alnum($pass)) {
                 $cpassErr = "* Password must be 8 alphanumeric long";
-                echo"C Password: ".$cpassErr."<br>";
+//                echo"C Password: ".$cpassErr."<br>";
                 $valid = FALSE;
             }
-            echo"C Password: ".$cpass."<br>";
+//            echo"C Password: ".$cpass."<br>";
         }
         if (strlen($cpass) > 8) {
             if (strlen($pass) > 8) {
                 if ($pass !== $cpass) {
                     $twopassErr = "* Both password must be the same";
-                    echo"Password: ".$twopassErr."<br>";
+//                    echo"Password: ".$twopassErr."<br>";
                     $valid = FALSE;
                 }
             }
         }
-        echo"valid: ".$valid."<br>";
+//        echo"valid: ".$valid."<br>";
         
         if ($valid == TRUE) {
-            echo"after valid == TRUE<br>";
-            $hashpass = SHA1($pass);
-            $hashcpass = SHA1($cpass);
+//            echo"after valid == TRUE<br>";
+            $hashpass = password_hash($pass,PASSWORD_DEFAULT);
+            $hashcpass = password_hash($cpass,PASSWORD_DEFAULT);
             $query = "INSERT INTO user(username, email, password, role_id) VALUES ('$uname', '$email', '$hashpass', '2')";
-            echo $query."<br>";
+//            echo $query."<br>";
             $sql = $DB_con->prepare($query);
-            echo 'statement prepared -> $DB_con->prepare($query)<br>';
+//            echo 'statement prepared -> $DB_con->prepare($query)<br>';
             
             try{
                 $sql->execute(); 
-                echo "after sql execute";
-                header('Location: ../user_login/index.php'); 
+//                echo "after sql execute";
+                header('Location: ../user_client_admin/client_admin_dashboard.php'); 
                 
             }  catch (Exception $e){
                 echo 'Message: ' .$e->getMessage();
@@ -140,7 +140,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         
         
-        header('Location: ../user_login/index.php'); 
+//        header('Location: ../user_login/index.php'); 
 
     }
 }

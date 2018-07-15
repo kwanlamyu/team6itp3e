@@ -104,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($pass == ""){
                 $sql = "UPDATE user SET email='$email' WHERE username='$uname'";
             }else{
-                $hashpass = SHA1($pass);
+                $hashpass = password_hash($pass,PASSWORD_DEFAULT);
                 $sql = "UPDATE user SET email='$email', password='$hashpass' WHERE username='$uname'";
             }
             
