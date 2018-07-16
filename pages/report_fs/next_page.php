@@ -106,17 +106,17 @@ foreach ($tempUniqueCategoryArray as $insert) {
 										</a>
 									</li>
 								</ul>
-								
+
 							</div>
 							</div>
 						</div>
-						
-						
-						
+
+
+
 							<!--begin::Portlet-->
 							<div class="m-content">
 							<div class="row">
-							<div class="col-lg-12"> 
+							<div class="col-lg-12">
 							<div class="m-portlet m-portlet--tab">
 
         <p id="data">Hello World!</p>
@@ -130,6 +130,7 @@ foreach ($tempUniqueCategoryArray as $insert) {
 					</div>
 					<!-- END: Subheader -->
     </div>
+    
 <script type="text/javascript">
     var accountArray = <?php echo json_encode($accountArray); ?>;
     var accountArrayCount = <?php echo count($accountArray); ?>;
