@@ -1089,10 +1089,16 @@ if ($noOfDirectors > 1) {
     $section->addText("\tThe director of the Company in office at the date of this statement are as follows:", $fontstyleName, $paragraphStyle);
 }
 
-if ($directorName1ApptDate != null) {
-    $section->addText($directorName1 . "   appointed on " . date('d F Y', strtotime($directorName1ApptDate)), $fontstyleName, $paragraphStyle);
+if ($directorAppointedDate != null) {
+    for($i = 0; $i < $noOfDirectors; $i++){
+        $section->addText("\t" . $directorName[$i] . "   appointed on " . date('d F Y', strtotime($directorAppointedDate[$i])), $fontstyleName, $paragraphStyle);
+    }
+   
 } else {
-    $section->addText($directName1);
+    for($i = 0; $i < $noOfDirectors; $i++){
+        $section->addText("\t" . $directorName[$i]);
+    }
+    
 }
 
 if ($noOfDirectors > 1) {
@@ -1137,7 +1143,10 @@ $table->addCell($firstCellValue)->addText(htmlspecialchars("The Company"), array
 $table->addRow();
 
 for($i = 0; $i < $noOfDirectors; $i++){
+    
     $table->addCell()->addText($directorName[$i], $fontstyleName);
+    $table->addCell()->addText($directorStartShare[$i], $fontstyleName, $centerAlignment);
+    $table->addCell()->addText($directorEndShare[$i], $fontstyleName, $centerAlignment);
 }
 
 
@@ -1192,8 +1201,9 @@ if ($noOfDirectors >= 2) {
 }
 
 $section->addTextBreak(1);
-$section->addText($directorName1 . "<w:br/>Director"
-        , $fontstyleName, $paragraphStyle);
+for($i = 0; $i < $noOfDirectors; $i++){
+        $section->addText($directorName[$i] . "<w:br/>Director", $fontstyleName, $paragraphStyle);
+}
 
 $section->addText("Singapore, " . (date('F d Y', strtotime($todayDate)))
         , $fontstyleName, $paragraphStyle);
