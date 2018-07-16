@@ -844,7 +844,7 @@
         }
       }
 			// after update of category, update directors
-			endOfForm();
+			updateDirectors();
     }
 
 		var count = 1;
@@ -878,7 +878,7 @@
 		}
 
 		// TODO: this function should happen after a validation for empty fields
-		function endOfForm(){
+		function updateDirectors(){
 			tempDirectorArray = [];
 			tempDateArray = [];
 			tempShareArray = [];
