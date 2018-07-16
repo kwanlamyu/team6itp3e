@@ -3478,7 +3478,7 @@ foreach ($fullArray as $key1 => $value1) { // [ Bank Balances] => Array of value
 
                             // Display the category heading
                             $section->addListItem(htmlspecialchars(strtoupper($key1)), 0, null, $nestedListStyle);
-                            
+
                             // create notes table
                             $table1 = $section->addTable();
                             $table1->addRow();
@@ -3604,18 +3604,25 @@ if (!empty($profitBeforeIncomeTaxArray)) {
     $table1->addRow();
     $table1->addCell($firstCellValue)->addText("This is determined after charging:");
 
+    $total = count($profitBeforeIncomeTaxArray);
+    $counter = 0;
 
     foreach ($profitBeforeIncomeTaxArray as $key1 => $value1) { //  [Depreciation of plant and equipment] => Array ( [December 2016] => 3014 )
-        // Display the category heading - ucwords($key2)
+        // Display the category heading
         $table1->addRow();
         $table1->addCell($firstCellValue)->addText($key1);
 
-        count($profitBeforeIncomeTaxArray);
-
+        $counter++;
+        
         foreach ($value1 as $key2 => $value2) { // [December 2016] => 3014
             // if don't need dash, just print everything out
             if ($numberOfSheets == count($value1)) {
-                $cellNotes = $table1->addCell($cellValue);
+                if ($counter == $total) {
+                    $cellNotes = $table1->addCell($cellValue, $cellThickBottomBorder);
+                } else {
+                    $cellNotes = $table1->addCell($cellValue);
+                }
+
                 $cellNotes->addText(number_format(ceil($value2)), $fontstyleName, $centerAlignment);
 
                 for ($h = 0; $h < count($years); $h++) {
@@ -3636,7 +3643,12 @@ if (!empty($profitBeforeIncomeTaxArray)) {
             // if not the same, then see which position it is
             else {
                 for ($h = 0; $h < count($years); $h++) {
-                    $cellNotes = $table1->addCell($cellValue);
+                    if ($counter == $total) {
+                        $cellNotes = $table1->addCell($cellValue, $cellThickBottomBorder);
+                    } else {
+                        $cellNotes = $table1->addCell($cellValue);
+                    }
+                    
                     if ($key2 == $years[$h]) {
                         $cellNotes->addText(number_format(ceil($value2)), $fontstyleName, $centerAlignment);
                     } else {
@@ -3652,7 +3664,7 @@ if (!empty($profitBeforeIncomeTaxArray)) {
 }
 
 if (!empty($incomeTaxArray)) {
-    
+
     $taxExpenseKey = ['Current income tax expenses', 'Current year tax expense'];
     $provisionKey = ['Under provision in prior year'];
 
@@ -4151,7 +4163,7 @@ if (!empty($tradeReceivablesArray)) {
     foreach ($totalArray as $key => $value) {
         foreach ($totalReceivablesArray as $keyReceivables => $valueReceivables) {
             if ($key == $keyReceivables) {
-                $finalReceivables = $value + $valueReceivables;
+                $finalReceivables = (float) $value + (float) $valueReceivables;
                 if ($finalReceivables == 0) {
                     $cellNotes = $table1->addCell($cellValue, $topAndBottom);
                     $cellNotes->addText("-", $fontstyleName, $centerAlignment);

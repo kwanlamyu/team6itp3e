@@ -72,15 +72,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 //            echo"C Password: ".$cpass."<br>";
         }
-        if (strlen($cpass) > 8) {
-            if (strlen($pass) > 8) {
-                if ($pass !== $cpass) {
-                    $twopassErr = "* Both password must be the same";
+        if ($pass !== $cpass) {
+            $twopassErr = "* Both password must be the same";
 //                    echo"Password: ".$twopassErr."<br>";
-                    $valid = FALSE;
-                }
-            }
+            $valid = FALSE;
         }
+            
 //        echo"valid: ".$valid."<br>";
         
         if ($valid == TRUE) {
@@ -95,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             try{
                 $sql->execute(); 
 //                echo "after sql execute";
-                header('Location: ../user_client_admin/client_admin_dashboard.php'); 
+                header('Location: ../user_login/login.php');
                 
             }  catch (Exception $e){
                 echo 'Message: ' .$e->getMessage();
