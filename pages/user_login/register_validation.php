@@ -72,15 +72,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 //            echo"C Password: ".$cpass."<br>";
         }
-        if (strlen($cpass) > 8) {
-            if (strlen($pass) > 8) {
-                if ($pass !== $cpass) {
-                    $twopassErr = "* Both password must be the same";
+        if ($pass !== $cpass) {
+            $twopassErr = "* Both password must be the same";
 //                    echo"Password: ".$twopassErr."<br>";
-                    $valid = FALSE;
-                }
-            }
+            $valid = FALSE;
         }
+            
 //        echo"valid: ".$valid."<br>";
         
         if ($valid == TRUE) {
