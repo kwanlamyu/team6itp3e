@@ -33,6 +33,23 @@ $companyAddress = $_POST["companyAddress"];
 $frsDate = $_POST['frsDate'];
 $currency = $_POST['currency'];
 
+$tempDirectorArray = $_POST['tempDirectorArray'];
+$tempDateArray = $_POST['tempDateArray'];
+$tempShareArray = $_POST['tempShareArray'];
+
+$directorName = explode(",", $tempDirectorArray);
+$directorAppointedDate = explode(",", $tempDateArray);
+$directorShare = explode(",", $tempShareArray);
+
+echo "Director Name:";
+print_r($tempDirectorArray);
+echo "<br/>";
+echo "Appointed Date:";
+print_r($directorAppointedDate);
+echo "<br/>";
+echo "Director Share:";
+print_r($directorShare);
+
 $accountArray = array();
 $valueArray = array();
 $categoryArray = array();

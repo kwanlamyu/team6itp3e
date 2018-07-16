@@ -742,6 +742,62 @@
                   <option value="4">4</option>
               </select>
           </div>
+          
+          <div class="form-group" id='directorFields'>
+              <label for="directorName0">Director Name: </label>
+              <input type ="text" id="directorName0" />
+              <input type="hidden" id="tempDirectorArray" name="tempDirectorArray" value="" />
+              
+              <label for="directorName0">Appointed Date:</label>
+              <input type ="date" id="directorNameApptDate0" />
+              <input type="hidden" id="tempDateArray" name="tempDateArray" value="" />
+              
+              <label for="directorShare0">Director's Share:</label>
+              <input type ="number" id="directorShare0" />
+              <input type="hidden" id="tempShareArray" name="tempShareArray" value="" />
+              
+              <button onclick="addDirectorFunction()" type='button' id='addDirector'>Add Director</button>
+             
+              <br>
+          </div>
+               
+          <script>
+            var count = 0;
+            var tempDirectorArray = [];
+            var tempDateArray = [];
+            var tempShareArray = [];
+                  
+            function addDirectorFunction(){
+
+                addDirectorFields();
+                count++;
+                
+                document.getElementById('directorFields').innerHTML += "Director Name: <input type='text' id='directorName" + count + "'> \n\
+                                                            Appointed Date: <input type='date' id='directorNameApptDate" + count + "'> \n\
+                                                            Director's Share: <input type='number' id='directorShare" + count + "'></br> ";
+               
+                for (i = 0; i < count; i++){
+                    document.getElementById('directorName' + i).value = tempDirectorArray[i];
+                    document.getElementById('directorNameApptDate' + i).value = tempDateArray[i];
+                    document.getElementById('directorShare' + i).value = tempShareArray[i];;
+                }
+            }
+              
+            function addDirectorFields(){
+                tempDirectorArray.push(document.getElementById('directorName' + count).value);
+                tempDateArray.push(document.getElementById('directorNameApptDate' + count).value);  
+                tempShareArray.push(document.getElementById('directorShare' + count).value);
+                                
+                                
+                alert(document.getElementById('directorName' + count).value);
+                document.getElementById('tempDirectorArray').value = tempDirectorArray;
+                document.getElementById('tempDateArray').value = tempDateArray;
+                document.getElementById('tempShareArray').value = tempShareArray;
+
+            } 
+            
+           
+          </script>
 
           <div class="form-group">
               <label for="directorName1">Director Name #1: </label>

@@ -59,6 +59,8 @@ $phpWord->addNumberingStyle(
         array('format' => 'lowerLetter', 'text' => '(%4)', 'left' => 360, 'hanging' => 360, 'tabPos' => 720),
         array('format' => 'lowerLetter', 'text' => '(%5)', 'left' => 360, 'hanging' => 360, 'tabPos' => 720),
         array('format' => 'lowerLetter', 'text' => '(%6)', 'left' => 360, 'hanging' => 360, 'tabPos' => 720),
+        array('format' => 'lowerLetter', 'text' => '(%7)', 'left' => 360, 'hanging' => 360, 'tabPos' => 720, 'start'=> 14),
+        array('format' => 'lowerLetter', 'text' => '(%8)', 'left' => 360, 'hanging' => 360, 'tabPos' => 720, 'start'=> 9)
     )
         )
 );
@@ -68,9 +70,15 @@ $phpWord->addNumberingStyle(
         $nestedListStyle, array(
     'type' => 'multilevel',
     'levels' => array(
-        array('format' => 'decimal', 'text' => '%1.', 'left' => 360, 'hanging' => 360, 'tabPos' => 360),
+        array('format' => 'decimal', 'text' => '%1.', 'left' => 360, 'hanging' => 360, 'tabPos' => 360, 'start' => 1),
         array('format' => 'decimal', 'text' => '%1.%2', 'left' => 360, 'hanging' => 360, 'tabPos' => 360),
-        array('format' => 'decimal', 'text' => '%1.%2', 'left' => 360, 'hanging' => 360, 'tabPos' => 360, 'start' => 2)
+        array('format' => 'decimal', 'text' => '%1.%2', 'left' => 360, 'hanging' => 360, 'tabPos' => 360, 'start' => 2),
+        array('format' => 'decimal', 'text' => '%1.%2', 'left' => 360, 'hanging' => 360, 'tabPos' => 360, 'start' => 2),
+        array('format' => 'decimal', 'text' => '%1.%2', 'left' => 360, 'hanging' => 360, 'tabPos' => 360, 'start' => 2),
+        array('format' => 'decimal', 'text' => '%1.%2', 'left' => 360, 'hanging' => 360, 'tabPos' => 360, 'start' => 2),
+        array('format' => 'decimal', 'text' => '%1.%2', 'left' => 360, 'hanging' => 360, 'tabPos' => 360, 'start' => 2),
+        array('format' => 'decimal', 'text' => '%1.%2', 'left' => 360, 'hanging' => 360, 'tabPos' => 360, 'start' => 2),
+        array('format' => 'decimal', 'text' => '%1.%2', 'left' => 360, 'hanging' => 360, 'tabPos' => 360, 'start' => 2),
     )
         )
 );
@@ -1015,6 +1023,7 @@ $yearEndString = $yearEndArray[2] . " " . $monthIdentifier[$yearEndMonth - 1] . 
 // YOKYEE START HERE
 //==============================================================================
 
+//Cover Page
 $section = $phpWord->addSection();
 //$section->addTextBreak([8], [$fontstyleName], [null]);
 $section->addText('<w:br/><w:br/><w:br/><w:br/><w:br/><w:br/><w:br/><w:br/><w:br/>', $fontstyleName);
@@ -1023,7 +1032,7 @@ $section->addText(strtoupper($companyName) .
 $section->addText("UNAUDITED FINANCIAL STATEMENTS", $fontStyleBigBlack);
 $section->addText("FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBigBlack);
 
-
+//Page 1
 $section = $phpWord->addSection();
 $section->addText(strtoupper($companyName), $fontStyleBlack);
 
@@ -1045,31 +1054,29 @@ if ($noOfDirectors > 1) {
 
 if ($noOfDirectors > 1) {
 
-    $section->addListItem("OPINION OF THE DIRECTORS", 0, $fontstyleName, $listingStyle);
+    $section->addListItem("\tOPINION OF THE DIRECTORS", 0, $fontstyleName, $listingStyle);
 } else {
 
-    $section->addListItem("OPINION OF THE DIRECTOR", 0, $fontstyleName, $listingStyle);
+    $section->addListItem("\tOPINION OF THE DIRECTOR", 0, $fontstyleName, $listingStyle);
 }
 
 $section->addListItem("the accompanying financial statements of the Company are drawn up so as to give a true and fair view of the financial position of the Company as at "
-        . date('d F Y', strtotime($yearEnd)) . " and the financial performance, changes in equity and cash flows of the Company for the financial year covered by the financial statements; and"
-        , 0, $fontstyleName, $romanListingStyle);
+                        . date('d F Y', strtotime($yearEnd)) . " and the financial performance, changes in equity and cash flows of the Company for the financial year covered by the financial statements; and"
+                        , 0, $fontstyleName, $romanListingStyle);
 
 $section->addListItem("at the date of this statement there are reasonable grounds to believe that the Company will be able to pay its debts as and when they fall due."
-        , 0, $fontstyleName, $romanListingStyle);
+                        , 0, $fontstyleName, $romanListingStyle);
 
 if ($noOfDirectors > 1) {
-    $section->addListItem("DIRECTORS", 0, $fontstyleName, $listingStyle);
+    $section->addListItem("\tDIRECTORS", 0, $fontstyleName, $listingStyle);
 } else {
-    $section->addListItem("DIRECTOR", 0, $fontstyleName, $listingStyle);
+    $section->addListItem("\tDIRECTOR", 0, $fontstyleName, $listingStyle);
 }
 
 if ($noOfDirectors > 1) {
-
-    $section->addText("The directors of the Company in office at the date of this statement are as follows:", $fontstyleName, $paragraphStyle);
+    $section->addText("\tThe directors of the Company in office at the date of this statement are as follows:", $fontstyleName, $paragraphStyle);
 } else {
-
-    $section->addText("The director of the Company in office at the date of this statement are as follows:", $fontstyleName, $paragraphStyle);
+    $section->addText("\tThe director of the Company in office at the date of this statement are as follows:", $fontstyleName, $paragraphStyle);
 }
 
 if ($directorName1ApptDate != null) {
@@ -1079,39 +1086,48 @@ if ($directorName1ApptDate != null) {
 }
 
 if ($noOfDirectors > 1) {
-    $section->addListItem("ARRANGEMENTS TO ENABLE DIRECTORS TO ACQUIRE SHARES AND DEBENTURES", 0, $fontstyleName, $listingStyle, $paragraphStyle);
+    $section->addListItem("\tARRANGEMENTS TO ENABLE DIRECTORS TO ACQUIRE SHARES AND \tDEBENTURES", 0, $fontstyleName, $listingStyle, $paragraphStyle);
 } else {
-    $section->addListItem("ARRANGEMENTS TO ENABLE DIRECTOR TO ACQUIRE SHARES AND DEBENTURES", 0, $fontstyleName, $listingStyle, $paragraphStyle);
+    $section->addListItem("\tARRANGEMENTS TO ENABLE DIRECTOR TO ACQUIRE SHARES AND \tDEBENTURES", 0, $fontstyleName, $listingStyle, $paragraphStyle);
 }
 
 if ($noOfDirectors > 1) {
-    $section->addText("Neither at the end of nor at any time during the financial year was the Company a party to any arrangement whose object was to enable the directors of the Company to acquire benefits by means of the acquisition of shares in, or debentures of, the Company or any other body corporate."
-            , $fontstyleName);
+    $section->addText("\tNeither at the end of nor at any time during the financial year was the Company a \tparty to any arrangement whose object was to enable the directors of the Company to \tacquire benefits by means of the acquisition of shares in, or debentures of, the \tCompany or any other body corporate."
+                        , $fontstyleName);
 } else {
-    $section->addText("Neither at the end of nor at any time during the financial year was the Company a party to any arrangement whose object was to enable the director of the Company to acquire benefits by means of the acquisition of shares in, or debentures of, the Company or any other body corporate."
-            , $fontstyleName);
+    $section->addText("\tNeither at the end of nor at any time during the financial year was the Company a \tparty to any arrangement whose object was to enable the director of the Company to \tacquire benefits by means of the acquisition of shares in, or debentures of, the \tCompany or any other body corporate."
+                        , $fontstyleName);
 }
 
 if ($noOfDirectors > 1) {
-    $section->addListItem("DIRECTORS' INTERESTS IN SHARES OR DEBENTURES", 0, $fontstyleName, $listingStyle, $paragraphStyle);
+    $section->addListItem("\tDIRECTORS' INTERESTS IN SHARES OR DEBENTURES", 0, $fontstyleName, $listingStyle, $paragraphStyle);
 } else {
-    $section->addListItem("DIRECTOR'S INTERESTS IN SHARES OR DEBENTURES", 0, $fontstyleName, $listingStyle, $paragraphStyle);
+    $section->addListItem("\tDIRECTOR'S INTERESTS IN SHARES OR DEBENTURES", 0, $fontstyleName, $listingStyle, $paragraphStyle);
 }
 
 if ($noOfDirectors > 1) {
-    $section->addText("According to the register of directors’ shareholdings, none of the directors holding office at the end of the financial year had any interest in the shares or debentures of the Company or its related corporations, except as follows: "
-            , $fontstyleName);
+    $section->addText("\tAccording to the register of directors’ shareholdings, none of the directors holding \toffice at the end of the financial year had any interest in the shares or debentures of \tthe Company or its related corporations, except as follows: "
+                        , $fontstyleName);
 } else {
-    $section->addText("According to the register of director’s shareholdings, none of the director holding office at the end of the financial year had any interest in the shares or debentures of the Company or its related corporations, except as follows: "
-            , $fontstyleName);
+    $section->addText("\tAccording to the register of director’s shareholdings, none of the director holding \toffice at the end of the financial year had any interest in the shares or debentures of \tthe Company or its related corporations, except as follows: "
+                        , $fontstyleName);
 }
 
-$section->addText('<w:br/>', $fontstyleName);
+$table = $section->addTable();
+$table->addRow();
+$table->addCell($firstCellValue);
+$cell = $table->addCell($cellValue);
+$cell->addText("At the beginning of financial year", $fontstyleName, $centerAlignment);
+$cell = $table->addCell($cellValue);
+$cell->addText("At the end of financial year", $centerAlignment);
 
-$textrun = $section->addTextRun();
-$textrun->addText(htmlspecialchars("The Company"), array('underline' => 'single'));
-$section->addText('<w:br/>' . $directorName1, $fontstyleName);
+$table->addRow();
+$table->addCell($firstCellValue)->addText(htmlspecialchars("The Company"), array('underline' => 'single'));
 
+$table->addRow();
+$table->addCell()->addText($directorName1, $fontstyleName);
+
+//Page 2
 $section = $phpWord->addSection();
 $section->addText(strtoupper($companyName), $fontStyleBlack);
 
@@ -1124,33 +1140,36 @@ if ($noOfDirectors > 1) {
 }
 
 if ($noOfDirectors > 1) {
-    $section->addListItem("DIRECTORS' CONTRACTUAL BENEFITS", 0, $fontstyleName, $listingStyle, $paragraphStyle);
+    $section->addListItem("\tDIRECTORS' CONTRACTUAL BENEFITS", 0, $fontstyleName, $listingStyle, $paragraphStyle);
 } else {
-    $section->addListItem("DIRECTORS' CONTRACTUAL BENEFITS", 0, $fontstyleName, $listingStyle, $paragraphStyle);
+    $section->addListItem("\tDIRECTORS' CONTRACTUAL BENEFITS", 0, $fontstyleName, $listingStyle, $paragraphStyle);
 }
 
 
 
-$section->addText("Since the end of the previous financial period, no director has received or become entitled to receive a benefit which is required to be disclosed under the Singapore Companies Act, by reason of a contract made by the Company or a related corporation with the directors or with a firm of which he is a member, or with a Company in which he has a substantial financial interest, except as disclosed in the financial statements."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tSince the end of the previous financial period, no director has received or become \tentitled to receive a benefit which is required to be disclosed under the Singapore \tCompanies Act, by reason of a contract made by the Company or a related \tcorporation with the directors or with a firm of which he is a member, or with a \tCompany in which he has a substantial financial interest, except as disclosed in the \tfinancial statements."
+                    , $fontstyleName, $paragraphStyle);
 $section->addTextBreak(1);
 
-$section->addListItem("OPTIONS GRANTED", 0, $fontstyleName, $listingStyle, $paragraphStyle);
+$section->addListItem("\tOPTIONS GRANTED", 0, $fontstyleName, $listingStyle, $paragraphStyle);
 
-$section->addText("No options were granted during the financial year to subscribe for unissued shares of the Company."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tNo options were granted during the financial year to subscribe for unissued shares of \tthe Company."
+                    , $fontstyleName, $paragraphStyle);
+
 $section->addTextBreak(1);
 
-$section->addListItem("OPTIONS EXERCISED", 0, $fontstyleName, $listingStyle, $paragraphStyle);
+$section->addListItem("\tOPTIONS EXERCISED", 0, $fontstyleName, $listingStyle, $paragraphStyle);
 
-$section->addText("No shares were issued during the financial year by virtue of the exercise of options to take up unissued shares of the Company."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tNo shares were issued during the financial year by virtue of the exercise of options to \ttake up unissued shares of the Company."
+                    , $fontstyleName, $paragraphStyle);
+
 $section->addTextBreak(1);
 
-$section->addListItem("OPTIONS OUTSTANDING", 0, $fontstyleName, $listingStyle, $paragraphStyle);
+$section->addListItem("\tOPTIONS OUTSTANDING", 0, $fontstyleName, $listingStyle, $paragraphStyle);
 
-$section->addText("There were no unissued shares of the Company under option at the end of the financial year."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tThere were no unissued shares of the Company under option at the end of the \tfinancial year."
+                    , $fontstyleName, $paragraphStyle);
+
 $section->addTextBreak(1);
 
 if ($noOfDirectors >= 2) {
@@ -3084,342 +3103,344 @@ for ($i = 0; $i < count($totalCashFlow); $i++) {
 
 // End of 4 STATEMENTS
 
+// Page 7
+$section = $phpWord->addSection();
+$section->addText(strtoupper($companyName), $fontStyleBlack);
+
+$section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
+$section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+
 $section->addText("These notes form an integral part of and should be read in conjunction with the accompanying financial statements."
         , $fontstyleName, $paragraphStyle);
 $section->addTextBreak(1);
 
+$section->addListItem("\tGENERAL INFORMATION", 0, $fontstyleName, $nestedListStyle);
+ 
+$section->addText("\tThe Company is incorporated and domiciled in Singapore."
+                    , $fontstyleName, $paragraphStyle);
+
+$section->addText("\tThe Company’s principal activities are those to carry-on the businesses of " . $companyPA
+                    , $fontstyleName, $paragraphStyle);
+
+$section->addText("\tThe Company’s registered office is at " . $companyAddress
+                    , $fontstyleName, $paragraphStyle);
+
+$section->addText("\tThe financial statements of the Company for the financial year ended \t\t" . date('F d Y', strtotime($yearEnd)) . " were authorised for issue in accordance with a resolution of the \tdirectors on the date of Statement by Directors."
+                    , $fontstyleName, $paragraphStyle);
+
+$section->addListItem("\tBASIS OF PREPARATION AND SUMMARY OF SIGNIFICANT ACCOUNTING \tPOLICIES", 0, $fontstyleName, $nestedListStyle);
+
+$section->addListItem("\tBasis of preparation", 1, $fontstyleName, $nestedListStyle);
+
+$section->addListItem("\tBasis of accounting", 2, $fontstyleName, $listingStyle);
+
+$section->addText("\tThe financial statements are prepared in accordance with Singapore Financial \tReporting Standards (“FRS”). The financial statements have been prepared under \tthe historical cost convention, except as disclosed in the \taccounting policies below."
+                            , $fontstyleName, $paragraphStyle);
+
+$section->addText("\tThe preparation of these financial statements in conformity with FRS requires \tmanagement to exercise its judgement in the process of applying the Company’s \taccounting policies. It also requires the use of certain critical accounting estimates \tand assumptions. The areas involving a higher degree of judgement or complexity,or \tareas where assumptions and estimates are significant to the financial statements, \tare disclosed in Note 3"
+                            , $fontstyleName, $paragraphStyle);
+
+$section->addListItem("\tAdoption of new and revised Singapore Financial Reporting Standards", 2, $fontstyleName, $listingStyle);
+
+$section->addText("\tOn " . date('F d Y', strtotime($frsDate)) . " the Company adopted the new or amended FRS and \tInterpretations to FRS (“INT FRS”) that are mandatory for application for the financial \tyear. The adoption of these new or amended FRS and INT FRS did not result \tinsubstantial changes of the Company’s accounting policies and had no material \teffect on the amounts reported for the current or prior financial period."
+                            , $fontstyleName, $paragraphStyle);
+
+//Page 8
 $section = $phpWord->addSection();
 $section->addText(strtoupper($companyName), $fontStyleBlack);
 
 $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
 $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 
-$section->addListItem(htmlspecialchars('GENERAL INFORMATION'), 0, $fontstyleName, $nestedListStyle);
+$section->addListItem("\tSummary of significant accounting policies", 1, $fontstyleName, $nestedListStyle);
 
-$section->addText("The Company is incorporated and domiciled in Singapore."
-        , $fontstyleName, $paragraphStyle);
+$section->addListItem("\tRevenue recognition", 3, $fontstyleName, $listingStyle);
 
-$section->addText("The Company’s principal activities are those to carry-on the businesses of " . $companyPA
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tSales comprise the fair value of the consideration received or receivable for the \trendering of services in the ordinary course of the Company’s activities. Sales are \tpresented net of goods and services tax, rebates and discounts."
+                            , $fontstyleName, $paragraphStyle);
 
-$section->addText("The Company’s registered office is at " . $companyAddress
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tThe Company recognises revenue when the amount of revenue and related cost can \tbe reliably measured, when it is probable that the collectability of the related \treceivables is reasonably assured and when the specific criteria for each of the \tCompany’s activities are met."
+                            , $fontstyleName, $paragraphStyle);
 
-$section->addText("The financial statements of the Company for the financial year ended " . date('F d Y', strtotime($yearEnd)) . " were authorised for issue in accordance with a resolution of the directors on the date of Statement by Directors."
-        , $fontstyleName, $paragraphStyle);
-
-$section->addListItem(htmlspecialchars('BASIS OF PREPARATION AND SUMMARY OF SIGNIFICANT ACCOUNTING POLICIES'), 0, $fontstyleName, $nestedListStyle);
-
-$section->addListItem(htmlspecialchars('Basis of preparation'), 1, $fontstyleName, $nestedListStyle);
-
-$section->addListItem("Basis of accounting", 2, $fontstyleName, $listingStyle);
-
-$section->addText("The financial statements are prepared in accordance with Singapore Financial Reporting Standards (“FRS”). The financial statements have been prepared under the historical cost convention, except as disclosed in the accounting policies below."
-        , $fontstyleName, $paragraphStyle);
-
-$section->addText("The preparation of these financial statements in conformity with FRS requires management to exercise its judgement in the process of applying the Company’s accounting policies. It also requires the use of certain critical accounting estimates and assumptions. The areas involving a higher degree of judgement or complexity,or areas where assumptions and estimates are significant to the financial statements, are disclosed in Note 3"
-        , $fontstyleName, $paragraphStyle);
-
-
-$section->addListItem("Adoption of new and revised Singapore Financial Reporting Standards", 2, $fontstyleName, $listingStyle);
-
-$section->addText("On " . date('F d Y', strtotime($frsDate)) . " the Company adopted the new or amended FRS and Interpretations to FRS (“INT FRS”) that are mandatory for application for the financial year. The adoption of these new or amended FRS and INT FRS did not result insubstantial changes of the Company’s accounting policies and had no material effect on the amounts reported for the current or prior financial period."
-        , $fontstyleName, $paragraphStyle);
-
-$section = $phpWord->addSection();
-$section->addText(strtoupper($companyName), $fontStyleBlack);
-
-$section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-$section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
-
-$section->addListItem(htmlspecialchars('Summary of significant accounting policies'), 1, $fontstyleName, $nestedListStyle);
-
-$section->addListItem("Revenue recognition", 3, $fontstyleName, $listingStyle);
-
-$section->addText("Sales comprise the fair value of the consideration received or receivable for the rendering of services in the ordinary course of the Company’s activities. Sales are presented net of goods and services tax, rebates and discounts."
-        , $fontstyleName, $paragraphStyle);
-
-$section->addText("The Company recognises revenue when the amount of revenue and related cost can be reliably measured, when it is probable that the collectability of the related receivables is reasonably assured and when the specific criteria for each of the Company’s activities are met."
-        , $fontstyleName, $paragraphStyle);
-?>
-<!-- need to change to dynamic-->
-<?php
 $section->addListItem("Service income", 1, $fontstyleName, $romanListingStyle);
 
-$section->addText("Service income is recognised when services are rendered."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tService income is recognised when services are rendered."
+                                , $fontstyleName, $paragraphStyle);
 
 $section->addListItem("Sale of goods", 1, $fontstyleName, $romanListingStyle);
 
-$section->addText("Revenue from these sales is recognised when a Company has delivered the products to the customer,the customer has accepted the products and collectability of the related receivables is reasonably assured."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tRevenue from these sales is recognised when a Company has delivered the \tproducts to the customer,the customer has accepted the products and collectability of \tthe related receivables is reasonably assured."
+                                , $fontstyleName, $paragraphStyle);
 
-$section->addListItem("Employee compensation", 3, $fontstyleName, $listingStyle);
+$section->addListItem("\tEmployee compensation", 3, $fontstyleName, $listingStyle);
 
-$section->addText("Employee benefits are recognised as an expense, unless the cost qualifies to be capitalised as an asset."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tEmployee benefits are recognised as an expense, unless the cost qualifies to be \tcapitalised as an asset."
+                            , $fontstyleName, $paragraphStyle);
 
 $section->addListItem("Defined contribution plans", 2, $fontstyleName, $romanListingStyle);
 
-$section->addText("Defined contribution plans are post-employment benefit plans under which the Company pays fixed contributions into separate entities such as the Central Provident Fund on a mandatory, contractual or voluntary basis. The Company has no further payment obligations once the contributions have been paid."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tDefined contribution plans are post-employment benefit plans under which the \tCompany pays fixed contributions into separate entities such as the Central \tProvident Fund on a mandatory, contractual or voluntary basis. The Company has no \tfurther payment obligations once the contributions have been paid."
+                                , $fontstyleName, $paragraphStyle);
 
 $section->addListItem("Employee leave entitlement", 2, $fontstyleName, $romanListingStyle);
 
-$section->addText("Employee entitlements to annual leave are recognised when they accrue to employees. A provision is made for the estimated liability for annual leave as a result of services rendered by employees up to the balance sheet date."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tEmployee entitlements to annual leave are recognised when they accrue to \temployees. A provision is made for the estimated liability for annual leave as a result \tof services rendered by employees up to the balance sheet date."
+                                , $fontstyleName, $paragraphStyle);
 
-$section->addListItem("Operating lease payments", 3, $fontstyleName, $listingStyle);
+$section->addListItem("\tOperating lease payments", 3, $fontstyleName, $listingStyle);
 
-$section->addText("Payments made under operating leases (net of any incentives received from the lessor) are recognized in profit or loss on a straight-line basis over the period of lease.", $fontstyleName, $paragraphStyle);
+$section->addText("\tPayments made under operating leases (net of any incentives received from the \tlessor) are recognized in profit or loss on a straight-line basis over the period of \tlease.", $fontstyleName, $paragraphStyle);
 
-$section->addText("Contingent rents are recognised as an expense in profit or loss when incurred.", $fontstyleName, $paragraphStyle);
+$section->addText("\tContingent rents are recognised as an expense in profit or loss when incurred.", $fontstyleName, $paragraphStyle);
 
+//Page 9
 $section = $phpWord->addSection();
 $section->addText(strtoupper($companyName), $fontStyleBlack);
 
 $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
 $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 
-$section->addText("2.2 Summary of significant accounting policies (Cont’d)", $fontstyleName, $paragraphStyle);
+$section->addListItem("\tSummary of significant accounting policies ", 3, $fontstyleName, $nestedListStyle);
 
-$section->addListItem("Borrowing costs", 3, $fontstyleName, $listingStyle);
+$section->addListItem("\tBorrowing costs", 3, $fontstyleName, $listingStyle);
 
-$section->addText("Borrowing costs are recognised in profit or loss using the effective interest method", $fontstyleName, $paragraphStyle);
+$section->addText("\tBorrowing costs are recognised in profit or loss using the effective interest method", $fontstyleName, $paragraphStyle);
+ 
+$section->addListItem("\tIncome taxes", 3, $fontstyleName, $listingStyle);
 
-$section->addListItem("Income taxes", 3, $fontstyleName, $listingStyle);
+$section->addText("\tCurrent income tax for current and prior periods is recognised at the amount \texpected to be paid to or recovered from the tax authorities,using the tax rates and \ttax laws that have been enacted or substantively enacted by the balance sheet date"
+                            , $fontstyleName, $paragraphStyle);
 
-$section->addText("Current income tax for current and prior periods is recognised at the amount expected to be paid to or recovered from the tax authorities,using the tax rates and tax laws that have been enacted or substantively enacted by the balance sheet date"
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tDeferred income tax is recognised for all temporary differences arising between the \ttax bases of assets and liabilities and their carrying amounts in the financial \tstatements except when the deferred income tax arises from the initial recognition of \tan asset or liability that affects neither accounting nor taxable profit or loss at the time \tof the transaction."
+                            , $fontstyleName, $paragraphStyle);
 
-$section->addText("Deferred income tax is recognised for all temporary differences arising between the tax bases of assets and liabilities and their carrying amounts in the financial statements except when the deferred income tax arises from the initial recognition of an asset or liability that affects neither accounting nor taxable profit or loss at the time of the transaction."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tA deferred income tax asset is recognised to the extent that it is probable that future \ttaxable profit will be available against which the deductible temporary differences and \ttax losses can be utilised."
+                            , $fontstyleName, $paragraphStyle);
 
-$section->addText("A deferred income tax asset is recognised to the extent that it is probable that future taxable profit will be available against which the deductible temporary differences and tax losses can be utilised."
-        , $fontstyleName, $paragraphStyle);
-
-$section->addText("Deferred income tax is measured:", $fontstyleName, $paragraphStyle);
+$section->addText("\tDeferred income tax is measured:", $fontstyleName, $paragraphStyle);
 
 $section->addListItem("at the tax rates that are expected to apply when the related deferred income tax asset is realised or the deferred income tax liability is settled, based on tax rates and tax laws that have been enacted or substantively enacted by the balance sheet date; and"
-        , 3, $fontstyleName, $romanListingStyle);
+                                , 3, $fontstyleName, $romanListingStyle);
 
 $section->addListItem("based on the tax consequence that will follow from the manner in which the Company expects, at the balance sheet date, to recover or settle the carrying amounts of its assets and liabilities."
-        , 3, $fontstyleName, $romanListingStyle);
+                                , 3, $fontstyleName, $romanListingStyle);
 
-$section->addText("Current and deferred income taxes are recognised as income or expense in profit or loss.", $fontstyleName, $paragraphStyle);
+$section->addText("\tCurrent and deferred income taxes are recognised as income or expense in profit or \tloss.", $fontstyleName, $paragraphStyle);
 ?>
 <!-- only applicable if inventory is in balance sheet-->
 <?php
-$section->addListItem("Inventories", 3, $fontstyleName, $listingStyle);
+$section->addListItem("\tInventories", 3, $fontstyleName, $listingStyle);
 
-$section->addText("Inventories are carried at the lower of cost and net realisable value. Cost is determined using the first-in, first-out method. Net realisable value is the estimated selling price in the ordinary course of business, less applicable variable selling expenses."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tInventories are carried at the lower of cost and net realisable value. Cost is \tdetermined using the first-in, first-out method. Net realisable value is the estimated \tselling price in the ordinary course of business, less applicable variable selling \texpenses."
+                            , $fontstyleName, $paragraphStyle);
 
+//Page 10
 $section = $phpWord->addSection();
 $section->addText(strtoupper($companyName), $fontStyleBlack);
 
 $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
 $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 
+$section->addListItem("\tSummary of significant accounting policies", 4, $fontstyleName, $nestedListStyle);
 
-$section->addText("2.2 Summary of significant accounting policies (Cont’d)", $fontstyleName);
-
-$section->addListItem("Plant and equipment", 3, $fontstyleName, $listingStyle);
+$section->addListItem("\tPlant and equipment", 3, $fontstyleName, $listingStyle);
 
 $section->addListItem("Measurement", 4, $fontstyleName, $romanListingStyle);
 
-$section->addText("Plant and equipment are initially recognised at cost and subsequently carried at cost less accumulated depreciation and accumulated impairment losses"
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tPlant and equipment are initially recognised at cost and subsequently carried at cost \tless accumulated depreciation and accumulated impairment losses"
+                                , $fontstyleName, $paragraphStyle);
 
-$section->addText("The cost of an item of plant and equipment initially recognised includes its purchase price and any cost that is directly attributable to bringing the asset to the location and condition necessary for it to be capable of operating in the manner intended by management."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tThe cost of an item of plant and equipment initially recognised includes its purchase \tprice and any cost that is directly attributable to bringing the asset to the location and \tcondition necessary for it to be capable of operating in the manner intended by \tmanagement."
+                                , $fontstyleName, $paragraphStyle);
 
 $section->addListItem("Depreciation", 4, $fontstyleName, $romanListingStyle);
 
-$section->addText("Depreciation on plant and equipment is calculated using the straight-line method to allocate their depreciable amounts over their estimated useful lives as follows:"
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tDepreciation on plant and equipment is calculated using the straight-line method to \tallocate their depreciable amounts over their estimated useful lives as follows:"
+                                , $fontstyleName, $paragraphStyle);
 ?>
 
 <!-- need to create table by form generation-->
 <?php
-$section->addText("The residual values, estimated useful lives and depreciation method of plant and equipment are reviewed, and adjusted as appropriate, at the end of each reporting period.The effects of any revision are recognised in profit or loss when the changes arise."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tThe residual values, estimated useful lives and depreciation method of plant and \tequipment are reviewed, and adjusted as appropriate, at the end of each reporting \tperiod.The effects of any revision are recognised in profit or loss when the changes \tarise."
+                                , $fontstyleName, $paragraphStyle);
 
-$section->addText("Fully depreciated plant and equipment still in use are retained in the financial statements."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tFully depreciated plant and equipment still in use are retained in the financial \tstatements."
+                                , $fontstyleName, $paragraphStyle);
 
 $section->addListItem("Subsequent expenditure", 4, $fontstyleName, $romanListingStyle);
 
-$section->addText("Subsequent expenditure relating to plant and equipment that has already been recognised is added to the carrying amount of the asset only when it is probable that future economic benefits associated with the item will flow to the Company and the cost of the item can be measured reliably. All other repair and maintenance expenses are recognised in profit or loss when incurred.", $fontstyleName, $paragraphStyle);
+$section->addText("\tSubsequent expenditure relating to plant and equipment that has already been \trecognised is added to the carrying amount of the asset only when it is probable that \tfuture economic benefits associated with the item will flow to the Company and the \tcost of the item can be measured reliably. All other repair and maintenance expenses \tare recognised in profit or loss when incurred.", $fontstyleName, $paragraphStyle);
 
 $section->addListItem("Disposal", 4, $fontstyleName, $romanListingStyle);
 
-$section->addText("On disposal of an item of plant and equipment, the difference between the disposal proceeds and its carrying amount is recognised in profit or loss"
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tOn disposal of an item of plant and equipment, the difference between the disposal \tproceeds and its carrying amount is recognised in profit or loss"
+                                , $fontstyleName, $paragraphStyle);
 
+
+//Page 11
 $section = $phpWord->addSection();
 $section->addText(strtoupper($companyName), $fontStyleBlack);
 
 $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
 $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 
-$section->addText("2.2 Summary of significant accounting policies (Cont’d)", $fontstyleName, $paragraphStyle);
+$section->addListItem("\tSummary of significant accounting policies", 5, $fontstyleName, $nestedListStyle);
 
-$section->addListItem("Impairment of non-financial assets", 3, $fontstyleName, $listingStyle);
+$section->addListItem("\tImpairment of non-financial assets", 3, $fontstyleName, $listingStyle);
+        
+$section->addText("\tNon-financial assets are tested for impairment whenever there is any objective \tevidence or indication that these assets may be impaired."
+                            , $fontstyleName, $paragraphStyle);
 
-$section->addText("Non-financial assets are tested for impairment whenever there is any objective evidence or indication that these assets may be impaired."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tFor the purpose of impairment testing, the recoverable amount (i.e. the higher of the \tfair value less cost to sell and the value-in-use) is determined on an individual asset \tbasis unless the asset does not generate cash flows that are largely independent of \tthose from other assets. If this is the case, the recoverable amount is determined for \tthe CGU to which the asset belongs."
+                            , $fontstyleName, $paragraphStyle);
 
-$section->addText("For the purpose of impairment testing, the recoverable amount (i.e. the higher of the fair value less cost to sell and the value-in-use) is determined on an individual asset basis unless the asset does not generate cash flows that are largely independent of those from other assets. If this is the case, the recoverable amount is determined for the CGU to which the asset belongs."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tIf the recoverable amount of the asset (or CGU) is estimated to be less than its \tcarrying amount, the carrying amount of the asset (or CGU) is reduced to its \trecoverable amount."
+                            , $fontstyleName, $paragraphStyle);
 
-$section->addText("If the recoverable amount of the asset (or CGU) is estimated to be less than its carrying amount, the carrying amount of the asset (or CGU) is reduced to its recoverable amount."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tThe difference between the carrying amount and recoverable amount is recognised \tas an impairment loss in profit or loss."
+                            , $fontstyleName, $paragraphStyle);
 
-$section->addText("The difference between the carrying amount and recoverable amount is recognised as an impairment loss in profit or loss."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tAn impairment loss for an asset is reversed only if, there has been a change in the \testimates used to determine the asset’s recoverable amount since the last \timpairment loss was recognised. The carrying amount of this asset is increased to its \trevised recoverable amount, provided that this amount does not exceed the carrying \tamount that would have been determined (net of any accumulated amortisation or \tdepreciation) had no impairment loss been recognised for the asset in prior years."
+                            , $fontstyleName, $paragraphStyle);
 
-$section->addText("An impairment loss for an asset is reversed only if, there has been a change in the estimates used to determine the asset’s recoverable amount since the last impairment loss was recognised. The carrying amount of this asset is increased to its revised recoverable amount, provided that this amount does not exceed the carrying amount that would have been determined (net of any accumulated amortisation or depreciation) had no impairment loss been recognised for the asset in prior years."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tA reversal of impairment loss for an asset is recognised in profit or loss."
+                            , $fontstyleName, $paragraphStyle);
 
-$section->addText("A reversal of impairment loss for an asset is recognised in profit or loss."
-        , $fontstyleName, $paragraphStyle);
-
-$section->addListItem("Financial assets", 3, $fontstyleName, $listingStyle);
+$section->addListItem("\tFinancial assets", 3, $fontstyleName, $listingStyle);
 
 $section->addListItem("Classification", 5, $fontstyleName, $romanListingStyle);
 
-$section->addText("The classification of financial assets depends on the purpose for which the assets were acquired. Management determines the classification of its financial assets at initial recognition."
-        , $fontstyleName);
+$section->addText("\tThe classification of financial assets depends on the purpose for which the assets \twere acquired. Management determines the classification of its financial assets at \tinitial recognition."
+                                , $fontstyleName);
 
-$section->addText("Loans and receivables", $fontstyleName);
+$section->addText("\tLoans and receivables", $fontstyleName);
 
-$section->addText("Loans and receivables are non-derivative financial assets with fixed or determinable payments that are not quoted in an active market. They are presented as current assets,except for those maturing later than 12 months after the end of financial reporting date which are presented as non-current assets. Loans and receivables are presented as “trade receivables” and “cash and bank balances” on the statement of financial position."
-        , $fontstyleName);
+$section->addText("\tLoans and receivables are non-derivative financial assets with fixed or determinable \tpayments that are not quoted in an active market. They are presented as current \tassets,except for those maturing later than 12 months after the end of financial \treporting date which are presented as non-current assets. Loans and receivables are \tpresented as “trade receivables” and “cash and bank balances” on the statement of \tfinancial position."
+                                , $fontstyleName);
 
+//Page 12
 $section = $phpWord->addSection();
 $section->addText(strtoupper($companyName), $fontStyleBlack);
 
 $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
 $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 
-$section->addText("2.2 Summary of significant accounting policies (Cont’d)", $fontstyleName, $paragraphStyle);
+$section->addListItem("\tSummary of significant accounting policies", 6, $fontstyleName, $nestedListStyle);
 
-//need to repeat order
-$section->addText("Financial assets (Cont’d)", $fontstyleName);
-//$section->addListItem("Financial assets (Cont’d)", 3, $fontstyleName, $listingStyle);
+$section->addListItem("\tFinancial assets (Cont’d)", 7, $fontstyleName, $listingStyle);
 
 $section->addListItem("Recognition and derecognition", 5, $fontstyleName, $romanListingStyle);
 
-$section->addText("Regular way purchases and sales of financial assets are recognised on trade-date - the date on which the Company commits to purchase or sell the asset."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tRegular way purchases and sales of financial assets are recognised on trade-date - \tthe date on which the Company commits to purchase or sell the asset."
+                                , $fontstyleName, $paragraphStyle);
 
-$section->addText("Financial assets are derecognised when the rights to receive cash flows from the financial assets have expired or have been transferred and the Company has transferred substantially all risks and rewards of ownership. On disposal of a financial asset, the difference between the carrying amount and the sale proceeds is recognised in the profit or loss."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tFinancial assets are derecognised when the rights to receive cash flows from the \tfinancial assets have expired or have been transferred and the Company has \ttransferred substantially all risks and rewards of ownership. On disposal of a financial \tasset, the difference between the carrying amount and the sale proceeds is \trecognised in the profit or loss."
+                                , $fontstyleName, $paragraphStyle);
 
 $section->addListItem("Initial measurement", 5, $fontstyleName, $romanListingStyle);
 
-$section->addText("Financial assets are initially recognised at fair value plus transaction costs."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tFinancial assets are initially recognised at fair value plus transaction costs."
+                                , $fontstyleName, $paragraphStyle);
 
 $section->addListItem("Subsequent measurement", 5, $fontstyleName, $romanListingStyle);
 
-$section->addText("Loans and receivables and financial assets are subsequently carried at amortised cost using the effective interest method."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tLoans and receivables and financial assets are subsequently carried at amortised \tcost using the effective interest method."
+                                , $fontstyleName, $paragraphStyle);
 
 $section->addListItem("Impairment", 5, $fontstyleName, $romanListingStyle);
 
-$section->addText("The Company assesses at each end of financial reporting date whether there is objective evidence that a financial asset or a group of financial assets is impaired and recognises an allowance for impairment when such evidence exists."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tThe Company assesses at each end of financial reporting date whether there is \tobjective evidence that a financial asset or a group of financial assets is impaired and \trecognises an allowance for impairment when such evidence exists."
+                                , $fontstyleName, $paragraphStyle);
 
-$section->addText("Loans and receivables", $fontstyleName, $paragraphStyle);
+$section->addText("\tLoans and receivables", $fontstyleName, $paragraphStyle);
 
-$section->addText("Significant financial difficulties of the debtor, probability that the debtor will enter bankruptcy, and default or significant delay in payments are objective evidence that these financial assets are impaired."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tSignificant financial difficulties of the debtor, probability that the debtor will enter \tbankruptcy, and default or significant delay in payments are objective evidence that \tthese financial assets are impaired."
+                                , $fontstyleName, $paragraphStyle);
 
-$section->addText("The carrying amount of these assets is reduced through the use of an impairment allowance account, which is calculated as the difference between the carrying amount and the present value of estimated future cash flows, discounted at the original effective interest rate. When the asset becomes uncollectible, it is written off against the allowance account. Subsequent recoveries of amounts previously written off are recognised against the same line item in the income statement."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tThe carrying amount of these assets is reduced through the use of an impairment \tallowance account, which is calculated as the difference between the carrying \tamount and the present value of estimated future cash flows, discounted at the \toriginal effective interest rate. When the asset becomes uncollectible, it is written off \tagainst the allowance account. Subsequent recoveries of amounts previously written \toff are recognised against the same line item in the income statement."
+                                , $fontstyleName, $paragraphStyle);
 
-$section->addText("The allowance for impairment loss account is reduced through the profit or loss in a subsequent period when the amount of impairment loss decreases and the related decrease can be objectively measured. The carrying amount of the asset previously impaired is increased to the extent that the new carrying amount does not exceed the amortised cost, had no impairment been recognised in prior periods."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tThe allowance for impairment loss account is reduced through the profit or loss in a \tsubsequent period when the amount of impairment loss decreases and the related \tdecrease can be objectively measured. The carrying amount of the asset previously \timpaired is increased to the extent that the new carrying amount does not exceed the \tamortised cost, had no impairment been recognised in prior periods."
+                                , $fontstyleName, $paragraphStyle);
 
+//Page 13
 $section = $phpWord->addSection();
 $section->addText(strtoupper($companyName), $fontStyleBlack);
 
 $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
 $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 
-$section->addText("2.2 Summary of significant accounting policies (Cont’d)", $fontstyleName, $paragraphStyle);
+$section->addListItem("\tSummary of significant accounting policies", 7, $fontstyleName, $nestedListStyle);
 
-$section->addListItem("Trade and other payables", 3, $fontstyleName, $listingStyle);
+$section->addListItem("\tTrade and other payables", 3, $fontstyleName, $listingStyle);
 
-$section->addText("Trade and other payables represent liabilities for goods and services provided to the Company prior to the end of financial year which are unpaid. They are classified as current liabilities if payment is due within one year or less (or in the normal operating cycle of the business if longer). Otherwise, they are presented as non-current liabilities."
-        , $fontstyleName);
+$section->addText("\tTrade and other payables represent liabilities for goods and services provided to the \tCompany prior to the end of financial year which are unpaid. They are classified as \tcurrent liabilities if payment is due within one year or less (or in the normal operating \tcycle of the business if longer). Otherwise, they are presented as non-current \tliabilities."
+                            , $fontstyleName);
 ?>
 
-<!-- check if borrowing is in balance sheet-->
+
 
 <?php
-$section->addListItem("Borrowings", 3, $fontstyleName, $listingStyle);
+$section->addListItem("\tBorrowings", 3, $fontstyleName, $listingStyle);
 
-$section->addText("Borrowings are presented as current liabilities unless the Company has an unconditional right to defer settlement for at least 12 months after the balance sheet date, in which case they are presented as non-current liabilities."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tBorrowings are presented as current liabilities unless the Company has an \tunconditional right to defer settlement for at least 12 months after the balance sheet \tdate, in which case they are presented as non-current liabilities."
+                            , $fontstyleName, $paragraphStyle);
 
-$section->addText("Borrowings are initially recognised at fair value (net of transaction costs) and subsequently carried at amortised cost. Any difference between the proceeds (net of transaction costs)and the redemption value is recognised in profit or loss over the period of the borrowings using the effective interest method."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tBorrowings are initially recognised at fair value (net of transaction costs) and \tsubsequently carried at amortised cost. Any difference between the proceeds (net of \ttransaction costs)and the redemption value is recognised in profit or loss over the \tperiod of the borrowings using the effective interest method."
+                            , $fontstyleName, $paragraphStyle);
 
-$section->addListItem("Cash and cash equivalents", 3, $fontstyleName, $listingStyle);
+$section->addListItem("\tCash and cash equivalents", 3, $fontstyleName, $listingStyle);
 
-$section->addText("For the purpose presentation in the statement of cash flows, cash and cash equivalents include deposits with financial institutions which are subject to an insignificant risk of change"
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tFor the purpose presentation in the statement of cash flows, cash and cash \tequivalents include deposits with financial institutions which are subject to an \tinsignificant risk of change"
+                            , $fontstyleName, $paragraphStyle);
 
-$section->addListItem("Cash and cash equivalents", 3, $fontstyleName, $listingStyle);
+$section->addListItem("\tCash and cash equivalents", 3, $fontstyleName, $listingStyle);
 
-$section->addText("Dividends to the Company’s shareholders are recognized when the dividends are approved for payment."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tDividends to the Company’s shareholders are recognized when the dividends are \tapproved for payment."
+                            , $fontstyleName, $paragraphStyle);
 
-$section->addListItem("Currency translation", 3, $fontstyleName, $listingStyle);
+$section->addListItem("\tCurrency translation", 3, $fontstyleName, $listingStyle);
 
 $section->addListItem("Functional and presentation currency", 6, $fontstyleName, $romanListingStyle);
 
-$section->addText("Items included in the financial statements of the Company are measured using the currency of the primary economic environment in which the Company operates (‘the functional currency’).The financial statements are presented in Singapore Dollar, which is the Company’s functional and presentation currency"
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tItems included in the financial statements of the Company are measured using the \tcurrency of the primary economic environment in which the Company operates (‘the \tfunctional currency’).The financial statements are presented in Singapore Dollar, \twhich is the Company’s functional and presentation currency"
+                                , $fontstyleName, $paragraphStyle);
 
+// Page 14
 $section = $phpWord->addSection();
 $section->addText(strtoupper($companyName), $fontStyleBlack);
 
 $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
 $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 
-$section->addText("2.2 Summary of significant accounting policies (Cont’d)", $fontstyleName, $paragraphStyle);
+$section->addListItem("\tSummary of significant accounting policies", 8, $fontstyleName, $nestedListStyle);
 
-$section->addText("Currency translation (Cont’d)", $fontstyleName);
-//$section->addListItem("Currency translation (Cont’d)", 2, $fontstyleName, $listingStyle, $paragraphStyle);
+$section->addListItem("\tCurrency translation (Cont’d)", 6, $fontstyleName, $listingStyle);$section->addListItem("Currency translation (Cont’d)", 2, $fontstyleName, $listingStyle, $paragraphStyle);
 
 $section->addListItem("Transactions and balances", 6, $fontstyleName, $romanListingStyle);
 
-$section->addText("Transactions in a currency other than the functional currency (“foreign currency”) are translated into the functional currency using the exchange rates at the dates of the transactions.Currency translation differences from the settlement of such transactions and from the translation of monetary assets and liabilities denominated in foreign currencies at the closing rates at the end of financial reporting date are recognised in the profit or loss, unless they arise from borrowings in foreign currencies, other currency instruments designated and qualifying as net investment hedges and net investment in foreign operations. Those currency translation differences are recognised in the currency translation reserve in the financial statements and transferred to profit or loss as part of the gain or loss on disposal of the foreign operation."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tTransactions in a currency other than the functional currency (“foreign currency”) are \ttranslated into the functional currency using the exchange rates at the dates of the \ttransactions.Currency translation differences from the settlement of such transactions \tand from the translation of monetary assets and liabilities denominated in foreign \tcurrencies at the closing rates at the end of financial reporting date are recognised in \tthe profit or loss, unless they arise from borrowings in foreign currencies, other \tcurrency instruments designated and qualifying as net investment hedges and net \tinvestment in foreign operations. Those currency translation differences are \trecognised in the currency translation reserve in the financial statements and \ttransferred to profit or loss as part of the gain or loss on disposal of the foreign \toperation."
+                                , $fontstyleName, $paragraphStyle);
 
-$section->addListItem("Share capital ", 3, $fontstyleName, $listingStyle);
+$section->addListItem("\tShare capital ", 3, $fontstyleName, $listingStyle);
 
-$section->addText("Ordinary shares are classified as equity. Incremental costs directly attributable to the issuance of new ordinary shares are deducted against the share capital account."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tOrdinary shares are classified as equity. Incremental costs directly attributable to the \tissuance of new ordinary shares are deducted against the share capital account."
+                            , $fontstyleName, $paragraphStyle);
 
-$section->addListItem("CRITICAL ACCOUNTING ESTIMATES, ASSUMPTIONS AND JUDGEMENTS", 0, $fontstyleName, $nestedListStyle);
+$section->addListItem("\tCRITICAL ACCOUNTING ESTIMATES, ASSUMPTIONS AND JUDGEMENTS", 0, $fontstyleName, $nestedListStyle);
 
-$section->addText("Estimates, assumptions and judgements are continually evaluated and are based on historical experience and other factors, including expectations of future events that are believed to be reasonable under the circumstances."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tEstimates, assumptions and judgements are continually evaluated and are based on \thistorical experience and other factors, including expectations of future events that \tare believed to be reasonable under the circumstances."
+                    , $fontstyleName, $paragraphStyle);
 
-$section->addListItem("Critical accounting estimates and assumptions", 5, $fontstyleName, $listingStyle);
+$section->addListItem("\tCritical accounting estimates and assumptions", 5, $fontstyleName, $listingStyle);
 
-$section->addText("During the financial year, the management did not make any critical estimates and assumptions that had a significant effect on the amounts recognised in the financial statements"
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tDuring the financial year, the management did not make any critical estimates and \tassumptions that had a significant effect on the amounts recognised in the financial \tstatements"
+                        , $fontstyleName, $paragraphStyle);
 
-$section->addListItem("Critical judgements in applying the Company’s accounting policies", 5, $fontstyleName, $listingStyle);
+$section->addListItem("\tCritical judgements in applying the Company’s accounting policies", 5, $fontstyleName, $listingStyle);
 
-$section->addText("In the process of applying the Company’s accounting policies, the directors are of the opinion that there is no application of critical judgement on the amounts recognised in the financial statements."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tIn the process of applying the Company’s accounting policies, the directors are of the \topinion that there is no application of critical judgement on the amounts recognised in \tthe financial statements."
+                        , $fontstyleName, $paragraphStyle);
 
 //==============================================================================
 // PHOEBE START HERE
@@ -4910,130 +4931,140 @@ if (in_array("Plant and Equipment", $categoryArray)) {
     }
 }
 
+//Page 19
 $section = $phpWord->addSection();
 $section->addText(strtoupper($companyName), $fontStyleBlack);
 
 $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
 $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 
-$section->addListItem("FINANCIAL RISK MANAGEMENT ", 0, $fontstyleName, $nestedListStyle);
+$section->addListItem("\tFINANCIAL RISK MANAGEMENT ", 0, $fontstyleName, $nestedListStyle);
 
-$section->addText("The Company’s activities expose it to a variety of financial risks. The Company’s overall business strategies, tolerance risk and general risk management philosophy are determined by directors in accordance with prevailing economic and operating conditions."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tThe Company’s activities expose it to a variety of financial risks. The Company’s \toverall business strategies, tolerance risk and general risk management philosophy \tare determined by directors in accordance with prevailing economic and operating \tconditions."
+                    , $fontstyleName, $paragraphStyle);
 
 $textrun = $section->addTextRun();
+$textrun->addText("\t");
 $textrun->addText(htmlspecialchars("Currency risk"), array('underline' => 'single'));
 
-$section->addText("The Company’s exposure to foreign exchange risk is minimal as transactions are predominantly denominated in " . $currency . ", being the functional currency of the Company."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tThe Company’s exposure to foreign exchange risk is minimal as transactions are \tpredominantly denominated in " . $currency . ", being the functional currency of the Company."
+                    , $fontstyleName, $paragraphStyle);
 
 $textrun = $section->addTextRun();
+$textrun->addText("\t");
 $textrun->addText(htmlspecialchars("Interest rate risk"), array('underline' => 'single'));
 
-$section->addText("Cash flow interest rate risk is the risk that the future cash flows of a financial instrument will fluctuate because of changes in market interest rates. Fair value interest rate risk is the risk that the fair value of a financial instrument will fluctuate due to changes in market interest rates. As the Company has no significant interest bearing assets or liabilities, the Company’s income and operating cash flows are substantially independent of changes in market interest rates."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tCash flow interest rate risk is the risk that the future cash flows of a financial \tinstrument will fluctuate because of changes in market interest rates. Fair value \tinterest rate risk is the risk that the fair value of a financial instrument will fluctuate \tdue to changes in market interest rates. As the Company has no significant interest \tbearing assets or liabilities, the Company’s income and operating cash flows are \tsubstantially independent of changes in market interest rates."
+                    , $fontstyleName, $paragraphStyle);
 
 $textrun = $section->addTextRun();
+$textrun->addText("\t");
 $textrun->addText(htmlspecialchars("Liquidity risk"), array('underline' => 'single'));
 
-$section->addText("Prudent liquidity management implies maintaining sufficient cash and the availability of funding through an adequate amount of committed credit facilities. The Company maintains sufficient cash balances to provide flexibility in meeting its day to day funding requirements. Cash and cash equivalents are placed with credit worthy institutions."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tPrudent liquidity management implies maintaining sufficient cash and the availability \tof funding through an adequate amount of committed credit facilities. The Company \tmaintains sufficient cash balances to provide flexibility in meeting its day to day \tfunding requirements. Cash and cash equivalents are placed with credit worthy \tinstitutions."
+                    , $fontstyleName, $paragraphStyle);
 
-$section->addText("The Company’s financial liabilities are due less than 1 year based on the remaining period from the reporting date to the contractual maturity date.  Balances due within 12 months equal their carrying balances as the impact of discounting is not significant."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tThe Company’s financial liabilities are due less than 1 year based on the remaining \tperiod from the reporting date to the contractual maturity date.  Balances due within \t12 months equal their carrying balances as the impact of discounting is not \tsignificant."
+                    , $fontstyleName, $paragraphStyle);
 
 $textrun = $section->addTextRun();
+$textrun->addText("\t");
 $textrun->addText(htmlspecialchars("Fair value measurements"), array('underline' => 'single'));
 
-$section->addText("The Company does not have any financial instruments as at end of the financial year which are measured at fair value. The carrying values of other receivables and other payables are assumed to approximate their fair values."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tThe Company does not have any financial instruments as at end of the financial year \twhich are measured at fair value. The carrying values of other receivables and other \tpayables are assumed to approximate their fair values."
+                    , $fontstyleName, $paragraphStyle);
 
 $textrun = $section->addTextRun();
+$textrun->addText("\t");
 $textrun->addText(htmlspecialchars("Credit risk"), array('underline' => 'single'));
 
-$section->addText("Credit risk is the risk that companies and other parties will be unable to meet their obligations to the Company resulting in financial loss to the Company. The Company manages such risks by dealing with a diverse of credit-worthy counterparties to mitigate any significant concentration of credit risk. Credit policy includes assessing and evaluation of existing and new customers' credit reliability and monitoring of receivable collections. The Company places its cash and cash equivalents with creditworthy institutions."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tCredit risk is the risk that companies and other parties will be unable to meet their \tobligations to the Company resulting in financial loss to the Company. The Company \tmanages such risks by dealing with a diverse of credit-worthy counterparties to \tmitigate any significant concentration of credit risk. Credit policy includes assessing \tand evaluation of existing and new customers' credit reliability and monitoring of \treceivable collections. The Company places its cash and cash equivalents with \tcreditworthy institutions."
+                    , $fontstyleName, $paragraphStyle);
 
+//Page 20
 $section = $phpWord->addSection();
 $section->addText(strtoupper($companyName), $fontStyleBlack);
 
 $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
 $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 
-$section->addListItem("FINANCIAL RISK MANAGEMENT (CONT’D)", 0, $fontstyleName, $listingStyle, $paragraphStyle);
+$section->addListItem("\tFINANCIAL RISK MANAGEMENT (CONT’D)", 0, $fontstyleName, $listingStyle, $paragraphStyle);
 
 $textrun = $section->addTextRun();
+$textrun->addText("\t");
 $textrun->addText(htmlspecialchars("Credit risk (Cont’d)"), array('underline' => 'single'));
 
-$section->addText("The maximum exposure to credit risk in the event that the counterparties fail to perform the obligations as at the end of the financial period in relation to each class of financial assets is the carrying amount of these assets in the statement of financial position."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tThe maximum exposure to credit risk in the event that the counterparties fail to \tperform the obligations as at the end of the financial period in relation to each class \tof financial assets is the carrying amount of these assets in the statement of financial \tposition."
+                    , $fontstyleName, $paragraphStyle);
 
-$section->addText("The credit risk for receivables based on the information provided to key management is as follows:"
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tThe credit risk for receivables based on the information provided to key management \tis as follows:"
+                    , $fontstyleName, $paragraphStyle);
 
-$section->addListItem("Financial assets that are neither past due nor impaired", 1, $fontstyleName, $listingStyle, $paragraphStyle);
+$section->addListItem("Financial assets that are neither past due nor impaired", 1, $fontstyleName, $listingStyle);
 
-$section->addText("Bank deposits that are neither past due nor impaired are mainly deposits with banks with high credit-ratings assigned by international credit-rating agencies. Other receivables that are neither past due nor impaired are substantially companies with a good collection track record with the Company."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tBank deposits that are neither past due nor impaired are mainly deposits with banks \twith high credit-ratings assigned by international credit-rating agencies. Other \treceivables that are neither past due nor impaired are substantially companies with a \tgood collection track record with the Company."
+                        , $fontstyleName, $paragraphStyle);
 
-$section->addListItem("Financial assets that are past due and/or impaired", 1, $fontstyleName, $listingStyle, $paragraphStyle);
+$section->addListItem("Financial assets that are past due and/or impaired", 1, $fontstyleName, $listingStyle);
 
-$section->addText("There is no other class of financial assets that is past due and/or impaired."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tThere is no other class of financial assets that is past due and/or impaired."
+                        , $fontstyleName, $paragraphStyle);
 
 $textrun = $section->addTextRun();
+$textrun->addText("\t");
 $textrun->addText(htmlspecialchars("Capital risk"), array('underline' => 'single'));
 
-$section->addText("The Company’s objectives when managing capital are:", $fontstyleName, $paragraphStyle);
+$section->addText("\tThe Company’s objectives when managing capital are:", $fontstyleName, $paragraphStyle);
 
-// need to add in phpWords unordered list
-$section->addText("The capital structure of the Company consists primarily of equity, comprising issued share capital."
-        , $fontstyleName);
+$section->addText("\tThe capital structure of the Company consists primarily of equity, comprising issued \tshare capital."
+                    , $fontstyleName);
 
-$section->addText("The Company manages its capital structure and makes adjustment to it in light of changes in economic conditions. It may maintain or adjust its capital structure through the payment of dividends, return of capital or issue of new shares."
-        , $fontstyleName);
+$section->addText("\tThe Company manages its capital structure and makes adjustment to it in light of \tchanges in economic conditions. It may maintain or adjust its capital structure \tthrough the payment of dividends, return of capital or issue of new shares."
+                    , $fontstyleName);
 
-$section->addListItem("RELATED PARTY TRANSACTIONS ", 0, $fontstyleName, $nestedListStyle);
+$section->addListItem("\tRELATED PARTY TRANSACTIONS ", 0, $fontstyleName, $nestedListStyle);
 
-$section->addText("Related parties comprise mainly of companies which are controlled or significantly influenced by the Company’s key management personnel and their close family members."
-        , $fontstyleName);
+$section->addText("\tRelated parties comprise mainly of companies which are controlled or significantly \tinfluenced by the Company’s key management personnel and their close family \tmembers."
+                    , $fontstyleName);
 
-$section->addText("Key management personnel of the Company are those persons having the authority and responsibility for planning, directing and controlling activities of the Company.  The directors and executive officers of the Company are considered as key management personnel of the Company."
-        , $fontstyleName);
+$section->addText("\tKey management personnel of the Company are those persons having the authority \tand responsibility for planning, directing and controlling activities of the Company.  \tThe directors and executive officers of the Company are considered as key \tmanagement personnel of the Company."
+                    , $fontstyleName);
 
+//Page 21
 $section = $phpWord->addSection();
 $section->addText(strtoupper($companyName), $fontStyleBlack);
 
 $section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
 $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 
-$section->addListItem("RELATED PARTY TRANSACTIONS (CONT’D)", 0, $fontstyleName, $listingStyle, $paragraphStyle);
+$section->addListItem("\tRELATED PARTY TRANSACTIONS (CONT’D)", 0, $fontstyleName, $nestedListStyle);
 
-$section->addText("The inter-company balances are unsecured and interest-free, unless stated otherwise, and are subject to the normal credit terms of the respective parties and are repayable on demand."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tThe inter-company balances are unsecured and interest-free, unless stated \totherwise, and are subject to the normal credit terms of the respective parties and \tare repayable on demand."
+                    , $fontstyleName, $paragraphStyle);
 
 $textrun = $section->addTextRun();
+$textrun->addText("\t");
 $textrun->addText(htmlspecialchars("Key management personnel compensation"), array('underline' => 'single'));
 
-$section->addText("Director’s remuneration", $fontstyleName);
+$section->addText("\tDirector’s remuneration", $fontstyleName);
 
-$section->addListItem("NEW OR REVISED ACCOUNTING STANDARDS AND INTERPRETATIONS", 0, $fontstyleName, $nestedListStyle);
+$section->addListItem("\tNEW OR REVISED ACCOUNTING STANDARDS AND INTERPRETATIONS", 0, $fontstyleName, $nestedListStyle);
 
-$section->addText("Certain new standards, amendments and interpretations to existing standards have been published and are mandatory for the Company’s accounting periods beginning on or after 1 January 2017  or later periods and which the Company has not early adopted."
-        , $fontstyleName);
+$section->addText("\tCertain new standards, amendments and interpretations to existing standards have \tbeen published and are mandatory for the Company’s accounting periods beginning \ton or after 1 January 2017  or later periods and which the Company has not early \tadopted."
+                    , $fontstyleName);
 
-$section->addText("The management anticipates that the adoption of the new amendments to FRS in the future periods will not have a material impact on the financial statements of the Company and of the Company in the period of their initial adoption."
-        , $fontstyleName);
+$section->addText("\tThe management anticipates that the adoption of the new amendments to FRS in the \tfuture periods will not have a material impact on the financial statements of the \tCompany and of the Company in the period of their initial adoption."
+                    , $fontstyleName);
 
-$section->addListItem("COMPARATIVE FIGURES ", 0, $fontstyleName, $nestedListStyle);
+$section->addListItem("\tCOMPARATIVE FIGURES ", 0, $fontstyleName, $nestedListStyle);
 
-$section->addText("The management anticipates that the adoption of the new amendments to FRS in the future periods will not have a material impact on the financial statements of the Company and of the Company in the period of their initial adoption."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tThe management anticipates that the adoption of the new amendments to FRS in the \tfuture periods will not have a material impact on the financial statements of the \tCompany and of the Company in the period of their initial adoption."
+                    , $fontstyleName, $paragraphStyle);
 
-$section->addListItem("COMPARATIVE FIGURES ", 0, $fontstyleName, $nestedListStyle);
+$section->addListItem("\tCOMPARATIVE FIGURES ", 0, $fontstyleName, $nestedListStyle);
 
-$section->addText("The financial statements cover the financial period since incorporation on 1 July 2014 to 31 December 2015. This being the first set of financial statements,there are no comparative."
-        , $fontstyleName, $paragraphStyle);
+$section->addText("\tThe financial statements cover the financial period since incorporation on 1 July 2014 \tto 31 December 2015. This being the first set of financial statements,there are no \tcomparative."
+                    , $fontstyleName, $paragraphStyle);
 
 $section->addText("End of unaudited financial statements", $fontstyleName, $paragraphStyle);
 
