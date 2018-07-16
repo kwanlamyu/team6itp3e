@@ -18,12 +18,6 @@ $companyName = $_POST['companyName'];
 // YOKYEE - Declare all variables for form
 $companyregID = $_POST["companyregID"];
 $yearEnd = $_POST["yearEnd"];
-$noOfDirectors = $_POST["noOfDirectors"];
-
-// This should be an array since there can be multiple directors
-$directorName1 = $_POST["directorName1"];
-$directorName1ApptDate = $_POST["directorName1ApptDate"];
-$director1Share = $_POST['director1Share'];
 $todayDate = $_POST["todayDate"];
 $firstBalanceDate = $_POST["firstBalanceDate"];
 $secondBalanceDate = $_POST["secondBalanceDate"];
@@ -35,20 +29,8 @@ $currency = $_POST['currency'];
 
 $tempDirectorArray = $_POST['tempDirectorArray'];
 $tempDateArray = $_POST['tempDateArray'];
-$tempShareArray = $_POST['tempShareArray'];
-
-$directorName = explode(",", $tempDirectorArray);
-$directorAppointedDate = explode(",", $tempDateArray);
-$directorShare = explode(",", $tempShareArray);
-
-echo "Director Name:";
-print_r($tempDirectorArray);
-echo "<br/>";
-echo "Appointed Date:";
-print_r($directorAppointedDate);
-echo "<br/>";
-echo "Director Share:";
-print_r($directorShare);
+$tempStartShareArray = $_POST['tempStartShareArray'];
+$tempEndShareArray = $_POST['tempEndShareArray'];
 
 $accountArray = array();
 $valueArray = array();
@@ -150,10 +132,10 @@ foreach ($tempUniqueCategoryArray as $insert) {
     // YOKYEE
     var companyregID = "<?php echo $companyregID; ?>";
     var yearEnd = "<?php echo $yearEnd; ?>";
-    var noOfDirectors = "<?php echo $noOfDirectors; ?>";
-    var directorName1 = "<?php echo $directorName1; ?>";
-    var directorName1ApptDate = "<?php echo $directorName1ApptDate; ?>";
-    var director1Share = "<?php echo $director1Share; ?>";
+    var tempDirectorArray = "<?php echo $tempDirectorArray?>";
+    var tempDateArray = "<?php echo $tempDateArray?>";
+    var tempStartShareArray = "<?php echo $tempStartShareArray?>";
+    var tempEndShareArray = "<?php echo $tempEndShareArray?>";
     var todayDate = "<?php echo $todayDate; ?>";
     var firstBalanceDate = "<?php echo $firstBalanceDate; ?>";
     var secondBalanceDate = "<?php echo $secondBalanceDate; ?>";
@@ -211,10 +193,10 @@ foreach ($tempUniqueCategoryArray as $insert) {
                     <input type='hidden' name='companyName' value='" + companyName + "'/>\n\
                     <input type='hidden' name='companyregID' value='" + companyregID + "'/>\n\
                     <input type='hidden' name='yearEnd' value='" + yearEnd + "'/>\n\
-                    <input type='hidden' name='noOfDirectors' value='" + noOfDirectors + "'/>\n\
-                    <input type='hidden' name='directorName1' value='" + directorName1 + "'/>\n\
-                    <input type='hidden' name='directorName1ApptDate' value='" + directorName1ApptDate + "'/>\n\
-                    <input type='hidden' name='director1Share' value='" + director1Share + "'/>\n\
+                    <input type='hidden' name='tempDirectorArray' value='" + tempDirectorArray + "'/>\n\
+                    <input type='hidden' name='tempDateArray' value='" + tempDateArray + "'/>\n\
+                    <input type='hidden' name='tempStartShareArray' value='" + tempStartShareArray + "'/>\n\
+                    <input type='hidden' name='tempEndShareArray' value='" + tempEndShareArray + "'/>\n\
                     <input type='hidden' name='todayDate' value='" + todayDate + "'/>\n\
                     <input type='hidden' name='firstBalanceDate' value='" + firstBalanceDate + "'/>\n\
                     <input type='hidden' name='secondBalanceDate' value='" + secondBalanceDate + "'/>\n\

@@ -132,11 +132,10 @@ $companyName = $_POST['companyName'];
 // Declare all variables for form
 $companyregID = $_POST["companyregID"];
 $yearEnd = $_POST["yearEnd"];
-$noOfDirectors = $_POST["noOfDirectors"];
-// This should be an array since there can be multiple directors
-$directorName1 = $_POST["directorName1"];
-$directorName1ApptDate = $_POST["directorName1ApptDate"];
-$director1Share = $_POST['director1Share'];
+$tempDirectorArray = $_POST['tempDirectorArray'];
+$tempDateArray = $_POST['tempDateArray'];
+$tempStartShareArray = $_POST['tempStartShareArray'];
+$tempEndShareArray = $_POST['tempEndShareArray'];
 $todayDate = $_POST["todayDate"];
 $firstBalanceDate = $_POST["firstBalanceDate"];
 $secondBalanceDate = $_POST["secondBalanceDate"];
@@ -145,6 +144,12 @@ $companyPA = $_POST["companyPA"];
 $companyAddress = $_POST["companyAddress"];
 $frsDate = $_POST['frsDate'];
 $currency = $_POST['currency'];
+
+$directorName = explode(",", $tempDirectorArray);
+$directorAppointedDate = explode(",", $tempDateArray);
+$directorStartShare = explode(",", $tempStartShareArray);
+$directorEndShare = explode(",", $tempEndShareArray);
+$noOfDirectors = count($directorName) - 1;
 
 // =============================================================================
 // PHOEBE
@@ -1124,13 +1129,17 @@ $table->addCell($firstCellValue);
 $cell = $table->addCell($cellValue);
 $cell->addText("At the beginning of financial year", $fontstyleName, $centerAlignment);
 $cell = $table->addCell($cellValue);
-$cell->addText("At the end of financial year", $centerAlignment);
+$cell->addText("At the end of financial year",  $fontstyleName, $centerAlignment);
 
 $table->addRow();
 $table->addCell($firstCellValue)->addText(htmlspecialchars("The Company"), array('underline' => 'single'));
 
 $table->addRow();
-$table->addCell()->addText($directorName1, $fontstyleName);
+
+for($i = 0; $i < $noOfDirectors; $i++){
+    $table->addCell()->addText($directorName[$i], $fontstyleName);
+}
+
 
 //Page 2
 $section = $phpWord->addSection();
