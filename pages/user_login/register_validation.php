@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             try{
                 $sql->execute(); 
 //                echo "after sql execute";
-                header('Location: ../user_client_admin/client_admin_dashboard.php'); 
+                header('Location: ../user_login/login.php');
                 
             }  catch (Exception $e){
                 echo 'Message: ' .$e->getMessage();
