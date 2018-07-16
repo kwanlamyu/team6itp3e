@@ -964,6 +964,12 @@ for ($i = 0; $i < count($consolidatedAssetsDebit); $i++) {
 $maxColumns = 7;
 $cellValue = 1750;
 $firstCellValue = 0;
+// check number of unused columns.
+// max columns - number of years + 1 column for Notes
+// merge the number of unused columns for the first cell.
+for ($i = 0; $i < ($maxColumns - ($numberOfSheets + 1)); $i++) {
+    $firstCellValue += $cellValue;
+}
 $defaultNoteNumber = 4;
 
 $monthIdentifier = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -1209,12 +1215,6 @@ $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 $table = $section->addTable();
 // top row which only shows date
 $table->addRow();
-// check number of unused columns.
-// max columns - number of years + 1 column for Notes
-// merge the number of unused columns for the first cell.
-for ($i = 0; $i < ($maxColumns - ($numberOfSheets + 1)); $i++) {
-    $firstCellValue += $cellValue;
-}
 $table->addCell($firstCellValue);
 $cell = $table->addCell($cellValue);
 $cell->addText("Notes", $fontstyleName, $centerAlignment);
@@ -3115,7 +3115,7 @@ $section->addText("These notes form an integral part of and should be read in co
 $section->addTextBreak(1);
 
 $section->addListItem("\tGENERAL INFORMATION", 0, $fontstyleName, $nestedListStyle);
- 
+
 $section->addText("\tThe Company is incorporated and domiciled in Singapore."
                     , $fontstyleName, $paragraphStyle);
 
@@ -3205,7 +3205,7 @@ $section->addListItem("\tSummary of significant accounting policies ", 3, $fonts
 $section->addListItem("\tBorrowing costs", 3, $fontstyleName, $listingStyle);
 
 $section->addText("\tBorrowing costs are recognised in profit or loss using the effective interest method", $fontstyleName, $paragraphStyle);
- 
+
 $section->addListItem("\tIncome taxes", 3, $fontstyleName, $listingStyle);
 
 $section->addText("\tCurrent income tax for current and prior periods is recognised at the amount \texpected to be paid to or recovered from the tax authorities,using the tax rates and \ttax laws that have been enacted or substantively enacted by the balance sheet date"
@@ -3287,7 +3287,7 @@ $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 $section->addListItem("\tSummary of significant accounting policies", 5, $fontstyleName, $nestedListStyle);
 
 $section->addListItem("\tImpairment of non-financial assets", 3, $fontstyleName, $listingStyle);
-        
+
 $section->addText("\tNon-financial assets are tested for impairment whenever there is any objective \tevidence or indication that these assets may be impaired."
                             , $fontstyleName, $paragraphStyle);
 
@@ -3613,7 +3613,7 @@ if (!empty($profitBeforeIncomeTaxArray)) {
         $table1->addCell($firstCellValue)->addText($key1);
 
         $counter++;
-        
+
         foreach ($value1 as $key2 => $value2) { // [December 2016] => 3014
             // if don't need dash, just print everything out
             if ($numberOfSheets == count($value1)) {
@@ -3648,7 +3648,7 @@ if (!empty($profitBeforeIncomeTaxArray)) {
                     } else {
                         $cellNotes = $table1->addCell($cellValue);
                     }
-                    
+
                     if ($key2 == $years[$h]) {
                         $cellNotes->addText(number_format(ceil($value2)), $fontstyleName, $centerAlignment);
                     } else {
