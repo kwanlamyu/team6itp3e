@@ -132,11 +132,10 @@ $companyName = $_POST['companyName'];
 // Declare all variables for form
 $companyregID = $_POST["companyregID"];
 $yearEnd = $_POST["yearEnd"];
-$noOfDirectors = $_POST["noOfDirectors"];
-// This should be an array since there can be multiple directors
-$directorName1 = $_POST["directorName1"];
-$directorName1ApptDate = $_POST["directorName1ApptDate"];
-$director1Share = $_POST['director1Share'];
+$tempDirectorArray = $_POST['tempDirectorArray'];
+$tempDateArray = $_POST['tempDateArray'];
+$tempStartShareArray = $_POST['tempStartShareArray'];
+$tempEndShareArray = $_POST['tempEndShareArray'];
 $todayDate = $_POST["todayDate"];
 $firstBalanceDate = $_POST["firstBalanceDate"];
 $secondBalanceDate = $_POST["secondBalanceDate"];
@@ -145,6 +144,12 @@ $companyPA = $_POST["companyPA"];
 $companyAddress = $_POST["companyAddress"];
 $frsDate = $_POST['frsDate'];
 $currency = $_POST['currency'];
+
+$directorName = explode(",", $tempDirectorArray);
+$directorAppointedDate = explode(",", $tempDateArray);
+$directorStartShare = explode(",", $tempStartShareArray);
+$directorEndShare = explode(",", $tempEndShareArray);
+$noOfDirectors = count($directorName) - 1;
 
 // =============================================================================
 // PHOEBE
@@ -1086,10 +1091,16 @@ if ($noOfDirectors > 1) {
     $section->addText("\tThe director of the Company in office at the date of this statement are as follows:", $fontstyleName, $paragraphStyle);
 }
 
-if ($directorName1ApptDate != null) {
-    $section->addText($directorName1 . "   appointed on " . date('d F Y', strtotime($directorName1ApptDate)), $fontstyleName, $paragraphStyle);
+if ($directorAppointedDate != null) {
+    for($i = 0; $i < $noOfDirectors; $i++){
+        $section->addText("\t" . $directorName[$i] . "   appointed on " . date('d F Y', strtotime($directorAppointedDate[$i])), $fontstyleName, $paragraphStyle);
+    }
+   
 } else {
-    $section->addText($directName1);
+    for($i = 0; $i < $noOfDirectors; $i++){
+        $section->addText("\t" . $directorName[$i]);
+    }
+    
 }
 
 if ($noOfDirectors > 1) {
@@ -1126,13 +1137,20 @@ $table->addCell($firstCellValue);
 $cell = $table->addCell($cellValue);
 $cell->addText("At the beginning of financial year", $fontstyleName, $centerAlignment);
 $cell = $table->addCell($cellValue);
-$cell->addText("At the end of financial year", $centerAlignment);
+$cell->addText("At the end of financial year",  $fontstyleName, $centerAlignment);
 
 $table->addRow();
 $table->addCell($firstCellValue)->addText(htmlspecialchars("The Company"), array('underline' => 'single'));
 
 $table->addRow();
-$table->addCell()->addText($directorName1, $fontstyleName);
+
+for($i = 0; $i < $noOfDirectors; $i++){
+    
+    $table->addCell()->addText($directorName[$i], $fontstyleName);
+    $table->addCell()->addText($directorStartShare[$i], $fontstyleName, $centerAlignment);
+    $table->addCell()->addText($directorEndShare[$i], $fontstyleName, $centerAlignment);
+}
+
 
 //Page 2
 $section = $phpWord->addSection();
@@ -1185,8 +1203,9 @@ if ($noOfDirectors >= 2) {
 }
 
 $section->addTextBreak(1);
-$section->addText($directorName1 . "<w:br/>Director"
-        , $fontstyleName, $paragraphStyle);
+for($i = 0; $i < $noOfDirectors; $i++){
+        $section->addText($directorName[$i] . "<w:br/>Director", $fontstyleName, $paragraphStyle);
+}
 
 $section->addText("Singapore, " . (date('F d Y', strtotime($todayDate)))
         , $fontstyleName, $paragraphStyle);

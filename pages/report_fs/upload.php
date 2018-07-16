@@ -733,16 +733,8 @@
               <input type="date" class="form-control" id="yearEnd" name="yearEnd" value="<?php echo date_format($date,"Y-m-d");?>"/>
           </div>
 
-          <div class="form-group">
-              <label for="noOfDirectors">No. of Directors: </label>
-              <select name="noOfDirectors" id="noOfDirectors" onchange="addDirectorField(this.value)" required="true">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-              </select>
-          </div>
-
+          <button onclick="addDirectorFunction()" type='button' id='addDirector'>Add Director</button>
+          
           <div class="form-group" id='directorFields'>
               <label for="directorName0">Director Name: </label>
               <input type ="text" id="directorName0" />
@@ -752,23 +744,14 @@
               <input type ="date" id="directorNameApptDate0" />
               <input type="hidden" id="tempDateArray" name="tempDateArray" value="" />
 
-              <label for="directorShare0">Director's Share:</label>
-              <input type ="number" id="directorShare0" />
-              <input type="hidden" id="tempShareArray" name="tempShareArray" value="" />
-
-              <button onclick="addDirectorFunction()" type='button' id='addDirector'>Add Director</button>
-
+              <label for="directorShare0">Director's Start Share:</label>
+              <input type ="number" id="directorStartShare0" />
+              <input type="hidden" id="tempStartShareArray" name="tempStartShareArray" value="" />
+              
+              <label for="directorShare0">Director's End Share:</label>
+              <input type ="number" id="directorEndShare0" />
+              <input type="hidden" id="tempEndShareArray" name="tempEndShareArray" value="" />
               <br>
-          </div>
-
-          <div class="form-group">
-              <label for="directorName1">Director Name #1: </label>
-              <input type="text" class="form-control" id="directorName1" name="directorName1" placeholder="Enter Director Name"/>
-              <label for="directorName1">Date of Appointment: </label>
-              <input type="date" class="form-control" id="directorName1ApptDate" name="directorName1ApptDate"/>
-              <label for="directorName1">Director #1 Share: </label>
-              <input type="text" class="form-control" id="director1Share" name="director1Share" placeholder="Enter Director's share"/>
-
           </div>
 
           <div class="form-group">
@@ -850,20 +833,23 @@
 		var count = 1;
 		var tempDirectorArray = [];
 		var tempDateArray = [];
-		var tempShareArray = [];
+		var tempStartShareArray = [];
+                var tempEndShareArray = [];
 
 		function addDirectorFunction(){
 
 				addDirectorFields();
 
 				document.getElementById('directorFields').innerHTML += "Director Name: <input type='text' id='directorName" + count + "'> \n\
-																										Appointed Date: <input type='date' id='directorNameApptDate" + count + "'> \n\
-																										Director's Share: <input type='number' id='directorShare" + count + "'></br> ";
+                                                                            Appointed Date: <input type='date' id='directorNameApptDate" + count + "'> \n\
+                                                                            Director's Start Share: <input type='number' id='directorStartShare" + count + "'>\n\
+                                                                            Director's End Share: <input type='number' id='directorEndShare" + count + "'> \n\</br> ";
 
 				for (i = 0; i < count; i++){
 						document.getElementById('directorName' + i).value = tempDirectorArray[i];
 						document.getElementById('directorNameApptDate' + i).value = tempDateArray[i];
-						document.getElementById('directorShare' + i).value = tempShareArray[i];
+						document.getElementById('directorStartShare' + i).value = tempStartShareArray[i];
+                                                document.getElementById('directorEndShare' + i).value = tempEndShareArray[i];
 				}
 				count++;
 
@@ -873,7 +859,8 @@
 			for (i = 0; i < count; i++){
 				tempDirectorArray[i] = document.getElementById('directorName' + i).value;
 				tempDateArray[i] = document.getElementById('directorNameApptDate' + i).value;
-				tempShareArray[i] = document.getElementById('directorShare' + i).value;
+				tempStartShareArray[i] = document.getElementById('directorStartShare' + i).value;
+                                tempEndShareArray[i] = document.getElementById('directorEndShare' + i).value;
 			}
 		}
 
@@ -881,18 +868,24 @@
 		function updateDirectors(){
 			tempDirectorArray = [];
 			tempDateArray = [];
-			tempShareArray = [];
+			tempStartShareArray = [];
+                        tempEndShareArray = [];
+                        
 			for (i = 0; i < count; i++){
 				tempDirectorName = document.getElementById('directorName' + i).value;
 				tempDirectorDate = document.getElementById('directorNameApptDate' + i).value;
-				tempDirectorShare = document.getElementById('directorShare' + i).value;
+				tempDirectorStartShare = document.getElementById('directorStartShare' + i).value;
+                                tempDirectorEndShare = document.getElementById('directorEndShare' + i).value;
 				tempDirectorArray.push(tempDirectorName);
 				tempDateArray.push(tempDirectorDate);
-				tempShareArray.push(tempDirectorShare);
+				tempStartShareArray.push(tempDirectorStartShare);
+                                tempEndShareArray.push(tempDirectorEndShare);
 			}
 			document.getElementById('tempDirectorArray').value = tempDirectorArray;
 			document.getElementById('tempDateArray').value = tempDateArray;
-			document.getElementById('tempShareArray').value = tempShareArray;
+			document.getElementById('tempStartShareArray').value = tempStartShareArray;
+                        document.getElementById('tempEndShareArray').value = tempEndShareArray;
+                        
 		}
 </script>
 </div>
