@@ -149,7 +149,7 @@ $directorName = explode(",", $tempDirectorArray);
 $directorAppointedDate = explode(",", $tempDateArray);
 $directorStartShare = explode(",", $tempStartShareArray);
 $directorEndShare = explode(",", $tempEndShareArray);
-$noOfDirectors = count($directorName) - 1;
+$noOfDirectors = count($directorName);
 
 // =============================================================================
 // PHOEBE
