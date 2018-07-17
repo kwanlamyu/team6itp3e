@@ -108,7 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
            
             if ($statement->execute()) {
 //                echo "<meta http-equiv='refresh' content='3;url=edit_accountant.php'> ";
-                //header('Location: edit_accountant.php'); 
+                header('Location: edit_accountant.php'); 
 //                echo'
 //                    <div class="row">
 //                        <div class"card">
