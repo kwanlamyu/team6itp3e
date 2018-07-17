@@ -4309,11 +4309,10 @@ if (!empty($tradeReceivablesArray)) {
         }
     }
     foreach ($tradeReceivablesArray as $key => $value) { // [OCBC Bank] => Array ( [December 2015] => 54684.19 )
-        foreach ($value as $k => $v) { // [December 2015] => 54684.19
-            if (in_array($key, $temp)) {
-                $table1->addRow();
-                $table1->addCell($firstCellValue)->addText($key);
-
+        if (in_array($key, $temp)) {
+            $table1->addRow();
+            $table1->addCell($firstCellValue)->addText($key);
+            foreach ($value as $k => $v) { // [December 2015] => 54684.19
                 // if don't need dash, just print everything out
                 if ($numberOfSheets == count($value)) {
                     $cellNotes = $table1->addCell($cellValue);
@@ -4409,19 +4408,57 @@ if (!empty($tradeReceivablesArray)) {
     $table1->addRow();
     $table1->addCell($firstCellValue);
 
-    foreach ($totalArray as $key => $value) {
-        foreach ($totalReceivablesArray as $keyReceivables => $valueReceivables) {
-            if ($key == $keyReceivables) {
-                $finalReceivables = (float) $value + (float) $valueReceivables;
-                if ($finalReceivables == 0) {
-                    $cellNotes = $table1->addCell($cellValue, $topAndBottom);
-                    $cellNotes->addText("-", $fontstyleName, $centerAlignment);
-                } else if ($finalReceivables < 0) {
-                    $cellNotes = $table1->addCell($cellValue, $topAndBottom);
-                    $cellNotes->addText("(" . number_format(ceil($finalReceivables)) . ")", $fontstyleName, $centerAlignment);
-                } else {
-                    $cellNotes = $table1->addCell($cellValue, $topAndBottom);
-                    $cellNotes->addText(number_format(ceil($finalReceivables)), $fontstyleName, $centerAlignment);
+    $finalReceivables = array();
+    
+// For adding manually 
+//    foreach ($totalArray as $key => $value) {
+//        foreach ($totalReceivablesArray as $keyReceivables => $valueReceivables) {
+//            if ($key == $keyReceivables) {
+//                $finalReceivables = (float) $value + (float) $valueReceivables;
+//
+//                if ($finalReceivables == 0) {
+//                    $cellNotes = $table1->addCell($cellValue, $topAndBottom);
+//                    $cellNotes->addText("-", $fontstyleName, $centerAlignment);
+//                } else if ($finalReceivables < 0) {
+//                    $cellNotes = $table1->addCell($cellValue, $topAndBottom);
+//                    $cellNotes->addText("(" . number_format(ceil($finalReceivables)) . ")", $fontstyleName, $centerAlignment);
+//                } else {
+//                    $cellNotes = $table1->addCell($cellValue, $topAndBottom);
+//                    $cellNotes->addText(number_format(ceil($finalReceivables)), $fontstyleName, $centerAlignment);
+//                }
+//            }
+//        }
+//    }
+
+    $array = array();
+    // Getting values from financial statement 
+    for ($j = 0; $j < count($years); $j++) {
+        $array[$years[$j]] = $totalReceivables[$j];
+
+        if ($totalReceivables[$j] == 0) {
+            $cellNotes = $table1->addCell($cellValue, $topAndBottom);
+            $cellNotes->addText("-", $fontstyleName, $centerAlignment);
+        } else if ($totalReceivables[$j] < 0) {
+            $cellNotes = $table1->addCell($cellValue, $topAndBottom);
+            $cellNotes->addText("(" . number_format(ceil($totalReceivables[$j])) . ")", $fontstyleName, $centerAlignment);
+        } else {
+            $cellNotes = $table1->addCell($cellValue, $topAndBottom);
+            $cellNotes->addText(number_format(ceil($totalReceivables[$j])), $fontstyleName, $centerAlignment);
+        }
+    }
+
+    // Do checking for trade and other payables here
+    $check = array();
+    for ($i = 0; $i < count($years); $i++) {
+        $temp = $totalReceivablesArray[$years[$i]] + $totalArray[$years[$i]];
+        $check[$years[$i]] = $temp;
+    }
+
+    foreach ($check as $key1 => $value1) {
+        foreach ($totalReceivables as $key2 => $value2) {
+            if ($key1 == $key2) {
+                if ($value1 != $value2) {
+                    echo "Value mismatch: Trade and other payables (Other payables) - " . $key1 . " does not match <br>";
                 }
             }
         }
@@ -4847,7 +4884,7 @@ if (!empty($borrowingArray)) {
             $array[$years[$i]] = $borrowings[$i];
         }
     }
-    
+
     // Do checking for top borrowing here 
     foreach ($array as $key1 => $value1) {
         foreach ($checkArray as $key2 => $value2) {
