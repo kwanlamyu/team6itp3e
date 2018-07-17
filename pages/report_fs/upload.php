@@ -876,10 +876,14 @@
 				tempDirectorDate = document.getElementById('directorNameApptDate' + i).value;
 				tempDirectorStartShare = document.getElementById('directorStartShare' + i).value;
                                 tempDirectorEndShare = document.getElementById('directorEndShare' + i).value;
-				tempDirectorArray.push(tempDirectorName);
-				tempDateArray.push(tempDirectorDate);
-				tempStartShareArray.push(tempDirectorStartShare);
-                                tempEndShareArray.push(tempDirectorEndShare);
+				
+                                if(tempDirectorName != ""){
+                                    tempDirectorArray.push(tempDirectorName);
+                                    tempDateArray.push(tempDirectorDate);
+                                    tempStartShareArray.push(tempDirectorStartShare);
+                                    tempEndShareArray.push(tempDirectorEndShare);
+                                }
+                                
 			}
 			document.getElementById('tempDirectorArray').value = tempDirectorArray;
 			document.getElementById('tempDateArray').value = tempDateArray;
