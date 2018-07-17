@@ -110,9 +110,7 @@
                         </div>
 
                     <div class="form-group">
-                        <button type="submit" name="updateButton" id="updateButton" class="btn btn-primary">
-                            <i class="fas fa-check"></i> Update Detail
-                        </button>
+                        <button type="submit" name="updateButton" id="updateButton" class="btn btn-primary"><i class="fas fa-check"></i> Update Detail </button>
                     </div>
 
                 </form>
@@ -134,16 +132,6 @@
         document.getElementById('accountantemail').value = email;
 
     }
-
-</script>
-
-<script>
-    function submitForm(){
-        document.getElementById("editAccountant").addEventListener("submit", function(event){
-    event.preventDefault();
-});
-    }
-
 
 </script>
 <?php include '../general/footer_content.php'; ?>
