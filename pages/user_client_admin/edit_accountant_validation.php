@@ -12,25 +12,8 @@ function test_input($data) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['updateButton'])) {
 //        echo "post update button <br>";
-        
-        
-//        if (empty($_POST["accountantid"])) {
-//            $unameErr = '* User name is required';
-//        } 
-//        else {
-            $uname = ($_POST["accountantid"]);
-//            echo 'Username: '.$uname.' <br>';
-////            echo "else statement <br>";
-//            $query = "SELECT COUNT(*) FROM user WHERE username = '".$uname."'";
-////            echo "pre-query execution <br>";
-//            $result = $DB_con->query($query);
-//            
-//            if ($result->fetchColumn() > 0) {
-//                $unameErr = "* Username has already been used";
-//                $valid = FALSE;
-//            }
-//            
-//        }
+      
+        $uname = ($_POST["accountantid"]);
         
         $regex = '/^[-a-z0-9_~!$%^&*=+}{\'?]+(\.[-a-z0-9_~!$%^&*=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i';
         if (empty($_POST["accountantemail"])) {
@@ -72,25 +55,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $valid = FALSE;
             }
         }
-//        echo 'Password: '.$pass.'<br>';
-//        if (empty($_POST["accountantcpassword"])) {
-//            $cpassErr = "* Password confirm is required";
-//            $valid = FALSE;
-//        } else {
-//            $cpass = ($_POST["accountantcpassword"]);
-//            if ((strlen($cpass) < 8) || !ctype_alnum($pass)) {
-//                $cpassErr = "* Password must be 8 alphanumeric long";
-//                $valid = FALSE;
-//            }
-//        }
-//        if (strlen($cpass) > 8) {
-//            if (strlen($pass) > 8) {
-//                if ($pass !== $cpass) {
-//                    $twopassErr = "* Both password must be the same";
-//                    $valid = FALSE;
-//                }
-//            }
-//        }
+        
+        if (empty($_POST["accountantcpassword"])) {
+            //$passErr = "* Password is required";
+            //$valid = FALSE;
+            $cpass ="";
+        }else {
+            $cpass = ($_POST["accountantcpassword"]);
+            if ((strlen($cpass) < 8) || !ctype_alnum($pass)) {
+                $cpassErr = "* Password must be 8 alphanumeric long";
+//                echo"C Password: ".$cpassErr."<br>";
+                $valid = FALSE;
+            }
+//            echo"C Password: ".$cpass."<br>";
+        }
+        
+        if (!empty($_POST["accountantpassword"]) && empty($_POST["accountantcpassword"])) {
+            $cpassErr = "* Please retype your password";
+//            echo"C Password: ".$cpassErr."<br>";
+            $valid = FALSE;
+        } 
+        
+        if ($pass !== $cpass) {
+            $twopassErr = "* Both password must be the same";
+//                    echo"Password: ".$twopassErr."<br>";
+            $valid = FALSE;
+        }
+
         
 //        echo gettype($valid).'<br>';
 //        echo $valid.'<br>';
@@ -116,7 +107,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
            
             if ($statement->execute()) {
-                header('Location: ../user_management/edit_accountant.php'); 
+//                echo "<meta http-equiv='refresh' content='3;url=edit_accountant.php'> ";
+                //header('Location: edit_accountant.php'); 
 //                echo'
 //                    <div class="row">
 //                        <div class"card">
@@ -135,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo '<div class="alert alert-warning mmbsm" role="alert">Error: ' . $sql . '<br>' . $DB_con->error . '</div>';
             }
         }
-       header('Location: edit_accountant.php'); 
+//       header('Location: edit_accountant.php'); 
     }
 }
 ?>

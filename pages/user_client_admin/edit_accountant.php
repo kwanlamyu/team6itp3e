@@ -82,8 +82,8 @@
                 <h4 class="modal-title">Edit Details</h4>
             </div>
             <div class="modal-body">
-                <form id="editAccountant" name="editAccountant" action="edit_accountant_validation.php" method="POST">
-                    <?php include('../user_client_admin/edit_accountant_validation.php'); ?>
+                <form id="editAccountant" name="editAccountant" action="edit_accountant.php" method="POST">
+                    <?php include('edit_accountant_validation.php'); ?>
                     
                     <div class="form-group" style="display: none;">
                         <label for="accountantid">Username</label>
@@ -101,6 +101,13 @@
                         <input type="password" class="form-control" id="accountantpassword" name="accountantpassword" placeholder="Password">
                         <span class="error"><?php echo $passErr; ?></span>
                     </div>
+                    
+                    <div class="form-group">
+                            <label for="accountantcpassword">Confirm Password</label>
+                            <input type="password" class="form-control" id="accountantcpassword" name="accountantcpassword" placeholder="Retype Password">
+                            <span class="error"><?php echo $cpassErr; ?></span>
+                            <span class="error"><?php echo $twopassErr; ?></span>
+                        </div>
 
                     <div class="form-group">
                         <button type="submit" name="updateButton" id="updateButton" class="btn btn-primary">
@@ -130,6 +137,14 @@
 
 </script>
 
+<script>
+    function submitForm(){
+        document.getElementById("editAccountant").addEventListener("submit", function(event){
+    event.preventDefault();
+});
+    }
 
+
+</script>
 <?php include '../general/footer_content.php'; ?>
 <?php include '../general/footer.php'; ?>
