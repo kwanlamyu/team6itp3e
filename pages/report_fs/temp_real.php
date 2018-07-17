@@ -4633,7 +4633,7 @@ if (!empty($tradePayableArray)) {
     for ($j = 0; $j < count($years); $j++) {
         $array[$years[$i]] = $finalTradeArray[$i];
     }
-    
+
     foreach ($array as $key1 => $value1) {
         foreach ($checkArray as $key2 => $value2) {
             if ($key1 == $key2) {
@@ -4654,6 +4654,15 @@ if (!empty($tradePayableArray)) {
 
 if (!empty($borrowingArray)) {
 
+    // For checking if the values matches
+    $checkArray = array();
+    $checkArray2 = array();
+
+    for ($i = 0; $i < count($years); $i++) {
+        $checkArray[$years[$i]] = 0;
+        $checkArray2[$years[$i]] = 0;
+    }
+
     $table1->addRow();
     $table1->addCell($firstCellValue)->addListItem(htmlspecialchars('BORROWINGS'), 0, null, $nestedListStyle);
 
@@ -4673,7 +4682,7 @@ if (!empty($borrowingArray)) {
     }
 
     $count = 0;
-    $currentNonCurrent = ["Current", "Non-current"];
+    $currentNonCurrent = ["current", "non-current"];
     $tempCurrent = array();
     $temp = array();
 
@@ -4702,8 +4711,8 @@ if (!empty($borrowingArray)) {
     }
 
     foreach ($borrowingArray as $key => $value) { // [OCBC Bank] => Array ( [December 2015] => 54684.19 )
-        if ($key != "Current") {
-            if ($key != "Non-current") {
+        if ($key != "current") {
+            if ($key != "non-current") {
                 if (stripos($key, "Repayment of borrowing") !== false) {
                     $table1->addRow();
                     $table1->addCell($firstCellValue)->addText("(Less) " . $key);
@@ -4720,6 +4729,22 @@ if (!empty($borrowingArray)) {
 
                             $cellNotes = $table1->addCell($cellValue);
                             $cellNotes->addText("(" . number_format(ceil($v)) . ")", $fontstyleName, $centerAlignment);
+
+                            // for checking if the value matches with total
+                            for ($h = 0; $h < count($years); $h++) {
+                                if ($k == $years[$h]) {
+                                    if ($checkArray[$years[$h]] == 0) {
+                                        $checkArray[$years[$h]] = $v;
+                                    } else {
+                                        foreach ($checkArray as $totalKey => $totalValue) {
+                                            if ($totalKey == $years[$h]) {
+                                                $totalValue = (float) $totalValue + (float) $v;
+                                                $checkArray[$years[$h]] = $totalValue;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                         // if not the same, then see which position it is
                         else {
@@ -4728,12 +4753,24 @@ if (!empty($borrowingArray)) {
                                 if ($k == $years[$h]) {
                                     $withoutFirstCharacter = substr($v, 1);
                                     $cellNotes->addText("(" . number_format(ceil($withoutFirstCharacter)) . ")", $fontstyleName, $centerAlignment);
+
+                                    // for checking if the value matches with total
+                                    if ($checkArray[$years[$h]] == 0) {
+                                        $checkArray[$years[$h]] = $v;
+                                    } else {
+                                        foreach ($checkArray as $totalKey => $totalValue) {
+                                            if ($totalKey == $years[$h]) {
+                                                $totalValue = (float) $totalValue + (float) ceil($v);
+                                                $checkArray[$years[$h]] = $totalValue;
+                                            }
+                                        }
+                                    }
                                 } else {
                                     $cellNotes->addText("-", $fontstyleName, $centerAlignment);
                                 }
                             }
                         }
-                        // Value is positive
+                        // Value is zero
                     } else if ($v == 0) {
                         for ($h = 0; $h < count($years); $h++) {
                             $cellNotes = $table1->addCell($cellValue);
@@ -4748,6 +4785,22 @@ if (!empty($borrowingArray)) {
                         if ($numberOfSheets == count($value)) {
                             $cellNotes = $table1->addCell($cellValue);
                             $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
+
+                            // for checking if the value matches with total
+                            for ($h = 0; $h < count($years); $h++) {
+                                if ($k == $years[$h]) {
+                                    if ($checkArray[$years[$h]] == 0) {
+                                        $checkArray[$years[$h]] = $v;
+                                    } else {
+                                        foreach ($checkArray as $totalKey => $totalValue) {
+                                            if ($totalKey == $years[$h]) {
+                                                $totalValue = (float) $totalValue + (float) $v;
+                                                $checkArray[$years[$h]] = $totalValue;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                         // if not the same, then see which position it is
                         else {
@@ -4755,6 +4808,18 @@ if (!empty($borrowingArray)) {
                                 $cellNotes = $table1->addCell($cellValue);
                                 if ($k == $years[$h]) {
                                     $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
+
+                                    // for checking if the value matches with total
+                                    if ($checkArray[$years[$h]] == 0) {
+                                        $checkArray[$years[$h]] = $v;
+                                    } else {
+                                        foreach ($checkArray as $totalKey => $totalValue) {
+                                            if ($totalKey == $years[$h]) {
+                                                $totalValue = (float) $totalValue + (float) ceil($v);
+                                                $checkArray[$years[$h]] = $totalValue;
+                                            }
+                                        }
+                                    }
                                 } else {
                                     $cellNotes->addText("-", $fontstyleName, $centerAlignment);
                                 }
@@ -4769,6 +4834,7 @@ if (!empty($borrowingArray)) {
     $table1->addRow();
     $table1->addCell($firstCellValue)->addText("As at end of financial year");
 
+    $array = array();
     for ($i = 0; $i < count($borrowings); $i++) {
         $cellNotes = $table1->addCell($cellValue, $topAndBottom);
         if ($borrowings[$i] < 0) {
@@ -4776,11 +4842,27 @@ if (!empty($borrowingArray)) {
         } else {
             $cellNotes->addText(number_format(round($borrowings[$i])), $fontstyleName, $centerAlignment);
         }
+
+        for ($j = 0; $j < count($years); $j++) {
+            $array[$years[$i]] = $borrowings[$i];
+        }
+    }
+    
+    // Do checking for top borrowing here 
+    foreach ($array as $key1 => $value1) {
+        foreach ($checkArray as $key2 => $value2) {
+            if ($key1 == $key2) {
+                if ($value1 != $value2) {
+                    echo "Value mismatch: Borrowing (top) - " . $key1 . " does not match <br>";
+                }
+            }
+        }
     }
 
     $table1->addRow();
     $table1->addCell($firstCellValue);
 
+    // Displaying current / non-current starts here 
     if (!empty($tempCurrent)) {
 
         // Store current and non-current value in temp array
@@ -4797,12 +4879,28 @@ if (!empty($borrowingArray)) {
             foreach ($value as $k => $v) {
                 if ($v < 0) {
                     $table1->addRow();
-                    $table1->addCell($firstCellValue)->addText("(Less) " . $key);
+                    $table1->addCell($firstCellValue)->addText("(Less) " . ucwords($key));
 
                     // if don't need dash, just print everything out
                     if ($numberOfSheets == count($value)) {
                         $cellNotes = $table1->addCell($cellValue);
                         $cellNotes->addText(ceil($v), $fontstyleName, $centerAlignment);
+
+                        // for checking if the value matches with total
+                        for ($h = 0; $h < count($years); $h++) {
+                            if ($k == $years[$h]) {
+                                if ($checkArray2[$years[$h]] == 0) {
+                                    $checkArray2[$years[$h]] = $v;
+                                } else {
+                                    foreach ($checkArray as $totalKey => $totalValue) {
+                                        if ($totalKey == $years[$h]) {
+                                            $totalValue = (float) $totalValue + (float) $v;
+                                            $checkArray2[$years[$h]] = $totalValue;
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                     // if not the same, then see which position it is
                     else {
@@ -4810,7 +4908,19 @@ if (!empty($borrowingArray)) {
                             $cellNotes = $table1->addCell($cellValue);
 
                             if ($k == $years[$h]) {
-                                $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
+                                $cellNotes->addText("(" . number_format(ceil($v)) . ")", $fontstyleName, $centerAlignment);
+
+                                // for checking if the value matches with total
+                                if ($checkArray2[$years[$h]] == 0) {
+                                    $checkArray2[$years[$h]] = $v;
+                                } else {
+                                    foreach ($checkArray2 as $totalKey => $totalValue) {
+                                        if ($totalKey == $years[$h]) {
+                                            $totalValue = (float) $totalValue + (float) $v;
+                                            $checkArray2[$years[$h]] = $totalValue;
+                                        }
+                                    }
+                                }
                             } else {
                                 $cellNotes->addText("-", $fontstyleName, $centerAlignment);
                             }
@@ -4818,7 +4928,7 @@ if (!empty($borrowingArray)) {
                     }
                 } else if ($v == 0) {
                     $table1->addRow();
-                    $table1->addCell($firstCellValue)->addText($key);
+                    $table1->addCell($firstCellValue)->addText(ucwords($key));
 
                     for ($h = 0; $h < count($years); $h++) {
                         $cellNotes = $table1->addCell($cellValue);
@@ -4828,12 +4938,28 @@ if (!empty($borrowingArray)) {
                     }
                 } else {
                     $table1->addRow();
-                    $table1->addCell($firstCellValue)->addText($key);
+                    $table1->addCell($firstCellValue)->addText(ucwords($key));
 
                     // if don't need dash, just print everything out
                     if ($numberOfSheets == count($value)) {
                         $cellNotes = $table1->addCell($cellValue);
                         $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
+
+                        // for checking if the value matches with total
+                        for ($h = 0; $h < count($years); $h++) {
+                            if ($k == $years[$h]) {
+                                if ($checkArray2[$years[$h]] == 0) {
+                                    $checkArray2[$years[$h]] = $v;
+                                } else {
+                                    foreach ($checkArray as $totalKey => $totalValue) {
+                                        if ($totalKey == $years[$h]) {
+                                            $totalValue = (float) $totalValue + (float) $v;
+                                            $checkArray2[$years[$h]] = $totalValue;
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                     // if not the same, then see which position it is
                     else {
@@ -4842,6 +4968,18 @@ if (!empty($borrowingArray)) {
 
                             if ($k == $years[$h]) {
                                 $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
+
+                                // for checking if the value matches with total
+                                if ($checkArray2[$years[$h]] == 0) {
+                                    $checkArray2[$years[$h]] = $v;
+                                } else {
+                                    foreach ($checkArray2 as $totalKey => $totalValue) {
+                                        if ($totalKey == $years[$h]) {
+                                            $totalValue = (float) $totalValue + (float) $v;
+                                            $checkArray2[$years[$h]] = $totalValue;
+                                        }
+                                    }
+                                }
                             } else {
                                 $cellNotes->addText("-", $fontstyleName, $centerAlignment);
                             }
@@ -4854,6 +4992,7 @@ if (!empty($borrowingArray)) {
         $table1->addRow();
         $table1->addCell($firstCellValue);
 
+        $array2 = array();
         for ($i = 0; $i < count($borrowings); $i++) {
             $cellNotes = $table1->addCell($cellValue, $topAndBottom);
 
@@ -4861,6 +5000,21 @@ if (!empty($borrowingArray)) {
                 $cellNotes->addText("(" . number_format(abs($borrowings[$i])) . ")", $fontstyleName, $centerAlignment);
             } else {
                 $cellNotes->addText(number_format(round($borrowings[$i])), $fontstyleName, $centerAlignment);
+            }
+
+            for ($j = 0; $j < count($years); $j++) {
+                $array2[$years[$i]] = $borrowings[$i];
+            }
+        }
+
+        // Do checking for top borrowing here 
+        foreach ($array as $key1 => $value1) {
+            foreach ($checkArray2 as $key2 => $value2) {
+                if ($key1 == $key2) {
+                    if ($value1 != $value2) {
+                        echo "Value mismatch: Borrowing (current/non-current) - " . $key1 . " does not match <br>";
+                    }
+                }
             }
         }
     }
