@@ -151,9 +151,6 @@ $directorStartShare = explode(",", $tempStartShareArray);
 $directorEndShare = explode(",", $tempEndShareArray);
 $noOfDirectors = count($directorName);
 
-echo $noOfDirectors;
-
-
 // =============================================================================
 // PHOEBE
 // =============================================================================
@@ -1095,15 +1092,13 @@ if ($noOfDirectors > 1) {
 }
 
 if ($directorAppointedDate != null) {
-    for($i = 0; $i < $noOfDirectors; $i++){
+    for ($i = 0; $i < $noOfDirectors; $i++) {
         $section->addText("\t" . $directorName[$i] . "   appointed on " . date('d F Y', strtotime($directorAppointedDate[$i])), $fontstyleName, $paragraphStyle);
     }
-   
 } else {
-    for($i = 0; $i < $noOfDirectors; $i++){
+    for ($i = 0; $i < $noOfDirectors; $i++) {
         $section->addText("\t" . $directorName[$i]);
     }
-    
 }
 
 if ($noOfDirectors > 1) {
@@ -1140,15 +1135,15 @@ $table->addCell($firstCellValue);
 $cell = $table->addCell($cellValue);
 $cell->addText("At the beginning of financial year", $fontstyleName, $centerAlignment);
 $cell = $table->addCell($cellValue);
-$cell->addText("At the end of financial year",  $fontstyleName, $centerAlignment);
+$cell->addText("At the end of financial year", $fontstyleName, $centerAlignment);
 
 $table->addRow();
 $table->addCell($firstCellValue)->addText(htmlspecialchars("The Company"), array('underline' => 'single'));
 
 $table->addRow();
 
-for($i = 0; $i < $noOfDirectors; $i++){
-    
+for ($i = 0; $i < $noOfDirectors; $i++) {
+
     $table->addCell()->addText($directorName[$i], $fontstyleName);
     $table->addCell()->addText($directorStartShare[$i], $fontstyleName, $centerAlignment);
     $table->addCell()->addText($directorEndShare[$i], $fontstyleName, $centerAlignment);
@@ -1206,8 +1201,8 @@ if ($noOfDirectors >= 2) {
 }
 
 $section->addTextBreak(1);
-for($i = 0; $i < $noOfDirectors; $i++){
-        $section->addText($directorName[$i] . "<w:br/>Director", $fontstyleName, $paragraphStyle);
+for ($i = 0; $i < $noOfDirectors; $i++) {
+    $section->addText($directorName[$i] . "<w:br/>Director", $fontstyleName, $paragraphStyle);
 }
 
 $section->addText("Singapore, " . (date('F d Y', strtotime($todayDate)))
@@ -3739,6 +3734,7 @@ if (!empty($incomeTaxArray)) {
                             $cellNotes = $table1->addCell($cellValue);
                             $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
 
+                            // for checking if the value matches with total
                             for ($h = 0; $h < count($years); $h++) {
                                 if ($k == $years[$h]) {
                                     if ($checkArray[$years[$h]] == 0) {
@@ -3747,7 +3743,7 @@ if (!empty($incomeTaxArray)) {
                                         foreach ($checkArray as $totalKey => $totalValue) {
                                             if ($totalKey == $years[$h]) {
                                                 $totalValue = (float) $totalValue + (float) $v;
-                                                $totalArray[$years[$h]] = $totalValue;
+                                                $checkArray[$years[$h]] = $totalValue;
                                             }
                                         }
                                     }
@@ -4246,7 +4242,7 @@ if (!empty($incomeTaxArray)) {
         } else {
             $cellNotes->addText(number_format($incomeTaxPayable[$i]), $fontstyleName, $centerAlignment);
         }
-        
+
         // For checking of matching values
         for ($j = 0; $j < count($years); $j++) {
             $array3[$years[$i]] = $incomeTaxPayable[$i];
@@ -4443,6 +4439,13 @@ if (!empty($tradeReceivablesArray)) {
 
 if (!empty($tradePayableArray)) {
 
+    // For checking if the values matches
+    $checkArray = array();
+
+    for ($i = 0; $i < count($years); $i++) {
+        $checkArray[$years[$i]] = 0;
+    }
+
     // For calculating the total value
     $totalArray = array();
 
@@ -4493,7 +4496,7 @@ if (!empty($tradePayableArray)) {
                 // if don't need dash, just print everything out
                 if ($numberOfSheets == count($value)) {
                     $cellNotes = $table1->addCell($cellValue);
-                    $cellNotes->addText(ceil($v), $fontstyleName, $centerAlignment);
+                    $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
                 }
                 // if not the same, then see which position it is
                 else {
@@ -4501,8 +4504,9 @@ if (!empty($tradePayableArray)) {
                         $cellNotes = $table1->addCell($cellValue);
 
                         if ($k == $years[$h]) {
-                            $cellNotes->addText(ceil($v), $fontstyleName, $centerAlignment);
+                            $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
 
+                            // For calculating the sub total
                             if ($totalPayablesArray[$k] == 0) {
                                 $totalPayablesArray[$k] = $v;
                             } else {
@@ -4540,15 +4544,32 @@ if (!empty($tradePayableArray)) {
                 // if don't need dash, just print everything out
                 if ($numberOfSheets == count($value)) {
                     $cellNotes = $table1->addCell($cellValue);
-                    $cellNotes->addText(ceil($v), $fontstyleName, $centerAlignment);
+                    $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
+
+                    // For calculating the sub total 
+                    for ($h = 0; $h < count($years); $h++) {
+                        if ($k == $years[$h]) {
+                            if ($totalArray[$years[$h]] == 0) {
+                                $totalArray[$years[$h]] = $v;
+                            } else {
+                                foreach ($totalArray as $totalKey => $totalValue) {
+                                    if ($totalKey == $years[$h]) {
+                                        $totalValue = (float) $totalValue + (float) $v;
+                                        $totalArray[$years[$h]] = $totalValue;
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
                 // if not the same, then see which position it is
                 else {
                     for ($h = 0; $h < count($years); $h++) {
                         $cellNotes = $table1->addCell($cellValue);
                         if ($k == $years[$h]) {
-                            $cellNotes->addText(ceil($v), $fontstyleName, $centerAlignment);
+                            $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
 
+                            // For calculating the sub total 
                             if ($totalArray[$k] == 0) {
                                 $totalArray[$k] = $v;
                             } else {
@@ -4574,11 +4595,11 @@ if (!empty($tradePayableArray)) {
     foreach ($totalArray as $key => $value) {
         $cellNotes = $table1->addCell($cellValue, $cellTopBorder);
         if ($value < 0) {
-            $cellNotes->addText("(" . ceil($value) . ")", $fontstyleName, $centerAlignment);
+            $cellNotes->addText("(" . number_format(ceil($value)) . ")", $fontstyleName, $centerAlignment);
         } else if ($value == 0) {
             $cellNotes->addText("-", $fontstyleName, $centerAlignment);
         } else {
-            $cellNotes->addText(ceil($value), $fontstyleName, $centerAlignment);
+            $cellNotes->addText(number_format(ceil($value)), $fontstyleName, $centerAlignment);
         }
     }
 
@@ -4591,17 +4612,33 @@ if (!empty($tradePayableArray)) {
     foreach ($totalArray as $key => $value) {
         foreach ($totalPayablesArray as $keyPayables => $valuePayables) {
             if ($key == $keyPayables) {
-                $finalPayables = $value + $valuePayables;
+                $finalPayables = (float) $value + (float) $valuePayables;
 
                 if ($finalPayables == 0) {
                     $cellNotes = $table1->addCell($cellValue, $topAndBottom);
                     $cellNotes->addText("-", $fontstyleName, $centerAlignment);
                 } else if ($finalPayables < 0) {
                     $cellNotes = $table1->addCell($cellValue, $topAndBottom);
-                    $cellNotes->addText("(" . ceil($finalPayables) . ")", $fontstyleName, $centerAlignment);
+                    $cellNotes->addText("(" . number_format(ceil($finalPayables)) . ")", $fontstyleName, $centerAlignment);
                 } else {
                     $cellNotes = $table1->addCell($cellValue, $topAndBottom);
-                    $cellNotes->addText(ceil($finalPayables), $fontstyleName, $centerAlignment);
+                    $cellNotes->addText(number_format(ceil($finalPayables)), $fontstyleName, $centerAlignment);
+                }
+            }
+        }
+    }
+
+    // Do checking for trade and other payables here
+    $array = array();
+    for ($j = 0; $j < count($years); $j++) {
+        $array[$years[$i]] = $finalTradeArray[$i];
+    }
+    
+    foreach ($array as $key1 => $value1) {
+        foreach ($checkArray as $key2 => $value2) {
+            if ($key1 == $key2) {
+                if ($value1 != $value2) {
+                    echo "Value mismatch: Trade and other payables (Other payables) - " . $key1 . " does not match <br>";
                 }
             }
         }
