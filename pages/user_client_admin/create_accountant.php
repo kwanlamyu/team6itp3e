@@ -3,7 +3,7 @@
 <div class="row">
     <div class="card">
         <div class="card-body">
-            <form id="createAccountant" name="createAccountant" action="create_accountant_validation.php" method="POST">
+            <form id="createAccountant" name="createAccountant" action="create_accountant.php" method="POST">
                 <?php include('create_accountant_validation.php'); ?>
 
                 <div class="form-group">

@@ -73,12 +73,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         if ($valid == TRUE) {
             if ($uname !== "") {
+                $hashpass = password_hash($pass,PASSWORD_DEFAULT);
                 $sql = $DB_con->prepare("INSERT INTO user(username, email, password, role_id)
-                                           VALUES ('$uname', '$email', '$pass', '3')");
+                                           VALUES ('$uname', '$email', '$hashpass', '3')");
             }
             if ($sql->execute()) {
                 header('Location: ../user_management/create_accountant.php');
-                echo "after sql execute";
+                echo '<div class="alert alert-success" role="alert">'
+                        . '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close"></a>'
+                        . ' Accountant successfully created '
+                    . '</div>';
 
                 //                echo'
                 //                    
