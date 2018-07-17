@@ -18,8 +18,8 @@
         <div class="card-body">
             <h5>Account Management</h5><hr>
             <button id="createWorkAccount" type="button" onClick="location.href = 'create_work_account.php';" name="createWorkAccount"  class="btn btn-success"><i class="fas fa-plus"></i> Add Account </button>
-            <button id="editWorkAccountant" type="button" onClick="location.href = 'edit_work_account.php';" name="editWorkAccountant"  class="btn btn-warning"><i class="fas fa-edit"></i> Edit Account </button>
-            <button id="deleteWorkAccountant" type="button" onClick="location.href = 'delete_work_account.php';" name="deleteWorkAccountant"  class="btn btn-danger"><i class="fas fa-minus"></i> Delete Account </button>
+            <button id="editWorkAccount" type="button" onClick="location.href = 'edit_work_account.php';" name="editWorkAccount"  class="btn btn-warning"><i class="fas fa-edit"></i> Edit Account </button>
+            <button id="deleteWorkAccount" type="button" onClick="location.href = 'delete_work_account.php';" name="deleteWorkAccount"  class="btn btn-danger"><i class="fas fa-minus"></i> Delete Account </button>
 
         </div>
     </div>
