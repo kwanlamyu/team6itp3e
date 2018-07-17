@@ -149,7 +149,7 @@ $directorName = explode(",", $tempDirectorArray);
 $directorAppointedDate = explode(",", $tempDateArray);
 $directorStartShare = explode(",", $tempStartShareArray);
 $directorEndShare = explode(",", $tempEndShareArray);
-$noOfDirectors = count($directorName) - 1;
+$noOfDirectors = count($directorName);
 
 // =============================================================================
 // PHOEBE
@@ -634,7 +634,9 @@ $totalArray = array();
 
 for ($i = 0; $i < count($years); $i++) {
     $totalArray[$years[$i]] = 0;
+    $checkArray[$years[$i]] = 0;
 }
+
 // =============================================================================
 // KOKHOE
 // =============================================================================
@@ -3683,12 +3685,19 @@ if (!empty($profitBeforeIncomeTaxArray)) {
 
 if (!empty($incomeTaxArray)) {
 
+    // For checking if the values matches
+    $checkArray = array();
+    $checkArray2 = array();
+    $checkArray3 = array();
+
+    for ($i = 0; $i < count($years); $i++) {
+        $checkArray[$years[$i]] = 0;
+        $checkArray2[$years[$i]] = 0;
+        $checkArray3[$years[$i]] = 0;
+    }
+
     $taxExpenseKey = ['Current income tax expenses', 'Current year tax expense'];
     $provisionKey = ['Under provision in prior year'];
-
-    $checkArray = array();
-    $checkValue = 0;
-
 
     // Display the category heading
     $section->addListItem(htmlspecialchars('INCOME TAXES'), 0, null, 'multilevel');
@@ -3727,9 +3736,20 @@ if (!empty($incomeTaxArray)) {
                             $cellNotes = $table1->addCell($cellValue);
                             $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
 
-                            // for checking if the value matches with total
-                            $checkValue += $v;
-                            $checkArray[$k] = $checkValue;
+                            for ($h = 0; $h < count($years); $h++) {
+                                if ($k == $years[$h]) {
+                                    if ($checkArray[$years[$h]] == 0) {
+                                        $checkArray[$years[$h]] = $v;
+                                    } else {
+                                        foreach ($checkArray as $totalKey => $totalValue) {
+                                            if ($totalKey == $years[$h]) {
+                                                $totalValue = (float) $totalValue + (float) $v;
+                                                $totalArray[$years[$h]] = $totalValue;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                         // if not the same, then see which position it is
                         else {
@@ -3740,8 +3760,16 @@ if (!empty($incomeTaxArray)) {
                                         $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
 
                                         // for checking if the value matches with total
-                                        $checkValue += $v;
-                                        $checkArray[$years[$h]] = $checkValue;
+                                        if ($checkArray[$years[$h]] == 0) {
+                                            $checkArray[$years[$h]] = $v;
+                                        } else {
+                                            foreach ($checkArray as $totalKey => $totalValue) {
+                                                if ($totalKey == $years[$h]) {
+                                                    $totalValue = (float) $totalValue + (float) $v;
+                                                    $checkArray[$years[$h]] = $totalValue;
+                                                }
+                                            }
+                                        }
                                     } else {
                                         $cellNotes->addText("-", $fontstyleName, $centerAlignment);
                                     }
@@ -3768,8 +3796,20 @@ if (!empty($incomeTaxArray)) {
                             $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
 
                             // for checking if the value matches with total
-                            $checkValue += $v;
-                            $checkArray[$k] = $checkValue;
+                            for ($h = 0; $h < count($years); $h++) {
+                                if ($k == $years[$h]) {
+                                    if ($checkArray[$years[$h]] == 0) {
+                                        $checkArray[$years[$h]] = $v;
+                                    } else {
+                                        foreach ($checkArray as $totalKey => $totalValue) {
+                                            if ($totalKey == $years[$h]) {
+                                                $totalValue = (float) $totalValue + (float) $v;
+                                                $checkArray[$years[$h]] = $totalValue;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                         // if not the same, then see which position it is
                         else {
@@ -3780,8 +3820,16 @@ if (!empty($incomeTaxArray)) {
                                         $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
 
                                         // for checking if the value matches with total
-                                        $checkValue += $v;
-                                        $checkArray[$k] = $checkValue;
+                                        if ($checkArray[$years[$h]] == 0) {
+                                            $checkArray[$years[$h]] = $v;
+                                        } else {
+                                            foreach ($checkArray as $totalKey => $totalValue) {
+                                                if ($totalKey == $years[$h]) {
+                                                    $totalValue = (float) $totalValue + (float) $v;
+                                                    $checkArray[$years[$h]] = $totalValue;
+                                                }
+                                            }
+                                        }
                                     } else {
                                         $cellNotes->addText("-", $fontstyleName, $centerAlignment);
                                     }
@@ -3893,7 +3941,22 @@ if (!empty($incomeTaxArray)) {
                             if ($numberOfSheets == count($value)) {
                                 $cellNotes = $table1->addCell($cellValue);
                                 $cellNotes->addText(ceil($v), $fontstyleName, $centerAlignment);
-                                echo ceil($v) . " ";
+
+                                // for checking if the value matches with total
+                                for ($h = 0; $h < count($years); $h++) {
+                                    if ($k == $years[$h]) {
+                                        if ($checkArray2[$years[$h]] == 0) {
+                                            $checkArray2[$years[$h]] = $v;
+                                        } else {
+                                            foreach ($checkArray2 as $totalKey => $totalValue) {
+                                                if ($totalKey == $years[$h]) {
+                                                    $totalValue = (float) $totalValue + (float) $v;
+                                                    $checkArray2[$years[$h]] = $totalValue;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
                             // if not the same, then see which position it is
                             else {
@@ -3901,6 +3964,18 @@ if (!empty($incomeTaxArray)) {
                                     $cellNotes = $table1->addCell($cellValue);
                                     if ($k == $years[$h]) {
                                         $cellNotes->addText("(" . number_format(ceil($v)) . ")", $fontstyleName, $centerAlignment);
+
+                                        // for checking if the value matches with total
+                                        if ($checkArray2[$years[$h]] == 0) {
+                                            $checkArray2[$years[$h]] = $v;
+                                        } else {
+                                            foreach ($checkArray2 as $totalKey => $totalValue) {
+                                                if ($totalKey == $years[$h]) {
+                                                    $totalValue = (float) $totalValue + (float) $v;
+                                                    $checkArray2[$years[$h]] = $totalValue;
+                                                }
+                                            }
+                                        }
                                     } else {
                                         $cellNotes->addText("- ", $fontstyleName, $centerAlignment);
                                     }
@@ -3916,12 +3991,29 @@ if (!empty($incomeTaxArray)) {
     $table1->addRow();
     $table1->addCell($firstCellValue)->addText("Tax expense");
 
+    $array2 = array();
     for ($i = 0; $i < count($incomeTaxExpenses); $i++) {
         $cellNotes = $table1->addCell($cellValue, $topAndBottom);
         if ($incomeTaxExpenses[$i] < 0) {
             $cellNotes->addText("(" . number_format(abs($incomeTaxExpenses[$i])) . ")", $fontstyleName, $centerAlignment);
         } else {
             $cellNotes->addText(number_format($incomeTaxExpenses[$i]), $fontstyleName, $centerAlignment);
+        }
+
+        // For checking of matching values
+        for ($j = 0; $j < count($years); $j++) {
+            $array2[$years[$i]] = $incomeTaxExpenses[$i];
+        }
+    }
+
+    // Do checking for part (a) Tax Calculated / Effect of...  
+    foreach ($array2 as $key1 => $value1) {
+        foreach ($checkArray2 as $key2 => $value2) {
+            if ($key1 == $key2) {
+                if ($value1 != $value2) {
+                    echo "Value mismatch: (a) Tax expense - " . $key1 . " does not match <br>";
+                }
+            }
         }
     }
 
@@ -3963,22 +4055,51 @@ if (!empty($incomeTaxArray)) {
         $table1->addCell($firstCellValue)->addText("Income tax paid");
 
         foreach ($incomeTaxArray as $key => $value) { // [OCBC Bank] => Array ( [December 2015] => 54684.19 )
-            foreach ($value as $k => $v) { // [December 2015] => 54684.19
-                // if don't need dash, just print everything out
-                if ($numberOfSheets == count($value)) {
-                    $cellNotes = $table1->addCell($cellValue);
-                    $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
-                }
-                // if not the same, then see which position it is
-                else {
-                    for ($h = 0; $h < count($years); $h++) {
-                        if ($key == "Income tax paid") {
+            if ($key == "Income tax paid") {
+                foreach ($value as $k => $v) { // [December 2015] => 54684.19
+                    // if don't need dash, just print everything out
+                    if ($numberOfSheets == count($value)) {
+                        $cellNotes = $table1->addCell($cellValue);
+                        $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
+
+                        // for checking if the value matches with total
+                        for ($h = 0; $h < count($years); $h++) {
+                            if ($k == $years[$h]) {
+                                if ($checkArray3[$years[$h]] == 0) {
+                                    $checkArray3[$years[$h]] = $v;
+                                } else {
+                                    foreach ($checkArray3 as $totalKey => $totalValue) {
+                                        if ($totalKey == $years[$h]) {
+                                            $totalValue = (float) $totalValue + (float) $v;
+                                            $checkArray3[$years[$h]] = $totalValue;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    // if not the same, then see which position it is
+                    else {
+                        for ($h = 0; $h < count($years); $h++) {
+
                             $cellNotes = $table1->addCell($cellValue);
                             if ($k == $years[$h]) {
                                 if ($v < 0) {
                                     $cellNotes->addText("(" . number_format(ceil($v)) . ")", $fontstyleName, $centerAlignment);
                                 } else {
                                     $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
+                                }
+
+                                // for checking if the value matches with total
+                                if ($checkArray3[$years[$h]] == 0) {
+                                    $checkArray3[$years[$h]] = $v;
+                                } else {
+                                    foreach ($checkArray3 as $totalKey => $totalValue) {
+                                        if ($totalKey == $years[$h]) {
+                                            $totalValue = (float) $totalValue + (float) $v;
+                                            $checkArray3[$years[$h]] = $totalValue;
+                                        }
+                                    }
                                 }
                             } else {
                                 $cellNotes->addText("- ", $fontstyleName, $centerAlignment);
@@ -4002,6 +4123,22 @@ if (!empty($incomeTaxArray)) {
                         if ($numberOfSheets == count($value)) {
                             $cellNotes = $table1->addCell($cellValue);
                             $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
+
+                            // for checking if the value matches with total
+                            for ($h = 0; $h < count($years); $h++) {
+                                if ($k == $years[$h]) {
+                                    if ($checkArray3[$years[$h]] == 0) {
+                                        $checkArray3[$years[$h]] = $v;
+                                    } else {
+                                        foreach ($checkArray3 as $totalKey => $totalValue) {
+                                            if ($totalKey == $years[$h]) {
+                                                $totalValue = (float) $totalValue + (float) $v;
+                                                $checkArray3[$years[$h]] = $totalValue;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                         // if not the same, then see which position it is
                         else {
@@ -4010,6 +4147,18 @@ if (!empty($incomeTaxArray)) {
                                     $cellNotes = $table1->addCell($cellValue);
                                     if ($k == $years[$h]) {
                                         $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
+
+                                        // for checking if the value matches with total
+                                        if ($checkArray3[$years[$h]] == 0) {
+                                            $checkArray3[$years[$h]] = $v;
+                                        } else {
+                                            foreach ($checkArray3 as $totalKey => $totalValue) {
+                                                if ($totalKey == $years[$h]) {
+                                                    $totalValue = (float) $totalValue + (float) $v;
+                                                    $checkArray3[$years[$h]] = $totalValue;
+                                                }
+                                            }
+                                        }
                                     } else {
                                         $cellNotes->addText("-", $fontstyleName, $centerAlignment);
                                     }
@@ -4035,6 +4184,22 @@ if (!empty($incomeTaxArray)) {
                     if ($numberOfSheets == count($value)) {
                         $cellNotes = $table1->addCell($cellValue);
                         $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
+
+                        // for checking if the value matches with total
+                        for ($h = 0; $h < count($years); $h++) {
+                            if ($k == $years[$h]) {
+                                if ($checkArray3[$years[$h]] == 0) {
+                                    $checkArray3[$years[$h]] = $v;
+                                } else {
+                                    foreach ($checkArray3 as $totalKey => $totalValue) {
+                                        if ($totalKey == $years[$h]) {
+                                            $totalValue = (float) $totalValue + (float) $v;
+                                            $checkArray3[$years[$h]] = $totalValue;
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                     // if not the same, then see which position it is
                     else {
@@ -4043,6 +4208,18 @@ if (!empty($incomeTaxArray)) {
                                 $cellNotes = $table1->addCell($cellValue);
                                 if ($k == $years[$h]) {
                                     $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
+
+                                    // for checking if the value matches with total
+                                    if ($checkArray3[$years[$h]] == 0) {
+                                        $checkArray3[$years[$h]] = $v;
+                                    } else {
+                                        foreach ($checkArray3 as $totalKey => $totalValue) {
+                                            if ($totalKey == $years[$h]) {
+                                                $totalValue = (float) $totalValue + (float) $v;
+                                                $checkArray3[$years[$h]] = $totalValue;
+                                            }
+                                        }
+                                    }
                                 } else {
                                     $cellNotes->addText("-", $fontstyleName, $centerAlignment);
                                 }
@@ -4057,6 +4234,7 @@ if (!empty($incomeTaxArray)) {
     $table1->addRow();
     $table1->addCell($firstCellValue)->addText("End of financial year");
 
+    $array3 = array();
     for ($i = 0; $i < count($incomeTaxPayable); $i++) {
         $cellNotes = $table1->addCell($cellValue, $topAndBottom);
 
@@ -4064,6 +4242,22 @@ if (!empty($incomeTaxArray)) {
             $cellNotes->addText("(" . number_format(abs($incomeTaxPayable[$i])) . ")", $fontstyleName, $centerAlignment);
         } else {
             $cellNotes->addText(number_format($incomeTaxPayable[$i]), $fontstyleName, $centerAlignment);
+        }
+        
+        // For checking of matching values
+        for ($j = 0; $j < count($years); $j++) {
+            $array3[$years[$i]] = $incomeTaxPayable[$i];
+        }
+    }
+
+    // Do checking for part (a) Tax Calculated / Effect of...  
+    foreach ($array3 as $key1 => $value1) {
+        foreach ($checkArray3 as $key2 => $value2) {
+            if ($key1 == $key2) {
+                if ($value1 != $value2) {
+                    echo "Value mismatch: (b) Movement in current income tax liabilities - " . $key1 . " does not match <br>";
+                }
+            }
         }
     }
 
