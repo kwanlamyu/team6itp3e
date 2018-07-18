@@ -1,12 +1,10 @@
 
 <?php
+session_start();
 include '../general/header.php';
 include '../general/navigation_clientadmin.php';
 
 require_once '../db_connection/db.php';
-// TODO: For testing only, requires to be changed to actual session check
-$_SESSION['companyName'] = "Abc Pte. Ltd.";
-
 ?>
 <div class="m-grid__item m-grid__item--fluid m-wrapper">
 <div class="m-subheader ">
@@ -52,353 +50,45 @@ $_SESSION['companyName'] = "Abc Pte. Ltd.";
 
 							<!--begin::Error Msg-->
         <?php
-				$fileArray = array();
-        $target_dir = "../../pages/report_fs/uploads/";
-                $errorFlag = 0;
-                $fileExist = 0;
-                $fileUpload = 0;
-                $fileTypeMismatch = 0;
-        for ($i = 0; $i < count($_FILES["trialBalances"]["name"]); $i++) {
-            $target_file = $target_dir . basename($_FILES["trialBalances"]["name"][$i]);
-            $uploadOk = 1;
-            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-            // Check if file already exists
-            if (file_exists($target_file)) {
-                unlink($target_file);
-                $fileExist = 1;
-            }
-
-            if ($imageFileType != "csv" && $imageFileType != "xlsx") {
-                $fileTypeMismatch = 1;
-                $uploadOk = 0;
-            }
-            // Check if $uploadOk is set to 0 by an error
-            if ($uploadOk == 0) {
-                $errorFlag = 1;
-            // echo "Sorry, your file was not uploaded.";
-                    // if everything is ok, try to upload file
-            } else {
-                if (move_uploaded_file($_FILES["trialBalances"]["tmp_name"][$i], $target_file)) {
-                    $fileUpload = 0;
-										array_push($fileArray, $target_file);
-                } else {
-                    $fileUpload = 1;
-                }
-            }
-        }
-                if ($fileTypeMismatch == 1) {
-                    echo '<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
-				<div class="m-alert__icon">
-					<i class="flaticon-exclamation-1"></i>
-					<span></span>
-				</div>
-				<div class="m-alert__text">
-					Sorry, only spreadsheets are allowed.
-				</div>
-				<div class="m-alert__close">
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-				</div>
-			</div>';
-                }
-                if ($fileExist == 1) {
-                    echo ' <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show " role="alert">
-				<div class="m-alert__icon">
-					<i class="flaticon-exclamation-1"></i>
-					<span></span>
-				</div>
-				<div class="m-alert__text">
-					Existing file deleted.
-				</div>
-				<div class="m-alert__close">
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-				</div>
-			</div>';
-                }
-                if ($fileUpload == 0) {
-                    echo '<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-success alert-dismissible fade show" role="alert">
-						<div class="m-alert__icon">
-							<i class="flaticon-exclamation-1"></i>
-							<span></span>
-						</div>
-						<div class="m-alert__text">
-							The files have been uploaded.
-						</div>
-						<div class="m-alert__close">
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-						</div>
-					</div>';
-                } else {
-                    echo '<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
-		<div class="m-alert__icon">
-			<i class="flaticon-exclamation-1"></i>
-			<span></span>
-		</div>
-		<div class="m-alert__text">
-			Sorry, there was an error uploading your file.
-		</div>
-		<div class="m-alert__close">
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-		</div>
-	</div>';
-                }
-                if ($errorFlag == 1) {
-                    echo "Sorry, your file was not uploaded.";
-                }
-        // loop end here
-
-        // open txt file that contains all known administrative expenses category
-        $expenseCategories = fopen("../../pages/report_fs/classification/Expenses.txt", "r") or die('<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
-											<div class="m-alert__icon">
-												<i class="flaticon-exclamation-1"></i>
-												<span></span>
-											</div>
-											<div class="m-alert__text">
-												Unable to open file.
-											</div>
-											<div class="m-alert__close">
-												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-											</div>
-										</div>');
-        $expenseString = "";
-        while (!feof($expenseCategories)) {
-            $expenseString .= fgetc($expenseCategories);
-        }
-        fclose($expenseCategories);
-        $expenseArray = explode(",", $expenseString);
-        for ($i = 0; $i < count($expenseArray); $i++) {
-            $expenseArray[$i] = trim($expenseArray[$i]);
-        }
-
-        $assetsCategories = fopen("../../pages/report_fs/classification/Assets.txt", "r") or die('<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
-											<div class="m-alert__icon">
-												<i class="flaticon-exclamation-1"></i>
-												<span></span>
-											</div>
-											<div class="m-alert__text">
-												Unable to open file.
-											</div>
-											<div class="m-alert__close">
-												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-											</div>
-										</div>');
-        $assetsString = "";
-        while (!feof($assetsCategories)) {
-            $assetsString .= fgetc($assetsCategories);
-        }
-        fclose($assetsCategories);
-        $assetsArray = explode(",", $assetsString);
-        for ($i = 0; $i < count($assetsArray); $i++) {
-            $assetsArray[$i] = trim($assetsArray[$i]);
-        }
-
-        $capitalsCategories = fopen("../../pages/report_fs/classification/Capital.txt", "r") or die('<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
-											<div class="m-alert__icon">
-												<i class="flaticon-exclamation-1"></i>
-												<span></span>
-											</div>
-											<div class="m-alert__text">
-												Unable to open file.
-											</div>
-											<div class="m-alert__close">
-												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-											</div>
-										</div>');
-        $capitalsString = "";
-        while (!feof($capitalsCategories)) {
-            $capitalsString .= fgetc($capitalsCategories);
-        }
-        fclose($capitalsCategories);
-        $capitalsArray = explode(",", $capitalsString);
-        for ($i = 0; $i < count($capitalsArray); $i++) {
-            $capitalsArray[$i] = trim($capitalsArray[$i]);
-        }
-
-        $liabilitiesCategories = fopen("classification/Current Liabilities.txt", "r") or die('<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
-											<div class="m-alert__icon">
-												<i class="flaticon-exclamation-1"></i>
-												<span></span>
-											</div>
-											<div class="m-alert__text">
-												Unable to open file.
-											</div>
-											<div class="m-alert__close">
-												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-											</div>
-										</div>');
-        $liabilitiesString = "";
-        while (!feof($liabilitiesCategories)) {
-            $liabilitiesString .= fgetc($liabilitiesCategories);
-        }
-        fclose($liabilitiesCategories);
-        $liabilitiesArray = explode(",", $liabilitiesString);
-        for ($i = 0; $i < count($liabilitiesArray); $i++) {
-            $liabilitiesArray[$i] = trim($liabilitiesArray[$i]);
-        }
-
-        // open txt file that contains all known non-current liabilities category
-        $nonCurrentLiabilitiesArray = fopen("classification/Non-current Liabilities.txt", "r") or die('<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
-											<div class="m-alert__icon">
-												<i class="flaticon-exclamation-1"></i>
-												<span></span>
-											</div>
-											<div class="m-alert__text">
-												Unable to open file.
-											</div>
-											<div class="m-alert__close">
-												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-											</div>
-										</div>');
-        $nonCurrentLiabilitiesString = "";
-        while (!feof($nonCurrentLiabilitiesArray)) {
-            $nonCurrentLiabilitiesString .= fgetc($nonCurrentLiabilitiesArray);
-        }
-        fclose($nonCurrentLiabilitiesArray);
-        $nonCurrentLiabilitiesArray = explode(",", $nonCurrentLiabilitiesString);
-        for ($i = 0; $i < count($nonCurrentLiabilitiesArray); $i++) {
-            $nonCurrentLiabilitiesArray[$i] = trim($nonCurrentLiabilitiesArray[$i]);
-        }
-
-        // open txt file that contains all known liabilities that have current and non-current category
-        $bothLiabilitiesArray = fopen("classification/Both Liabilities.txt", "r") or die('<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
-											<div class="m-alert__icon">
-												<i class="flaticon-exclamation-1"></i>
-												<span></span>
-											</div>
-											<div class="m-alert__text">
-												Unable to open file.
-											</div>
-											<div class="m-alert__close">
-												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-											</div>
-										</div>');
-        $bothLiabilitiesString = "";
-        while (!feof($bothLiabilitiesArray)) {
-            $bothLiabilitiesString .= fgetc($bothLiabilitiesArray);
-        }
-        fclose($bothLiabilitiesArray);
-        $bothLiabilitiesArray = explode(",", $bothLiabilitiesString);
-        for ($i = 0; $i < count($bothLiabilitiesArray); $i++) {
-            $bothLiabilitiesArray[$i] = trim($bothLiabilitiesArray[$i]);
-        }
-
-        $nonCurrentAssetsCategories = fopen("../../pages/report_fs/classification/Non-current Assets.txt", "r") or die('<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
-											<div class="m-alert__icon">
-												<i class="flaticon-exclamation-1"></i>
-												<span></span>
-											</div>
-											<div class="m-alert__text">
-												Unable to open file.
-											</div>
-											<div class="m-alert__close">
-												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-											</div>
-										</div>');
-        $nonCurrentAssetsString = "";
-        while (!feof($nonCurrentAssetsCategories)) {
-            $nonCurrentAssetsString .= fgetc($nonCurrentAssetsCategories);
-        }
-        fclose($nonCurrentAssetsCategories);
-        $nonCurrentAssetsArray = explode(",", $nonCurrentAssetsString);
-        for ($i = 0; $i < count($nonCurrentAssetsArray); $i++) {
-            $nonCurrentAssetsArray[$i] = trim($nonCurrentAssetsArray[$i]);
-        }
-
-        $incomeCategories = fopen("../../pages/report_fs/classification/Income.txt", "r") or die('<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
-											<div class="m-alert__icon">
-												<i class="flaticon-exclamation-1"></i>
-												<span></span>
-											</div>
-											<div class="m-alert__text">
-												Unable to open file.
-											</div>
-											<div class="m-alert__close">
-												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-											</div>
-										</div>');
-        $incomeString = "";
-        while (!feof($incomeCategories)) {
-            $incomeString .= fgetc($incomeCategories);
-        }
-        fclose($incomeCategories);
-        $incomeArray = explode(",", $incomeString);
-        for ($i = 0; $i < count($incomeArray); $i++) {
-            $incomeArray[$i] = trim($incomeArray[$i]);
-        }
-
-        // set array for months
-        $monthIdentifier = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-        // open txt file that contains all known administrative expenses category
-        $adminExpenseCategories = fopen("../../pages/report_fs/classification/Administrative Expenses.txt", "r") or die('<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
-											<div class="m-alert__icon">
-												<i class="flaticon-exclamation-1"></i>
-												<span></span>
-											</div>
-											<div class="m-alert__text">
-												Unable to open file.
-											</div>
-											<div class="m-alert__close">
-												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-											</div>
-										</div>');
-        $adminExpenseString = "";
-        while (!feof($adminExpenseCategories)) {
-            $adminExpenseString .= fgetc($adminExpenseCategories);
-        }
-        fclose($adminExpenseCategories);
-        $adminExpenseArray = explode(",", $adminExpenseString);
-        for ($i = 0; $i < count($adminExpenseArray); $i++) {
-            $adminExpenseArray[$i] = trim($adminExpenseArray[$i]);
-        }
-
-        // open txt file that contains all known administrative expenses category
-        $distriMarketingExpenseCategories = fopen("../../pages/report_fs/classification/Distribution and Marketing Expenses.txt", "r") or die('<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
-											<div class="m-alert__icon">
-												<i class="flaticon-exclamation-1"></i>
-												<span></span>
-											</div>
-											<div class="m-alert__text">
-												Unable to open file.
-											</div>
-											<div class="m-alert__close">
-												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-											</div>
-										</div>');
-        $distriMarketingExpenseString = "";
-        while (!feof($distriMarketingExpenseCategories)) {
-            $distriMarketingExpenseString .= fgetc($distriMarketingExpenseCategories);
-        }
-        fclose($distriMarketingExpenseCategories);
-        $distriMarketingExpenseArray = explode(",", $distriMarketingExpenseString);
-        for ($i = 0; $i < count($distriMarketingExpenseArray); $i++) {
-            $distriMarketingExpenseArray[$i] = trim($distriMarketingExpenseArray[$i]);
-        }
-
-        // open txt file that contains all known income tax category
-        $taxPayableCategories = fopen("../../pages/report_fs/classification/Tax Payable.txt", "r") or die('<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
-											<div class="m-alert__icon">
-												<i class="flaticon-exclamation-1"></i>
-												<span></span>
-											</div>
-											<div class="m-alert__text">
-												Unable to open file.
-											</div>
-											<div class="m-alert__close">
-												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-											</div>
-										</div>');
-
-                                        //end::Error Msg
-        $taxPayableString = "";
-        while (!feof($taxPayableCategories)) {
-            $taxPayableString .= fgetc($taxPayableCategories);
-        }
-        fclose($taxPayableCategories);
-        $taxPayableArray = explode(",", $taxPayableString);
-        for ($i = 0; $i < count($taxPayableArray); $i++) {
-            $taxPayableArray[$i] = trim($taxPayableArray[$i]);
-        }
+				$query = $DB_con->prepare("SELECT * FROM main_category WHERE company_name = :companyName AND client_company = :clientName");
+				$query->bindParam(':companyName', $companyName);
+				$query->bindParam(':clientName', $clientName);
+				$companyName = $_SESSION['companyName'];
+				$clientName = $_POST['clientCompany'];
+				$query->execute();
+				$result = $query->setFetchMode(PDO::FETCH_ASSOC);
+				$result = $query->fetchAll();
+				for ($i = 0; $i < count($result); $i++){
+					$mainAccountName = $result[$i]['main_account'];
+					$individualAccountArray = explode(",",$result[$i]['account_names']);
+					$individualAccountNames = array();
+					for ($x = 0; $x < count($individualAccountArray); $x++){
+						array_push($individualAccountNames, trim($individualAccountArray[$x]));
+					}
+					if (strcasecmp($mainAccountName, "expenses") === 0){
+              $expenseArray = $individualAccountNames;
+            } else if (strcasecmp($mainAccountName, "assets") === 0){
+              $assetsArray = $individualAccountNames;
+            } else if (strcasecmp($mainAccountName, "Capital") === 0){
+              $capitalsArray = $individualAccountNames;
+            } else if (strcasecmp($mainAccountName, "Current Liabilities") === 0){
+              $liabilitiesArray = $individualAccountNames;
+            } else if (strcasecmp($mainAccountName, "Non-current Liabilities") === 0){
+              $nonCurrentLiabilitiesArray = $individualAccountNames;
+            } else if (strcasecmp($mainAccountName, "Both Liabilities") === 0){
+              $bothLiabilitiesArray = $individualAccountNames;
+            } else if (strcasecmp($mainAccountName, "Non-current Assets") === 0){
+              $nonCurrentAssetsArray = $individualAccountNames;
+            } else if (strcasecmp($mainAccountName, "Income") === 0){
+              $incomeArray = $individualAccountNames;
+            } else if (strcasecmp($mainAccountName, "Administrative Expenses") === 0){
+							$adminExpenseArray = $individualAccountNames;
+						} else if (strcasecmp($mainAccountName, "Distribution and Marketing Expenses") === 0){
+							$distriMarketingExpenseArray = $individualAccountNames;
+						} else if (strcasecmp($mainAccountName, "Tax Payable") === 0){
+							$taxPayableArray = $individualAccountNames;
+						}
+				}
 
         //install composer first
         //https://phpspreadsheet.readthedocs.io/en/develop/#learn-by-documentation
@@ -421,7 +111,9 @@ $_SESSION['companyName'] = "Abc Pte. Ltd.";
 
         // only read active sheet, can change to read specific sheet
         // $sheetData = $spreadsheet->getActiveSheet()->toArray();
+				$fileArray = $_POST['fileArray'];
 				for ($i = 0; $i < count($fileArray); $i++){
+					$target_file = $fileArray[$i];
 					$spreadsheet = $reader->load($target_file);
 					$numberOfSheets = $spreadsheet->getSheetCount();
 					if ($numberOfSheets > 1) {
@@ -460,6 +152,7 @@ $_SESSION['companyName'] = "Abc Pte. Ltd.";
           $creditColumn = false;
           $categoryColumn = false;
 
+					// old implementation where TB includes company name and FY ended
           for ($i = 0; $i < count($sheetData); $i++) {
               for ($x = 0; $x < count($sheetData[$i]); $x++) {
                   $currentData = $sheetData[$i][$x];
@@ -745,13 +438,16 @@ $_SESSION['companyName'] = "Abc Pte. Ltd.";
 		  </div>
 
           <?php
+					$monthIdentifier = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
           $month = substr($endedAtArray[0], 0, -5);
           $monthInNumber = 0;
-          for ($i = 0; $i < count($monthIdentifier); $i++) {
+
+					for ($i = 0; $i < count($monthIdentifier); $i++) {
               if (stripos($monthIdentifier[$i], trim($month)) !== false) {
                   $monthInNumber = $i + 1;
               }
           }
+
           $yearEnded = substr($endedAtArray[0], -4);
           $numberOfDaysInMonth = cal_days_in_month(CAL_GREGORIAN, $monthInNumber, $yearEnded);
           $date = date_create("$yearEnded-$monthInNumber-$numberOfDaysInMonth");
@@ -764,8 +460,8 @@ $_SESSION['companyName'] = "Abc Pte. Ltd.";
           $today = date("Y-m-d");
           $separatedDate = explode("-", $today);
           $todayObject = date_create("$separatedDate[0]-$separatedDate[1]-$separatedDate[2]");
-
           ?>
+
           <hr/>
           <div class="form-group">
               <label for="yearEnd">Financial Year Ended: </label>
