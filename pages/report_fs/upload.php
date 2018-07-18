@@ -292,7 +292,6 @@ require_once '../db_connection/db.php';
                   $originalCatValue = "";
                   $categoryValue = trim($sheetData[$i][$categoryColumn]);
                   if (empty($categoryValue)) {
-											echo $accountValue;
                       $categoryValue = "undefined";
                       array_push($undefinedRows, $rowCounter);
                   }

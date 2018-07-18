@@ -183,7 +183,7 @@ require_once '../db_connection/db.php';
 
             // insert administrative expenses
             $mainAccount = "Administrative Expenses";
-            $accountNames = "Accounting Fee,Administrative Expenses,Bank Charges,Compilation Fee,Depreciation,Entertainment,Freight Charges,Internet Expenses,Late Penalty,Nominee Director Fee,Office Supplies,Postage and Courier,Professional Fee,Secretarial Fee,Taxation Fee,Salaries,Skill Development Levy & SINDA,Exchange difference,Unrealised exchange difference,Unrealised exch - Non trade";
+            $accountNames = "Accounting Fee,Administrative Expenses,Bank Charges,Compilation Fee,Depreciation,Entertainment,Freight Charges,Internet Expenses,Late Penalty,Nominee Director Fee,Office Supplies,Postage and Courier,Professional Fee,Secretarial Fee,Taxation Fee,Salaries,Skill Development Levy & SINDA";
             $query->execute();
 
             // insert assets
@@ -254,7 +254,7 @@ require_once '../db_connection/db.php';
             $query->execute();
 
             $subAccount = "Administrative Expenses";
-            $accountNames = "Accounting fee,Administrative expenses,Business entertainment,Bank Charges,Compilation fee,Depreciation,Entertainment,Freight paid,Director Remuneration,Insurance,Internet expenses,Late Fees Paid,Nominee Director Services,Office Supplies,Postage and courier,Professional Fee,Printing and stationery,Rent,Secretarial services,Staff Salaries,Staff cost - employment pass,Secretarial  fee,Taxation services,Skill Development Levy,Wages & Salaries";
+            $accountNames = "Accounting fee,Administrative expenses,Business entertainment,Bank Charges,Compilation fee,Depreciation,Entertainment,Freight paid,Director Remuneration,Insurance,Internet expenses,Late Fees Paid,Nominee Director Services,Office Supplies,Postage and courier,Professional Fee,Printing and stationery,Rent,Secretarial services,Staff Salaries,Staff cost - employment pass,Secretarial  fee,Taxation services,Skill Development Levy,Wages & Salaries,Exchange difference,Unrealised exch - Non trade";
             $query->execute();
 
             $subAccount = "Amount owing from a Shareholder";
