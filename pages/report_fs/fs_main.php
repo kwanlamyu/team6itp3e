@@ -66,13 +66,16 @@ require_once '../db_connection/db.php';
 									</div>
 								</div>
 								<!--begin::Form-->
-								<select name="numberOfTB" onchange="changeFileUploadForm()" id="tbNumber">
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-								</select>
+								<div>
+									<span>Select number of trial balances to upload</span>
+									<select name="numberOfTB" onchange="changeFileUploadForm()" id="tbNumber">
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+									</select>
+								</div>
 								<form action="upload.php" method="post" enctype="multipart/form-data" class="m-form m-form--fit m-form--label-align-right">
 									<div class="m-portlet__body" id="formForUploads">
 
@@ -100,25 +103,6 @@ require_once '../db_connection/db.php';
 										</div>
 									</div>
 								</form>
-								<script>
-								function changeFileUploadForm(){
-									var selectedValue = document.getElementById("tbNumber").value;
-									var currentForm = document.getElementById("formForUploads");
-									currentForm.innerHTML = "";
-									for (i = 0; i < selectedValue; i++){
-										currentForm.innerHTML += "<div class='form-group m-form__group'>\
-										<span class='m-input-icon__icon m-input-icon__icon--right'>\
-										<span><i class='la la-thumb-tack'></i></span></span>\
-										Select file to upload:\
-										<div class='m-input-icon m-input-icon--left m-input-icon--right'>\
-										<input type='file' class='m-dropzone dropzone m-dropzone--success' name='trialBalances[]' id='m-dropzone-three' accept='.xlsx'>\
-										</div></div>";
-									}
-									currentForm.innerHTML += "<div class='m-form__actions'>\
-									<input type='submit' class='btn btn-accent' value='Upload File' name='submit'>\
-									</div>";
-								}
-								</script>
 
 								<!--end::Form-->
 							</div>
@@ -129,6 +113,26 @@ require_once '../db_connection/db.php';
 					</div>
 					<!-- END: Subheader -->
     </div>
+
+		<script>
+		function changeFileUploadForm(){
+			var selectedValue = document.getElementById("tbNumber").value;
+			var currentForm = document.getElementById("formForUploads");
+			currentForm.innerHTML = "";
+			for (i = 0; i < selectedValue; i++){
+				currentForm.innerHTML += "<div class='form-group m-form__group'>\
+				<span class='m-input-icon__icon m-input-icon__icon--right'>\
+				<span><i class='la la-thumb-tack'></i></span></span>\
+				Select file to upload:\
+				<div class='m-input-icon m-input-icon--left m-input-icon--right'>\
+				<input type='file' class='m-dropzone dropzone m-dropzone--success' name='trialBalances[]' id='m-dropzone-three' accept='.xlsx'>\
+				</div></div>";
+			}
+			currentForm.innerHTML += "<div class='m-form__actions'>\
+			<input type='submit' class='btn btn-accent' value='Upload File' name='submit'>\
+			</div>";
+		}
+		</script>
 
 	<?php include '../general/footer_content.php';?>
 	<?php include '../general/footer.php';?>
