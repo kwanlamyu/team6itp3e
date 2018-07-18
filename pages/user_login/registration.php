@@ -36,6 +36,12 @@
                         </div>
 
                         <div class="form-group m-form__group">
+                            <!--<label for="companyname">Company Name</label>-->
+                            <input type="text" class="form-control m-input" id="companyname" name="companyname" placeholder="Company Name">
+                            <span class="error"><?php echo $companynameErr; ?></span>
+                        </div>
+                        
+                        <div class="form-group m-form__group">
                             <!--<label for="email">Email</label>-->
                             <input type="email" class="form-control m-input" id="email" name="email" placeholder="Enter your email" <?php
                             if (!empty($_POST['email'])) {

@@ -2,8 +2,8 @@
 <?php
 
 require_once '../db_connection/db.php';
-$unameErr = $emailErr = $passErr = $cpassErr = $checkErr = $twopassErr = "";
-$uname = $email = $pass = $cpass = $emailvalid = "";
+$unameErr = $companynameErr = $emailErr = $passErr = $cpassErr = $checkErr = $twopassErr = "";
+$uname = $companyname = $email = $pass = $cpass = $emailvalid = "";
 $valid = TRUE; //this var scope ok
 function test_input($data) {
     $data = trim($data);
@@ -29,6 +29,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $valid = FALSE;
             }
         }
+        
+        if (empty($_POST["companyname"])) {
+            $companynameErr = "* Company Name is required";
+            $valid = FALSE;
+        } else{
+            $companyname =($_POST["companyname"]);
+//            echo "Company Name: ".$companyname."<br>";
+//            echo "Valid: ".$valid."<br>"; 
+        }
+        
 //        echo"Fullname: ".$uname."<br>";
         $regex = '/^[-a-z0-9_~!$%^&*=+}{\'?]+(\.[-a-z0-9_~!$%^&*=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i';
         if (empty($_POST["email"])) {
@@ -84,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //            echo"after valid == TRUE<br>";
             $hashpass = password_hash($pass,PASSWORD_DEFAULT);
             $hashcpass = password_hash($cpass,PASSWORD_DEFAULT);
-            $query = "INSERT INTO user(username, email, password, role_id) VALUES ('$uname', '$email', '$hashpass', '2')";
+            $query = "INSERT INTO user(username, email, password, role_id, companyName) VALUES ('$uname', '$email', '$hashpass', '2', '$companyname')";
 //            echo $query."<br>";
             $sql = $DB_con->prepare($query);
 //            echo 'statement prepared -> $DB_con->prepare($query)<br>';
