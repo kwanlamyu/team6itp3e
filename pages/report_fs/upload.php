@@ -52,78 +52,100 @@ $_SESSION['companyName'] = "Abc Pte. Ltd.";
 
 							<!--begin::Error Msg-->
         <?php
+				$fileArray = array();
         $target_dir = "../../pages/report_fs/uploads/";
-        $target_file = $target_dir . basename($_FILES["trialBalances"]["name"]);
-        $uploadOk = 1;
-        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+                $errorFlag = 0;
+                $fileExist = 0;
+                $fileUpload = 0;
+                $fileTypeMismatch = 0;
+        for ($i = 0; $i < count($_FILES["trialBalances"]["name"]); $i++) {
+            $target_file = $target_dir . basename($_FILES["trialBalances"]["name"][$i]);
+            $uploadOk = 1;
+            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-        // Check if file already exists
-        if (file_exists($target_file)) {
-            unlink($target_file);
-            echo ' <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show " role="alert">
-											<div class="m-alert__icon">
-												<i class="flaticon-exclamation-1"></i>
-												<span></span>
-											</div>
-											<div class="m-alert__text">
-												Existing file deleted.
-											</div>
-											<div class="m-alert__close">
-												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-											</div>
-										</div>
-			';
-        }
+            // Check if file already exists
+            if (file_exists($target_file)) {
+                unlink($target_file);
+                $fileExist = 1;
+            }
 
-        if ($imageFileType != "csv" && $imageFileType != "xlsx") {
-            echo '<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
-											<div class="m-alert__icon">
-												<i class="flaticon-exclamation-1"></i>
-												<span></span>
-											</div>
-											<div class="m-alert__text">
-												Sorry, only spreadsheets are allowed.
-											</div>
-											<div class="m-alert__close">
-												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-											</div>
-										</div>';
-            $uploadOk = 0;
-        }
-        // Check if $uploadOk is set to 0 by an error
-        if ($uploadOk == 0) {
-            echo "Sorry, your file was not uploaded.";
-        // if everything is ok, try to upload file
-        } else {
-            if (move_uploaded_file($_FILES["m-dropzone-three"]["tmp_name"], $target_file)) {
-                echo
-				'<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-success alert-dismissible fade show" role="alert">
-											<div class="m-alert__icon">
-												<i class="flaticon-exclamation-1"></i>
-												<span></span>
-											</div>
-											<div class="m-alert__text">
-												The file ' . basename($_FILES["m-dropzone-three"]["name"]) . ' has been uploaded.
-											</div>
-											<div class="m-alert__close">
-												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-											</div>
-										</div>';
+            if ($imageFileType != "csv" && $imageFileType != "xlsx") {
+                $fileTypeMismatch = 1;
+                $uploadOk = 0;
+            }
+            // Check if $uploadOk is set to 0 by an error
+            if ($uploadOk == 0) {
+                $errorFlag = 1;
+            // echo "Sorry, your file was not uploaded.";
+                    // if everything is ok, try to upload file
             } else {
-                echo '<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
-											<div class="m-alert__icon">
-												<i class="flaticon-exclamation-1"></i>
-												<span></span>
-											</div>
-											<div class="m-alert__text">
-												Sorry, there was an error uploading your file.
-											</div>
-											<div class="m-alert__close">
-												<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-											</div>
-										</div>';
+                if (move_uploaded_file($_FILES["trialBalances"]["tmp_name"][$i], $target_file)) {
+                    $fileUpload = 0;
+										array_push($fileArray, $target_file);
+                } else {
+                    $fileUpload = 1;
+                }
             }
         }
+                if ($fileTypeMismatch == 1) {
+                    echo '<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+				<div class="m-alert__icon">
+					<i class="flaticon-exclamation-1"></i>
+					<span></span>
+				</div>
+				<div class="m-alert__text">
+					Sorry, only spreadsheets are allowed.
+				</div>
+				<div class="m-alert__close">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+				</div>
+			</div>';
+                }
+                if ($fileExist == 1) {
+                    echo ' <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show " role="alert">
+				<div class="m-alert__icon">
+					<i class="flaticon-exclamation-1"></i>
+					<span></span>
+				</div>
+				<div class="m-alert__text">
+					Existing file deleted.
+				</div>
+				<div class="m-alert__close">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+				</div>
+			</div>';
+                }
+                if ($fileUpload == 0) {
+                    echo '<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-success alert-dismissible fade show" role="alert">
+						<div class="m-alert__icon">
+							<i class="flaticon-exclamation-1"></i>
+							<span></span>
+						</div>
+						<div class="m-alert__text">
+							The files have been uploaded.
+						</div>
+						<div class="m-alert__close">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+						</div>
+					</div>';
+                } else {
+                    echo '<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+		<div class="m-alert__icon">
+			<i class="flaticon-exclamation-1"></i>
+			<span></span>
+		</div>
+		<div class="m-alert__text">
+			Sorry, there was an error uploading your file.
+		</div>
+		<div class="m-alert__close">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+		</div>
+	</div>';
+                }
+                if ($errorFlag == 1) {
+                    echo "Sorry, your file was not uploaded.";
+                }
+        // loop end here
 
         // open txt file that contains all known administrative expenses category
         $expenseCategories = fopen("../../pages/report_fs/classification/Expenses.txt", "r") or die('<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
@@ -367,7 +389,7 @@ $_SESSION['companyName'] = "Abc Pte. Ltd.";
 											</div>
 										</div>');
 
-										//end::Error Msg
+                                        //end::Error Msg
         $taxPayableString = "";
         while (!feof($taxPayableCategories)) {
             $taxPayableString .= fgetc($taxPayableCategories);
@@ -387,6 +409,7 @@ $_SESSION['companyName'] = "Abc Pte. Ltd.";
         require_once __DIR__ . '\..\..\vendor\autoload.php';
 
         use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
         // use PhpOffice\PhpSpreadsheet\Reader\Csv;
 
         // can change to read csv file as well
@@ -394,15 +417,16 @@ $_SESSION['companyName'] = "Abc Pte. Ltd.";
         // only read data
         $reader->setReadDataOnly(true);
         // set file to be read
-        $spreadsheet = $reader->load($target_file);
+
 
         // only read active sheet, can change to read specific sheet
         // $sheetData = $spreadsheet->getActiveSheet()->toArray();
-
-        $numberOfSheets = $spreadsheet->getSheetCount();
-
-				if ($numberOfSheets > 1){
-					die("Please upload only 1 sheet per trial balance.<br/><a href='javascript:history.go(-1)'>Upload again</a>");
+				for ($i = 0; $i < count($fileArray); $i++){
+					$spreadsheet = $reader->load($target_file);
+					$numberOfSheets = $spreadsheet->getSheetCount();
+					if ($numberOfSheets > 1) {
+	            die("Please upload only 1 sheet per trial balance.<br/><a href='javascript:history.go(-1)'>Upload again</a>");
+	        }
 				}
 
         echo "<br/>";
@@ -414,12 +438,16 @@ $_SESSION['companyName'] = "Abc Pte. Ltd.";
         $companyName =  "";
         $yearEnded = "";
 
-        for ($activeSheet = 0; $activeSheet < $numberOfSheets; $activeSheet++){
+				for ($j = 0; $j < count($fileArray); $j++){
+					$target_file = $fileArray[$j];
+					$spreadsheet = $reader->load($target_file);
           $dataFound = 0;
+					// change of implementation, there is supposed to be only 1 sheet, therefore a 0 is set here
+					$activeSheet = 0;
 
           $sheetData = $spreadsheet->getSheet($activeSheet)->toArray();
-          $trialBalanceArray[$activeSheet] = array();
-          $yearlyUndefinedRows[$activeSheet] = array();
+          $trialBalanceArray[$j] = array();
+          $yearlyUndefinedRows[$j] = array();
           // data in spreadsheet that are valid accounts will be saved into this array
           $annualArray = array();
           // the below can be changed to store rows of data instead of printing, for user to move accordingly
@@ -433,104 +461,104 @@ $_SESSION['companyName'] = "Abc Pte. Ltd.";
           $categoryColumn = false;
 
           for ($i = 0; $i < count($sheetData); $i++) {
-            for ($x = 0; $x < count($sheetData[$i]); $x++) {
-              $currentData = $sheetData[$i][$x];
-              if (!empty($currentData)){
-                if ($dataFound < 3){
-                  if ($dataFound == 0){
-                    $companyName = $currentData;
-                    $dataFound++;
-                  } else if ($dataFound == 1){
-                    $dataFound++;
-                  } else if ($dataFound == 2){
-                    $fullDate = $currentData;
-                    $yearEnded = substr($fullDate, -4);
-                    array_push($endedAtArray, $fullDate);
-                    $dataFound++;
+              for ($x = 0; $x < count($sheetData[$i]); $x++) {
+                  $currentData = $sheetData[$i][$x];
+                  if (!empty($currentData)) {
+                      if ($dataFound < 3) {
+                          if ($dataFound == 0) {
+                              $companyName = $currentData;
+                              $dataFound++;
+                          } elseif ($dataFound == 1) {
+                              $dataFound++;
+                          } elseif ($dataFound == 2) {
+                              $fullDate = $currentData;
+                              $yearEnded = substr($fullDate, -4);
+                              array_push($endedAtArray, $fullDate);
+                              $dataFound++;
+                          }
+                      } else {
+                          if (gettype($accountColumn) == "boolean") {
+                              if (stripos($currentData, "account") !== false) {
+                                  $accountColumn = $x;
+                              }
+                          }
+                          if (gettype($debitColumn) == "boolean") {
+                              if (stripos($currentData, "debit") !== false) {
+                                  $debitColumn = $x;
+                              }
+                          } elseif (gettype($creditColumn) == "boolean") {
+                              if (stripos($currentData, "credit") !== false) {
+                                  $creditColumn = $x;
+                              }
+                          }
+                      }
                   }
-                } else {
-                  if (gettype($accountColumn) == "boolean"){
-                    if (stripos($currentData,"account") !== false){
-                      $accountColumn = $x;
-                    }
-                  }
-                  if (gettype($debitColumn) == "boolean"){
-                    if (stripos($currentData,"debit") !== false){
-                      $debitColumn = $x;
-                    }
-                  } else if (gettype($creditColumn) == "boolean"){
-                    if (stripos($currentData,"credit") !== false){
-                      $creditColumn = $x;
-                    }
-                  }
-                }
               }
-            }
-            if (is_numeric($accountColumn) && is_numeric($debitColumn) && is_numeric($creditColumn)){
-              $categoryColumn = $creditColumn + 1;
-              break;
-            }
-
+              if (is_numeric($accountColumn) && is_numeric($debitColumn) && is_numeric($creditColumn)) {
+                  $categoryColumn = $creditColumn + 1;
+                  break;
+              }
           }
 
           $modifiedCategoryArray = array();
 
           $undefinedRows = array();
           $rowCounter = 0;
-          for ($i = 0; $i < $sheetData; $i++){
+          for ($i = 0; $i < $sheetData; $i++) {
+              $accountValue = $sheetData[$i][$accountColumn];
 
-            $accountValue = $sheetData[$i][$accountColumn];
-
-            if (stripos($accountValue,"total:") !== false){
-              break;
-            } else {
-              $amount = 0;
-              $debitOrCredit = "";
-              if (is_numeric($sheetData[$i][$debitColumn])){
-                $amount = $sheetData[$i][$debitColumn];
-                $debitOrCredit = "debit";
-              } else if (is_numeric($sheetData[$i][$creditColumn])){
-                $amount = $sheetData[$i][$creditColumn];
-                $debitOrCredit = "credit";
+              if (stripos($accountValue, "total:") !== false) {
+                  break;
               } else {
-                continue;
+                  $amount = 0;
+                  $debitOrCredit = "";
+                  if (is_numeric($sheetData[$i][$debitColumn])) {
+                      $amount = $sheetData[$i][$debitColumn];
+                      $debitOrCredit = "debit";
+                  } elseif (is_numeric($sheetData[$i][$creditColumn])) {
+                      $amount = $sheetData[$i][$creditColumn];
+                      $debitOrCredit = "credit";
+                  } else {
+                      continue;
+                  }
+                  $tempArray = array();
+                  $originalCatValue = "";
+                  $categoryValue = trim($sheetData[$i][$categoryColumn]);
+                  if (empty($categoryValue)) {
+                      $categoryValue = "undefined";
+                      array_push($undefinedRows, $rowCounter);
+                  }
+                  if (in_array($categoryValue, $adminExpenseArray)) {
+                      $originalCatValue = $categoryValue;
+                      $categoryValue = "Administrative Expenses";
+                  } elseif (in_array($categoryValue, $distriMarketingExpenseArray)) {
+                      $originalCatValue = $categoryValue;
+                      $categoryValue = "Distribution and Marketing Expenses";
+                  } elseif (in_array($categoryValue, $taxPayableArray)) {
+                      $originalCatValue = $categoryValue;
+                      $categoryValue = "Current Income Tax Liabilities";
+                  }
+                  array_push($tempArray, $accountValue);
+                  array_push($tempArray, $amount);
+                  array_push($tempArray, $categoryValue);
+                  array_push($tempArray, $debitOrCredit);
+                  array_push($annualArray, $tempArray);
+                  if (!empty($originalCatValue)) {
+                      array_push($modifiedCategoryArray, $originalCatValue . "," . $categoryValue);
+                  }
               }
-              $tempArray = array();
-              $originalCatValue = "";
-              $categoryValue = trim($sheetData[$i][$categoryColumn]);
-              if (empty($categoryValue)){
-                $categoryValue = "undefined";
-                array_push($undefinedRows, $rowCounter);
-              }
-              if (in_array($categoryValue,$adminExpenseArray)){
-                $originalCatValue = $categoryValue;
-                $categoryValue = "Administrative Expenses";
-              } else if (in_array($categoryValue, $distriMarketingExpenseArray)){
-                $originalCatValue = $categoryValue;
-                $categoryValue = "Distribution and Marketing Expenses";
-              } else if (in_array($categoryValue, $taxPayableArray)){
-                $originalCatValue = $categoryValue;
-                $categoryValue = "Current Income Tax Liabilities";
-              }
-              array_push($tempArray,$accountValue);
-              array_push($tempArray,$amount);
-              array_push($tempArray,$categoryValue);
-              array_push($tempArray,$debitOrCredit);
-              array_push($annualArray,$tempArray);
-              if (!empty($originalCatValue)){
-                array_push($modifiedCategoryArray,$originalCatValue . "," . $categoryValue);
-              }
-            }
-            $rowCounter++;
+              $rowCounter++;
           }
-          array_push($trialBalanceArray[$activeSheet],$yearEnded);
-          array_push($trialBalanceArray[$activeSheet],$annualArray);
+          array_push($trialBalanceArray[$j], $yearEnded);
+          array_push($trialBalanceArray[$j], $annualArray);
 
-          array_push($yearlyUndefinedRows[$activeSheet],$yearEnded);
-          array_push($yearlyUndefinedRows[$activeSheet],$undefinedRows);
-        }
+          array_push($yearlyUndefinedRows[$j], $yearEnded);
+          array_push($yearlyUndefinedRows[$j], $undefinedRows);
 
-		//begin::Company Name
+				}
+				// end loop here
+
+        //begin::Company Name
         echo '<!--begin::Portlet--> <div class="m-portlet m-portlet--full-height">
 									<div class="m-portlet__head">
 										<div class="m-portlet__head-caption">
@@ -541,8 +569,8 @@ $_SESSION['companyName'] = "Abc Pte. Ltd.";
 									</div><div class="m-portlet__body">';
 
        //begin::Accordion
-        for ($i = 0; $i < count($trialBalanceArray); $i++){
-		  echo '<div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_'. $i .'" role="tablist">
+        for ($i = 0; $i < count($trialBalanceArray); $i++) {
+            echo '<div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_'. $i .'" role="tablist">
 											<div class="m-accordion__item m-accordion__item--info">
 
 												<div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_'.$i.'_item_1_head" data-toggle="collapse" href="#m_accordion_'.$i.'_item_1_body" aria-expanded="  false">
@@ -551,90 +579,90 @@ $_SESSION['companyName'] = "Abc Pte. Ltd.";
 													</span>
 													<span class="m-accordion__item-title">';
 
-          echo $endedAtArray[$i];
+            echo $endedAtArray[$i];
 
-		  echo '</span>
+            echo '</span>
 													<span class="m-accordion__item-mode"></span>
 												</div>
 
 												<div class="m-accordion__item-body collapse" id="m_accordion_'.$i.'_item_1_body" class=" " role="tabpanel" aria-labelledby="m_accordion_'.$i.'_item_1_head" data-parent="#m_accordion_'.$i.'">
 													<div class="m-accordion__item-content">';
 
-          $yearlyArray = $trialBalanceArray[$i][1];
-          for ($x = 0; $x < count($yearlyUndefinedRows[$i][1]);$x++){
-            $contextPrinted = false;
+            $yearlyArray = $trialBalanceArray[$i][1];
+            for ($x = 0; $x < count($yearlyUndefinedRows[$i][1]);$x++) {
+                $contextPrinted = false;
 
-            $rows = $yearlyArray[$yearlyUndefinedRows[$i][1][$x]];
-            $currentRowCounter = $yearlyUndefinedRows[$i][1][$x];
-			echo "<hr/>";
-            if (($currentRowCounter + 2) > count($yearlyArray)){
-              for ($k = $currentRowCounter - 2; $k < $currentRowCounter; $k++){
-                $previousRow = $yearlyArray[$k];
-                for ($j = 0; $j < count($previousRow); $j++){
-                  echo $previousRow[$j] . " ";
+                $rows = $yearlyArray[$yearlyUndefinedRows[$i][1][$x]];
+                $currentRowCounter = $yearlyUndefinedRows[$i][1][$x];
+                echo "<hr/>";
+                if (($currentRowCounter + 2) > count($yearlyArray)) {
+                    for ($k = $currentRowCounter - 2; $k < $currentRowCounter; $k++) {
+                        $previousRow = $yearlyArray[$k];
+                        for ($j = 0; $j < count($previousRow); $j++) {
+                            echo $previousRow[$j] . " ";
+                        }
+                        echo "<br/>";
+                    }
+                    $contextPrinted = true;
                 }
-                echo "<br/>";
-              }
-              $contextPrinted = true;
-            }
-            for ($j = 0; $j < count($rows); $j++){
-              if ($j != 2){
-                echo ($rows[$j] . " ");
-              } else {
-                echo "<select id='catUpdate" . $i . $x . "'>";
-                echo "<option value=''> </option>";
-                if (strcasecmp($rows[3], "debit") == 0){
-                  echo "<option disabled>---Assets---</option>";
-                  for ($k = 0; $k < count($assetsArray); $k++){
-                    echo "<option value='" . $assetsArray[$k] . "'>" . $assetsArray[$k] ."</options>";
-                  }
-                  echo "<option disabled>---Expenses---</option>";
-                  for ($k = 0; $k < count($expenseArray); $k++){
-                    echo "<option value='" . $expenseArray[$k] . "'>" . $expenseArray[$k] ."</options>";
-                  }
-                } else {
-                  echo "<option disabled>---Assets(Liabilities)---</option>";
-                  for ($k = 0; $k < count($nonCurrentAssetsArray); $k++){
-                    echo "<option value='" . $nonCurrentAssetsArray[$k] . "'>" . $nonCurrentAssetsArray[$k] ."</options>";
-                  }
-                  echo "<option disabled>---Liabilities---</option>";
-                  for ($k = 0; $k < count($liabilitiesArray); $k++){
-                    echo "<option value='" . $liabilitiesArray[$k] . "'>" . $liabilitiesArray[$k] ."</options>";
-                  }
-                  echo "<option disabled>---Income---</option>";
-                  for ($k = 0; $k < count($incomeArray); $k++){
-                    echo "<option value='" . $incomeArray[$k] . "'>" . $incomeArray[$k] ."</options>";
-                  }
-                  echo "<option disabled>---Capital---</option>";
-                  for ($k = 0; $k < count($capitalsArray); $k++){
-                    echo "<option value='" . $capitalsArray[$k] . "'>" . $capitalsArray[$k] ."</options>";
-                  }
+                for ($j = 0; $j < count($rows); $j++) {
+                    if ($j != 2) {
+                        echo($rows[$j] . " ");
+                    } else {
+                        echo "<select id='catUpdate" . $i . $x . "'>";
+                        echo "<option value=''> </option>";
+                        if (strcasecmp($rows[3], "debit") == 0) {
+                            echo "<option disabled>---Assets---</option>";
+                            for ($k = 0; $k < count($assetsArray); $k++) {
+                                echo "<option value='" . $assetsArray[$k] . "'>" . $assetsArray[$k] ."</options>";
+                            }
+                            echo "<option disabled>---Expenses---</option>";
+                            for ($k = 0; $k < count($expenseArray); $k++) {
+                                echo "<option value='" . $expenseArray[$k] . "'>" . $expenseArray[$k] ."</options>";
+                            }
+                        } else {
+                            echo "<option disabled>---Assets(Liabilities)---</option>";
+                            for ($k = 0; $k < count($nonCurrentAssetsArray); $k++) {
+                                echo "<option value='" . $nonCurrentAssetsArray[$k] . "'>" . $nonCurrentAssetsArray[$k] ."</options>";
+                            }
+                            echo "<option disabled>---Liabilities---</option>";
+                            for ($k = 0; $k < count($liabilitiesArray); $k++) {
+                                echo "<option value='" . $liabilitiesArray[$k] . "'>" . $liabilitiesArray[$k] ."</options>";
+                            }
+                            echo "<option disabled>---Income---</option>";
+                            for ($k = 0; $k < count($incomeArray); $k++) {
+                                echo "<option value='" . $incomeArray[$k] . "'>" . $incomeArray[$k] ."</options>";
+                            }
+                            echo "<option disabled>---Capital---</option>";
+                            for ($k = 0; $k < count($capitalsArray); $k++) {
+                                echo "<option value='" . $capitalsArray[$k] . "'>" . $capitalsArray[$k] ."</options>";
+                            }
+                        }
+                        echo "</select>&#9;";
+                    }
                 }
-                echo "</select>&#9;";
-              }
-            }
 
-            echo "<br/>";
-            if ($contextPrinted == false){
-              for ($k = $currentRowCounter + 1; $k < $currentRowCounter + 3; $k++){
-                $nextRow = $yearlyArray[$k];
-                for ($j = 0; $j < count($nextRow); $j++){
-                  echo $nextRow[$j];
-                }
                 echo "<br/>";
-              }
+                if ($contextPrinted == false) {
+                    for ($k = $currentRowCounter + 1; $k < $currentRowCounter + 3; $k++) {
+                        $nextRow = $yearlyArray[$k];
+                        for ($j = 0; $j < count($nextRow); $j++) {
+                            echo $nextRow[$j];
+                        }
+                        echo "<br/>";
+                    }
+                }
             }
-          }
-		  echo'</div>
+            echo'</div>
 												</div>
 											</div>
 										</div>';
-								//end::Accordion
+            //end::Accordion
         }
 
-		//begin::Modified
-        if (count($modifiedCategoryArray) > 0){
-          echo '<div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_m" role="tablist"><div class="m-accordion__item m-accordion__item--info">
+        //begin::Modified
+        if (count($modifiedCategoryArray) > 0) {
+            echo '<div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_m" role="tablist"><div class="m-accordion__item m-accordion__item--info">
 
 												<div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_m_item_1_head" data-toggle="collapse" href="#m_accordion_m_item_1_body" aria-expanded="  false">
 													<span class="m-accordion__item-icon">
@@ -645,7 +673,7 @@ $_SESSION['companyName'] = "Abc Pte. Ltd.";
 												</div>
 												<div class="m-accordion__item-body collapse" id="m_accordion_m_item_1_body" class=" " role="tabpanel" aria-labelledby="m_accordion_5_item_1_head" data-parent="#m_accordion_m">
 													<div class="m-accordion__item-content"><p>';
-		echo '<table class="table table-bordered m-table m-table--border-success">
+            echo '<table class="table table-bordered m-table m-table--border-success">
 											<thead>
 												<tr>
 													<th>
@@ -660,23 +688,23 @@ $_SESSION['companyName'] = "Abc Pte. Ltd.";
 												</tr>
 											</thead>
 											<tbody>';
-												for ($i = 0; $i < count($modifiedCategoryArray);$i++){
-														$tempStr = explode(",", $modifiedCategoryArray[$i]);
-													echo '<tr>';
-													echo '<th scope="row">'.$i.'</th>';
-													echo '<td>'.$tempStr[0].'</td>';
-													echo '<td>'.$tempStr[1].'</td>';
-													echo '</tr>';
-												}
-												echo '</tbody>
+            for ($i = 0; $i < count($modifiedCategoryArray);$i++) {
+                $tempStr = explode(",", $modifiedCategoryArray[$i]);
+                echo '<tr>';
+                echo '<th scope="row">'.$i.'</th>';
+                echo '<td>'.$tempStr[0].'</td>';
+                echo '<td>'.$tempStr[1].'</td>';
+                echo '</tr>';
+            }
+            echo '</tbody>
 										</table>';
-		/* Old Code for Reference
-          for ($i = 0; $i < count($modifiedCategoryArray);$i++){
-            $tempStr = explode(",", $modifiedCategoryArray[$i]);
-            echo $tempStr[0] . ' --> ' . $tempStr[1] . '<br>';
-          }
-		  */
-		  echo '
+            /* Old Code for Reference
+              for ($i = 0; $i < count($modifiedCategoryArray);$i++){
+                $tempStr = explode(",", $modifiedCategoryArray[$i]);
+                echo $tempStr[0] . ' --> ' . $tempStr[1] . '<br>';
+              }
+              */
+            echo '
 														</p>
 													</div>
 												</div>
@@ -719,10 +747,10 @@ $_SESSION['companyName'] = "Abc Pte. Ltd.";
           <?php
           $month = substr($endedAtArray[0], 0, -5);
           $monthInNumber = 0;
-          for ($i = 0; $i < count($monthIdentifier); $i++){
-            if (stripos($monthIdentifier[$i],trim($month)) !== false){
-              $monthInNumber = $i + 1;
-            }
+          for ($i = 0; $i < count($monthIdentifier); $i++) {
+              if (stripos($monthIdentifier[$i], trim($month)) !== false) {
+                  $monthInNumber = $i + 1;
+              }
           }
           $yearEnded = substr($endedAtArray[0], -4);
           $numberOfDaysInMonth = cal_days_in_month(CAL_GREGORIAN, $monthInNumber, $yearEnded);
@@ -741,7 +769,7 @@ $_SESSION['companyName'] = "Abc Pte. Ltd.";
           <hr/>
           <div class="form-group">
               <label for="yearEnd">Financial Year Ended: </label>
-              <input type="date" class="form-control" id="yearEnd" name="yearEnd" value="<?php echo date_format($date,"Y-m-d");?>"/>
+              <input type="date" class="form-control" id="yearEnd" name="yearEnd" value="<?php echo date_format($date, "Y-m-d");?>"/>
           </div>
 
           <button onclick="addDirectorFunction()" type='button' id='addDirector'>Add Director</button>
@@ -777,12 +805,12 @@ $_SESSION['companyName'] = "Abc Pte. Ltd.";
 
           <div class="form-group">
               <label for="secondBalanceDate">Previous financial year ended date: </label>
-              <input type="date" class="form-control" id="secondBalanceDate" name="secondBalanceDate" value="<?php echo date_format($previousdate,"Y-m-d");?>"/>
+              <input type="date" class="form-control" id="secondBalanceDate" name="secondBalanceDate" value="<?php echo date_format($previousdate, "Y-m-d");?>"/>
           </div>
 
           <div class="form-group">
               <label for="thirdBalanceDate">Financial year ended date: </label>
-              <input type="date" class="form-control" id="thirdBalanceDate" name="thirdBalanceDate" value="<?php echo date_format($date,"Y-m-d");?>"/>
+              <input type="date" class="form-control" id="thirdBalanceDate" name="thirdBalanceDate" value="<?php echo date_format($date, "Y-m-d");?>"/>
           </div>
 
           <div class="form-group">
@@ -808,16 +836,15 @@ $_SESSION['companyName'] = "Abc Pte. Ltd.";
           <!-- yok yee required data end -->
             <?php
             echo "<input type='hidden' name='companyName' value='" . $companyName . "'/>";
-            echo "<input type='hidden' name='numberOfYears' value='" . $numberOfSheets . "'/>";
+            echo "<input type='hidden' name='numberOfYears' value='" . count($fileArray) . "'/>";
             for ($i = 0; $i < count($trialBalanceArray); $i++) {
-              echo "<input type='hidden' name='years[]' value='" . $endedAtArray[$i] . "'/>";
-              $yearArray = $trialBalanceArray[$i][1];
+                echo "<input type='hidden' name='years[]' value='" . $endedAtArray[$i] . "'/>";
+                $yearArray = $trialBalanceArray[$i][1];
                 for ($x = 0; $x < count($yearArray); $x++) {
-                  $allRows = $yearArray[$x];
-                  for ($j = 0; $j < count($allRows);$j++){
-                    echo "<input type='hidden' name='data[" . $i . "][$x][]' value='" . $allRows[$j] . "' id='formData" . $i . $x . $j . "'/>";
-                  }
-
+                    $allRows = $yearArray[$x];
+                    for ($j = 0; $j < count($allRows);$j++) {
+                        echo "<input type='hidden' name='data[" . $i . "][$x][]' value='" . $allRows[$j] . "' id='formData" . $i . $x . $j . "'/>";
+                    }
                 }
             }
             ?>
