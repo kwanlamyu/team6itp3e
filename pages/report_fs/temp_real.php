@@ -1760,7 +1760,7 @@ $table->addRow();
 $table->addCell($firstCellValue);
 $table->addCell($cellValue);
 $totalCurrentAssets = array();
-for ($x = 0; $x < 2; $x++) {
+for ($x = 0; $x < $numberOfSheets; $x++) {
     $total = $bankArray[$x] + $totalReceivables[$x];
     array_push($totalCurrentAssets, $total);
 }
@@ -1845,7 +1845,9 @@ $table->addCell($cellValue);
 $totalAssets = array();
 for ($x = 0; $x < count($totalCurrentAssets); $x++) {
     $totalValue = $totalCurrentAssets[$x];
-    $totalValue += $nonCurrentCalculated[$x][1];
+    if (isset($nonCurrentCalculated[$x][$x+1])){
+      $totalValue += $nonCurrentCalculated[$x][$x+1];
+    }
     array_push($totalAssets, $totalValue);
 }
 for ($i = 0; $i < count($totalAssets); $i++) {
@@ -3860,7 +3862,7 @@ if (!empty($incomeTaxArray)) {
         }
     }
 
-    // Do checking for part (a) here 
+    // Do checking for part (a) here
     foreach ($array as $key1 => $value1) {
         foreach ($checkArray as $key2 => $value2) {
             if ($key1 == $key2) {
@@ -4005,7 +4007,7 @@ if (!empty($incomeTaxArray)) {
         }
     }
 
-    // Do checking for part (a) Tax Calculated / Effect of...  
+    // Do checking for part (a) Tax Calculated / Effect of...
     foreach ($array2 as $key1 => $value1) {
         foreach ($checkArray2 as $key2 => $value2) {
             if ($key1 == $key2) {
@@ -4249,7 +4251,7 @@ if (!empty($incomeTaxArray)) {
         }
     }
 
-    // Do checking for part (a) Tax Calculated / Effect of...  
+    // Do checking for part (a) Tax Calculated / Effect of...
     foreach ($array3 as $key1 => $value1) {
         foreach ($checkArray3 as $key2 => $value2) {
             if ($key1 == $key2) {
@@ -4409,8 +4411,8 @@ if (!empty($tradeReceivablesArray)) {
     $table1->addCell($firstCellValue);
 
     $finalReceivables = array();
-    
-// For adding manually 
+
+// For adding manually
 //    foreach ($totalArray as $key => $value) {
 //        foreach ($totalReceivablesArray as $keyReceivables => $valueReceivables) {
 //            if ($key == $keyReceivables) {
@@ -4431,7 +4433,7 @@ if (!empty($tradeReceivablesArray)) {
 //    }
 
     $array = array();
-    // Getting values from financial statement 
+    // Getting values from financial statement
     for ($j = 0; $j < count($years); $j++) {
         $array[$years[$j]] = $totalReceivables[$j];
 
@@ -4583,7 +4585,7 @@ if (!empty($tradePayableArray)) {
                     $cellNotes = $table1->addCell($cellValue);
                     $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
 
-                    // For calculating the sub total 
+                    // For calculating the sub total
                     for ($h = 0; $h < count($years); $h++) {
                         if ($k == $years[$h]) {
                             if ($totalArray[$years[$h]] == 0) {
@@ -4606,7 +4608,7 @@ if (!empty($tradePayableArray)) {
                         if ($k == $years[$h]) {
                             $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
 
-                            // For calculating the sub total 
+                            // For calculating the sub total
                             if ($totalArray[$k] == 0) {
                                 $totalArray[$k] = $v;
                             } else {
@@ -4885,7 +4887,7 @@ if (!empty($borrowingArray)) {
         }
     }
 
-    // Do checking for top borrowing here 
+    // Do checking for top borrowing here
     foreach ($array as $key1 => $value1) {
         foreach ($checkArray as $key2 => $value2) {
             if ($key1 == $key2) {
@@ -4899,7 +4901,7 @@ if (!empty($borrowingArray)) {
     $table1->addRow();
     $table1->addCell($firstCellValue);
 
-    // Displaying current / non-current starts here 
+    // Displaying current / non-current starts here
     if (!empty($tempCurrent)) {
 
         // Store current and non-current value in temp array
@@ -5044,7 +5046,7 @@ if (!empty($borrowingArray)) {
             }
         }
 
-        // Do checking for top borrowing here 
+        // Do checking for top borrowing here
         foreach ($array as $key1 => $value1) {
             foreach ($checkArray2 as $key2 => $value2) {
                 if ($key1 == $key2) {

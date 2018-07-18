@@ -1,6 +1,10 @@
 
-<?php include '../general/header.php';?>
-<?php include '../general/navigation_accountant.php';?>
+<?php
+include '../general/header.php';
+include '../general/navigation_accountant.php';
+require_once '../db_connection/db.php';
+
+?>
 
 <div class="m-grid__item m-grid__item--fluid m-wrapper">
 	<!-- BEGIN: Subheader -->
@@ -37,17 +41,17 @@
 										</a>
 									</li>
 								</ul>
-								
+
 							</div>
 							</div>
 						</div>
-						
-						
-						
+
+
+
 							<!--begin::Portlet-->
 							<div class="m-content">
 							<div class="row">
-							<div class="col-lg-12"> 
+							<div class="col-lg-12">
 							<div class="m-portlet m-portlet--tab">
 								<div class="m-portlet__head">
 									<div class="m-portlet__head-caption">
@@ -64,7 +68,7 @@
 								<!--begin::Form-->
 								<form action="upload.php" method="post" enctype="multipart/form-data" class="m-form m-form--fit m-form--label-align-right">
 									<div class="m-portlet__body">
-												
+
 										<div class="form-group m-form__group">
 										<span class="m-input-icon__icon m-input-icon__icon--right">
 													<span>
@@ -72,17 +76,17 @@
 													</span>
 												</span>
 										Select files to upload:
-										
+
 											<div class="m-input-icon m-input-icon--left m-input-icon--right">
-											
+
 											<input type="file" class="m-dropzone dropzone m-dropzone--success" name="m-dropzone-three" id="m-dropzone-three" accept=".xlsx" >
-												
+
 											</div>
-											
-											
-									
-											
-											
+
+
+
+
+
 										</div>
 										<div class="m-form__actions">
 											<input type="submit" class="btn btn-accent" value="Upload File" name="submit">

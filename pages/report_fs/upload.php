@@ -1,6 +1,13 @@
 
-<?php include '../general/header.php';?>
-<?php include '../general/navigation_clientadmin.php';?>
+<?php
+include '../general/header.php';
+include '../general/navigation_clientadmin.php';
+
+require_once '../db_connection/db.php';
+// TODO: For testing only, requires to be changed to actual session check
+$_SESSION['companyName'] = "Abc Pte. Ltd.";
+
+?>
 <div class="m-grid__item m-grid__item--fluid m-wrapper">
 <div class="m-subheader ">
 						<div class="d-flex align-items-center">
@@ -394,6 +401,10 @@
 
         $numberOfSheets = $spreadsheet->getSheetCount();
 
+				if ($numberOfSheets > 1){
+					die("Please upload only 1 sheet per trial balance.<br/><a href='javascript:history.go(-1)'>Upload again</a>");
+				}
+
         echo "<br/>";
 
         $trialBalanceArray = array();
@@ -734,7 +745,7 @@
           </div>
 
           <button onclick="addDirectorFunction()" type='button' id='addDirector'>Add Director</button>
-          
+
           <div class="form-group" id='directorFields'>
               <label for="directorName0">Director Name: </label>
               <input type ="text" id="directorName0" />
@@ -747,7 +758,7 @@
               <label for="directorShare0">Director's Start Share:</label>
               <input type ="number" id="directorStartShare0" />
               <input type="hidden" id="tempStartShareArray" name="tempStartShareArray" value="" />
-              
+
               <label for="directorShare0">Director's End Share:</label>
               <input type ="number" id="directorEndShare0" />
               <input type="hidden" id="tempEndShareArray" name="tempEndShareArray" value="" />
@@ -870,26 +881,26 @@
 			tempDateArray = [];
 			tempStartShareArray = [];
                         tempEndShareArray = [];
-                        
+
 			for (i = 0; i < count; i++){
 				tempDirectorName = document.getElementById('directorName' + i).value;
 				tempDirectorDate = document.getElementById('directorNameApptDate' + i).value;
 				tempDirectorStartShare = document.getElementById('directorStartShare' + i).value;
                                 tempDirectorEndShare = document.getElementById('directorEndShare' + i).value;
-				
+
                                 if(tempDirectorName != ""){
                                     tempDirectorArray.push(tempDirectorName);
                                     tempDateArray.push(tempDirectorDate);
                                     tempStartShareArray.push(tempDirectorStartShare);
                                     tempEndShareArray.push(tempDirectorEndShare);
                                 }
-                                
+
 			}
 			document.getElementById('tempDirectorArray').value = tempDirectorArray;
 			document.getElementById('tempDateArray').value = tempDateArray;
 			document.getElementById('tempStartShareArray').value = tempStartShareArray;
                         document.getElementById('tempEndShareArray').value = tempEndShareArray;
-                        
+
 		}
 </script>
 </div>
