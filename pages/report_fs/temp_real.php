@@ -161,7 +161,7 @@ $years = explode(",", $yearsArray);
 
 $getHiddenData = $_POST['passData'];
 
-echo "<b>Original Data: </b>" . $getHiddenData . "<hr>";
+//echo "<b>Original Data: </b>" . $getHiddenData . "<hr>";
 // Convert String to array, then delete away the "*"
 $categoryDataArray = explode("*", $getHiddenData);
 
@@ -203,53 +203,56 @@ for ($i = 0; $i < count($categoryDataArray); $i++) {
                 }
             }
 
+            array_push($tempArray, $accountValueArray[1]);
             $innerArray[$accountValueArray[0]] = $yearArray;
             $fullArray[$individualNote[0]] = $innerArray;
+
+            unset($tempArray);
+            $tempArray = array();
         } else {
 
             // check with the fullArray to see if the value is inside, if inside, add, not inside add one more entry
             foreach (array_keys($innerArray) as $inner) {
 
                 // account string inside the array already -> need to append more value inside only
-//                if (strpos($inner, $accountValueArray[0]) !== false) {
+                if (strpos($inner, $accountValueArray[0]) !== false) {
 
-                for ($u = 0; $u < $numberOfSheets; $u++) {
-                    if ($getFirstCharacter == $u) {
-                        $yearArray[$years[$u]] = $accountValueArray[1];
+                    for ($u = 0; $u < $numberOfSheets; $u++) {
+                        if ($getFirstCharacter == $u) {
+                            $yearArray[$years[$u]] = $accountValueArray[1];
+                        }
                     }
+
+                    // add on the value, do something here
+                    array_push($tempArray, $accountValueArray[1]);
+                    $innerArray[$accountValueArray[0]] = $yearArray;
+                    $fullArray[$individualNote[0]] = $innerArray;
+                } else {
+
+                    for ($e = 0; $e < $numberOfSheets; $e++) {
+                        if ($getFirstCharacter == $e) {
+                            if (gettype($accountValueArray[1] == "String")) {
+                                $tempArray[$years[$e]] = (float) $accountValueArray[1];
+                            }
+                        }
+                    }
+
+                    // create a new entry
+                    $innerArray[$accountValueArray[0]] = $tempArray;
+                    $fullArray[$individualNote[0]] = $innerArray;
                 }
 
-                // add on the value, do something here
-                $innerArray[$accountValueArray[0]] = $yearArray;
-                $fullArray[$individualNote[0]] = $innerArray;
-
-//                } 
-//                else {
-//
-//                    for ($e = 0; $e < $numberOfSheets; $e++) {
-//                        if ($getFirstCharacter == $e) {
-//                            if (gettype($accountValueArray[1] == "String")) {
-//                                $tempArray[$years[$e]] = (float) $accountValueArray[1];
-//                            }
-//                        }
-//                    }
-//
-//                    // create a new entry
-//                    $innerArray[$accountValueArray[0]] = $tempArray;
-//                    $fullArray[$individualNote[0]] = $innerArray;
-//                }
+                unset($tempArray);
+                $tempArray = array();
             }
         }
     }
 
     unset($yearArray);
     $yearArray = array();
-
     unset($innerArray);
     $innerArray = array();
 }
-
-print_r($fullArray);
 
 $accountArray = array();
 $valueArray = array();
