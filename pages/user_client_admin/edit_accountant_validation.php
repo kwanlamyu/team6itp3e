@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $regex = '/^[-a-z0-9_~!$%^&*=+}{\'?]+(\.[-a-z0-9_~!$%^&*=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i';
         if (empty($_POST["accountantemail"])) {
 //            echo'$_POST["accountantemail"] is empty<br>';
-            //$emailErr = "* Email is required";
+            $emailErr = "* Email is required";
             $valid = FALSE;
 //            echo'if (empty($_POST["accountantemail"])): '.$valid.'<br>';
         
@@ -107,8 +107,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
            
             if ($statement->execute()) {
-//                echo "<meta http-equiv='refresh' content='3;url=edit_accountant.php'> ";
-                header('Location: edit_accountant.php'); 
+                //echo "<meta http-equiv='refresh' content='3;url=edit_accountant.php'> ";
+                echo '<div class="alert alert-success" role="alert">'
+                        . '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close"></a>'
+                        . ' Details successfully changed'
+                    . '</div>';
+                echo '<span class="text-success"><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Redirecting Please Wait</span>';
+                echo "<meta http-equiv='refresh' content='3;url=edit_accountant.php'> ";
+//                header('Location: edit_accountant.php'); 
 //                echo'
 //                    <div class="row">
 //                        <div class"card">
@@ -126,6 +132,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 echo '<div class="alert alert-warning mmbsm" role="alert">Error: ' . $sql . '<br>' . $DB_con->error . '</div>';
             }
+        }else{
+            echo '<div class="alert alert-danger" role="alert">'
+                        . '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close"></a>'
+                . '</div>';
         }
 //       header('Location: edit_accountant.php'); 
     }

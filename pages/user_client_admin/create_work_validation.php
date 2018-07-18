@@ -74,12 +74,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //            echo $managesql;
             if ($accountSql->execute()) {
                 //echo "after sql execute";
-                header('Location: manage_work_account.php');
+//                header('Location: manage_work_account.php');
                 echo '<div class="alert alert-success" role="alert">'
                         . '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close"></a>'
                         . ' Account successfully created'
                     . '</div>';
-                echo '<span class="text-success"><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Redirecting please wait</span>';
+                echo '<span class="text-success"><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Redirecting Please Wait</span>';
                 echo "<meta http-equiv='refresh' content='3;url=manage_work_account.php'> ";
                
                         
