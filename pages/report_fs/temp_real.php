@@ -161,7 +161,7 @@ $years = explode(",", $yearsArray);
 
 $getHiddenData = $_POST['passData'];
 
-//echo "<b>Original Data: </b>" . $getHiddenData . "<hr>";
+echo "<b>Original Data: </b>" . $getHiddenData . "<hr>";
 // Convert String to array, then delete away the "*"
 $categoryDataArray = explode("*", $getHiddenData);
 
@@ -203,56 +203,53 @@ for ($i = 0; $i < count($categoryDataArray); $i++) {
                 }
             }
 
-            array_push($tempArray, $accountValueArray[1]);
             $innerArray[$accountValueArray[0]] = $yearArray;
             $fullArray[$individualNote[0]] = $innerArray;
-
-            unset($tempArray);
-            $tempArray = array();
         } else {
 
             // check with the fullArray to see if the value is inside, if inside, add, not inside add one more entry
             foreach (array_keys($innerArray) as $inner) {
 
                 // account string inside the array already -> need to append more value inside only
-                if (strpos($inner, $accountValueArray[0]) !== false) {
+//                if (strpos($inner, $accountValueArray[0]) !== false) {
 
-                    for ($u = 0; $u < $numberOfSheets; $u++) {
-                        if ($getFirstCharacter == $u) {
-                            $yearArray[$years[$u]] = $accountValueArray[1];
-                        }
+                for ($u = 0; $u < $numberOfSheets; $u++) {
+                    if ($getFirstCharacter == $u) {
+                        $yearArray[$years[$u]] = $accountValueArray[1];
                     }
-
-                    // add on the value, do something here
-                    array_push($tempArray, $accountValueArray[1]);
-                    $innerArray[$accountValueArray[0]] = $yearArray;
-                    $fullArray[$individualNote[0]] = $innerArray;
-                } else {
-
-                    for ($e = 0; $e < $numberOfSheets; $e++) {
-                        if ($getFirstCharacter == $e) {
-                            if (gettype($accountValueArray[1] == "String")) {
-                                $tempArray[$years[$e]] = (float) $accountValueArray[1];
-                            }
-                        }
-                    }
-
-                    // create a new entry
-                    $innerArray[$accountValueArray[0]] = $tempArray;
-                    $fullArray[$individualNote[0]] = $innerArray;
                 }
 
-                unset($tempArray);
-                $tempArray = array();
+                // add on the value, do something here
+                $innerArray[$accountValueArray[0]] = $yearArray;
+                $fullArray[$individualNote[0]] = $innerArray;
+
+//                } 
+//                else {
+//
+//                    for ($e = 0; $e < $numberOfSheets; $e++) {
+//                        if ($getFirstCharacter == $e) {
+//                            if (gettype($accountValueArray[1] == "String")) {
+//                                $tempArray[$years[$e]] = (float) $accountValueArray[1];
+//                            }
+//                        }
+//                    }
+//
+//                    // create a new entry
+//                    $innerArray[$accountValueArray[0]] = $tempArray;
+//                    $fullArray[$individualNote[0]] = $innerArray;
+//                }
             }
         }
     }
 
     unset($yearArray);
     $yearArray = array();
+
     unset($innerArray);
     $innerArray = array();
 }
+
+print_r($fullArray);
 
 $accountArray = array();
 $valueArray = array();
@@ -446,8 +443,6 @@ foreach ($fullArray as $key => $value) {
             $borrowingArray["Non-current"] = $nonCurrent;
         }
     }
-
-
 
     if ($key === "Share Capital") {
         $shareCapitalArray = $value;
@@ -5064,6 +5059,8 @@ if (!empty($borrowingArray)) {
 
 if (in_array("Share Capital", $categoryArray)) {
 
+    $beginningArray = array();
+
     array_push($displayedCategory, "Share Capital");
 
     $section = $phpWord->addSection();
@@ -5075,16 +5072,12 @@ if (in_array("Share Capital", $categoryArray)) {
     // Create another row
     $table2->addRow();
     $table2->addCell($firstCellValue);
-
-    $cellNotes = $table2->addCell($cellValue);
-    $cellNotes->addText("Number of ordinary shares", $fontstyleName, $centerAlignment, $fontstyleBottomUnderline);
-    $cellNotes = $table2->addCell($cellValue);
-    $cellNotes->addText("$", $fontstyleName, $centerAlignment, $fontstyleBottomUnderline);
-
-    $cellNotes = $table2->addCell($cellValue);
-    $cellNotes->addText("Number of ordinary shares", $fontstyleName, $centerAlignment, $fontstyleBottomUnderline);
-    $cellNotes = $table2->addCell($cellValue);
-    $cellNotes->addText("$", $fontstyleName, $centerAlignment, $fontstyleBottomUnderline);
+    for ($i = 0; $i < count($shareCapital); $i++) {
+        $cellNotes = $table2->addCell($cellValue);
+        $cellNotes->addText("Number of ordinary shares", $fontstyleName, $centerAlignment);
+        $cellNotes = $table2->addCell($cellValue);
+        $cellNotes->addText("$", $fontstyleName, $centerAlignment);
+    }
 
     $table2->addRow();
     $table2->addCell($firstCellValue)->addText("Issued and fully paid:");
@@ -5092,66 +5085,108 @@ if (in_array("Share Capital", $categoryArray)) {
     $table2->addRow();
     $table2->addCell($firstCellValue)->addText("At beginning of financial year");
 
-    foreach ($shareCapital as $k => $v) {
-        // Start from 1 because second year will be sheet 1 in TB
-        for ($i = 1; $i < count($shareCapital); $i++) {
-            if ($i == $k && $shareCapital[$i] < 0) {
+    // If only one year of TB inserted 
+    if (count($shareCapital) == 1) {
+        for ($j = 0; $j < 2; $j++) {
+            if ($shareCapital[0] < 0) {
                 $cellNotes = $table2->addCell($cellValue);
-                $cellNotes->addText("(" . number_format(abs($shareCapitalArray[$i])) . ")", $fontstyleName, $centerAlignment);
+                $cellNotes->addText("(" . number_format($shareCapital[0]) . ")", $fontstyleName, $centerAlignment);
+            } else if ($shareCapital[0] > 0) {
                 $cellNotes = $table2->addCell($cellValue);
-                $cellNotes->addText("(" . number_format(abs($shareCapitalArray[$i])) . ")", $fontstyleName, $centerAlignment);
-            } else if ($i == $k && $shareCapital[$i] > 0) {
-                $cellNotes = $table2->addCell($cellValue);
-                $cellNotes->addText(number_format($shareCapital[$i]), $fontstyleName, $centerAlignment);
-                $cellNotes = $table2->addCell($cellValue);
-                $cellNotes->addText(number_format($shareCapital[$i]), $fontstyleName, $centerAlignment);
+                $cellNotes->addText(number_format($shareCapital[0]), $fontstyleName, $centerAlignment);
             }
         }
     }
+    // More than 1 TB inserted
+    else {
+        for ($i = 1; $i <= count($shareCapital); $i++) {
+            for ($j = 0; $j < 2; $j++) {
+                if ($i == count($shareCapital)) {
+                    if ($shareCapital[$i - 1] < 0) {
+                        $cellNotes = $table2->addCell($cellValue);
+                        $cellNotes->addText("(" . number_format($shareCapital[$i - 1]) . ")", $fontstyleName, $centerAlignment);
+                    } else if ($shareCapital[$i - 1] > 0) {
+                        $cellNotes = $table2->addCell($cellValue);
+                        $cellNotes->addText(number_format($shareCapital[$i - 1]), $fontstyleName, $centerAlignment);
+                    }
+                } else {
 
-    $cellNotes = $table2->addCell($cellValue);
-    $cellNotes->addText(number_format($shareCapital[1]), $fontstyleName, $centerAlignment);
-    $cellNotes = $table2->addCell($cellValue);
-    $cellNotes->addText(number_format($shareCapital[1]), $fontstyleName, $centerAlignment);
+                    if ($shareCapital[$i] < 0) {
+                        $cellNotes = $table2->addCell($cellValue);
+                        $cellNotes->addText("(" . number_format($shareCapital[$i]) . ")", $fontstyleName, $centerAlignment);
+                    } else if ($shareCapital[$i] > 0) {
+                        $cellNotes = $table2->addCell($cellValue);
+                        $cellNotes->addText(number_format($shareCapital[$i]), $fontstyleName, $centerAlignment);
+                    }
+                }
+            }
+            if ($i == count($shareCapital)) {
+                array_push($beginningArray, $shareCapital[$i - 1]);
+            } else {
+                array_push($beginningArray, $shareCapital[$i]);
+            }
+        }
+    }
 
     $table2->addRow();
     $table2->addCell($firstCellValue)->addText("Issuance of ordinary shares");
 
-    $issuanceOfOrdinaryShares = $shareCapital[0] - $shareCapital[1];
-    for ($i = 0; $i < count($shareCapital); $i++) {
+    // If only one year of TB inserted 
+    if (count($shareCapital) == 1) {
+        $issuance = $shareCapital[0] - $beginningArray[0];
         $cellNotes = $table2->addCell($cellValue);
-        if ($issuanceOfOrdinaryShares < 0) {
+
+        if ($issuance <= 0) {
             $cellNotes->addText("-", $fontstyleName, $centerAlignment);
         } else {
-            $cellNotes->addText(number_format($issuanceOfOrdinaryShares), $fontstyleName, $centerAlignment);
+            $cellNotes->addText(number_format($issuance), $fontstyleName, $centerAlignment);
         }
-    }
-
-    $cellNotes = $table2->addCell($cellValue);
-    $cellNotes->addText("-", $fontstyleName, $centerAlignment);
-    $cellNotes = $table2->addCell($cellValue);
-    $cellNotes->addText("-", $fontstyleName, $centerAlignment);
-
-    $table2->addRow();
-    $table2->addCell($firstCellValue)->addText("At end of financial year/period");
-
-    foreach ($shareCapital as $k => $v) {
+    } else {
         for ($i = 0; $i < count($shareCapital); $i++) {
+            for ($j = 0; $j < 2; $j++) {
+                $cellNotes = $table2->addCell($cellValue);
+                $issuance = $shareCapital[$i] - $beginningArray[$i];
 
-            if ($i == $k && $shareCapital[$i] < 0) {
-                $cellNotes = $table2->addCell($cellValue, $topAndBottom);
-                $cellNotes->addText("(" . number_format(abs($shareCapitalArray[$i])) . ")", $fontstyleName, $centerAlignment);
-                $cellNotes = $table2->addCell($cellValue, $topAndBottom);
-                $cellNotes->addText("(" . number_format(abs($shareCapitalArray[$i])) . ")", $fontstyleName, $centerAlignment);
-            } else if ($i == $k && $shareCapital[$i] > 0) {
-                $cellNotes = $table2->addCell($cellValue, $topAndBottom);
-                $cellNotes->addText(number_format(round($shareCapital[$i])), $fontstyleName, $centerAlignment);
-                $cellNotes = $table2->addCell($cellValue, $topAndBottom);
-                $cellNotes->addText(number_format(round($shareCapital[$i])), $fontstyleName, $centerAlignment);
+                if ($issuance <= 0) {
+                    $cellNotes->addText("-", $fontstyleName, $centerAlignment);
+                } else {
+                    $cellNotes->addText(number_format($issuance), $fontstyleName, $centerAlignment);
+                }
             }
         }
     }
 
+    $table2->addRow();
+    $table2->addCell($firstCellValue)->addText("At end of financial year/period");
+
+    // If only one year of TB inserted 
+    if (count($shareCapital) == 1) {
+        for ($j = 0; $j < 2; $j++) {
+            if ($shareCapital[0] < 0) {
+                $cellNotes = $table2->addCell($cellValue);
+                $cellNotes->addText("(" . number_format($shareCapital[0]) . ")", $fontstyleName, $centerAlignment);
+            } else if ($shareCapital[0] > 0) {
+                $cellNotes = $table2->addCell($cellValue);
+                $cellNotes->addText(number_format($shareCapital[0]), $fontstyleName, $centerAlignment);
+            }
+        }
+    }
+    // More than 1 TB inserted
+    else {
+        for ($i = 0; $i <= count($shareCapital); $i++) {
+            for ($j = 0; $j < 2; $j++) {
+
+                if ($shareCapital[$i] < 0) {
+                    $cellNotes = $table2->addCell($cellValue, $topAndBottom);
+                    $cellNotes->addText("(" . number_format($shareCapital[$i]) . ")", $fontstyleName, $centerAlignment);
+                } else if ($shareCapital[$i] > 0) {
+                    $cellNotes = $table2->addCell($cellValue, $topAndBottom);
+                    $cellNotes->addText(number_format($shareCapital[$i]), $fontstyleName, $centerAlignment);
+                }
+            }
+        }
+    }
+    
     $table2->addRow();
     $table2->addCell($firstCellValue);
 
