@@ -5176,7 +5176,7 @@ if (in_array("Share Capital", $categoryArray)) {
     }
     // More than 1 TB inserted
     else {
-        for ($i = 0; $i <= count($shareCapital); $i++) {
+        for ($i = 0; $i < count($shareCapital); $i++) {
             for ($j = 0; $j < 2; $j++) {
 
                 if ($shareCapital[$i] < 0) {
