@@ -50,6 +50,7 @@ require_once '../db_connection/db.php';
 
 							<!--begin::Error Msg-->
         <?php
+				$monthIdentifier = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 				$query = $DB_con->prepare("SELECT * FROM main_category WHERE company_name = :companyName AND client_company = :clientName");
 				$query->bindParam(':companyName', $companyName);
 				$query->bindParam(':clientName', $clientName);
@@ -58,10 +59,12 @@ require_once '../db_connection/db.php';
 				$query->execute();
 				$result = $query->setFetchMode(PDO::FETCH_ASSOC);
 				$result = $query->fetchAll();
+				$accountAndCategory = array();
 				for ($i = 0; $i < count($result); $i++){
 					$mainAccountName = $result[$i]['main_account'];
 					$individualAccountArray = explode(",",$result[$i]['account_names']);
 					$individualAccountNames = array();
+					$accountAndCategory[$mainAccountName] = array();
 					for ($x = 0; $x < count($individualAccountArray); $x++){
 						array_push($individualAccountNames, trim($individualAccountArray[$x]));
 					}
@@ -88,6 +91,20 @@ require_once '../db_connection/db.php';
 						} else if (strcasecmp($mainAccountName, "Tax Payable") === 0){
 							$taxPayableArray = $individualAccountNames;
 						}
+						$accountAndCategory[$mainAccountName] = $individualAccountNames;
+				}
+				$query = $DB_con->prepare("SELECT * FROM sub_category WHERE company_name = :companyName AND client_company = :clientName");
+				$query->bindParam(':companyName', $companyName);
+				$query->bindParam(':clientName', $clientName);
+				$companyName = $_SESSION['companyName'];
+				$clientName = $_POST['clientCompany'];
+				$query->execute();
+				$result = $query->setFetchMode(PDO::FETCH_ASSOC);
+				$result = $query->fetchAll();
+				$subCategories = array();
+				for ($i = 0; $i < count($result); $i++){
+					$subName = $result[$i]['sub_account'];
+					$subCategories[$subName] = explode(",",$result[$i]['account_names']);
 				}
 
         //install composer first
@@ -157,34 +174,35 @@ require_once '../db_connection/db.php';
               for ($x = 0; $x < count($sheetData[$i]); $x++) {
                   $currentData = $sheetData[$i][$x];
                   if (!empty($currentData)) {
-                      if ($dataFound < 3) {
-                          if ($dataFound == 0) {
-                              $companyName = $currentData;
-                              $dataFound++;
-                          } elseif ($dataFound == 1) {
-                              $dataFound++;
-                          } elseif ($dataFound == 2) {
-                              $fullDate = $currentData;
-                              $yearEnded = substr($fullDate, -4);
-                              array_push($endedAtArray, $fullDate);
-                              $dataFound++;
-                          }
-                      } else {
-                          if (gettype($accountColumn) == "boolean") {
-                              if (stripos($currentData, "account") !== false) {
-                                  $accountColumn = $x;
-                              }
-                          }
-                          if (gettype($debitColumn) == "boolean") {
-                              if (stripos($currentData, "debit") !== false) {
-                                  $debitColumn = $x;
-                              }
-                          } elseif (gettype($creditColumn) == "boolean") {
-                              if (stripos($currentData, "credit") !== false) {
-                                  $creditColumn = $x;
-                              }
-                          }
-                      }
+                      // if ($dataFound < 3) {
+                      //     if ($dataFound == 0) {
+                      //         $companyName = $currentData;
+                      //         $dataFound++;
+                      //     } elseif ($dataFound == 1) {
+                      //         $dataFound++;
+                      //     } elseif ($dataFound == 2) {
+                      //         $fullDate = $currentData;
+                      //         $yearEnded = substr($fullDate, -4);
+                      //         array_push($endedAtArray, $fullDate);
+                      //         $dataFound++;
+                      //     }
+                      // } else {
+											$endedAtArray = $_POST['dateEnd'];
+	                  if (gettype($accountColumn) == "boolean") {
+	                      if (stripos($currentData, "account") !== false) {
+	                          $accountColumn = $x;
+	                      }
+	                  }
+	                  if (gettype($debitColumn) == "boolean") {
+	                      if (stripos($currentData, "debit") !== false) {
+	                          $debitColumn = $x;
+	                      }
+	                  } elseif (gettype($creditColumn) == "boolean") {
+	                      if (stripos($currentData, "credit") !== false) {
+	                          $creditColumn = $x;
+	                      }
+	                  }
+                      // }
                   }
               }
               if (is_numeric($accountColumn) && is_numeric($debitColumn) && is_numeric($creditColumn)) {
@@ -192,12 +210,68 @@ require_once '../db_connection/db.php';
                   break;
               }
           }
+					// for ($i = 0; $i < count($sheetData); $i++){
+					// 	$accountName = $sheetData[$i][$accountColumn];
+					// 	if (stripos($accountName, "total:") !== false){
+					// 		break;
+					// 	}
+					// 	$catFound = 0;
+					// 	for ($x = 0; $x < count($adminExpenseArray); $x++){
+					// 		if (stripos($accountName, $adminExpenseArray[$x]) !== false || stripos($adminExpenseArray[$x], $accountName) !== false){
+					// 			$sheetData[$i][$categoryColumn] = "Administrative Expenses";
+					// 			$catFound = 1;
+					// 			break;
+					// 		}
+					// 	}
+					// 	if ($catFound == 0){
+					// 		for ($x = 0; $x < count($distriMarketingExpenseArray); $x++){
+					// 			if (stripos($accountName,$distriMarketingExpenseArray[$x]) !== false || stripos($distriMarketingExpenseArray[$x], $accountName) !== false){
+					// 				$sheetData[$i][$categoryColumn] = "Distribution and Marketing Expenses";
+					// 				$catFound = 1;
+					// 				break;
+					// 			}
+					// 		}
+					// 	}
+					// 	if ($catFound == 0){
+					// 		for ($x = 0; $x < count($taxPayableArray); $x++){
+					// 			if (stripos($accountName, $taxPayableArray[$x]) !== false || stripos($taxPayableArray[$x], $accountName) !== false){
+					// 				$sheetData[$i][$categoryColumn] = "Current Income Tax Liabilities";
+					// 				$catFound = 1;
+					// 				break;
+					// 			}
+					// 		}
+					// 	}
+					// 	if ($catFound == 0){
+					// 		for ($x = 0; $x < count($incomeArray); $x++){
+					// 			if (stripos($accountName,$incomeArray[$x]) !== false || stripos($incomeArray[$x], $accountName) !== false){
+					// 				$sheetData[$i][$categoryColumn] = "Distribution and Marketing Expenses";
+					// 				$catFound = 1;
+					// 				break;
+					// 			}
+					// 		}
+					// 	}
+					// }
+					for ($i = 0; $i < count($sheetData); $i++){
+						$accountName = $sheetData[$i][$accountColumn];
+						$catFound = 0;
+						foreach ($subCategories as $key => $value) {
+							foreach ($value as $k => $v) {
+								if (strcasecmp($v, $accountName) === 0){
+									$sheetData[$i][$categoryColumn] = $key;
+									$catFound = 1;
+									break;
+								}
+							}
+							if ($catFound == 1){
+								break;
+							}
+						}
+					}
 
           $modifiedCategoryArray = array();
-
           $undefinedRows = array();
           $rowCounter = 0;
-          for ($i = 0; $i < $sheetData; $i++) {
+          for ($i = 0; $i < count($sheetData); $i++) {
               $accountValue = $sheetData[$i][$accountColumn];
 
               if (stripos($accountValue, "total:") !== false) {
@@ -218,9 +292,11 @@ require_once '../db_connection/db.php';
                   $originalCatValue = "";
                   $categoryValue = trim($sheetData[$i][$categoryColumn]);
                   if (empty($categoryValue)) {
+											echo $accountValue;
                       $categoryValue = "undefined";
                       array_push($undefinedRows, $rowCounter);
                   }
+
                   if (in_array($categoryValue, $adminExpenseArray)) {
                       $originalCatValue = $categoryValue;
                       $categoryValue = "Administrative Expenses";
@@ -262,6 +338,11 @@ require_once '../db_connection/db.php';
 									</div><div class="m-portlet__body">';
 
        //begin::Accordion
+			 for ($x = 0; $x < count($endedAtArray); $x++){
+				 $tempDateParts = explode("-",$endedAtArray[$x]);
+				 $tempDateString = $monthIdentifier[$tempDateParts[1] - 1] . " " . $tempDateParts[0];
+				 $endedAtArray[$x] = $tempDateString;
+			 }
         for ($i = 0; $i < count($trialBalanceArray); $i++) {
             echo '<div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_'. $i .'" role="tablist">
 											<div class="m-accordion__item m-accordion__item--info">
@@ -271,7 +352,6 @@ require_once '../db_connection/db.php';
 														<i class="fa flaticon-user-ok"></i>
 													</span>
 													<span class="m-accordion__item-title">';
-
             echo $endedAtArray[$i];
 
             echo '</span>
@@ -438,7 +518,6 @@ require_once '../db_connection/db.php';
 		  </div>
 
           <?php
-					$monthIdentifier = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
           $month = substr($endedAtArray[0], 0, -5);
           $monthInNumber = 0;
 

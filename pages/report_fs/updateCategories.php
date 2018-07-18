@@ -183,7 +183,7 @@ require_once '../db_connection/db.php';
 
             // insert administrative expenses
             $mainAccount = "Administrative Expenses";
-            $accountNames = "Accounting Fee,Administrative Expenses,Bank Charges,Compilation Fee,Depreciation,Entertainment,Freight Charges,Internet Expenses,Late Penalty,Nominee Director Fee,Office Supplies,Postage and Courier,Professional Fee,Secretarial Fee,Taxation Fee,Salaries,Skill Development Levy & SINDA";
+            $accountNames = "Accounting Fee,Administrative Expenses,Bank Charges,Compilation Fee,Depreciation,Entertainment,Freight Charges,Internet Expenses,Late Penalty,Nominee Director Fee,Office Supplies,Postage and Courier,Professional Fee,Secretarial Fee,Taxation Fee,Salaries,Skill Development Levy & SINDA,Exchange difference,Unrealised exchange difference,Unrealised exch - Non trade";
             $query->execute();
 
             // insert assets
@@ -242,6 +242,109 @@ require_once '../db_connection/db.php';
             $mainAccount = "Trade and other payables";
             $accountNames = "Accruals,GST Payables,Amount owing to a Shareholder,Trade Payables";
             $query->execute();
+
+            $query = $DB_con->prepare("INSERT INTO sub_category (company_name, client_company, sub_account, account_names) VALUES (:company_name, :client_company, :sub_account, :account_names)");
+            $query->bindParam(':company_name', $companyName);
+            $query->bindParam(':client_company', $clientName);
+            $query->bindParam(':sub_account', $subAccount);
+            $query->bindParam(':account_names', $accountNames);
+
+            $subAccount = "Accruals";
+            $accountNames = "Accruals";
+            $query->execute();
+
+            $subAccount = "Administrative Expenses";
+            $accountNames = "Accounting fee,Administrative expenses,Business entertainment,Bank Charges,Compilation fee,Depreciation,Entertainment,Freight paid,Director Remuneration,Insurance,Internet expenses,Late Fees Paid,Nominee Director Services,Office Supplies,Postage and courier,Professional Fee,Printing and stationery,Rent,Secretarial services,Staff Salaries,Staff cost - employment pass,Secretarial  fee,Taxation services,Skill Development Levy,Wages & Salaries";
+            $query->execute();
+
+            $subAccount = "Amount owing from a Shareholder";
+            $accountNames = "Amount owing to/(from) SH";
+            $query->execute();
+
+            $subAccount = "Bank Balances";
+            $accountNames = "OCBC Bank,OCBC - USD,OCBC - USD Exchange";
+            $query->execute();
+
+            $subAccount = "Borrowings";
+            $accountNames = "Borrowings";
+            $query->execute();
+
+            $subAccount = "Cost of Sales";
+            $accountNames = "Purchases";
+            $query->execute();
+
+            $subAccount = "Current Income Tax Liabilities";
+            $accountNames = "Income tax payable";
+            $query->execute();
+
+            $subAccount = "Deposits";
+            $accountNames = "Hoiio deposit,Deposits Paid";
+            $query->execute();
+
+            $subAccount = "Distribution and Marketing Expenses";
+            $accountNames = "Telephone,Transport - Taxi fare,Travelling";
+            $query->execute();
+
+            $subAccount = "Finance expenses";
+            $accountNames = "Interest on bank borrowings";
+            $query->execute();
+
+            $subAccount = "GST Payables";
+            $accountNames = "GST control";
+            $query->execute();
+
+            $subAccount = "Income Tax Expense";
+            $accountNames = "Income tax expense,Income Tax Payables,Income tax expenses";
+            $query->execute();
+
+            $subAccount = "Other Income";
+            $accountNames = "Unrealised exchange difference";
+            $query->execute();
+
+            $subAccount = "Plant and Equipment";
+            $accountNames = "Office Equipment at Cost,Office Equipment Accum Dep'n,Softwares at Cost,Softwares Accum Dep'n,Computer & servers - cost,Computer and servers - acc dep";
+            $query->execute();
+
+            $subAccount = "Prepayments";
+            $accountNames = "Prepayments";
+            $query->execute();
+
+            $subAccount = "Retained Profits";
+            $accountNames = "Retained Earnings";
+            $query->execute();
+
+            $subAccount = "Revenue";
+            $accountNames = "Sales";
+            $query->execute();
+
+            $subAccount = "Share Capital";
+            $accountNames = "Paid Up Capital";
+            $query->execute();
+
+            $subAccount = "Trade Payables";
+            $accountNames = "Trade Payables - USD,Trade Payables - USD Exchange";
+            $query->execute();
+
+            $subAccount = "Trade Receivables";
+            $accountNames = "Trade Receivables - USD,Trade Receivables - USD Exchan";
+            $query->execute();
+
+            $subAccount = "Amount owing to a Shareholder";
+            $accountNames = "Amount owing to directors";
+            $query->execute();
+
+            $subAccount = "Exchange Gain - Non Trade";
+            $accountNames = "Unrealised exchange difference";
+            $query->execute();
+
+            $subAccount = "Exchange Gain - Trade";
+            $accountNames = "Exchange difference";
+            $query->execute();
+
+            $subAccount = "Telephone Expenses";
+            $accountNames = "Telephone charges,Telephone";
+            $query->execute();
+
           }
           $query = $DB_con->prepare("SELECT * FROM main_category WHERE company_name = :companyName AND client_company = :clientName");
           $query->bindParam(':companyName', $companyName);
@@ -269,8 +372,17 @@ require_once '../db_connection/db.php';
           foreach ($fileArray as $value){
             echo "<input type='hidden' name='fileArray[]' value='" . $value . "'/>";
           }
+          $dateStart = $_POST['yearStart'];
+          $dateEnd = $_POST['yearEnd'];
+          foreach ($dateStart as $value){
+            echo "<input type='hidden' name='dateStart[]' value='" . $value . "'/>";
+          }
+          foreach ($dateEnd as $value){
+            echo "<input type='hidden' name='dateEnd[]' value='" . $value . "'/>";
+          }
           ?>
           <input type="hidden" name="clientCompany" value="<?php echo $clientName;?>"/>
+          <input type="hidden" name="companyName" value="<?php echo $companyName;?>"/>
           <input type="submit" value="Submit" class="btn btn-brand">
         </form>
         <?php
