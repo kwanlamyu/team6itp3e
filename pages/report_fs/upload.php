@@ -53,7 +53,7 @@ $_SESSION['companyName'] = "Abc Pte. Ltd.";
 							<!--begin::Error Msg-->
         <?php
         $target_dir = "../../pages/report_fs/uploads/";
-        $target_file = $target_dir . basename($_FILES["m-dropzone-three"]["name"]);
+        $target_file = $target_dir . basename($_FILES["trialBalances"]["name"]);
         $uploadOk = 1;
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
