@@ -50,15 +50,15 @@
 									</li>
 								</ul>
 							</div>
-							<!-- END: Horizontal Menu -->				
+							<!-- END: Horizontal Menu -->
 				<!-- BEGIN: Topbar -->
 							<div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
 								<div class="m-stack__item m-topbar__nav-wrapper">
-									<ul class="m-topbar__nav m-nav m-nav--inline">	
+									<ul class="m-topbar__nav m-nav m-nav--inline">
 										<li class="m-nav__item m-topbar__user-profile  m-dropdown m-dropdown--medium m-dropdown--arrow  m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
 											<a href="#" class="m-nav__link m-dropdown__toggle">
 												<span class="m-topbar__userpic m--hide">
-													<img src="assets/app/media/img/users/user4.jpg" class="m--img-rounded m--marginless m--img-centered" alt=""/>
+													<img src="../../assets/app/media/img/users/user4.jpg" class="m--img-rounded m--marginless m--img-centered" alt=""/>
 												</span>
 												<span class="m-nav__link-icon m-topbar__usericon">
 													<span class="m-nav__link-icon-wrapper">
@@ -75,7 +75,7 @@
 													<div class="m-dropdown__header m--align-center">
 														<div class="m-card-user m-card-user--skin-light">
 															<div class="m-card-user__pic">
-																<img src="assets/app/media/img/users/user4.jpg" class="m--img-rounded m--marginless" alt=""/>
+																<img src="../../assets/app/media/img/users/user4.jpg" class="m--img-rounded m--marginless" alt=""/>
 															</div>
 															<div class="m-card-user__details">
 																<span class="m-card-user__name m--font-weight-500">
@@ -109,7 +109,7 @@
 					</div>
 				</div>
 			</header>
-			<!-- END: Header -->		
+			<!-- END: Header -->
 		<!-- begin::Body -->
 			<div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
 				<!-- BEGIN: Left Aside -->
@@ -125,14 +125,14 @@
 					</div>
 					<!-- END: Brand -->
 	<!-- BEGIN: Aside Menu -->
-	<div 
-		id="m_ver_menu" 
-		class="m-aside-menu  m-aside-menu--skin-light m-aside-menu--submenu-skin-light " 
+	<div
+		id="m_ver_menu"
+		class="m-aside-menu  m-aside-menu--skin-light m-aside-menu--submenu-skin-light "
 		data-menu-vertical="true"
-		 m-menu-scrollable="true" m-menu-dropdown-timeout="500"  
+		 m-menu-scrollable="true" m-menu-dropdown-timeout="500"
 		>
 						<ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
-						
+
 						<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  m-menu-submenu-toggle="click" m-menu-link-redirect="1">
 								<a  href="javascript:;" class="m-menu__link m-menu__toggle">
 									<i class="m-menu__link-icon flaticon-users"></i>
@@ -155,7 +155,7 @@
 											<a  href="../user_client_admin/add_accountant.php" class="m-menu__link ">
 												<i class="m-menu__link-icon la la-commenting"></i>
 												<span class="m-menu__link-text">
-													Add Accountant 
+													Add Accountant
 												</span>
 											</a>
 										</li>
@@ -178,8 +178,8 @@
 									</ul>
 								</div>
 							</li>
-						
-							
+
+
 							<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  m-menu-submenu-toggle="click" m-menu-link-redirect="1">
 								<a  href="javascript:;" class="m-menu__link m-menu__toggle">
 									<i class="m-menu__link-icon flaticon-interface-6"></i>
@@ -217,12 +217,12 @@
 									</ul>
 								</div>
 							</li>
-							
+
 							<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  m-menu-submenu-toggle="click" m-menu-link-redirect="1">
 								<a  href="javascript:;" class="m-menu__link m-menu__toggle">
 									<i class="m-menu__link-icon flaticon-bag"></i>
 									<span class="m-menu__link-text">
-										Licenses 
+										Licenses
 									</span>
 									<i class="m-menu__ver-arrow la la-angle-right"></i>
 								</a>
@@ -255,7 +255,7 @@
 									</ul>
 								</div>
 							</li>
-							
+
 							<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  m-menu-submenu-toggle="click" m-menu-link-redirect="1">
 								<a  href="javascript:;" class="m-menu__link m-menu__toggle">
 									<i class="m-menu__link-icon flaticon-open-box"></i>
@@ -274,7 +274,7 @@
 												</span>
 											</span>
 										</li>
-										
+
 										<li class="m-menu__item " aria-haspopup="true"  m-menu-link-redirect="1">
 											<a  href="#" class="m-menu__link ">
 												<i class="m-menu__link-icon la la-commenting"></i>
@@ -294,7 +294,7 @@
 									</ul>
 								</div>
 							</li>
-	
+
 						</ul>
 					</div>
 					<!-- END: Aside Menu -->
