@@ -68,7 +68,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     } elseif ($userData['role_id'] == '3') {
                         echo"Welcome Standard User";
                         //redirect to Accountant Dash
-                        header('Location: ../user_client_admin/client_admin_dashboard.php');
+                        echo "<meta http-equiv='refresh' content='3;url=../user_client_admin/client_admin_dashboard.php'> ";
+                        echo '<span class="text-success "><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Login succesful please wait</span>';
+//                        header('Location: ../user_client_admin/client_admin_dashboard.php');
                     } else {
                         echo"User type not found";
                         //Display error message to contact System Admin

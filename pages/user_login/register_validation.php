@@ -102,7 +102,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             try{
                 $sql->execute(); 
 //                echo "after sql execute";
-                header('Location: ../user_login/login.php');
+                echo "<meta http-equiv='refresh' content='3;url=../user_login/login.php'> ";
+                echo '<span class="text-success "><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Registration succesful! redirecting to login please wait</span>';
+//                header('Location: ../user_login/login.php');
                 
             }  catch (Exception $e){
                 echo 'Message: ' .$e->getMessage();
