@@ -34,13 +34,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $query = $DB_con->prepare($sql);
             $query->execute();
 //            echo '$query->execute()<br>';
-            if($query->fetchColumn() == 0){
+            
+
+            $data = $query->fetchAll();
+            if(count($data) == 0){
                 $unameErr = "Account invalid";
                 $passErr = "Password invalid";
             }
-
-            $data = $query->fetchAll();
-            
 
 //            echo '$data = $query->fetchAll()<br>';
             //echo "hello world";
@@ -54,15 +54,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 //                    echo "password verified";
                     if ($userData['role_id'] == '1') {
-                        echo"Welcome Super Admin";
+//                        echo"Welcome Super Admin";
                         //redirect to Super Admin Dash
-                        header('Location: ../user_super_admin/userdashboard.php');
+                        echo "<meta http-equiv='refresh' content='3;url=../user_super_admin/userdashboard.php'> ";
+                        echo '<span class="text-success "><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Login succesful please wait</span>';
+//                        header('Location: ../user_super_admin/userdashboard.php');
                     } elseif ($userData['role_id'] == '2') {
 //                        echo"Welcome Client Admin";
                         //redirect to Client Admin Dash
-                        //echo "<meta http-equiv='refresh' content='3;url=client_admin_dashboard.php'> ";
-                        //echo '<span class="text-success "><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Redirecting please wait</span>';
-                        header('Location: ../user_client_admin/client_admin_dashboard.php');
+                        echo "<meta http-equiv='refresh' content='3;url=../user_client_admin/client_admin_dashboard.php'> ";
+                        echo '<span class="text-success "><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Login succesful please wait</span>';
+//                        header('Location: ../user_client_admin/client_admin_dashboard.php');
                     } elseif ($userData['role_id'] == '3') {
                         echo"Welcome Standard User";
                         //redirect to Accountant Dash
