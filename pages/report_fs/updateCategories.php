@@ -1,9 +1,8 @@
-
 <?php
-session_start();
+require_once '../db_connection/db.php';
 include '../general/header.php';
 include '../general/navigation_accountant.php';
-require_once '../db_connection/db.php';
+
 ?>
 <div class="m-grid__item m-grid__item--fluid m-wrapper">
   <div class="m-subheader ">
@@ -183,7 +182,7 @@ require_once '../db_connection/db.php';
 
             // insert administrative expenses
             $mainAccount = "Administrative Expenses";
-            $accountNames = "Accounting Fee,Administrative Expenses,Bank Charges,Compilation Fee,Depreciation,Entertainment,Freight Charges,Internet Expenses,Late Penalty,Nominee Director Fee,Office Supplies,Postage and Courier,Professional Fee,Secretarial Fee,Taxation Fee,Salaries,Skill Development Levy & SINDA";
+            $accountNames = "Accounting Fee,Administrative Expenses";
             $query->execute();
 
             // insert assets
@@ -211,14 +210,6 @@ require_once '../db_connection/db.php';
             $accountNames = "Telephone Expenses,Transport Expenses,Travel Expenses";
             $query->execute();
 
-            $mainAccount = "Exchange Gain - Non Trade";
-            $accountNames = "Unrealised exchange difference,Exchange Gain - Non-trade";
-            $query->execute();
-
-            $mainAccount = "Exchange Gain - Trade";
-            $accountNames = "Exchange Gain - Trade,Exchange difference";
-            $query->execute();
-
             $mainAccount = "Expenses";
             $accountNames = "Administrative Expenses,Distribution and Marketing Expenses,Income Tax Expense,Finance Expenses";
             $query->execute();
@@ -243,6 +234,14 @@ require_once '../db_connection/db.php';
             $accountNames = "Accruals,GST Payables,Amount owing to a Shareholder,Trade Payables";
             $query->execute();
 
+            $mainAccount = "Exchange Gain - Non-trade";
+            $accountNames = "Unrealised exchange difference,Exchange Gain - Non-trade";
+            $query->execute();
+
+            $mainAccount = "Exchange Gain - Trade";
+            $accountNames = "Exchange Gain - Trade,Exchange difference";
+            $query->execute();
+
             $query = $DB_con->prepare("INSERT INTO sub_category (company_name, client_company, sub_account, account_names) VALUES (:company_name, :client_company, :sub_account, :account_names)");
             $query->bindParam(':company_name', $companyName);
             $query->bindParam(':client_company', $clientName);
@@ -254,7 +253,7 @@ require_once '../db_connection/db.php';
             $query->execute();
 
             $subAccount = "Administrative Expenses";
-            $accountNames = "Accounting fee,Administrative expenses,Business entertainment,Bank Charges,Compilation fee,Depreciation,Entertainment,Freight paid,Director Remuneration,Insurance,Internet expenses,Late Fees Paid,Nominee Director Services,Office Supplies,Postage and courier,Professional Fee,Printing and stationery,Rent,Secretarial services,Staff Salaries,Staff cost - employment pass,Secretarial  fee,Taxation services,Skill Development Levy,Wages & Salaries,Exchange difference,Unrealised exch - Non trade";
+            $accountNames = "Accounting fee,Administrative expenses,Business entertainment,Bank Charges,Compilation fee,Depreciation,Entertainment,Freight paid,Director Remuneration,Insurance,Internet expenses,Late Fees Paid,Nominee Director Services,Office Supplies,Postage and courier,Professional Fee,Printing and stationery,Rent,Secretarial services,Staff Salaries,Staff cost - employment pass,Secretarial  fee,Taxation services,Skill Development Levy,Wages & Salaries";
             $query->execute();
 
             $subAccount = "Amount owing from a Shareholder";
@@ -285,7 +284,7 @@ require_once '../db_connection/db.php';
             $accountNames = "Telephone,Transport - Taxi fare,Travelling";
             $query->execute();
 
-            $subAccount = "Finance expenses";
+            $subAccount = "Finance Expenses";
             $accountNames = "Interest on bank borrowings";
             $query->execute();
 
@@ -333,16 +332,12 @@ require_once '../db_connection/db.php';
             $accountNames = "Amount owing to directors";
             $query->execute();
 
-            $subAccount = "Exchange Gain - Non Trade";
-            $accountNames = "Unrealised exchange difference";
-            $query->execute();
-
-            $subAccount = "Exchange Gain - Trade";
-            $accountNames = "Exchange difference";
-            $query->execute();
-
             $subAccount = "Telephone Expenses";
             $accountNames = "Telephone charges,Telephone";
+            $query->execute();
+
+            $subAccount = "Exchanges";
+            $accountNames = "Unrealised exchange difference,Unrealised exch - Non trade,Exchange difference,Unrealised exchange difference";
             $query->execute();
 
           }

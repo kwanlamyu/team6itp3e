@@ -1,8 +1,9 @@
 
 <?php
+require_once '../db_connection/db.php';
+
 include '../general/header.php';
 include '../general/navigation_accountant.php';
-require_once '../db_connection/db.php';
 // TODO: For testing only, requires to be changed to actual session check
 $_SESSION['companyName'] = "Abc Pte. Ltd.";
 ?>
