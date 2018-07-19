@@ -1,6 +1,5 @@
 
 <?php
-session_start();
 include '../general/header.php';
 include '../general/navigation_accountant.php';
 require_once '../db_connection/db.php';

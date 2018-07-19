@@ -642,6 +642,8 @@ for ($i = 0; $i < count($years); $i++) {
 // =============================================================================
 // retrieval and sorting of data
 // open txt file that contains all known administrative expenses category
+
+// TODO: change to data from database instead
 $assetsArray = fopen("classification/Assets.txt", "r") or die("Unable to open file!");
 $assetsString = "";
 while (!feof($assetsArray)) {
@@ -5072,7 +5074,7 @@ if (in_array("Share Capital", $categoryArray)) {
     $table2->addRow();
     $table2->addCell($firstCellValue)->addText("At beginning of financial year");
 
-    // If only one year of TB inserted 
+    // If only one year of TB inserted
     if (count($shareCapital) == 1) {
         for ($j = 0; $j < 2; $j++) {
             if ($shareCapital[0] < 0) {
@@ -5118,7 +5120,7 @@ if (in_array("Share Capital", $categoryArray)) {
     $table2->addRow();
     $table2->addCell($firstCellValue)->addText("Issuance of ordinary shares");
 
-    // If only one year of TB inserted 
+    // If only one year of TB inserted
     if (count($shareCapital) == 1) {
         $issuance = $shareCapital[0] - $beginningArray[0];
         $cellNotes = $table2->addCell($cellValue);
@@ -5146,7 +5148,7 @@ if (in_array("Share Capital", $categoryArray)) {
     $table2->addRow();
     $table2->addCell($firstCellValue)->addText("At end of financial year/period");
 
-    // If only one year of TB inserted 
+    // If only one year of TB inserted
     if (count($shareCapital) == 1) {
         for ($j = 0; $j < 2; $j++) {
             if ($shareCapital[0] < 0) {
