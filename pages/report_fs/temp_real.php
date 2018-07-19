@@ -254,6 +254,8 @@ for ($i = 0; $i < count($categoryDataArray); $i++) {
     $innerArray = array();
 }
 
+print_r($fullArray);
+
 $accountArray = array();
 $valueArray = array();
 $categoryArray = array();
@@ -1843,8 +1845,8 @@ $table->addCell($cellValue);
 $totalAssets = array();
 for ($x = 0; $x < count($totalCurrentAssets); $x++) {
     $totalValue = $totalCurrentAssets[$x];
-    if (isset($nonCurrentCalculated[$x][$x+1])){
-      $totalValue += $nonCurrentCalculated[$x][$x+1];
+    if (isset($nonCurrentCalculated[$x][$x + 1])) {
+        $totalValue += $nonCurrentCalculated[$x][$x + 1];
     }
     array_push($totalAssets, $totalValue);
 }
@@ -3494,22 +3496,22 @@ foreach ($fullArray as $key1 => $value1) { // [ Bank Balances] => Array of value
                     if ($key1 !== "Trade and other payables") {
                         if ($key1 !== "Borrowings") {
 
-                            // Display the category heading
+//                            // Display the category heading
                             $section->addListItem(htmlspecialchars(strtoupper($key1)), 0, null, $nestedListStyle);
-
-                            // create notes table
+//
+//                            // create notes table
                             $table1 = $section->addTable();
                             $table1->addRow();
-
-                            // Displaying the heading
+//
+//                            // Displaying the heading
                             $table1->addCell($firstCellValueNotes);
                             $cellNotes = $table1->addCell($cellValueNotes);
-
-                            // Create another row
+//
+//                            // Create another row
                             $table1->addRow();
                             $table1->addCell($firstCellValueNotes);
-
-                            // Do the year heading
+//
+//                            // Do the year heading
                             for ($i = 0; $i < count($formatedDate); $i++) {
                                 $cellNotes = $table1->addCell(1750);
                                 $dateStart = $formatedDate[$i][0];
@@ -3523,9 +3525,9 @@ foreach ($fullArray as $key1 => $value1) { // [ Bank Balances] => Array of value
                             array_push($displayedCategory, $key1);
 
                             foreach ($value1 as $key2 => $value2) { // [OCBC Bank] => Array ( [December 2015] => 54684.19 )
-                                // Display the category heading
+//                                // Display the category heading
                                 $table1->addRow();
-                                $table1->addCell($firstCellValueNotes)->addText(ucwords($key2));
+                                $table1->addCell($firstCellValueNotes)->addText("Hi"); // ucwords($key2)
 
                                 foreach ($value2 as $key3 => $value3) { // [December 2015] => 54684.19
                                     // if don't need dash, just print everything out
@@ -3939,7 +3941,7 @@ if (!empty($incomeTaxArray)) {
                             // if don't need dash, just print everything out
                             if ($numberOfSheets == count($value)) {
                                 $cellNotes = $table1->addCell($cellValue);
-                                $cellNotes->addText(ceil($v), $fontstyleName, $centerAlignment);
+                                $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
 
                                 // for checking if the value matches with total
                                 for ($h = 0; $h < count($years); $h++) {
@@ -4524,19 +4526,21 @@ if (!empty($tradePayableArray)) {
             array_push($temp, $tradePayable[$i]);
         }
     }
-    foreach ($tradePayableArray as $key => $value) { // [OCBC Bank] => Array ( [December 2015] => 54684.19 )
-        foreach ($value as $k => $v) { // [December 2015] => 54684.19
-            if (in_array($key, $temp)) {
-                $table1->addRow();
-                $table1->addCell($firstCellValue)->addText($key);
 
-                // if don't need dash, just print everything out
-                if ($numberOfSheets == count($value)) {
+    echo "<hr>";
+    print_r($tradePayableArray);
+    echo "<hr>";
+
+    foreach ($tradePayableArray as $key => $value) { // [OCBC Bank] => Array ( [December 2015] => 54684.19 )
+        if (stripos($key, "Trade payable") !== false) {
+            $table1->addRow();
+            $table1->addCell($firstCellValue)->addText($key);
+
+            foreach ($value as $k => $v) {
+                if (count($value) == $numberOfSheets) {
                     $cellNotes = $table1->addCell($cellValue);
                     $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
-                }
-                // if not the same, then see which position it is
-                else {
+                } else {
                     for ($h = 0; $h < count($years); $h++) {
                         $cellNotes = $table1->addCell($cellValue);
 
@@ -4559,9 +4563,6 @@ if (!empty($tradePayableArray)) {
                         }
                     }
                 }
-
-                $table1->addRow();
-                $table1->addCell($firstCellValue);
             }
         }
     }
@@ -4646,29 +4647,12 @@ if (!empty($tradePayableArray)) {
     $table1->addRow();
     $table1->addCell($firstCellValue);
 
-    foreach ($totalArray as $key => $value) {
-        foreach ($totalPayablesArray as $keyPayables => $valuePayables) {
-            if ($key == $keyPayables) {
-                $finalPayables = (float) $value + (float) $valuePayables;
-
-                if ($finalPayables == 0) {
-                    $cellNotes = $table1->addCell($cellValue, $topAndBottom);
-                    $cellNotes->addText("-", $fontstyleName, $centerAlignment);
-                } else if ($finalPayables < 0) {
-                    $cellNotes = $table1->addCell($cellValue, $topAndBottom);
-                    $cellNotes->addText("(" . number_format(ceil($finalPayables)) . ")", $fontstyleName, $centerAlignment);
-                } else {
-                    $cellNotes = $table1->addCell($cellValue, $topAndBottom);
-                    $cellNotes->addText(number_format(ceil($finalPayables)), $fontstyleName, $centerAlignment);
-                }
-            }
-        }
-    }
-
     // Do checking for trade and other payables here
     $array = array();
     for ($j = 0; $j < count($years); $j++) {
-        $array[$years[$i]] = $finalTradeArray[$i];
+        $cellNotes = $table1->addCell($cellValue, $topAndBottom);
+        $cellNotes->addText(number_format(ceil($finalTradeArray[$j])), $fontstyleName, $centerAlignment);
+        $array[$years[$j]] = $finalTradeArray[$j];
     }
 
     foreach ($array as $key1 => $value1) {
@@ -5189,7 +5173,7 @@ if (in_array("Share Capital", $categoryArray)) {
             }
         }
     }
-    
+
     $table2->addRow();
     $table2->addCell($firstCellValue);
 
