@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //            echo "Valid: ".$valid."<br>"; 
         }
         
-        $uenregex = '/^(\d{9}[a-zA-Z \-_])||((18|19|20)\d{2}\d{6}[a-zA-z \-_])||((T|S|R)\d{2}(LP|LL|FC|PF|RF|MQ|MM|NB|CC|CS|MB|FM|GS|GA|GB|DP|CP|NR|CM|CD|MD|HS|VH|CH|MH|CL|XL|CX|RP|TU|TC|FB|FN|PA|PB|SS|MC|SM)\d{4}[a-zA-Z \-_])$/';
+        $uenregex = '/^(\d{9}[a-zA-Z \-_])|((18|19|20)\d{2}\d{6}[a-zA-z \-_])|((T|S|R)\d{2}(LP|LL|FC|PF|RF|MQ|MM|NB|CC|CS|MB|FM|GS|GA|GB|DP|CP|NR|CM|CD|MD|HS|VH|CH|MH|CL|XL|CX|RP|TU|TC|FB|FN|PA|PB|SS|MC|SM)\d{4}[a-zA-Z \-_])$/';
         if (empty($_POST["uennumber"])) {
             $uennumberErr = "* UEN/ACRA No. is required";
             $valid = FALSE;
