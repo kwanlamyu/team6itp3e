@@ -118,7 +118,7 @@ WHERE role_id=3;");
                                                     echo "<tr>";
                                                     echo "<td scope=\"row\">" . $result['username'] . "</td>";
                                                     echo "<td scope=\"row\">" . $result['email'] . "</td>";
-                                                    echo "<td><button type=\"button\" class=\"btn btn-danger\">Delete</button></td>";
+                                                    echo "<td><a href='#' class='m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill' title='Edit details'>                            <i class='la la-edit'></i>                        </a>                        <a href='#' class='m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill' title='Delete'>                            <i class='la la-trash'></i>                        </a> </td>";
                                                     echo "</tr>";
                                                 } else {
                                                     echo "<tr> No Results Found </tr>";

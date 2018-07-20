@@ -72,14 +72,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
         
-        $companyName = $_SESSION['company'];
-//        $companyName = "jerome pte ltd";
+ //       $companyName = $_SESSION['company'];
+        //$companyName = "jerome pte ltd";
         
         if ($valid == TRUE) {
             if ($uname !== "") {
                 $hashpass = password_hash($pass,PASSWORD_DEFAULT);
-                $sql = $DB_con->prepare("INSERT INTO user(username, email, password, role_id, companyName)
-                                           VALUES ('$uname', '$email', '$hashpass', '3','$comapnyName')");
+                $sql = $DB_con->prepare("INSERT INTO user(username, email, password, role_id)
+                                           VALUES ('$uname', '$email', '$hashpass', '3')");
             }
             if ($sql->execute()) {
                 //header('Location: ../user_management/create_accountant.php');

@@ -1385,7 +1385,8 @@ var Dashboard = function() {
                         type: "remote",
                         source: {
                             read: {
-                                url: "https://keenthemes.com/metronic/preview/inc/api/datatables/demos/default.php"
+                                url: "../../pages/user_client_admin/client_admin_dashboard_json.php"
+							
                             }
                         },
                         pageSize: 10,
@@ -1408,39 +1409,31 @@ var Dashboard = function() {
                     filterable: !1,
                     pagination: !0,
                     columns: [{
-                        field: "RecordID",
-                        title: "#",
-                        sortable: !1,
-                        width: 40,
-                        selector: {
-                            class: "m-checkbox--solid m-checkbox--brand"
-                        },
-                        textAlign: "center"
-                    }, {
-                        field: "OrderID",
-                        title: "Order ID",
-                        sortable: "asc",
+                        field: "username",
+                        title: "Username",
+						sortable: "asc",
                         filterable: !1,
-                        width: 150,
-                        template: "{{OrderID}} - {{ShipCountry}}"
-                    }, {
-                        field: "ShipName",
-                        title: "Ship Name",
-                        width: 150,
-                        responsive: {
+                        width: 200,
+						responsive: {
                             visible: "lg"
                         }
                     }, {
-                        field: "ShipDate",
-                        title: "Ship Date"
+                        field: "email",
+                        title: "Email",
+						sortable: "asc",
+                        filterable: !1,
+						width: 200,
+						responsive: {
+                            visible: "lg"
+                        }
                     },  {
                         field: "Actions",
-                        width: 110,
+                        width: 100,
                         title: "Actions",
                         sortable: !1,
                         overflow: "visible",
                         template: function(e, t, a) {
-                            return '                        <div class="dropdown ' + (a.getPageSize() - t <= 4 ? "dropup" : "") + '">                            <a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">                                <i class="la la-ellipsis-h"></i>                            </a>                            <div class="dropdown-menu dropdown-menu-right">                                <a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>                                <a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>                                <a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>                            </div>                        </div>                        <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">                            <i class="la la-edit"></i>                        </a>                        <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">                            <i class="la la-trash"></i>                        </a>                    '
+                            return '                        <div class="dropdown ' + (a.getPageSize() - t <= 4 ? "dropup" : "") + '">                                                <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">                            <i class="la la-edit"></i>                        </a>                        <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">                            <i class="la la-trash"></i>                        </a>                    '
                         }
                     }]
                 }),
