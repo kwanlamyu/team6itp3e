@@ -35,7 +35,7 @@
                                     <div class="input-group">
                                         <form method="post" action="../user_login/export.php">
                                             <input type="submit" class="btn btn-outline-success" name="export" value="CSV Export"/>
-                                        </form> 
+                                        </form>
                                     </div>
                                 </div>
                                 <!--BEGIN: Search -->

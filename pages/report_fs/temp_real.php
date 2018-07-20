@@ -6,6 +6,8 @@
 //include 'header.php';
 // PHPWord depedency
 require_once __DIR__ . '\..\..\vendor\autoload.php';
+require_once '../db_connection/db.php';
+
 //require_once 'C:\xampp\htdocs\phpWordsItp\vendor\autoload.php';
 $phpWord = new \PhpOffice\PhpWord\PhpWord();
 //Default font style
@@ -253,8 +255,6 @@ for ($i = 0; $i < count($categoryDataArray); $i++) {
     unset($innerArray);
     $innerArray = array();
 }
-
-print_r($fullArray);
 
 $accountArray = array();
 $valueArray = array();
@@ -642,149 +642,56 @@ for ($i = 0; $i < count($years); $i++) {
 // =============================================================================
 // retrieval and sorting of data
 // open txt file that contains all known administrative expenses category
-
+// variable clash, client name refers to the client this FS is for
+$clientName = $companyName;
+// service provider is the company name of the accountant/ client admin
+$serviceProvider = $_SESSION['companyName'];
 // TODO: change to data from database instead
-$assetsArray = fopen("classification/Assets.txt", "r") or die("Unable to open file!");
-$assetsString = "";
-while (!feof($assetsArray)) {
-    $assetsString .= fgetc($assetsArray);
-}
-fclose($assetsArray);
-$assetsArray = explode(",", $assetsString);
-for ($i = 0; $i < count($assetsArray); $i++) {
-    $assetsArray[$i] = trim($assetsArray[$i]);
-}
+$query = $DB_con->prepare("SELECT * FROM main_category WHERE company_name = :companyName AND client_company = :clientName");
+$query->bindParam(':companyName', $serviceProvider);
+$query->bindParam(':clientName', $clientName);
+// company name from session is the account/client admin's company name
+// company name from post is the client's company name (The company this FS is for)
 
-// open txt file that contains all known capital category
-$capitalArray = fopen("classification/Capital.txt", "r") or die("Unable to open file!");
-$capitalString = "";
-while (!feof($capitalArray)) {
-    $capitalString .= fgetc($capitalArray);
-}
-fclose($capitalArray);
-$capitalArray = explode(",", $capitalString);
-for ($i = 0; $i < count($capitalArray); $i++) {
-    $capitalArray[$i] = trim($capitalArray[$i]);
-}
-
-// open txt file that contains all known liabilities category
-$liabilitiesArray = fopen("classification/Current Liabilities.txt", "r") or die("Unable to open file!");
-$liabilitiesString = "";
-while (!feof($liabilitiesArray)) {
-    $liabilitiesString .= fgetc($liabilitiesArray);
-}
-fclose($liabilitiesArray);
-$liabilitiesArray = explode(",", $liabilitiesString);
-for ($i = 0; $i < count($liabilitiesArray); $i++) {
-    $liabilitiesArray[$i] = trim($liabilitiesArray[$i]);
-}
-
-// open txt file that contains all known non-current liabilities category
-$nonCurrentLiabilitiesArray = fopen("classification/Non-current Liabilities.txt", "r") or die("Unable to open file!");
-$nonCurrentLiabilitiesString = "";
-while (!feof($nonCurrentLiabilitiesArray)) {
-    $nonCurrentLiabilitiesString .= fgetc($nonCurrentLiabilitiesArray);
-}
-fclose($nonCurrentLiabilitiesArray);
-$nonCurrentLiabilitiesArray = explode(",", $nonCurrentLiabilitiesString);
-for ($i = 0; $i < count($nonCurrentLiabilitiesArray); $i++) {
-    $nonCurrentLiabilitiesArray[$i] = trim($nonCurrentLiabilitiesArray[$i]);
-}
-
-// open txt file that contains all known liabilities that have current and non-current category
-$bothLiabilitiesArray = fopen("classification/Both Liabilities.txt", "r") or die("Unable to open file!");
-$bothLiabilitiesString = "";
-while (!feof($bothLiabilitiesArray)) {
-    $bothLiabilitiesString .= fgetc($bothLiabilitiesArray);
-}
-fclose($bothLiabilitiesArray);
-$bothLiabilitiesArray = explode(",", $bothLiabilitiesString);
-for ($i = 0; $i < count($bothLiabilitiesArray); $i++) {
-    $bothLiabilitiesArray[$i] = trim($bothLiabilitiesArray[$i]);
-}
-
-// open txt file that contains all known current assets category
-$currentAssetsArray = fopen("classification/Current Assets.txt", "r") or die("Unable to open file!");
-$currentAssetsString = "";
-while (!feof($currentAssetsArray)) {
-    $currentAssetsString .= fgetc($currentAssetsArray);
-}
-fclose($currentAssetsArray);
-$currentAssetsArray = explode(",", $currentAssetsString);
-for ($i = 0; $i < count($currentAssetsArray); $i++) {
-    $currentAssetsArray[$i] = trim($currentAssetsArray[$i]);
-}
-
-// open txt file that contains all known liabilities category
-$tradeLiabilitiesArray = fopen("classification/Trade and other payables.txt", "r") or die("Unable to open file!");
-$tradeLiabilitiesString = "";
-while (!feof($tradeLiabilitiesArray)) {
-    $tradeLiabilitiesString .= fgetc($tradeLiabilitiesArray);
-}
-fclose($tradeLiabilitiesArray);
-$tradeLiabilitiesArray = explode(",", $tradeLiabilitiesString);
-for ($i = 0; $i < count($tradeLiabilitiesArray); $i++) {
-    $tradeLiabilitiesArray[$i] = trim($tradeLiabilitiesArray[$i]);
-}
-
-// open txt file that contains all known administrative expenses category
-$incomeArray = fopen("classification/Income.txt", "r") or die("Unable to open file!");
-$incomeString = "";
-while (!feof($incomeArray)) {
-    $incomeString .= fgetc($incomeArray);
-}
-fclose($incomeArray);
-$incomeArray = explode(",", $incomeString);
-for ($i = 0; $i < count($incomeArray); $i++) {
-    $incomeArray[$i] = trim($incomeArray[$i]);
-}
-
-// open txt file that contains all known administrative expenses category
-$expensesArray = fopen("classification/Expenses.txt", "r") or die("Unable to open file!");
-$expensesString = "";
-while (!feof($expensesArray)) {
-    $expensesString .= fgetc($expensesArray);
-}
-fclose($expensesArray);
-$expensesArray = explode(",", $expensesString);
-for ($i = 0; $i < count($expensesArray); $i++) {
-    $expensesArray[$i] = trim($expensesArray[$i]);
-}
-
-// open txt file that contains all known adjustments account
-$adjustmentsArray = fopen("classification/Adjustments.txt", "r") or die("Unable to open file!");
-$adjustmentsString = "";
-while (!feof($adjustmentsArray)) {
-    $adjustmentsString .= fgetc($adjustmentsArray);
-}
-fclose($adjustmentsArray);
-$adjustmentsArray = explode(",", $adjustmentsString);
-for ($i = 0; $i < count($adjustmentsArray); $i++) {
-    $adjustmentsArray[$i] = trim($adjustmentsArray[$i]);
-}
-
-// open txt file that contains all known trade gain
-$tradeGainArray = fopen("classification/Exchange Gain - Trade.txt", "r") or die("Unable to open file!");
-$tradeGainString = "";
-while (!feof($tradeGainArray)) {
-    $tradeGainString .= fgetc($tradeGainArray);
-}
-fclose($tradeGainArray);
-$tradeGainArray = explode(",", $tradeGainString);
-for ($i = 0; $i < count($tradeGainArray); $i++) {
-    $tradeGainArray[$i] = trim($tradeGainArray[$i]);
-}
-
-// open txt file that contains all known non-trade gain
-$nonTradeGainArray = fopen("classification/Exchange Gain - Non Trade.txt", "r") or die("Unable to open file!");
-$nonTradeGainString = "";
-while (!feof($nonTradeGainArray)) {
-    $nonTradeGainString .= fgetc($nonTradeGainArray);
-}
-fclose($nonTradeGainArray);
-$nonTradeGainArray = explode(",", $nonTradeGainString);
-for ($i = 0; $i < count($nonTradeGainArray); $i++) {
-    $nonTradeGainArray[$i] = trim($nonTradeGainArray[$i]);
+$query->execute();
+$result = $query->setFetchMode(PDO::FETCH_ASSOC);
+$result = $query->fetchAll();
+$accountAndCategory = array();
+echo $clientName;
+for ($i = 0; $i < count($result); $i++) {
+    $mainAccountName = $result[$i]['main_account'];
+    $individualAccountArray = explode(",", $result[$i]['account_names']);
+    $individualAccountNames = array();
+    $accountAndCategory[$mainAccountName] = array();
+    for ($x = 0; $x < count($individualAccountArray); $x++) {
+        array_push($individualAccountNames, trim($individualAccountArray[$x]));
+    }
+    if (strcasecmp($mainAccountName, "Assets") === 0) {
+        $assetsArray = $individualAccountNames;
+    } else if (strcasecmp($mainAccountName, "Capital") === 0) {
+        $capitalArray = $individualAccountNames;
+    } else if (strcasecmp($mainAccountName, "Current Liabilities") === 0) {
+        $liabilitiesArray = $individualAccountNames;
+    } else if (strcasecmp($mainAccountName, "Non-current Liabilities") === 0) {
+        $nonCurrentLiabilitiesArray = $individualAccountNames;
+    } else if (strcasecmp($mainAccountName, "Both Liabilities") === 0) {
+        $bothLiabilitiesArray = $individualAccountNames;
+    } else if (strcasecmp($mainAccountName, "Current Assets") === 0) {
+        $currentAssetsArray = $individualAccountNames;
+    } else if (strcasecmp($mainAccountName, "Trade and other payables") === 0) {
+        $tradeLiabilitiesArray = $individualAccountNames;
+    } else if (strcasecmp($mainAccountName, "Income") === 0) {
+        $incomeArray = $individualAccountNames;
+    } else if (strcasecmp($mainAccountName, "Expenses") === 0) {
+        $expensesArray = $individualAccountNames;
+    } else if (strcasecmp($mainAccountName, "Adjustments") === 0) {
+        $adjustmentsArray = $individualAccountNames;
+    } else if (strcasecmp($mainAccountName, "Exchange Gain - Trade") === 0) {
+        $tradeGainArray = $individualAccountNames;
+    } else if (strcasecmp($mainAccountName, "Exchange Gain - Non-Trade") === 0) {
+        $nonTradeGainArray = $individualAccountNames;
+    }
+    $accountAndCategory[$mainAccountName] = $individualAccountNames;
 }
 
 $amountToShareholder = array();
@@ -901,11 +808,14 @@ for ($i = 0; $i < $numberOfSheets; $i++) {
                         }
                         $expenseAmount[$i][count($expenseAmount[$i])] = array($currentData, $amount);
                     }
+                } else {
+                    echo $currentData;
                 }
             }
         }
     }
 }
+
 // start adding assets classifcations on debit column
 for ($i = 0; $i < $numberOfSheets; $i++) {
     $tempCategoryArray = array();
@@ -1047,15 +957,16 @@ $section->addText("UNAUDITED FINANCIAL STATEMENTS", $fontStyleBigBlack);
 $section->addText("FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBigBlack);
 
 //Page 1
-$section = $phpWord->addSection();
-$section->addText(strtoupper($companyName), $fontStyleBlack);
+$section = $phpWord->createSection();
+$header = $section->createHeader();
+$header->addText(strtoupper($companyName), $fontStyleBlack);
 
 if ($noOfDirectors > 1) {
-    $section->addText("DIRECTORS' STATEMENT<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-    $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+    $header->addText("DIRECTORS' STATEMENT<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
+    $header->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 } else {
-    $section->addText("DIRECTOR'S STATEMENT<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-    $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+    $header->addText("DIRECTOR'S STATEMENT<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
+    $header->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 }
 
 if ($noOfDirectors > 1) {
@@ -1153,15 +1064,16 @@ for ($i = 0; $i < $noOfDirectors; $i++) {
 
 
 //Page 2
-$section = $phpWord->addSection();
-$section->addText(strtoupper($companyName), $fontStyleBlack);
+$section = $phpWord->createSection();
+$header = $section->createHeader();
+$header->addText(strtoupper($companyName), $fontStyleBlack);
 
 if ($noOfDirectors > 1) {
-    $section->addText("DIRECTORS' STATEMENT<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-    $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+    $header->addText("DIRECTORS' STATEMENT<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
+    $header->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 } else {
-    $section->addText("DIRECTOR'S STATEMENT<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-    $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+    $header->addText("DIRECTOR'S STATEMENT<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
+    $header->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 }
 
 if ($noOfDirectors > 1) {
@@ -1169,8 +1081,6 @@ if ($noOfDirectors > 1) {
 } else {
     $section->addListItem("\tDIRECTORS' CONTRACTUAL BENEFITS", 0, $fontstyleName, $listingStyle, $paragraphStyle);
 }
-
-
 
 $section->addText("\tSince the end of the previous financial period, no director has received or become \tentitled to receive a benefit which is required to be disclosed under the Singapore \tCompanies Act, by reason of a contract made by the Company or a related \tcorporation with the directors or with a firm of which he is a member, or with a \tCompany in which he has a substantial financial interest, except as disclosed in the \tfinancial statements."
         , $fontstyleName, $paragraphStyle);
@@ -1215,7 +1125,6 @@ $section->addText("Singapore, " . (date('F d Y', strtotime($todayDate)))
 // =============================================================================
 // These point on is the 4 statements
 // P&L
-$section = $phpWord->addSection();
 $tempIncomeCategories = array();
 for ($i = 0; $i < count($incomeAmount); $i++) {
     for ($x = 0; $x < count($incomeAmount[$i]); $x++) {
@@ -1227,9 +1136,11 @@ for ($i = 0; $i < count($incomeAmount); $i++) {
 
 $revenueFinal = array();
 
-$section->addText(strtoupper($companyName), $fontStyleBlack);
-$section->addText("STATEMENT OF COMPREHENSIVE INCOME<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper($yearEndString), $fontStyleBlack);
-$section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+$section = $phpWord->createSection();
+$header = $section->createHeader();
+$header->addText(strtoupper($companyName), $fontStyleBlack);
+$header->addText("STATEMENT OF COMPREHENSIVE INCOME<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper($yearEndString), $fontStyleBlack);
+$header->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 
 // create P&L Table
 $table = $section->addTable();
@@ -1662,10 +1573,12 @@ for ($i = 0; $i < count($netPandL); $i++) {
 }
 
 // BS
-$section = $phpWord->addSection();
-$section->addText(strtoupper($companyName), $fontStyleBlack);
-$section->addText("STATEMENT OF FINANCIAL POSITION<w:br/>AS AT " . strtoupper($yearEndString), $fontStyleBlack);
-$section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+$section = $phpWord->createSection();
+$header = $section->createHeader();
+$header->addText(strtoupper($companyName), $fontStyleBlack);
+$header->addText("STATEMENT OF FINANCIAL POSITION<w:br/>AS AT " . strtoupper($yearEndString), $fontStyleBlack);
+$header->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+
 $table = $section->addTable();
 $table->addRow();
 $table->addCell($firstCellValue);
@@ -1847,8 +1760,10 @@ $table->addCell($cellValue);
 $totalAssets = array();
 for ($x = 0; $x < count($totalCurrentAssets); $x++) {
     $totalValue = $totalCurrentAssets[$x];
-    if (isset($nonCurrentCalculated[$x][$x + 1])) {
-        $totalValue += $nonCurrentCalculated[$x][$x + 1];
+    for ($i = 0; $i < count($tempNonCurrentArray); $i++) {
+        if (isset($nonCurrentFinal[$i][$x])) {
+            $totalValue += $nonCurrentFinal[$i][$x];
+        }
     }
     array_push($totalAssets, $totalValue);
 }
@@ -1860,6 +1775,7 @@ for ($i = 0; $i < count($totalAssets); $i++) {
         $cell->addText(number_format($totalAssets[$i]), $fontstyleName, $centerAlignment);
     }
 }
+
 
 $table->addRow();
 $table->addCell($firstCellValue)->addText("LIABILITIES", $fontStyleBlack);
@@ -2334,10 +2250,12 @@ for ($i = 0; $i < count($capitalAmount); $i++) {
 }
 
 // Equity statement
-$section = $phpWord->addSection();
-$section->addText(strtoupper($companyName), $fontStyleBlack);
-$section->addText("STATEMENT OF CHANGES IN EQUITY<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper($yearEndString), $fontStyleBlack);
-$section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+$section = $phpWord->createSection();
+$header = $section->createHeader();
+$header->addText(strtoupper($companyName), $fontStyleBlack);
+$header->addText("STATEMENT OF CHANGES IN EQUITY<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper($yearEndString), $fontStyleBlack);
+$header->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+
 $table = $section->addTable();
 $equityFirstCell = $cellValue * ($maxColumns - 3);
 $table->addRow();
@@ -2413,10 +2331,12 @@ if (round($totalEquityArray[0]) != round($shareCapitalFromTB[0] + $calculatedRet
 }
 
 // Cash flow statements
-$section = $phpWord->addSection();
-$section->addText(strtoupper($companyName), $fontStyleBlack);
-$section->addText("STATEMENT OF CASH FLOWS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper($yearEndString), $fontStyleBlack);
-$section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+$section = $phpWord->createSection();
+$header = $section->createHeader();
+$header->addText(strtoupper($companyName), $fontStyleBlack);
+$header->addText("STATEMENT OF CASH FLOWS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper($yearEndString), $fontStyleBlack);
+$header->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+
 $cashFlowFirstCell = $firstCellValue + $cellValue;
 $table = $section->addTable();
 $table->addRow();
@@ -3125,11 +3045,11 @@ for ($i = 0; $i < count($totalCashFlow); $i++) {
 
 // End of 4 STATEMENTS
 // Page 7
-$section = $phpWord->addSection();
-$section->addText(strtoupper($companyName), $fontStyleBlack);
-
-$section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-$section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+$section = $phpWord->createSection();
+$header = $section->createHeader();
+$header->addText(strtoupper($companyName), $fontStyleBlack);
+$header->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
+$header->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 
 $section->addText("These notes form an integral part of and should be read in conjunction with the accompanying financial statements."
         , $fontstyleName, $paragraphStyle);
@@ -3168,10 +3088,6 @@ $section->addText("\tOn " . date('F d Y', strtotime($frsDate)) . " the Company a
 
 //Page 8
 $section = $phpWord->addSection();
-$section->addText(strtoupper($companyName), $fontStyleBlack);
-
-$section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-$section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 
 $section->addListItem("\tSummary of significant accounting policies", 1, $fontstyleName, $nestedListStyle);
 
@@ -3216,10 +3132,6 @@ $section->addText("\tContingent rents are recognised as an expense in profit or 
 
 //Page 9
 $section = $phpWord->addSection();
-$section->addText(strtoupper($companyName), $fontStyleBlack);
-
-$section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-$section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 
 $section->addListItem("\tSummary of significant accounting policies ", 3, $fontstyleName, $nestedListStyle);
 
@@ -3257,10 +3169,6 @@ $section->addText("\tInventories are carried at the lower of cost and net realis
 
 //Page 10
 $section = $phpWord->addSection();
-$section->addText(strtoupper($companyName), $fontStyleBlack);
-
-$section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-$section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 
 $section->addListItem("\tSummary of significant accounting policies", 4, $fontstyleName, $nestedListStyle);
 
@@ -3300,10 +3208,6 @@ $section->addText("\tOn disposal of an item of plant and equipment, the differen
 
 //Page 11
 $section = $phpWord->addSection();
-$section->addText(strtoupper($companyName), $fontStyleBlack);
-
-$section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-$section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 
 $section->addListItem("\tSummary of significant accounting policies", 5, $fontstyleName, $nestedListStyle);
 
@@ -3341,10 +3245,6 @@ $section->addText("\tLoans and receivables are non-derivative financial assets w
 
 //Page 12
 $section = $phpWord->addSection();
-$section->addText(strtoupper($companyName), $fontStyleBlack);
-
-$section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-$section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 
 $section->addListItem("\tSummary of significant accounting policies", 6, $fontstyleName, $nestedListStyle);
 
@@ -3386,10 +3286,6 @@ $section->addText("\tThe allowance for impairment loss account is reduced throug
 
 //Page 13
 $section = $phpWord->addSection();
-$section->addText(strtoupper($companyName), $fontStyleBlack);
-
-$section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-$section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 
 $section->addListItem("\tSummary of significant accounting policies", 7, $fontstyleName, $nestedListStyle);
 
@@ -3397,11 +3293,7 @@ $section->addListItem("\tTrade and other payables", 3, $fontstyleName, $listingS
 
 $section->addText("\tTrade and other payables represent liabilities for goods and services provided to the \tCompany prior to the end of financial year which are unpaid. They are classified as \tcurrent liabilities if payment is due within one year or less (or in the normal operating \tcycle of the business if longer). Otherwise, they are presented as non-current \tliabilities."
         , $fontstyleName);
-?>
 
-
-
-<?php
 $section->addListItem("\tBorrowings", 3, $fontstyleName, $listingStyle);
 
 $section->addText("\tBorrowings are presented as current liabilities unless the Company has an \tunconditional right to defer settlement for at least 12 months after the balance sheet \tdate, in which case they are presented as non-current liabilities."
@@ -3429,10 +3321,6 @@ $section->addText("\tItems included in the financial statements of the Company a
 
 // Page 14
 $section = $phpWord->addSection();
-$section->addText(strtoupper($companyName), $fontStyleBlack);
-
-$section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-$section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 
 $section->addListItem("\tSummary of significant accounting policies", 8, $fontstyleName, $nestedListStyle);
 
@@ -3476,10 +3364,11 @@ $maxColumnsNotesException = 5;
 $cellValueNotes = 1750;
 $firstCellValueNotes = 0;
 
-$section = $phpWord->addSection();
-$section->addText(strtoupper($companyName), $fontStyleBlack);
-$section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper($yearEndString), $fontStyleBlack);
-$section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+$section = $phpWord->createSection();
+$header = $section->createHeader();
+$header->addText(strtoupper($companyName), $fontStyleBlack);
+$header->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper($yearEndString), $fontStyleBlack);
+$header->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 
 // check number of unused columns.
 // max columns - number of years + 1 column for Notes
@@ -3487,7 +3376,6 @@ $section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 for ($i = 0; $i < ($maxColumnsNotes - ($numberOfSheets + 1)); $i++) {
     $firstCellValueNotes += $cellValueNotes;
 }
-
 
 // Display normally
 foreach ($fullArray as $key1 => $value1) { // [ Bank Balances] => Array of values
@@ -3529,7 +3417,7 @@ foreach ($fullArray as $key1 => $value1) { // [ Bank Balances] => Array of value
                             foreach ($value1 as $key2 => $value2) { // [OCBC Bank] => Array ( [December 2015] => 54684.19 )
 //                                // Display the category heading
                                 $table1->addRow();
-                                $table1->addCell($firstCellValueNotes)->addText("Hi"); // ucwords($key2)
+                                $table1->addCell($firstCellValueNotes)->addText($key2); // ucwords($key2)
 
                                 foreach ($value2 as $key3 => $value3) { // [December 2015] => 54684.19
                                     // if don't need dash, just print everything out
@@ -3680,6 +3568,7 @@ if (!empty($profitBeforeIncomeTaxArray)) {
             }
         }
     }
+
     // Create another row
     $table1->addRow();
     $table1->addCell($firstCellValue);
@@ -4063,7 +3952,8 @@ if (!empty($incomeTaxArray)) {
                     // if don't need dash, just print everything out
                     if ($numberOfSheets == count($value)) {
                         $cellNotes = $table1->addCell($cellValue);
-                        $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
+                        $withoutFirstCharacter = substr($v, 1);
+                        $cellNotes->addText(number_format(ceil($withoutFirstCharacter)), $fontstyleName, $centerAlignment);
 
                         // for checking if the value matches with total
                         for ($h = 0; $h < count($years); $h++) {
@@ -4088,7 +3978,8 @@ if (!empty($incomeTaxArray)) {
                             $cellNotes = $table1->addCell($cellValue);
                             if ($k == $years[$h]) {
                                 if ($v < 0) {
-                                    $cellNotes->addText("(" . number_format(ceil($v)) . ")", $fontstyleName, $centerAlignment);
+                                    $withoutFirstCharacter = substr($v, 1);
+                                    $cellNotes->addText("(" . number_format(ceil($withoutFirstCharacter)) . ")", $fontstyleName, $centerAlignment);
                                 } else {
                                     $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
                                 }
@@ -4454,7 +4345,7 @@ if (!empty($tradeReceivablesArray)) {
     // Do checking for trade and other payables here
     $check = array();
     for ($i = 0; $i < count($years); $i++) {
-        $temp = $totalReceivablesArray[$years[$i]] + $totalArray[$years[$i]];
+        $temp = (float) $totalReceivablesArray[$years[$i]] + (float) $totalArray[$years[$i]];
         $check[$years[$i]] = $temp;
     }
 
@@ -4750,8 +4641,9 @@ if (!empty($borrowingArray)) {
                         // if don't need dash, just print everything out
                         if ($numberOfSheets == count($value)) {
 
+                            $withoutFirstCharacter = substr($v, 1);
                             $cellNotes = $table1->addCell($cellValue);
-                            $cellNotes->addText("(" . number_format(ceil($v)) . ")", $fontstyleName, $centerAlignment);
+                            $cellNotes->addText("(" . number_format(ceil($withoutFirstCharacter)) . ")", $fontstyleName, $centerAlignment);
 
                             // for checking if the value matches with total
                             for ($h = 0; $h < count($years); $h++) {
@@ -5452,10 +5344,6 @@ if (in_array("Plant and Equipment", $categoryArray)) {
 
 //Page 19
 $section = $phpWord->addSection();
-$section->addText(strtoupper($companyName), $fontStyleBlack);
-
-$section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-$section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 
 $section->addListItem("\tFINANCIAL RISK MANAGEMENT ", 0, $fontstyleName, $nestedListStyle);
 
@@ -5502,12 +5390,6 @@ $section->addText("\tCredit risk is the risk that companies and other parties wi
 
 //Page 20
 $section = $phpWord->addSection();
-$section->addText(strtoupper($companyName), $fontStyleBlack);
-
-$section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-$section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
-
-$section->addListItem("\tFINANCIAL RISK MANAGEMENT (CONT’D)", 0, $fontstyleName, $listingStyle, $paragraphStyle);
 
 $textrun = $section->addTextRun();
 $textrun->addText("\t");
@@ -5551,10 +5433,6 @@ $section->addText("\tKey management personnel of the Company are those persons h
 
 //Page 21
 $section = $phpWord->addSection();
-$section->addText(strtoupper($companyName), $fontStyleBlack);
-
-$section->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper(date('d F Y', strtotime($yearEnd))), $fontStyleBlack);
-$section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 
 $section->addListItem("\tRELATED PARTY TRANSACTIONS (CONT’D)", 0, $fontstyleName, $nestedListStyle);
 
@@ -5589,11 +5467,12 @@ $section->addText("End of unaudited financial statements", $fontstyleName, $para
 
 // Start of Appendix
 // Appendix 1
+$section = $phpWord->createSection();
+$header = $section->createHeader();
+$header->addText(strtoupper($companyName), $fontStyleBlack, $centerAlignment);
+$header->addText("DETAILED INCOME STATEMENT<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper($yearEndString), $fontStyleBlack, $centerAlignment);
+$header->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 
-$section = $phpWord->addSection();
-$section->addText(strtoupper($companyName), $fontStyleBlack, $centerAlignment);
-$section->addText("DETAILED INCOME STATEMENT<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper($yearEndString), $fontStyleBlack, $centerAlignment);
-$section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 $table = $section->addTable();
 $table->addRow();
 $appendixFirstCell = $cellValue * ($maxColumns - count($years));
@@ -5886,9 +5765,7 @@ for ($i = 0; $i < count($beforeIncomeTax); $i++) {
 
 // Appendix 2
 $section = $phpWord->addSection();
-$section->addText(strtoupper($companyName), $fontStyleBlack, $centerAlignment);
-$section->addText("DETAILED INCOME STATEMENT<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper($yearEndString), $fontStyleBlack, $centerAlignment);
-$section->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
+
 $table = $section->addTable();
 $table->addRow();
 $appendixFirstCell = $cellValue * ($maxColumns - count($years));

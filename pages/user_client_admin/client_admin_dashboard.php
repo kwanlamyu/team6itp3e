@@ -1,6 +1,7 @@
 
 
 <?php include '../general/header.php';?>
+<?php require_once '../db_connection/db.php';?>
 <?php include '../general/navigation_clientadmin.php';?>
 <?php include '../db_connection/db.php'; ?>
 

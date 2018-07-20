@@ -1,10 +1,8 @@
 
 <?php
-session_start();
+require_once '../db_connection/db.php';
 include '../general/header.php';
 include '../general/navigation_clientadmin.php';
-
-require_once '../db_connection/db.php';
 ?>
 <div class="m-grid__item m-grid__item--fluid m-wrapper">
 <div class="m-subheader ">
@@ -90,6 +88,10 @@ require_once '../db_connection/db.php';
 							$distriMarketingExpenseArray = $individualAccountNames;
 						} else if (strcasecmp($mainAccountName, "Tax Payable") === 0){
 							$taxPayableArray = $individualAccountNames;
+						} else if (strcasecmp($mainAccountName, "Exchange Gain - Trade") === 0){
+							$exchangesTradeArray = $individualAccountNames;
+						} else if (strcasecmp($mainAccountName, "Exchange Gain - Non-trade") === 0){
+							$exchangesNonTradeArray = $individualAccountNames;
 						}
 						$accountAndCategory[$mainAccountName] = $individualAccountNames;
 				}
@@ -144,7 +146,6 @@ require_once '../db_connection/db.php';
         $yearlyUndefinedRows = array();
         $endedAtArray = array();
 
-        $companyName =  "";
         $yearEnded = "";
 
 				for ($j = 0; $j < count($fileArray); $j++){
@@ -264,6 +265,32 @@ require_once '../db_connection/db.php';
 							}
 							if ($catFound == 1){
 								break;
+							}
+						}
+					}
+
+					for ($i = 0; $i < count($sheetData); $i++){
+						if (stripos($sheetData[$i][$categoryColumn],"Exchange") !== false){
+							$accountName = $sheetData[$i][$accountColumn];
+							$identifiedTrade = 0;
+							if (!empty($sheetData[$i][$creditColumn])){
+								foreach ($exchangesTradeArray as $key => $value){
+									if (strcasecmp($accountName,$value) === 0){
+										$sheetData[$i][$categoryColumn] = "Exchange Gain - Trade";
+										$identifiedTrade = 1;
+										break;
+									}
+								}
+								if ($identifiedTrade == 0){
+									foreach ($exchangesNonTradeArray as $key => $value){
+										if (strcasecmp($accountName, $value) === 0){
+											$sheetData[$i][$categoryColumn] = "Exchange Gain - Non-trade";
+											break;
+										}
+									}
+								}
+							} else if (!empty($sheetData[$i][$debitColumn])){
+								$sheetData[$i][$categoryColumn] = "Administrative Expenses";
 							}
 						}
 					}
@@ -432,58 +459,59 @@ require_once '../db_connection/db.php';
             //end::Accordion
         }
 
+// no longer required due to change of implementation, updating of categories is now done in updateCategories.php
         //begin::Modified
-        if (count($modifiedCategoryArray) > 0) {
-            echo '<div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_m" role="tablist"><div class="m-accordion__item m-accordion__item--info">
-
-												<div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_m_item_1_head" data-toggle="collapse" href="#m_accordion_m_item_1_body" aria-expanded="  false">
-													<span class="m-accordion__item-icon">
-														<i class="fa flaticon-user-ok"></i>
-													</span>
-													<span class="m-accordion__item-title">Replaced Categories</span>
-													<span class="m-accordion__item-mode"></span>
-												</div>
-												<div class="m-accordion__item-body collapse" id="m_accordion_m_item_1_body" class=" " role="tabpanel" aria-labelledby="m_accordion_5_item_1_head" data-parent="#m_accordion_m">
-													<div class="m-accordion__item-content"><p>';
-            echo '<table class="table table-bordered m-table m-table--border-success">
-											<thead>
-												<tr>
-													<th>
-														#
-													</th>
-													<th>
-														Previous Name
-													</th>
-													<th>
-														Replaced Name
-													</th>
-												</tr>
-											</thead>
-											<tbody>';
-            for ($i = 0; $i < count($modifiedCategoryArray);$i++) {
-                $tempStr = explode(",", $modifiedCategoryArray[$i]);
-                echo '<tr>';
-                echo '<th scope="row">'.$i.'</th>';
-                echo '<td>'.$tempStr[0].'</td>';
-                echo '<td>'.$tempStr[1].'</td>';
-                echo '</tr>';
-            }
-            echo '</tbody>
-										</table>';
-            /* Old Code for Reference
-              for ($i = 0; $i < count($modifiedCategoryArray);$i++){
-                $tempStr = explode(",", $modifiedCategoryArray[$i]);
-                echo $tempStr[0] . ' --> ' . $tempStr[1] . '<br>';
-              }
-              */
-            echo '
-														</p>
-													</div>
-												</div>
-
-											</div>
-											</div>';
-        }
+        // if (count($modifiedCategoryArray) > 0) {
+        //     echo '<div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_m" role="tablist"><div class="m-accordion__item m-accordion__item--info">
+				//
+				// 								<div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_m_item_1_head" data-toggle="collapse" href="#m_accordion_m_item_1_body" aria-expanded="  false">
+				// 									<span class="m-accordion__item-icon">
+				// 										<i class="fa flaticon-user-ok"></i>
+				// 									</span>
+				// 									<span class="m-accordion__item-title">Replaced Categories</span>
+				// 									<span class="m-accordion__item-mode"></span>
+				// 								</div>
+				// 								<div class="m-accordion__item-body collapse" id="m_accordion_m_item_1_body" class=" " role="tabpanel" aria-labelledby="m_accordion_5_item_1_head" data-parent="#m_accordion_m">
+				// 									<div class="m-accordion__item-content"><p>';
+        //     echo '<table class="table table-bordered m-table m-table--border-success">
+				// 							<thead>
+				// 								<tr>
+				// 									<th>
+				// 										#
+				// 									</th>
+				// 									<th>
+				// 										Previous Name
+				// 									</th>
+				// 									<th>
+				// 										Replaced Name
+				// 									</th>
+				// 								</tr>
+				// 							</thead>
+				// 							<tbody>';
+        //     for ($i = 0; $i < count($modifiedCategoryArray);$i++) {
+        //         $tempStr = explode(",", $modifiedCategoryArray[$i]);
+        //         echo '<tr>';
+        //         echo '<th scope="row">'.$i.'</th>';
+        //         echo '<td>'.$tempStr[0].'</td>';
+        //         echo '<td>'.$tempStr[1].'</td>';
+        //         echo '</tr>';
+        //     }
+        //     echo '</tbody>
+				// 						</table>';
+        //     /* Old Code for Reference
+        //       for ($i = 0; $i < count($modifiedCategoryArray);$i++){
+        //         $tempStr = explode(",", $modifiedCategoryArray[$i]);
+        //         echo $tempStr[0] . ' --> ' . $tempStr[1] . '<br>';
+        //       }
+        //       */
+        //     echo '
+				// 										</p>
+				// 									</div>
+				// 								</div>
+				//
+				// 							</div>
+				// 							</div>';
+        // }
 
 
         ?>
@@ -495,15 +523,15 @@ require_once '../db_connection/db.php';
 		<div class="m-portlet__body">
 		<!-- Yok yee's required data here -->
 		<div class="form-group m-form__group row">
-								<label for="companyName" class="col-lg-2 col-form-label">
+								<!-- <label for="companyName" class="col-lg-2 col-form-label">
 									Company Name
-								</label>
-								<div class="col-lg-3">
+								</label> -->
+								<!-- <div class="col-lg-3">
 									<input class="form-control m-input" type="text" id="companyName" name="companyName" value="<?php echo $companyName?>">
 									<span class="m-form__help">
 										Please enter company name
 									</span>
-								</div>
+								</div> -->
 								<label for="companyregID"class="col-lg-2 col-form-label">
 									Company Registration No.
 								</label>
@@ -609,7 +637,7 @@ require_once '../db_connection/db.php';
 
           <!-- yok yee required data end -->
             <?php
-            echo "<input type='hidden' name='companyName' value='" . $companyName . "'/>";
+            echo "<input type='hidden' name='companyName' value='" . $clientName . "'/>";
             echo "<input type='hidden' name='numberOfYears' value='" . count($fileArray) . "'/>";
             for ($i = 0; $i < count($trialBalanceArray); $i++) {
                 echo "<input type='hidden' name='years[]' value='" . $endedAtArray[$i] . "'/>";
