@@ -71,14 +71,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             }
         }
+        
+        $companyName = $_SESSION['company'];
+//        $companyName = "jerome pte ltd";
+        
         if ($valid == TRUE) {
             if ($uname !== "") {
                 $hashpass = password_hash($pass,PASSWORD_DEFAULT);
-                $sql = $DB_con->prepare("INSERT INTO user(username, email, password, role_id)
-                                           VALUES ('$uname', '$email', '$hashpass', '3')");
+                $sql = $DB_con->prepare("INSERT INTO user(username, email, password, role_id, companyName)
+                                           VALUES ('$uname', '$email', '$hashpass', '3','$comapnyName')");
             }
             if ($sql->execute()) {
-                header('Location: ../user_management/create_accountant.php');
+                //header('Location: ../user_management/create_accountant.php');
                 echo '<div class="alert alert-success" role="alert">'
                         . '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close"></a>'
                         . ' Accountant successfully created '

@@ -21,8 +21,7 @@
                 <table class="table table-hover table-room">
                     <thead>
                     <th>UEN/ACRA No.</th>
-                    <th>Company Name</th>
-                    <th>File Number</th>
+                    <th>Account Creator</th>
                     <th>Account Manager(s)</th>
                     <th>Edit Details</th>
                     </thead>
@@ -30,15 +29,16 @@
 
                     <tbody>
                         <?php
-////                            echo'after table body';
-//                        $sql = $DB_con->prepare("SELECT * FROM user WHERE role_id = 3");
-////                            echo'statement prepared';
-//                        $sql->execute();
-//                        $users = $sql->fetchAll();
+                        //$userID = $_SESSION["username"];
+                        $userID = 'Jerome';
+//                            echo'after table body';
+                        $sql = $DB_con->prepare("SELECT * FROM userManageAccount WHERE account_user_username = '".$userID."'");
+//                            echo'statement prepared';
+                        $sql->execute();
+                        $users = $sql->fetchAll();
 //                            echo'statement executed';
                         if (count($users) == 0) {
                             echo '<tr>'
-                                    . '<td>Nil</td>'
                                     . '<td>Nil</td>'
                                     . '<td>Nil</td>'
                                     . '<td>Nil</td>'
@@ -52,12 +52,11 @@
 
                                 echo ""
                                 . "<tr>"
-                                    . "<td id='account_uen" . $counter . "'>{$row['UEN']}</td>"
-                                    . "<td id='account_companyName" . $counter . "'>{$row['companyName']}</td>"
-                                    . "<td id='account_fileNumber" . $counter . "'>{$row['fileNumber']}</td>"
-                                    . "<td id='account_accountManagers" . $counter . "'>{$row['companyName']}</td>"
+                                    . "<td id='account_uen" . $counter . "'>{$row['account_UEN']}</td>"
+                                    . "<td id='account_account_user_username" . $counter . "'>{$row['account_user_username']}</td>"
+                                    . "<td id='account_user_username" . $counter . "'>{$row['user_username']}</td>"
                                     . "<td id='edit'>"
-                                        . "<button type='button' name='editButton' id='editButton' class='btn btn-success edit_data'data-toggle='modal' data-target='#editModal' onclick='updateUsername(" . $counter . ")'>"
+                                        . "<button type='button' name='editButton' id='editButton' class='btn btn-success edit_data'data-toggle='modal' data-target='#editModal' onclick='updateUEN(" . $counter . ")'>"
                                             . "<i class='far fa-edit'></i> Edit "
                                         . "</button>"
                                     . "</td>"
@@ -88,29 +87,60 @@
                 <form id="editAccountant" name="editAccountant" action="#" method="POST">
                     <?php //include('edit_accountant_validation.php'); ?>
                     
+                    <div class="form-group">
+                            <label for="uenid">UEN/ACRA No.</label>
+                            <input type="text" class="form-control" id="viewid" name="viewid" disabled>                               
+                        </div>
+                    
                     <div class="form-group" style="display: none;">
-                        <label for="accountantid">Username</label>
-                        <input type="text" class="form-control" id="accountantid" name="accountantid">                            
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="accountantemail" name="accountantemail">
-                        <span class="error"><?php echo $emailErr; ?></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="accountantpassword">Password</label>
-                        <input type="password" class="form-control" id="accountantpassword" name="accountantpassword" placeholder="Password">
-                        <span class="error"><?php echo $passErr; ?></span>
+                        <!--<label for="uenid">Username</label>-->
+                        <input type="text" class="form-control" id="uenid" name="uenid">                            
                     </div>
                     
                     <div class="form-group">
-                            <label for="accountantcpassword">Confirm Password</label>
-                            <input type="password" class="form-control" id="accountantcpassword" name="accountantcpassword" placeholder="Retype Password">
-                            <span class="error"><?php echo $cpassErr; ?></span>
-                            <span class="error"><?php echo $twopassErr; ?></span>
+                        <label for="edit_account">Account Manager</label>
+                        <div class="table-responsive table-scroll">
+                            <table class="table table-hover table-room">
+                                <thead>
+                                <th>Accountant</th>
+                                <th>Select</th>
+                                </thead>
+                                <?php // echo'after table head';?>
+
+                                <tbody>
+                                    <?php
+//                            echo'after table body';
+                                    $sql = $DB_con->prepare("SELECT username FROM user WHERE role_id = 3");
+//                            echo'statement prepared';
+                                    $sql->execute();
+                                    $users = $sql->fetchAll();
+//                            echo'statement executed';
+                                    if (count($users) == 0) {
+                                        echo '<tr>'
+                                        . '<td> </td>'
+                                        . '<td> </td>'
+                                        . '</tr>';
+                                    } else {
+//                                echo'else condition reached';
+                                        $counter = 0;
+                                        foreach ($users as $row) {
+//                                    echo'rows echoed';
+                                            echo ""
+                                            . "<tr>"
+                                                . "<td id='edit_account_username" . $counter . "'>{$row['username']}</td>"
+                                                . "<td id='edit_account_users'>"
+                                                    . "<input type='checkbox' name='edit_Collaborator[]' id='edit_Collaborator' value='". $row['username'] ."'>"
+                                                . "</td>"
+                                            . "</tr>\n";
+                                            $counter++;
+                                        }
+                                    }
+                                    ?>
+
+                                </tbody>
+                            </table>
                         </div>
+                    </div>
 
                     <div class="form-group">
                         <button type="submit" name="updateButton" id="updateButton" class="btn btn-primary"><i class="fas fa-check"></i> Update Detail </button>
@@ -126,16 +156,16 @@
 </div>
 
 <!--  Modal Script-->
-<script>
-
-    function updateUsername(x) {
-        var username = document.getElementById("accountant_username" + x).innerHTML;
-        document.getElementById('accountantid').value = username;
-        var email = document.getElementById("accountant_email" + x).innerHTML;
-        document.getElementById('accountantemail').value = email;
-
+    <script>
+        
+    function updateUEN(x){
+        var uen = document.getElementById("account_uen" + x).innerHTML;
+        document.getElementById('uenid').value = uen;
+        document.getElementById('viewid').value = uen;
+        
+        
     }
-
-</script>
+     
+    </script>
 <?php include '../general/footer_content.php'; ?>
 <?php include '../general/footer.php'; ?>

@@ -1,3 +1,6 @@
+<?php 
+    //check for username and role_id
+    //if(isset($_SESSION['username']) && $_SESSION['role_id']==='2'){?>
 
 
 <?php include '../general/header.php';?>
@@ -5,50 +8,50 @@
 <?php include '../general/navigation_clientadmin.php';?>
 
 <div class="m-grid__item m-grid__item--fluid m-wrapper">
-	<!-- BEGIN: Subheader -->
-					<div class="m-subheader ">
-						<div class="d-flex align-items-center">
-							<div class="mr-auto">
-								<h3 class="m-subheader__title m-subheader__title--separator">
-									Financial Statement
-								</h3>
-								<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
-									<li class="m-nav__item m-nav__item--home">
-										<a href="#" class="m-nav__link m-nav__link--icon">
-											<i class="m-nav__link-icon la la-home"></i>
-										</a>
-									</li>
-									<li class="m-nav__separator">
-										-
-									</li>
-									<li class="m-nav__item">
-										<a href="" class="m-nav__link">
-											<span class="m-nav__link-text">
-												Generate Report
-											</span>
-										</a>
-									</li>
-									<li class="m-nav__separator">
-										-
-									</li>
-									<li class="m-nav__item">
-										<a href="" class="m-nav__link">
-											<span class="m-nav__link-text">
-												Financial Statement
-											</span>
-										</a>
-									</li>
-								</ul>
-								
-							</div>
-							</div>
-						</div>
-						
-						
-						<div class="m-content">
-						<div class="row">
-							<div class="col-xl-12">
-								<!--begin::Portlet-->
+    <!-- BEGIN: Subheader -->
+    <div class="m-subheader ">
+        <div class="d-flex align-items-center">
+            <div class="mr-auto">
+                <h3 class="m-subheader__title m-subheader__title--separator">
+                    Financial Statement
+                </h3>
+                <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                    <li class="m-nav__item m-nav__item--home">
+                        <a href="#" class="m-nav__link m-nav__link--icon">
+                            <i class="m-nav__link-icon la la-home"></i>
+                        </a>
+                    </li>
+                    <li class="m-nav__separator">
+                        -
+                    </li>
+                    <li class="m-nav__item">
+                        <a href="" class="m-nav__link">
+                            <span class="m-nav__link-text">
+                                Generate Report
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-nav__separator">
+                        -
+                    </li>
+                    <li class="m-nav__item">
+                        <a href="" class="m-nav__link">
+                            <span class="m-nav__link-text">
+                                Financial Statement
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="m-content">
+        <div class="row">
+            <div class="col-xl-12">
+                <!--begin::Portlet-->
                 <div class="m-portlet">
                     <div class="m-portlet__head">
                         <div class="m-portlet__head-caption">
@@ -73,16 +76,16 @@
                                 <!--BEGIN: Search -->
                                 <div class="col-lg-3">
 
-                                        <div class="input-group">
-												<div class="input-group-prepend">
-															<span class="input-group-text" id="basic-addon2">
-																<i class="flaticon-search"></i>
-															</span>
-														</div>
-												
-												<input autocomplete="off" type="text" name="q" class="form-control m-input" value="" placeholder="Search..." id="m_quicksearch_input" onkeyup="filterTable()">
-                                                
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon2">
+                                                <i class="flaticon-search"></i>
+                                            </span>
                                         </div>
+
+                                        <input autocomplete="off" type="text" name="q" class="form-control m-input" value="" placeholder="Search..." id="m_quicksearch_input" onkeyup="filterTable()">
+
+                                    </div>
 
                                 </div>
                                 <!--END: Search -->
@@ -132,12 +135,12 @@ WHERE role_id=3;");
                     <!--end::Form-->
                 </div>
                 <!--end::Portlet-->
-						</div>
-						</div>
-					</div>
-					</div>
-					<!-- END: Subheader -->
+            </div>
+        </div>
     </div>
+</div>
+<!-- END: Subheader -->
+</div>
 
 <script language='javascript'>
     function filterTable() {
@@ -160,5 +163,15 @@ WHERE role_id=3;");
     }
 </script>
 
-	<?php include '../general/footer_content.php';?>
-	<?php include '../general/footer.php';?>
+<?php include '../general/footer_content.php'; ?>
+<?php include '../general/footer.php';
+//}//end of session and role_id checking
+//    elseif(isset($_SESSION['username']) && $_SESSION['role_id']==='1'){
+//        header('Location: ../user_super_admin/userdashboard.php');
+//    }
+//    elseif(isset($_SESSION['username']) && $_SESSION['role_id']==='3'){
+//        header('Location: ../user_client_admin/client_admin_dashboard.php');
+//    }
+//    else{
+//        header('Location: ../user_login/login.php');
+//    } ?>
