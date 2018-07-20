@@ -517,7 +517,7 @@ include '../general/navigation_clientadmin.php';
         ?>
 
 		<br>
-        <form action="next_page.php" method="post" onsubmit="updateCategory()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+        <form name='detailsForm' action="next_page.php" method="post" onsubmit="validateForm()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
 
 
 		<div class="m-portlet__body">
@@ -650,11 +650,26 @@ include '../general/navigation_clientadmin.php';
                 }
             }
             ?>
-            <input type="submit" value="Submit" class="btn btn-brand">
+            <input name="submit" type="submit" value="Submit" class="btn btn-brand">
         </form>
 
 
 <script type="text/javascript">
+		function validateForm(){
+			var submitBtn = document.forms['detailsForm']['submit'];
+			submitBtn.disabled = true;
+			var companyUEN = document.getElementById("companyregID").value;
+			if (companyUEN == ""){
+				if (companyUEN == ""){
+					alert("Company UEN must be entered");
+				}
+				submitBtn.disabled = false;
+				return false;
+			} else {
+				updateCategory();
+				return true;
+			}
+		}
     function updateCategory() {
       var numberOfYears = <?php echo count($trialBalanceArray);?>;
       var undefinedArray = <?php echo json_encode($yearlyUndefinedRows);?>;

@@ -121,6 +121,11 @@ $_SESSION['companyName'] = "Abc Pte. Ltd.";
     </div>
 
 		<script>
+		// reset the dropdown box and form when user presses back
+		document.getElementById("tbNumber").selectedIndex = 0;
+		document.forms['uploadForm'].reset();
+
+		// validation to ensure all input are not null and are of valid input
 		function validateForm(){
 			var submitBtn = document.forms['uploadForm']['submit'];
 			submitBtn.disabled = true;
