@@ -60,7 +60,7 @@
 /*
  * joey local DB
  */
-//session_start();
+session_start();
 
 $DBHOST = 'localhost';
 $DBNAME = 'ecomplyc_itp';
