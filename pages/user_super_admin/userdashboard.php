@@ -1,10 +1,10 @@
 <?php 
     //check for username and role_id
     //if(isset($_SESSION['username']) && $_SESSION['role_id']==='1'){
-
+    require_once '../db_connection/db.php';
     include '../general/header.php';
     include '../general/navigation_superadmin.php';
-    include '../db_connection/db.php'; 
+     
 ?>
 
 <div class="m-grid__item m-grid__item--fluid m-wrapper" > <!-- style="background: url(../../assets/app/media/img/bg/repeatbg.png); background-repeat: repeat;" -->
