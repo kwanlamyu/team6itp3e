@@ -45,6 +45,7 @@
 						<div class="m-content">
 						<div class="row">
 							<div class="col-lg-12">
+
 						<!--begin::Portlet-->
 								<div class="m-portlet">
 									<div class="m-portlet__head">
@@ -60,42 +61,80 @@
 										</div>
 									</div>
 									<!--begin::Form-->
-									<form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+									<form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="createAccountant" name="createAccountant" action="create_accountant.php" method="POST">
+									
+									<?php include('create_accountant_validation.php'); ?>
+									
 										<div class="m-portlet__body">
 											<div class="form-group m-form__group row">
 												<label class="col-lg-2 col-form-label">
 													Accountant Name:
 												</label>
 												<div class="col-lg-3">
-													<input type="email" class="form-control m-input" >
-													<span class="m-form__help">
-														Please enter accountant name
-													</span>
+													<input type="text" class="form-control" id="accountantid" name="accountantid" placeholder="Enter a username" <?php
+                    if (!empty($_POST['accountantid'])) {
+                        echo "value=\"" . $_POST["accountantid"] . "\"";
+                    }
+                    ?>>
+                    <span class="error"><?php echo $unameErr; ?></span>
+													
+													
+													
+													
+													
+													
 												</div>
 												<label class="col-lg-2 col-form-label">
 													Email:
 												</label>
 												<div class="col-lg-3">
-													<input type="email" class="form-control m-input" >
-													<span class="m-form__help">
-														Please enter email
-													</span>
+													<input type="email" class="form-control" id="email" name="email" placeholder="Enter Accountant's email" <?php
+                    if (!empty($_POST['email'])) {
+                        echo "value=\"" . $_POST["email"] . "\"";
+                    }
+                    ?>>
+                    <span class="error"><?php echo $emailErr; ?></span>
 												</div>
 											</div>
+											
+											<div class="form-group m-form__group row">
+												<label class="col-lg-2 col-form-label">
+													Password:
+												</label>
+												<div class="col-lg-3">
+													 <input type="password" class="form-control" id="accountantpassword" name="accountantpassword" placeholder="Password">
+                    <span class="error"><?php echo $passErr; ?></span>
+                    <span class="error"><?php echo $twopassErr; ?></span>
+													
+												</div>
+												<label class="col-lg-2 col-form-label">
+													Confirm Password:
+												</label>
+												<div class="col-lg-3">
+													<input type="password" class="form-control" id="accountantcpassword" name="accountantcpassword" placeholder="Confirm Password">
+                    <span class="error"><?php echo $cpassErr; ?></span>
+                    <span class="error"><?php echo $twopassErr; ?></span>
+												</div>
+											</div>
+											
+											
+											
 										</div>
 										<div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
 											<div class="m-form__actions m-form__actions--solid">
 												<div class="row">
-													<div class="col-lg-2"></div>
-													<div class="col-lg-10">
-														<button type="reset" class="btn btn-success">
+													<div class="col-lg-5"></div>
+													<div class="col-lg-7">
+														<button type="submit" name="createButton" id="createButton" class="btn btn-success">
 															Submit
 														</button>
-														<button type="reset" class="btn btn-secondary">
-															Cancel
+														<button type="reset" class="btn btn-danger">
+															Clear
 														</button>
 													</div>
 												</div>
+												
+												
 											</div>
 										</div>
 									</form>

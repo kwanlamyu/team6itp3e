@@ -31,32 +31,26 @@
                         <!--begin::Section-->
                         <div class="m-section">
                             <div class="row">
-                                <div class="col-lg-6" align="left">
-                                    <div>
+                                <div class="col-lg-9" align="left">
+                                    <div class="input-group">
                                         <form method="post" action="../user_login/export.php">
                                             <input type="submit" class="btn btn-outline-success" name="export" value="CSV Export"/>
                                         </form> 
                                     </div>
                                 </div>
                                 <!--BEGIN: Search -->
-                                <div class="col-lg-6 m-header-search m-header-search--expandable m-header-search--skin-light" m-quicksearch-mode="default">
+                                <div class="col-lg-3">
 
-                                    <form class="m-header-search__form">
-                                        <div class="m-header-search__wrapper">
-                                            <span class="m-header-search__icon-search" id="m_quicksearch_search">
-                                                <i class="flaticon-search"></i>
-                                            </span>
-                                            <span class="m-header-search__input-wrapper">
-                                                <input autocomplete="off" type="text" name="q" class="m-header-search__input" value="" placeholder="Search..." id="m_quicksearch_input" onkeyup="filterTable()">
-                                            </span>
-                                            <span class="m-header-search__icon-close" id="m_quicksearch_close">
-                                                <i class="la la-remove"></i>
-                                            </span>
-                                            <span class="m-header-search__icon-cancel" id="m_quicksearch_cancel">
-                                                <i class="la la-remove"></i>
-                                            </span>
+                                        <div class="input-group">
+												<div class="input-group-prepend">
+															<span class="input-group-text" id="basic-addon2">
+																<i class="flaticon-search"></i>
+															</span>
+														</div>
+												
+												<input autocomplete="off" type="text" name="q" class="form-control m-input" value="" placeholder="Search..." id="m_quicksearch_input" onkeyup="filterTable()">
+                                                
                                         </div>
-                                    </form>
 
                                 </div>
                                 <!--END: Search -->

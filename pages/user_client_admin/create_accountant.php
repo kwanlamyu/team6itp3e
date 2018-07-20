@@ -1,5 +1,6 @@
 <?php include '../general/header.php'; ?>
 <?php include '../general/navigation_clientadmin.php'; ?>
+
 <div class="row">
     <div class="card">
         <div class="card-body">
