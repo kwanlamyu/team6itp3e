@@ -156,7 +156,12 @@ $_SESSION['companyName'] = "Abc Pte. Ltd.";
 					var formattedEndDate = new Date(endYear, endMonth - 1, endDay);
 					if (formattedStartDate >= today || formattedEndDate >= today){
 						dateFlag = 1;
-						dateError = "Start date should not later than today.";
+						if (formattedStartDate >= today){
+							dateError = "Start date ";
+						} else if (formattedEndDate >= today){
+							dateError = "End date ";
+						}
+						dateError += "Start date should not later than today.";
 						break;
 					} else if (formattedStartDate > formattedEndDate){
 						dateFlag = 1;

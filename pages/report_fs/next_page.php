@@ -19,9 +19,9 @@ $companyName = $_POST['companyName'];
 $companyregID = $_POST["companyregID"];
 $yearEnd = $_POST["yearEnd"];
 $todayDate = $_POST["todayDate"];
-$firstBalanceDate = $_POST["firstBalanceDate"];
-$secondBalanceDate = $_POST["secondBalanceDate"];
-$thirdBalanceDate = $_POST["thirdBalanceDate"];
+// $firstBalanceDate = $_POST["firstBalanceDate"];
+// $secondBalanceDate = $_POST["secondBalanceDate"];
+// $thirdBalanceDate = $_POST["thirdBalanceDate"];
 $companyPA = $_POST["companyPA"];
 $companyAddress = $_POST["companyAddress"];
 $frsDate = $_POST['frsDate'];
@@ -101,7 +101,7 @@ foreach ($tempUniqueCategoryArray as $insert) {
             <div class="col-lg-12">
                 <div class="m-portlet m-portlet--tab">
 
-                    <p id="data">Hello World!</p>
+                    <p id="data"></p>
                     <p id="test"></p>
 
                 </div>
@@ -137,9 +137,11 @@ foreach ($tempUniqueCategoryArray as $insert) {
     var tempStartShareArray = "<?php echo $tempStartShareArray?>";
     var tempEndShareArray = "<?php echo $tempEndShareArray?>";
     var todayDate = "<?php echo $todayDate; ?>";
-    var firstBalanceDate = "<?php echo $firstBalanceDate; ?>";
-    var secondBalanceDate = "<?php echo $secondBalanceDate; ?>";
-    var thirdBalanceDate = "<?php echo $thirdBalanceDate; ?>";
+    /*
+    var firstBalanceDate = "";
+    var secondBalanceDate = "";
+    var thirdBalanceDate = "";
+    */
     var companyPA = "<?php echo $companyPA; ?>";
     var companyAddress = "<?php echo $companyAddress; ?>";
     var frsDate = "<?php echo $frsDate; ?>";
@@ -158,8 +160,8 @@ foreach ($tempUniqueCategoryArray as $insert) {
 
     // Creation of form
     var formElement = "<form id='form' name='passDataForm' method='post' action='temp_real.php'>\n\
-                    <b>Category:</b> <input type='text' name='category' value='" + categoryArray[counter] + "' id='categoryLooper'><br>\n\
-                    ";
+                    <b>Category:</b> <input type='text' name='category' value='" + categoryArray[counter] + "' id='categoryLooper'>\n\
+                    <button type='button' id='skipBtn'>Skip</button>";
 
     formElement += "<br><br>\n\
                     <b>TB Accounts:</b>\n\
@@ -170,6 +172,7 @@ foreach ($tempUniqueCategoryArray as $insert) {
     }
 
     formElement += "<p id='helpingWords'><b>Helping Keys:</b><br></p>\n\
+                    <button type='button' id='addManualBtn'>Add Manual Input Boxes</button><br/><br/>\n\
                     <p id='inputField'> Manual Accounts: <input type='text' id='mAccount0'> \n\
                     Values: <input type='text' id='mValue0'>";
 
@@ -183,9 +186,7 @@ foreach ($tempUniqueCategoryArray as $insert) {
 //    formElement += "</select>";
 
     formElement += "<br><br></p>\n\
-                    <button type='button' id='addManualBtn'>Add Manual Input Boxes</button><br><br>\n\
-                    <button type='button' id='skipBtn'>Skip</button>\n\
-                    <button type='button' id='nextBtn'>Next & Submit</button>\n\
+                    <button type='button' id='nextBtn'>Next</button>\n\
                     <button type='submit' id='submitBtn'>Submit</button>\n\
                     <input type='hidden' name='passData' value='" + storeCategory + "' id='passData'/>\n\
                     <input type='hidden' name='years[]' value='" + years + "'/>\n\
@@ -198,9 +199,6 @@ foreach ($tempUniqueCategoryArray as $insert) {
                     <input type='hidden' name='tempStartShareArray' value='" + tempStartShareArray + "'/>\n\
                     <input type='hidden' name='tempEndShareArray' value='" + tempEndShareArray + "'/>\n\
                     <input type='hidden' name='todayDate' value='" + todayDate + "'/>\n\
-                    <input type='hidden' name='firstBalanceDate' value='" + firstBalanceDate + "'/>\n\
-                    <input type='hidden' name='secondBalanceDate' value='" + secondBalanceDate + "'/>\n\
-                    <input type='hidden' name='thirdBalanceDate' value='" + thirdBalanceDate + "'/>\n\
                     <input type='hidden' name='companyPA' value='" + companyPA + "'/>\n\
                     <input type='hidden' name='companyAddress' value='" + companyAddress + "'/>\n\
                     <input type='hidden' name='frsDate' value='" + frsDate + "'/>\n\
@@ -214,7 +212,6 @@ foreach ($tempUniqueCategoryArray as $insert) {
 
         }
     }
-
     formElement += "</form><div id='results'> </div>";
 
     document.getElementById("data").innerHTML = formElement;
@@ -224,7 +221,7 @@ foreach ($tempUniqueCategoryArray as $insert) {
 
 //------------------------------------------------------------------------------------------
     var clickAdd = document.getElementById('addManualBtn');
-    var c = 1;
+    // var c = 1;
     clickAdd.onclick = function () {
         var tempAccountArray = [];
         var tempValueArray = [];
@@ -249,7 +246,7 @@ foreach ($tempUniqueCategoryArray as $insert) {
         for (t = 0; t < yearsCount; t++) {
             document.getElementById('inputField').innerHTML += "<input type='radio' name='" + c + "' id='date" + (count) + t + "' value='" + years[t] + "'>" + years[t];
         }
-        c++;
+        // c++;
 
         document.getElementById('inputField').innerHTML += "<br><br>";
 
@@ -296,6 +293,7 @@ foreach ($tempUniqueCategoryArray as $insert) {
 //------------------------------------------------------------------------------------------
     var clickNext = document.getElementById('nextBtn');
     clickNext.onclick = function () {
+
 
         // Trying to store with * to separate the category (package)
         storeCategory.push("*");
