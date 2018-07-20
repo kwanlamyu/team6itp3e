@@ -459,58 +459,59 @@ include '../general/navigation_clientadmin.php';
             //end::Accordion
         }
 
+// no longer required due to change of implementation, updating of categories is now done in updateCategories.php
         //begin::Modified
-        if (count($modifiedCategoryArray) > 0) {
-            echo '<div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_m" role="tablist"><div class="m-accordion__item m-accordion__item--info">
-
-												<div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_m_item_1_head" data-toggle="collapse" href="#m_accordion_m_item_1_body" aria-expanded="  false">
-													<span class="m-accordion__item-icon">
-														<i class="fa flaticon-user-ok"></i>
-													</span>
-													<span class="m-accordion__item-title">Replaced Categories</span>
-													<span class="m-accordion__item-mode"></span>
-												</div>
-												<div class="m-accordion__item-body collapse" id="m_accordion_m_item_1_body" class=" " role="tabpanel" aria-labelledby="m_accordion_5_item_1_head" data-parent="#m_accordion_m">
-													<div class="m-accordion__item-content"><p>';
-            echo '<table class="table table-bordered m-table m-table--border-success">
-											<thead>
-												<tr>
-													<th>
-														#
-													</th>
-													<th>
-														Previous Name
-													</th>
-													<th>
-														Replaced Name
-													</th>
-												</tr>
-											</thead>
-											<tbody>';
-            for ($i = 0; $i < count($modifiedCategoryArray);$i++) {
-                $tempStr = explode(",", $modifiedCategoryArray[$i]);
-                echo '<tr>';
-                echo '<th scope="row">'.$i.'</th>';
-                echo '<td>'.$tempStr[0].'</td>';
-                echo '<td>'.$tempStr[1].'</td>';
-                echo '</tr>';
-            }
-            echo '</tbody>
-										</table>';
-            /* Old Code for Reference
-              for ($i = 0; $i < count($modifiedCategoryArray);$i++){
-                $tempStr = explode(",", $modifiedCategoryArray[$i]);
-                echo $tempStr[0] . ' --> ' . $tempStr[1] . '<br>';
-              }
-              */
-            echo '
-														</p>
-													</div>
-												</div>
-
-											</div>
-											</div>';
-        }
+        // if (count($modifiedCategoryArray) > 0) {
+        //     echo '<div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_m" role="tablist"><div class="m-accordion__item m-accordion__item--info">
+				//
+				// 								<div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_m_item_1_head" data-toggle="collapse" href="#m_accordion_m_item_1_body" aria-expanded="  false">
+				// 									<span class="m-accordion__item-icon">
+				// 										<i class="fa flaticon-user-ok"></i>
+				// 									</span>
+				// 									<span class="m-accordion__item-title">Replaced Categories</span>
+				// 									<span class="m-accordion__item-mode"></span>
+				// 								</div>
+				// 								<div class="m-accordion__item-body collapse" id="m_accordion_m_item_1_body" class=" " role="tabpanel" aria-labelledby="m_accordion_5_item_1_head" data-parent="#m_accordion_m">
+				// 									<div class="m-accordion__item-content"><p>';
+        //     echo '<table class="table table-bordered m-table m-table--border-success">
+				// 							<thead>
+				// 								<tr>
+				// 									<th>
+				// 										#
+				// 									</th>
+				// 									<th>
+				// 										Previous Name
+				// 									</th>
+				// 									<th>
+				// 										Replaced Name
+				// 									</th>
+				// 								</tr>
+				// 							</thead>
+				// 							<tbody>';
+        //     for ($i = 0; $i < count($modifiedCategoryArray);$i++) {
+        //         $tempStr = explode(",", $modifiedCategoryArray[$i]);
+        //         echo '<tr>';
+        //         echo '<th scope="row">'.$i.'</th>';
+        //         echo '<td>'.$tempStr[0].'</td>';
+        //         echo '<td>'.$tempStr[1].'</td>';
+        //         echo '</tr>';
+        //     }
+        //     echo '</tbody>
+				// 						</table>';
+        //     /* Old Code for Reference
+        //       for ($i = 0; $i < count($modifiedCategoryArray);$i++){
+        //         $tempStr = explode(",", $modifiedCategoryArray[$i]);
+        //         echo $tempStr[0] . ' --> ' . $tempStr[1] . '<br>';
+        //       }
+        //       */
+        //     echo '
+				// 										</p>
+				// 									</div>
+				// 								</div>
+				//
+				// 							</div>
+				// 							</div>';
+        // }
 
 
         ?>

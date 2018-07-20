@@ -2,7 +2,16 @@
 require_once '../db_connection/db.php';
 include '../general/header.php';
 include '../general/navigation_accountant.php';
+require_once __DIR__ . '\..\..\vendor\autoload.php';
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
+// use PhpOffice\PhpSpreadsheet\Reader\Csv;
+
+// can change to read csv file as well
+$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+// only read data
+$reader->setReadDataOnly(true);
 ?>
 <div class="m-grid__item m-grid__item--fluid m-wrapper">
   <div class="m-subheader ">
@@ -158,208 +167,266 @@ include '../general/navigation_accountant.php';
                 if ($errorFlag == 1) {
                     echo "Sorry, your file was not uploaded.";
                 } else {
-        // loop end here
-        try {
-          $query = $DB_con->prepare("SELECT * FROM main_category WHERE company_name = :companyName AND client_company = :clientName");
-          $query->bindParam(':companyName', $companyName);
-          $query->bindParam(':clientName', $clientName);
-          $companyName = $_SESSION['companyName'];
-          $clientName = $_POST['clientCompany'];
-          $query->execute();
-          $result = $query->setFetchMode(PDO::FETCH_ASSOC);
-          $result = $query->fetchAll();
-          if (count($result) === 0){
-            // insert default data here
-            $query = $DB_con->prepare("INSERT INTO main_category (company_name, client_company, main_account, account_names) VALUES (:company_name, :client_company, :main_account, :account_names)");
-            $query->bindParam(':company_name', $companyName);
-            $query->bindParam(':client_company', $clientName);
-            $query->bindParam(':main_account', $mainAccount);
-            $query->bindParam(':account_names', $accountNames);
-            // insert adjustments
-            $mainAccount = "Adjustments";
-            $accountNames = "Depreciation,Interest on bank borrowings";
+                  for ($i = 0; $i < count($fileArray); $i++){
+          					$target_file = $fileArray[$i];
+          					$spreadsheet = $reader->load($target_file);
+          					$numberOfSheets = $spreadsheet->getSheetCount();
+          					if ($numberOfSheets > 1) {
+          	            die("Please upload only 1 sheet per trial balance.<br/><a href='fs_main.php'>Upload again</a>");
+          	        }
+                    // implementation only allows 1 sheet in file
+                    $activeSheet = 0;
+                    $sheetData = $spreadsheet->getSheet($activeSheet)->toArray();
+                    $accountColumn = false;
+                    $accountColFound = 0;
+                    $headingRow = false;
+                    for ($x = 0; $x < count($sheetData); $x++){
+                      for ($j = 0; $j < count($sheetData[$x]); $j++){
+                        $currentData = $sheetData[$x][$j];
+                        if (stripos($currentData,"account") !== false){
+                          $accountColumn = $j;
+                          break;
+                        }
+                      }
+                      if (strcasecmp(gettype($accountColumn),"boolean") !== 0){
+                        $accountColFound = 1;
+                        $headingRow = $x + 1;
+                        break;
+                      }
+                    }
+                    if ($accountColFound == 0) {
+                      die("Please ensure headings are included in the file.(Account, Debit, Credit)");
+                    } else {
+                      $allAccounts = array();
+                      for ($x = $headingRow; $x < count($sheetData); $x++){
+                          $currentData = trim($sheetData[$x][$accountColumn]);
+                          if (empty($currentData) || in_array($currentData,$allAccounts)){
+                            continue;
+                          } else {
+                            array_push($allAccounts, $currentData);
+                          }
+                    }
+          				}
+                }
+
+        if (isset($allAccounts)){
+          try {
+            echo "<hr/>";
+            $query = $DB_con->prepare("SELECT * FROM main_category WHERE company_name = :companyName AND client_company = :clientName");
+            $query->bindParam(':companyName', $companyName);
+            $query->bindParam(':clientName', $clientName);
+            $companyName = $_SESSION['companyName'];
+            $clientName = $_POST['clientCompany'];
             $query->execute();
+            $result = $query->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $query->fetchAll();
+            if (count($result) === 0){
+              // insert default data here
+              $query = $DB_con->prepare("INSERT INTO main_category (company_name, client_company, main_account, account_names) VALUES (:company_name, :client_company, :main_account, :account_names)");
+              $query->bindParam(':company_name', $companyName);
+              $query->bindParam(':client_company', $clientName);
+              $query->bindParam(':main_account', $mainAccount);
+              $query->bindParam(':account_names', $accountNames);
+              // insert adjustments
+              $mainAccount = "Adjustments";
+              $accountNames = "Depreciation,Interest on bank borrowings";
+              $query->execute();
 
-            // insert administrative expenses
-            $mainAccount = "Administrative Expenses";
-            $accountNames = "Accounting Fee,Administrative Expenses";
+              // insert administrative expenses
+              $mainAccount = "Administrative Expenses";
+              $accountNames = "Accounting Fee,Administrative Expenses";
+              $query->execute();
+
+              // insert assets
+              $mainAccount = "Assets";
+              $accountNames = "Bank Balances,Deposits,Trade Receivables,Plant and Equipment,Prepayments,Amount owing from a Shareholder";
+              $query->execute();
+
+              $mainAccount = "Both Liabilities";
+              $accountNames = "Borrowings";
+              $query->execute();
+
+              $mainAccount = "Capital";
+              $accountNames = "Share Capital,Retained Profits,Accumulated Losses";
+              $query->execute();
+
+              $mainAccount = "Current Assets";
+              $accountNames = "Bank Balance,Trade Receivables,Deposits,Prepayments,Amount owing from a Shareholder";
+              $query->execute();
+
+              $mainAccount = "Current Liabilities";
+              $accountNames = "Trade Payables,GST Payables,Accruals,Amount owing to a Shareholder,Current Income Tax Liabilities";
+              $query->execute();
+
+              $mainAccount = "Distribution and Marketing Expenses";
+              $accountNames = "Telephone Expenses,Transport Expenses,Travel Expenses";
+              $query->execute();
+
+              $mainAccount = "Expenses";
+              $accountNames = "Administrative Expenses,Distribution and Marketing Expenses,Income Tax Expense,Finance Expenses";
+              $query->execute();
+
+              $mainAccount = "Income";
+              $accountNames = "Revenue,Other Income,Exchange Gain - Trade,Exchange Gain - Non-trade";
+              $query->execute();
+
+              $mainAccount = "Non-current Assets";
+              $accountNames = "Plant and Equipment";
+              $query->execute();
+
+              $mainAccount = "Non-current Liabilities";
+              $accountNames = "";
+              $query->execute();
+
+              $mainAccount = "Tax Payable";
+              $accountNames = "Income Tax Payables,Current Income Tax Liabilities";
+              $query->execute();
+
+              $mainAccount = "Trade and other payables";
+              $accountNames = "Accruals,GST Payables,Amount owing to a Shareholder,Trade Payables";
+              $query->execute();
+
+              $mainAccount = "Exchange Gain - Non-trade";
+              $accountNames = "Unrealised exchange difference,Exchange Gain - Non-trade";
+              $query->execute();
+
+              $mainAccount = "Exchange Gain - Trade";
+              $accountNames = "Exchange Gain - Trade,Exchange difference";
+              $query->execute();
+
+              $query = $DB_con->prepare("INSERT INTO sub_category (company_name, client_company, sub_account, account_names) VALUES (:company_name, :client_company, :sub_account, :account_names)");
+              $query->bindParam(':company_name', $companyName);
+              $query->bindParam(':client_company', $clientName);
+              $query->bindParam(':sub_account', $subAccount);
+              $query->bindParam(':account_names', $accountNames);
+
+              $subAccount = "Accruals";
+              $accountNames = "Accruals";
+              $query->execute();
+
+              $subAccount = "Administrative Expenses";
+              $accountNames = "Accounting fee,Administrative expenses,Business entertainment,Bank Charges,Compilation fee,Depreciation,Entertainment,Freight paid,Director Remuneration,Insurance,Internet expenses,Late Fees Paid,Nominee Director Services,Office Supplies,Postage and courier,Professional Fee,Printing and stationery,Rent,Secretarial services,Staff Salaries,Staff cost - employment pass,Secretarial  fee,Taxation services,Skill Development Levy,Wages & Salaries";
+              $query->execute();
+
+              $subAccount = "Amount owing from a Shareholder";
+              $accountNames = "Amount owing to/(from) SH";
+              $query->execute();
+
+              $subAccount = "Bank Balances";
+              $accountNames = "OCBC Bank,OCBC - USD,OCBC - USD Exchange";
+              $query->execute();
+
+              $subAccount = "Borrowings";
+              $accountNames = "Borrowings";
+              $query->execute();
+
+              $subAccount = "Cost of Sales";
+              $accountNames = "Purchases";
+              $query->execute();
+
+              $subAccount = "Current Income Tax Liabilities";
+              $accountNames = "Income tax payable";
+              $query->execute();
+
+              $subAccount = "Deposits";
+              $accountNames = "Hoiio deposit,Deposits Paid";
+              $query->execute();
+
+              $subAccount = "Distribution and Marketing Expenses";
+              $accountNames = "Telephone,Transport - Taxi fare,Travelling";
+              $query->execute();
+
+              $subAccount = "Finance Expenses";
+              $accountNames = "Interest on bank borrowings";
+              $query->execute();
+
+              $subAccount = "GST Payables";
+              $accountNames = "GST control";
+              $query->execute();
+
+              $subAccount = "Income Tax Expense";
+              $accountNames = "Income tax expense,Income Tax Payables,Income tax expenses";
+              $query->execute();
+
+              $subAccount = "Other Income";
+              $accountNames = "Unrealised exchange difference";
+              $query->execute();
+
+              $subAccount = "Plant and Equipment";
+              $accountNames = "Office Equipment at Cost,Office Equipment Accum Dep'n,Softwares at Cost,Softwares Accum Dep'n,Computer & servers - cost,Computer and servers - acc dep";
+              $query->execute();
+
+              $subAccount = "Prepayments";
+              $accountNames = "Prepayments";
+              $query->execute();
+
+              $subAccount = "Retained Profits";
+              $accountNames = "Retained Earnings";
+              $query->execute();
+
+              $subAccount = "Revenue";
+              $accountNames = "Sales";
+              $query->execute();
+
+              $subAccount = "Share Capital";
+              $accountNames = "Paid Up Capital";
+              $query->execute();
+
+              $subAccount = "Trade Payables";
+              $accountNames = "Trade Payables - USD,Trade Payables - USD Exchange";
+              $query->execute();
+
+              $subAccount = "Trade Receivables";
+              $accountNames = "Trade Receivables - USD,Trade Receivables - USD Exchan";
+              $query->execute();
+
+              $subAccount = "Amount owing to a Shareholder";
+              $accountNames = "Amount owing to directors";
+              $query->execute();
+
+              $subAccount = "Telephone Expenses";
+              $accountNames = "Telephone charges,Telephone";
+              $query->execute();
+
+              $subAccount = "Exchanges";
+              $accountNames = "Unrealised exchange difference,Unrealised exch - Non trade,Exchange difference,Unrealised exchange difference";
+              $query->execute();
+
+            }
+            echo "<span>Company: " . $companyName . "</span><br/>";
+            echo "<span>Client: " . $clientName . "</span><br/>";
+            // TODO: change to editable
+            $query = $DB_con->prepare("SELECT * FROM sub_category WHERE company_name =:companyName AND client_company = :clientName");
+            $query->bindParam(':companyName', $companyName);
+            $query->bindParam(':clientName', $clientName);
             $query->execute();
-
-            // insert assets
-            $mainAccount = "Assets";
-            $accountNames = "Bank Balances,Deposits,Trade Receivables,Plant and Equipment,Prepayments,Amount owing from a Shareholder";
-            $query->execute();
-
-            $mainAccount = "Both Liabilities";
-            $accountNames = "Borrowings";
-            $query->execute();
-
-            $mainAccount = "Capital";
-            $accountNames = "Share Capital,Retained Profits,Accumulated Losses";
-            $query->execute();
-
-            $mainAccount = "Current Assets";
-            $accountNames = "Bank Balance,Trade Receivables,Deposits,Prepayments,Amount owing from a Shareholder";
-            $query->execute();
-
-            $mainAccount = "Current Liabilities";
-            $accountNames = "Trade Payables,GST Payables,Accruals,Amount owing to a Shareholder,Current Income Tax Liabilities";
-            $query->execute();
-
-            $mainAccount = "Distribution and Marketing Expenses";
-            $accountNames = "Telephone Expenses,Transport Expenses,Travel Expenses";
-            $query->execute();
-
-            $mainAccount = "Expenses";
-            $accountNames = "Administrative Expenses,Distribution and Marketing Expenses,Income Tax Expense,Finance Expenses";
-            $query->execute();
-
-            $mainAccount = "Income";
-            $accountNames = "Revenue,Other Income,Exchange Gain - Trade,Exchange Gain - Non-trade";
-            $query->execute();
-
-            $mainAccount = "Non-current Assets";
-            $accountNames = "Plant and Equipment";
-            $query->execute();
-
-            $mainAccount = "Non-current Liabilities";
-            $accountNames = "";
-            $query->execute();
-
-            $mainAccount = "Tax Payable";
-            $accountNames = "Income Tax Payables,Current Income Tax Liabilities";
-            $query->execute();
-
-            $mainAccount = "Trade and other payables";
-            $accountNames = "Accruals,GST Payables,Amount owing to a Shareholder,Trade Payables";
-            $query->execute();
-
-            $mainAccount = "Exchange Gain - Non-trade";
-            $accountNames = "Unrealised exchange difference,Exchange Gain - Non-trade";
-            $query->execute();
-
-            $mainAccount = "Exchange Gain - Trade";
-            $accountNames = "Exchange Gain - Trade,Exchange difference";
-            $query->execute();
-
-            $query = $DB_con->prepare("INSERT INTO sub_category (company_name, client_company, sub_account, account_names) VALUES (:company_name, :client_company, :sub_account, :account_names)");
-            $query->bindParam(':company_name', $companyName);
-            $query->bindParam(':client_company', $clientName);
-            $query->bindParam(':sub_account', $subAccount);
-            $query->bindParam(':account_names', $accountNames);
-
-            $subAccount = "Accruals";
-            $accountNames = "Accruals";
-            $query->execute();
-
-            $subAccount = "Administrative Expenses";
-            $accountNames = "Accounting fee,Administrative expenses,Business entertainment,Bank Charges,Compilation fee,Depreciation,Entertainment,Freight paid,Director Remuneration,Insurance,Internet expenses,Late Fees Paid,Nominee Director Services,Office Supplies,Postage and courier,Professional Fee,Printing and stationery,Rent,Secretarial services,Staff Salaries,Staff cost - employment pass,Secretarial  fee,Taxation services,Skill Development Levy,Wages & Salaries";
-            $query->execute();
-
-            $subAccount = "Amount owing from a Shareholder";
-            $accountNames = "Amount owing to/(from) SH";
-            $query->execute();
-
-            $subAccount = "Bank Balances";
-            $accountNames = "OCBC Bank,OCBC - USD,OCBC - USD Exchange";
-            $query->execute();
-
-            $subAccount = "Borrowings";
-            $accountNames = "Borrowings";
-            $query->execute();
-
-            $subAccount = "Cost of Sales";
-            $accountNames = "Purchases";
-            $query->execute();
-
-            $subAccount = "Current Income Tax Liabilities";
-            $accountNames = "Income tax payable";
-            $query->execute();
-
-            $subAccount = "Deposits";
-            $accountNames = "Hoiio deposit,Deposits Paid";
-            $query->execute();
-
-            $subAccount = "Distribution and Marketing Expenses";
-            $accountNames = "Telephone,Transport - Taxi fare,Travelling";
-            $query->execute();
-
-            $subAccount = "Finance Expenses";
-            $accountNames = "Interest on bank borrowings";
-            $query->execute();
-
-            $subAccount = "GST Payables";
-            $accountNames = "GST control";
-            $query->execute();
-
-            $subAccount = "Income Tax Expense";
-            $accountNames = "Income tax expense,Income Tax Payables,Income tax expenses";
-            $query->execute();
-
-            $subAccount = "Other Income";
-            $accountNames = "Unrealised exchange difference";
-            $query->execute();
-
-            $subAccount = "Plant and Equipment";
-            $accountNames = "Office Equipment at Cost,Office Equipment Accum Dep'n,Softwares at Cost,Softwares Accum Dep'n,Computer & servers - cost,Computer and servers - acc dep";
-            $query->execute();
-
-            $subAccount = "Prepayments";
-            $accountNames = "Prepayments";
-            $query->execute();
-
-            $subAccount = "Retained Profits";
-            $accountNames = "Retained Earnings";
-            $query->execute();
-
-            $subAccount = "Revenue";
-            $accountNames = "Sales";
-            $query->execute();
-
-            $subAccount = "Share Capital";
-            $accountNames = "Paid Up Capital";
-            $query->execute();
-
-            $subAccount = "Trade Payables";
-            $accountNames = "Trade Payables - USD,Trade Payables - USD Exchange";
-            $query->execute();
-
-            $subAccount = "Trade Receivables";
-            $accountNames = "Trade Receivables - USD,Trade Receivables - USD Exchan";
-            $query->execute();
-
-            $subAccount = "Amount owing to a Shareholder";
-            $accountNames = "Amount owing to directors";
-            $query->execute();
-
-            $subAccount = "Telephone Expenses";
-            $accountNames = "Telephone charges,Telephone";
-            $query->execute();
-
-            $subAccount = "Exchanges";
-            $accountNames = "Unrealised exchange difference,Unrealised exch - Non trade,Exchange difference,Unrealised exchange difference";
-            $query->execute();
-
+            $result = $query->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $query->fetchAll();
+            for ($i = 0; $i < count($allAccounts); $i++){
+              echo "Account name: " . $allAccounts[$i] . "<br/>";
+              $foundSubCat = 0;
+              for ($x = 0; $x < count($result); $x++){
+                $underThisAccount = $result[$x]['account_names'];
+                $underThisAccount = explode(",",$underThisAccount);
+                for ($j = 0; $j < count($underThisAccount);$j++){
+                  if (strcasecmp($underThisAccount[$j],$allAccounts[$i]) === 0){
+                    echo "Matching account category: ". $result[$x]['sub_account'] . "<br/>";
+                    $foundSubCat = 1;
+                    break;
+                  }
+                }
+              }
+              if ($foundSubCat == 0){
+                echo "Matching account category: No match blank field here<br/>";
+              }
+            }
+          } catch (PDOException $e) {
+              echo 'Error: ' .$e->getMessage();
           }
-          $query = $DB_con->prepare("SELECT * FROM main_category WHERE company_name = :companyName AND client_company = :clientName");
-          $query->bindParam(':companyName', $companyName);
-          $query->bindParam(':clientName', $clientName);
-          $companyName = $_SESSION['companyName'];
-          $clientName = $_POST['clientCompany'];
-          $query->execute();
-          $result = $query->setFetchMode(PDO::FETCH_ASSOC);
-          $result = $query->fetchAll();
-          echo "<span>Company: " . $companyName . "</span><br/>";
-          echo "<span>Client: " . $clientName . "</span><br/>";
-          // TODO: change to editable
-          for ($i = 0; $i < count($result); $i++){
-            echo "<span>Category: ";
-            echo $result[$i]['main_account'] . "<br/>";
-            echo "<span>Accounts under " . $result[$i]['main_account'] . ": " . $result[$i]['account_names'] . "</span>";
-          }
-        } catch (PDOException $e) {
-            echo 'Error: ' .$e->getMessage();
+        } else {
+          die("Unable to find the accounts in your file, please ensure the column headings (Account, Debit, Credit) are present.");
         }
+
 
         ?>
         <form action="upload.php" method="post" onsubmit="updateCategory()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
