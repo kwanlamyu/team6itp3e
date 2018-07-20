@@ -159,7 +159,7 @@ foreach ($tempUniqueCategoryArray as $insert) {
 //------------------------------------------------------------------------------------------
 
     // Creation of form
-    var formElement = "<form id='form' name='passDataForm' method='post' action='temp_real.php'>\n\
+    var formElement = "<form id='form' name='passDataForm' method='post' action='temp_real.php' onsubmit='return submitForm()'>\n\
                     <b>Category:</b> <input type='text' name='category' value='" + categoryArray[counter] + "' id='categoryLooper'>\n\
                     <button type='button' id='skipBtn'>Skip</button>";
 
@@ -221,7 +221,7 @@ foreach ($tempUniqueCategoryArray as $insert) {
 
 //------------------------------------------------------------------------------------------
     var clickAdd = document.getElementById('addManualBtn');
-    // var c = 1;
+    var c = 1;
     clickAdd.onclick = function () {
         var tempAccountArray = [];
         var tempValueArray = [];
@@ -246,15 +246,16 @@ foreach ($tempUniqueCategoryArray as $insert) {
         for (t = 0; t < yearsCount; t++) {
             document.getElementById('inputField').innerHTML += "<input type='radio' name='" + c + "' id='date" + (count) + t + "' value='" + years[t] + "'>" + years[t];
         }
-        // c++;
+        c++;
 
         document.getElementById('inputField').innerHTML += "<br><br>";
 
         for (i = 0; i < count; i++) {
             document.getElementById('mValue' + i).value = tempAccountArray[i];
             document.getElementById('mAccount' + i).value = tempValueArray[i];
-
-            document.getElementById('date' + i + tempRadioArray[i]).checked = true;
+            if (typeof(tempRadioArray[i]) !== 'undefined'){
+              document.getElementById('date' + i + tempRadioArray[i]).checked = true;
+            }
 
         }
     }
@@ -292,53 +293,155 @@ foreach ($tempUniqueCategoryArray as $insert) {
 
 //------------------------------------------------------------------------------------------
     var clickNext = document.getElementById('nextBtn');
-    clickNext.onclick = function () {
+    clickNext.addEventListener('click', function(){
+      nextIsClicked();
+    });
 
-
-        // Trying to store with * to separate the category (package)
-        storeCategory.push("*");
-        storeCategory.push(document.getElementById('categoryLooper').value);
-
-        for (q = 0; q < accountArrayCount; q++) {
-            if (document.getElementById(q).checked === true) {
-                storeCategory.push(document.getElementById(q).value);
+    function nextIsClicked(fromSubmit) {
+        fromSubmit = fromSubmit || false;
+        resultCheck = validateNext();
+        if (fromSubmit == true){
+          if (resultCheck == 1){
+            return true;
+          } else {
+            if (resultCheck == 0){
+              dataStore();
+              return true;
+            } else {
+              if (manualError != ""){
+                alert(manualError);
+              }
+              if (checkBoxError != ""){
+                alert(checkBoxError);
+              }
+              return false;
             }
-        }
-
-        // For manually enter part
-        var manuallyEnterCount = count + 1;
-        for (w = 0; w < manuallyEnterCount; w++) {
-            if (document.getElementById('mValue' + w).value !== "" && document.getElementById('mAccount' + w).value !== "") {
-                for (r = 0; r < years.length; r++) {
-                    if (document.getElementById('date' + w + r).checked) {
-                        storeCategory.push(" " + r + document.getElementById('mAccount' + w).value + "#" + document.getElementById('mValue' + w).value);
-                    }
-                }
-            }
-        }
-
-        document.getElementById("passData").value = storeCategory;
-        document.getElementById("test").innerHTML += document.getElementById("passData").value + "<br>";
-        // Reset the form - clear all checked checkbox and input field
-        document.getElementById("form").reset();
-        // Change the data displayed for category
-        counter++;
-        document.getElementById('categoryLooper').value = categoryArray[counter];
-
-        // Display helping keys
-        if (document.getElementById('categoryLooper').value === "Income Taxes") {
-            for (e = 0; e < incomeTaxKeyWords.length; e++) {
-                document.getElementById('helpingWords').innerHTML += incomeTaxKeyWords[e] + "<br>";
-            }
-
-        } else if (document.getElementById('categoryLooper').value === "Borrowings") {
-            for (h = 0; h < borrowingsKeywords.length; h++) {
-                document.getElementById('helpingWords').innerHTML += borrowingsKeywords[h] + "<br>";
-            }
-
+          }
+          dataStore();
+          return true;
         } else {
-            document.getElementById('helpingWords').innerHTML = " ";
+          if (resultCheck == 2){
+            alert(manualError);
+            return false;
+          } else if (resultCheck == 1){
+            alert(checkBoxError);
+            return false;
+          } else {
+            dataStore();
+            return true;
+          }
         }
+    }
+
+    function dataStore(){
+      // Trying to store with * to separate the category (package)
+      storeCategory.push("*");
+      storeCategory.push(document.getElementById('categoryLooper').value);
+
+      for (q = 0; q < accountArrayCount; q++) {
+          if (document.getElementById(q).checked === true) {
+              storeCategory.push(document.getElementById(q).value);
+          }
+      }
+
+      // For manually enter part
+      var manuallyEnterCount = count + 1;
+      for (w = 0; w < manuallyEnterCount; w++) {
+          if (document.getElementById('mValue' + w).value !== "" && document.getElementById('mAccount' + w).value !== "") {
+              for (r = 0; r < years.length; r++) {
+                  if (document.getElementById('date' + w + r).checked) {
+                      storeCategory.push(" " + r + document.getElementById('mAccount' + w).value + "#" + document.getElementById('mValue' + w).value);
+                  }
+              }
+          }
+      }
+
+      document.getElementById("passData").value = storeCategory;
+      document.getElementById("test").innerHTML += document.getElementById("passData").value + "<br>";
+      // Reset the form - clear all checked checkbox and input field
+      document.getElementById("form").reset();
+      // Change the data displayed for category
+      counter++;
+      document.getElementById('categoryLooper').value = categoryArray[counter];
+
+      // Display helping keys
+      if (document.getElementById('categoryLooper').value === "Income Taxes") {
+          for (e = 0; e < incomeTaxKeyWords.length; e++) {
+              document.getElementById('helpingWords').innerHTML += incomeTaxKeyWords[e] + "<br>";
+          }
+
+      } else if (document.getElementById('categoryLooper').value === "Borrowings") {
+          for (h = 0; h < borrowingsKeywords.length; h++) {
+              document.getElementById('helpingWords').innerHTML += borrowingsKeywords[h] + "<br>";
+          }
+
+      } else {
+          document.getElementById('helpingWords').innerHTML = " ";
+      }
+    }
+
+    function submitForm(){
+      submitBtn = document.getElementById("submitBtn");
+      submitBtn.disabled = true;
+      if (nextIsClicked(true) == false){
+        submitBtn.disabled = false;
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+    function validateNext(){
+      checkBoxFlag = 1;
+      checkBoxError = "No input detected, please use skip instead";
+      // check that if manual account has input, all required fields are filled in if not empty.
+      manualFlag = 0;
+      manualError = "";
+      for (i = 0; i < c; i++){
+        manualInput = document.getElementById("mAccount" + i).value;
+        manualAmount = document.getElementById("mValue" + i).value;
+        if (manualInput == "" && manualAmount == ""){
+          manualFlag = 2;
+          break;
+        }
+        if ((manualInput != "" && manualAmount == "") || (manualAmount != "" && manualInput == "")){
+          manualFlag = 1;
+          manualError = "Please fill in both manual account and values";
+        } else if (manualInput != "" && manualAmount != ""){
+          if (!isNaN(manualAmount)){
+            radioIsChecked = 1;
+            for (x = 0; x < yearsCount; x++){
+              currentRadio = document.getElementById("date" + i + x);
+              if (currentRadio.checked){
+                radioIsChecked = 0;
+                break;
+              }
+            }
+            if (radioIsChecked == 1){
+              manualFlag = 1;
+              manualError = "Please select a date for the manual input";
+            }
+          } else {
+            manualFlag = 1;
+            manualError = "Only numbers allowed for values";
+          }
+        }
+      }
+      for (i = 0; i < accountArrayCount; i++){
+        currentCheckBox = document.getElementById(i);
+        if (currentCheckBox.checked){
+          checkBoxFlag = 0;
+          break;
+        }
+      }
+      // if manual flag triggered, show error, else proceed with what the button is intended for
+      if (manualFlag == 2 && checkBoxFlag == 1){
+        return 1;
+      } else if (manualFlag == 1){
+        return 2;
+      } else {
+        return 0;
+      }
     }
 //------------------------------------------------------------------------------------------
 
