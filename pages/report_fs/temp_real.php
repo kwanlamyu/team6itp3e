@@ -164,8 +164,8 @@ $years = explode(",", $yearsArray);
 $getHiddenData = $_POST['passData'];
 
 //echo "<b>Original Data: </b>" . $getHiddenData . "<hr>";
-// Convert String to array, then delete away the "*"
-$categoryDataArray = explode("*", $getHiddenData);
+// Convert String to array, then delete away the "*" // convert all to small caps
+$categoryDataArray = explode("*", strtolower($getHiddenData));
 
 // Deleting first array item
 $removedFirstItem = array_shift($categoryDataArray);
@@ -195,6 +195,8 @@ for ($i = 0; $i < count($categoryDataArray); $i++) {
         // $accountValueArray[0] = account
         // $accountValueArray[1] = value
         $accountValueArray = explode("#", $withoutFirstCharacter);
+
+
 
         // check if $innerArray is empty
         if (count($innerArray) == 0) {
@@ -263,15 +265,15 @@ $categoryArray = array();
 for ($aa = 0; $aa < $numberOfSheets; $aa++) {
     // Seperate the data into different category
     for ($ab = 0; $ab < count($data[$aa]); $ab++) {
-        array_push($categoryArray, $data[$aa][$ab][2]);
-        array_push($accountArray, $aa . $data[$aa][$ab][0]);
+        array_push($categoryArray, strtolower($data[$aa][$ab][2]));
+        array_push($accountArray, strtolower($aa . $data[$aa][$ab][0]));
         array_push($valueArray, $data[$aa][$ab][1]);
     }
 }
 
 $incomeTaxPayable = array();
 for ($i = 0; $i < count($accountArray); $i++) {
-    if (stripos($accountArray[$i], "Income tax payable") !== false) {
+    if (stripos($accountArray[$i], "income tax payable") !== false) {
         // ceil is to round up value
         array_push($incomeTaxPayable, ceil($valueArray[$i]));
     }
@@ -279,7 +281,7 @@ for ($i = 0; $i < count($accountArray); $i++) {
 
 $incomeTaxExpenses = array();
 for ($i = 0; $i < count($accountArray); $i++) {
-    if (stripos($accountArray[$i], "Income tax expense") !== false) {
+    if (stripos($accountArray[$i], "income tax expense") !== false) {
         // ceil is to round up value
         array_push($incomeTaxExpenses, ceil($valueArray[$i]));
     }
@@ -287,7 +289,7 @@ for ($i = 0; $i < count($accountArray); $i++) {
 
 $borrowings = array();
 for ($i = 0; $i < count($accountArray); $i++) {
-    if (stripos($accountArray[$i], "Borrowing") !== false) {
+    if (stripos($accountArray[$i], "borrowing") !== false) {
         // round is to round down value
         array_push($borrowings, round($valueArray[$i]));
     }
@@ -297,7 +299,7 @@ $shareCapital = array();
 // 0 = 2016 , 1 = 2015 , 2 = 2014 , etc ...
 for ($aa = 0; $aa < $numberOfSheets; $aa++) {
     for ($ab = 0; $ab < count($data[$aa]); $ab++) {
-        if (strcasecmp($data[$aa][$ab][2], "Share Capital") == 0) {
+        if (strcasecmp($data[$aa][$ab][2], "share capital") == 0) {
             $shareCapital[$aa] = $data[$aa][$ab][1];
         }
     }
@@ -316,30 +318,30 @@ $depOfficeEquipment = array();
 // 0 = 2016 , 1 = 2015 , 2 = 2014 , etc ...
 for ($aa = 0; $aa < $numberOfSheets; $aa++) {
     for ($ab = 0; $ab < count($data[$aa]); $ab++) {
-        if (strcasecmp($data[$aa][$ab][2], "Plant and Equipment") == 0) {
+        if (strcasecmp($data[$aa][$ab][2], "plant and equipment") == 0) {
             // ---- Cost----
-            if (strcasecmp($data[$aa][$ab][0], "Office Equipment at Cost") == 0) {
+            if (strcasecmp($data[$aa][$ab][0], "office equipment at cost") == 0) {
                 $tempOfficeEquipment[$aa] = $data[$aa][$ab][1];
             }
 
-            if (strcasecmp($data[$aa][$ab][0], "Computer & servers - cost") == 0) {
+            if (strcasecmp($data[$aa][$ab][0], "computer & servers - cost") == 0) {
                 $tempComputer[$aa] = $data[$aa][$ab][1];
             }
 
-            if (strcasecmp($data[$aa][$ab][0], "Softwares at Cost") == 0) {
+            if (strcasecmp($data[$aa][$ab][0], "softwares at cost") == 0) {
                 $tempSoftware[$aa] = $data[$aa][$ab][1];
             }
 
             // ---- Accumulated depreciation ----
-            if (strcasecmp($data[$aa][$ab][0], "Office Equipment Accum Dep") == 0) {
+            if (strcasecmp($data[$aa][$ab][0], "office equipment accum dep") == 0) {
                 $depOfficeEquipment[$aa] = $data[$aa][$ab][1];
             }
 
-            if (strcasecmp($data[$aa][$ab][0], "Softwares Accum Dep") == 0) {
+            if (strcasecmp($data[$aa][$ab][0], "softwares accum dep") == 0) {
                 $depSoftware[$aa] = $data[$aa][$ab][1];
             }
 
-            if (strcasecmp($data[$aa][$ab][0], "Computer and servers - acc dep") == 0) {
+            if (strcasecmp($data[$aa][$ab][0], "computer and servers - acc dep") == 0) {
                 $depComputer[$aa] = $data[$aa][$ab][1];
             }
         }
@@ -356,15 +358,15 @@ $shareCapitalArray = array();
 // Storing those specially display de
 foreach ($fullArray as $key => $value) {
 
-    if ($key === "Profit Before Income Tax") {
+    if ($key === "profit before income tax") {
         $profitBeforeIncomeTaxArray = $value;
     }
 
-    if ($key === "Trade and other receivables") {
+    if ($key === "trade and other receivables") {
         $tradeReceivablesArray = $value;
     }
 
-    if ($key === "Income Taxes") {
+    if ($key === "income taxes") {
         $incomeTaxArray = $value;
 
         $incomeTax = array();
@@ -374,7 +376,7 @@ foreach ($fullArray as $key => $value) {
             // "income tax paid" exist in income tax array
             if (stripos(array_keys($incomeTaxArray)[$i], 'income') !== false) {
                 if (stripos(array_keys($incomeTaxArray)[$i], 'tax') !== false) {
-                    if (stripos(array_keys($incomeTaxArray)[$i], 'tax') !== false) {
+                    if (stripos(array_keys($incomeTaxArray)[$i], 'paid') !== false) {
                         $string = "exist";
                     }
                 }
@@ -387,11 +389,11 @@ foreach ($fullArray as $key => $value) {
         }
     }
 
-    if ($key === "Trade and other payables") {
+    if ($key === "trade and other payables") {
         $tradePayableArray = $value;
     }
 
-    if ($key === "Borrowings") {
+    if ($key === "borrowings") {
         $borrowingArray = $value;
 
         $proceeds = array();
@@ -449,7 +451,7 @@ foreach ($fullArray as $key => $value) {
         }
     }
 
-    if ($key === "Share Capital") {
+    if ($key === "share capital") {
         $shareCapitalArray = $value;
     }
 }
@@ -477,31 +479,31 @@ foreach ($fullArray as $key1 => $value1) {
 }
 
 if (!empty($profitBeforeIncomeTaxArray)) {
-    array_push($displayedCategory, "Profit before income tax");
+    array_push($displayedCategory, "profit before income tax");
 }
 
 if (!empty($incomeTaxArray)) {
-    array_push($displayedCategory, "Income Taxes");
+    array_push($displayedCategory, "income taxes");
 }
 
 if (!empty($tradeReceivablesArray)) {
-    array_push($displayedCategory, "Trade and other receivables");
+    array_push($displayedCategory, "trade and other receivables");
 }
 
 if (!empty($tradePayableArray)) {
-    array_push($displayedCategory, "Trade and other payables");
+    array_push($displayedCategory, "trade and other payables");
 }
 
 if (!empty($borrowingArray)) {
-    array_push($displayedCategory, "Borrowings");
+    array_push($displayedCategory, "borrowings");
 }
 
-if (in_array("Share Capital", $categoryArray)) {
-    array_push($displayedCategory, "Share Capital");
+if (in_array("share capital", $categoryArray)) {
+    array_push($displayedCategory, "share capital");
 }
 
-if (in_array("Plant and Equipment", $categoryArray)) {
-    array_push($displayedCategory, "Plant and Equipment");
+if (in_array("plant and equipment", $categoryArray)) {
+    array_push($displayedCategory, "plant and equipment");
 }
 
 $sequenceCategory = array();
@@ -524,9 +526,9 @@ for ($k = 0; $k < count($defaultArray); $k++) {
 }
 
 // Phoebe Calculation
-if (in_array("Plant and Equipment", $categoryArray)) {
+if (in_array("plant and equipment", $categoryArray)) {
 
-    array_push($displayedCategory, "Plant and Equipment");
+    array_push($displayedCategory, "plant and equipment");
 
     // ---- Cost ----
     $tempComputerAndSoftwares = 0;
@@ -1061,7 +1063,6 @@ for ($i = 0; $i < $noOfDirectors; $i++) {
     $table->addCell()->addText($directorStartShare[$i], $fontstyleName, $centerAlignment);
     $table->addCell()->addText($directorEndShare[$i], $fontstyleName, $centerAlignment);
 }
-
 
 //Page 2
 $section = $phpWord->createSection();
@@ -3370,6 +3371,8 @@ $header->addText(strtoupper($companyName), $fontStyleBlack);
 $header->addText("NOTES TO THE FINANCIAL STATEMENTS<w:br/>FOR THE FINANCIAL YEAR ENDED " . strtoupper($yearEndString), $fontStyleBlack);
 $header->addLine(['weight' => 0.5, 'width' => 460, 'height' => 0]);
 
+$table1 = $section->addTable();
+
 // check number of unused columns.
 // max columns - number of years + 1 column for Notes
 // merge the number of unused columns for the first cell.
@@ -3379,29 +3382,30 @@ for ($i = 0; $i < ($maxColumnsNotes - ($numberOfSheets + 1)); $i++) {
 
 // Display normally
 foreach ($fullArray as $key1 => $value1) { // [ Bank Balances] => Array of values
-    if ($key1 !== "Profit Before Income Tax") {
-        if ($key1 !== "Trade and other receivables") {
-            if ($key1 !== "Share Capital") {
-                if ($key1 !== "Income Taxes") {
-                    if ($key1 !== "Trade and other payables") {
-                        if ($key1 !== "Borrowings") {
+    if ($key1 !== "profit before income tax") {
+        if ($key1 !== "trade and other receivables") {
+            if ($key1 !== "share capital") {
+                if ($key1 !== "income taxes") {
+                    if ($key1 !== "trade and other payables") {
+                        if ($key1 !== "borrowings") {
 
-//                            // Display the category heading
+                            // Display the category heading
                             $section->addListItem(htmlspecialchars(strtoupper($key1)), 0, null, $nestedListStyle);
-//
-//                            // create notes table
                             $table1 = $section->addTable();
+
+                            // create notes table
                             $table1->addRow();
-//
-//                            // Displaying the heading
+                            
+//                            $table1->addListItem(htmlspecialchars(strtoupper($key1)), 0, null, $nestedListStyle);
+                            // Displaying the heading
                             $table1->addCell($firstCellValueNotes);
                             $cellNotes = $table1->addCell($cellValueNotes);
-//
-//                            // Create another row
+
+                            // Create another row
                             $table1->addRow();
                             $table1->addCell($firstCellValueNotes);
-//
-//                            // Do the year heading
+
+                            // Do the year heading
                             for ($i = 0; $i < count($formatedDate); $i++) {
                                 $cellNotes = $table1->addCell(1750);
                                 $dateStart = $formatedDate[$i][0];
@@ -3415,9 +3419,9 @@ foreach ($fullArray as $key1 => $value1) { // [ Bank Balances] => Array of value
                             array_push($displayedCategory, $key1);
 
                             foreach ($value1 as $key2 => $value2) { // [OCBC Bank] => Array ( [December 2015] => 54684.19 )
-//                                // Display the category heading
+                                // Display the category heading
                                 $table1->addRow();
-                                $table1->addCell($firstCellValueNotes)->addText($key2); // ucwords($key2)
+                                $table1->addCell($firstCellValueNotes)->addText(ucwords($key2)); // ucwords($key2)
 
                                 foreach ($value2 as $key3 => $value3) { // [December 2015] => 54684.19
                                     // if don't need dash, just print everything out
@@ -3587,8 +3591,8 @@ if (!empty($incomeTaxArray)) {
         $checkArray3[$years[$i]] = 0;
     }
 
-    $taxExpenseKey = ['Current income tax expenses', 'Current year tax expense'];
-    $provisionKey = ['Under provision in prior year'];
+    $taxExpenseKey = ['current income tax expenses', 'current year tax expense'];
+    $provisionKey = ['under provision in prior year'];
 
     // Display the category heading
     $section->addListItem(htmlspecialchars('INCOME TAXES'), 0, null, 'multilevel');
@@ -3677,7 +3681,7 @@ if (!empty($incomeTaxArray)) {
     for ($i = 0; $i < count($provisionKey); $i++) {
         if (in_array($provisionKey[$i], array_keys($incomeTaxArray))) {
             $table1->addRow();
-            $table1->addCell($firstCellValue)->addText($provisionKey[$i]);
+            $table1->addCell($firstCellValue)->addText(ucwords($provisionKey[$i]));
 
             foreach ($incomeTaxArray as $key => $value) { // [OCBC Bank] => Array ( [December 2015] => 54684.19 )
                 if ($provisionKey[$i] === $key) {
@@ -3821,10 +3825,10 @@ if (!empty($incomeTaxArray)) {
     $table1->addCell($firstCellValue)->addText("Effects of:");
 
     foreach ($incomeTaxArray as $key => $value) {
-        if ($key != "Current income tax expenses") {
-            if ($key != "Under provision in prior year") {
-                if ($key != "Income tax paid") {
-                    if ($key != "Current year tax expense") {
+        if ($key != "current income tax expenses") {
+            if ($key != "under provision in prior year") {
+                if ($key != "income tax paid") {
+                    if ($key != "current year tax expense") {
                         $table1->addRow();
                         $table1->addCell($firstCellValue)->addText("- " . trim($key));
 
@@ -3942,12 +3946,12 @@ if (!empty($incomeTaxArray)) {
         }
     }
 
-    if (in_array("Income tax paid", array_keys($incomeTaxArray))) {
+    if (in_array("income tax paid", array_keys($incomeTaxArray))) {
         $table1->addRow();
         $table1->addCell($firstCellValue)->addText("Income tax paid");
 
         foreach ($incomeTaxArray as $key => $value) { // [OCBC Bank] => Array ( [December 2015] => 54684.19 )
-            if ($key == "Income tax paid") {
+            if ($key == "income tax paid") {
                 foreach ($value as $k => $v) { // [December 2015] => 54684.19
                     // if don't need dash, just print everything out
                     if ($numberOfSheets == count($value)) {
@@ -3973,12 +3977,14 @@ if (!empty($incomeTaxArray)) {
                     }
                     // if not the same, then see which position it is
                     else {
+
                         for ($h = 0; $h < count($years); $h++) {
 
                             $cellNotes = $table1->addCell($cellValue);
                             if ($k == $years[$h]) {
                                 if ($v < 0) {
                                     $withoutFirstCharacter = substr($v, 1);
+
                                     $cellNotes->addText("(" . number_format(ceil($withoutFirstCharacter)) . ")", $fontstyleName, $centerAlignment);
                                 } else {
                                     $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
@@ -4068,7 +4074,7 @@ if (!empty($incomeTaxArray)) {
     for ($i = 0; $i < count($provisionKey); $i++) {
         if (in_array($provisionKey[$i], array_keys($incomeTaxArray))) {
             $table1->addRow();
-            $table1->addCell($firstCellValue)->addText($provisionKey[$i]);
+            $table1->addCell($firstCellValue)->addText(ucwords($provisionKey[$i]));
         }
 
         foreach ($incomeTaxArray as $key => $value) { // [OCBC Bank] => Array ( [December 2015] => 54684.19 )
@@ -4194,7 +4200,7 @@ if (!empty($tradeReceivablesArray)) {
         $cellNotes->addText("$", $fontstyleName, $centerAlignment);
     }
 
-    $tradeReceivables = ["Trade receivables"];
+    $tradeReceivables = ["trade receivables"];
     $temp = array();
 
     // Check if there's trade receivables available
@@ -4206,7 +4212,7 @@ if (!empty($tradeReceivablesArray)) {
     foreach ($tradeReceivablesArray as $key => $value) { // [OCBC Bank] => Array ( [December 2015] => 54684.19 )
         if (in_array($key, $temp)) {
             $table1->addRow();
-            $table1->addCell($firstCellValue)->addText($key);
+            $table1->addCell($firstCellValue)->addText(ucwords($key));
             foreach ($value as $k => $v) { // [December 2015] => 54684.19
                 // if don't need dash, just print everything out
                 if ($numberOfSheets == count($value)) {
@@ -4244,9 +4250,9 @@ if (!empty($tradeReceivablesArray)) {
     $table1->addCell($firstCellValue);
 
     foreach ($tradeReceivablesArray as $key => $value) { // [OCBC Bank] => Array ( [December 2015] => 54684.19 )
-        if (stripos($key, "Trade receivable") === false) {
+        if (stripos($key, "trade receivable") === false) {
             $table1->addRow();
-            $table1->addCell($firstCellValue)->addText($key);
+            $table1->addCell($firstCellValue)->addText(ucwords($key));
         }
 
         foreach ($value as $k => $v) { // [December 2015] => 54684.19
@@ -4410,7 +4416,7 @@ if (!empty($tradePayableArray)) {
         $cellNotes->addText("$", $fontstyleName, $centerAlignment);
     }
 
-    $tradePayable = ["Trade payables"];
+    $tradePayable = ["trade payables"];
     $temp = array();
 
     // Check if there's trade payables available
@@ -4420,14 +4426,10 @@ if (!empty($tradePayableArray)) {
         }
     }
 
-    echo "<hr>";
-    print_r($tradePayableArray);
-    echo "<hr>";
-
     foreach ($tradePayableArray as $key => $value) { // [OCBC Bank] => Array ( [December 2015] => 54684.19 )
-        if (stripos($key, "Trade payable") !== false) {
+        if (stripos($key, "trade payable") !== false) {
             $table1->addRow();
-            $table1->addCell($firstCellValue)->addText($key);
+            $table1->addCell($firstCellValue)->addText(ucwords($key));
 
             foreach ($value as $k => $v) {
                 if (count($value) == $numberOfSheets) {
@@ -4464,9 +4466,9 @@ if (!empty($tradePayableArray)) {
     $table1->addCell($firstCellValue)->addText("Other payables", $fontstyleBottomUnderline);
 
     foreach ($tradePayableArray as $key => $value) { // [OCBC Bank] => Array ( [December 2015] => 54684.19 )
-        if (stripos($key, "Trade payable") === false) {
+        if (stripos($key, "trade payable") === false) {
             $table1->addRow();
-            $table1->addCell($firstCellValue)->addText($key);
+            $table1->addCell($firstCellValue)->addText(ucwords($key));
         }
 
         foreach ($value as $k => $v) { // [December 2015] => 54684.19
@@ -4629,10 +4631,10 @@ if (!empty($borrowingArray)) {
             if ($key != "non-current") {
                 if (stripos($key, "Repayment of borrowing") !== false) {
                     $table1->addRow();
-                    $table1->addCell($firstCellValue)->addText("(Less) " . $key);
+                    $table1->addCell($firstCellValue)->addText("(Less) " . ucwords($key));
                 } else {
                     $table1->addRow();
-                    $table1->addCell($firstCellValue)->addText($key);
+                    $table1->addCell($firstCellValue)->addText(ucwords($key));
                 }
 
                 foreach ($value as $k => $v) { // [December 2015] => 54684.19
@@ -4938,7 +4940,7 @@ if (!empty($borrowingArray)) {
     $table1->addCell($firstCellValue);
 }
 
-if (in_array("Share Capital", $categoryArray)) {
+if (in_array("share capital", $categoryArray)) {
 
     $beginningArray = array();
 
@@ -5076,7 +5078,7 @@ if (in_array("Share Capital", $categoryArray)) {
             . "There is no par value for the ordinary share. The holder of the ordinary share is entitled to receive dividends as end when declared by the Company.", $paragraphStyle);
 }
 
-if (in_array("Plant and Equipment", $categoryArray)) {
+if (in_array("plant and equipment", $categoryArray)) {
 
     array_push($displayedCategory, "Plant and Equipment");
 
