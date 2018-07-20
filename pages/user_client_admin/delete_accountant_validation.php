@@ -20,8 +20,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "DELETE FROM user WHERE username='$uname' AND role_id=3";
         $statement = $DB_con->prepare($sql);
         $statement->execute();
-        header('Location: ../user_management/delete_accountant.php');
-        
+//        header('Location: ../user_management/delete_accountant.php');
+        echo '<div class="alert alert-success" role="alert">'
+                        . '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close"></a>'
+                        . ' User successfully deleted'
+                    . '</div>';
+                echo '<span class="text-success"><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Redirecting Please Wait</span>';
+                echo "<meta http-equiv='refresh' content='3;url=delete_accountant.php'> ";
 //        echo'
 //            <body>
 //                <div class="row">
