@@ -517,7 +517,7 @@ include '../general/navigation_clientadmin.php';
         ?>
 
 		<br>
-        <form name='detailsForm' action="next_page.php" method="post" onsubmit="validateForm()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+        <form name='detailsForm' action="next_page.php" method="post" onsubmit="return validateForm()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
 
 
 		<div class="m-portlet__body">
@@ -570,8 +570,8 @@ include '../general/navigation_clientadmin.php';
 
           <hr/>
           <div class="form-group">
-              <label for="yearEnd">Financial Year Ended: </label>
-              <input type="date" class="form-control" id="yearEnd" name="yearEnd" value="<?php echo date_format($date, "Y-m-d");?>"/>
+              <!-- <label for="yearEnd">Financial Year Ended: </label> -->
+              <input type="hidden" class="form-control" id="yearEnd" name="yearEnd" value="<?php echo date_format($date, "Y-m-d");?>"/>
           </div>
 
           <button onclick="addDirectorFunction()" type='button' id='addDirector'>Add Director</button>
@@ -595,25 +595,25 @@ include '../general/navigation_clientadmin.php';
               <br>
           </div>
 
-          <div class="form-group">
-              <label for="todayDate">Today Date: </label>
-              <input type="date" class="form-control" id="todayDate" name="todayDate" value=""/>
-          </div>
+          <!-- <div class="form-group"> -->
+              <!-- <label for="todayDate">Today Date: </label> -->
+              <input type="hidden" class="form-control" id="todayDate" name="todayDate" value="<?php echo date("Y-m-d");?>"/>
+          <!-- </div> -->
 
-          <div class="form-group">
+          <!-- <div class="form-group">
               <label for="firstBalanceDate">First Balance Date: </label>
               <input type="date" class="form-control" id="firstBalanceDate" name="firstBalanceDate"/>
-          </div>
+          </div> -->
 
-          <div class="form-group">
-              <label for="secondBalanceDate">Previous financial year ended date: </label>
-              <input type="date" class="form-control" id="secondBalanceDate" name="secondBalanceDate" value="<?php echo date_format($previousdate, "Y-m-d");?>"/>
-          </div>
+          <!-- <div class="form-group"> -->
+              <!-- <label for="secondBalanceDate">Previous financial year ended date: </label> -->
+              <input type="hidden" class="form-control" id="secondBalanceDate" name="secondBalanceDate" value="<?php echo date_format($previousdate, "Y-m-d");?>"/>
+          <!-- </div> -->
 
-          <div class="form-group">
-              <label for="thirdBalanceDate">Financial year ended date: </label>
-              <input type="date" class="form-control" id="thirdBalanceDate" name="thirdBalanceDate" value="<?php echo date_format($date, "Y-m-d");?>"/>
-          </div>
+          <!-- <div class="form-group"> -->
+              <!-- <label for="thirdBalanceDate">Financial year ended date: </label> -->
+              <input type="hidden" class="form-control" id="thirdBalanceDate" name="thirdBalanceDate" value="<?php echo date_format($date, "Y-m-d");?>"/>
+          <!-- </div> -->
 
           <div class="form-group">
               <label for="companyPA">Company's principal activities: </label>
@@ -632,7 +632,7 @@ include '../general/navigation_clientadmin.php';
 
           <div class="form-group">
               <label for="currency">Currency: </label>
-              <input type="text" class="form-control" id="currency" name="currency" placeholder='E.g. Singapore Dollar'/>
+              <input type="text" class="form-control" id="currency" name="currency" placeholder='E.g. Singapore Dollar' value="Singapore Dollar"/>
           </div>
 
           <!-- yok yee required data end -->
@@ -655,21 +655,7 @@ include '../general/navigation_clientadmin.php';
 
 
 <script type="text/javascript">
-		function validateForm(){
-			var submitBtn = document.forms['detailsForm']['submit'];
-			submitBtn.disabled = true;
-			var companyUEN = document.getElementById("companyregID").value;
-			if (companyUEN == ""){
-				if (companyUEN == ""){
-					alert("Company UEN must be entered");
-				}
-				submitBtn.disabled = false;
-				return false;
-			} else {
-				updateCategory();
-				return true;
-			}
-		}
+
     function updateCategory() {
       var numberOfYears = <?php echo count($trialBalanceArray);?>;
       var undefinedArray = <?php echo json_encode($yearlyUndefinedRows);?>;
@@ -689,7 +675,83 @@ include '../general/navigation_clientadmin.php';
 		var tempDirectorArray = [];
 		var tempDateArray = [];
 		var tempStartShareArray = [];
-                var tempEndShareArray = [];
+    var tempEndShareArray = [];
+
+		function validateForm(){
+			var submitBtn = document.forms['detailsForm']['submit'];
+			submitBtn.disabled = true;
+			updateCategory();
+			// tempDirectorArray, tempDateArray, tempStartShareArray,tempEndShareArray are taken from updateDirectors()
+			var today = new Date();
+			var companyUEN = document.forms['detailsForm']["companyregID"].value;
+			var companyPrincipalActivities = document.forms['detailsForm']['companyPA'].value;
+			var companyAdd = document.forms['detailsForm']['companyAddress'].value;
+			var adoptedFrs = document.forms['detailsForm']['frsDate'].value;
+			var currency = document.forms['detailsForm']['currency'].value;
+			var directorFlag = 0;
+			var directorError = "";
+			for (i = 0; i < count; i++){
+				if (tempDirectorArray[i] == "" || tempDateArray[i] == "" || tempStartShareArray[i] == "" || tempEndShareArray[i] == ""){
+					directorFlag = 1;
+					directorError = "All inputs required for directors";
+					break;
+				} else {
+					if (tempStartShareArray[i] <= 0){
+						directorFlag = 1;
+						directorError = "Start share cannot be 0 or less";
+						break;
+					}
+					appointYear = tempDateArray[i].substring(0,4);
+					appointMonth = tempDateArray[i].substring(5,7);
+					appointDay = tempDateArray[i].substring(8,10);
+					var appointDate = new Date(appointYear, appointMonth - 1, appointDay);
+					if (appointDate > today){
+						directorFlag = 1;
+						directorError = "Director cannot be appointed later than today";
+						break;
+					}
+				}
+			}
+			frsFlag = 0;
+			frsError = "";
+			if (adoptedFrs == ""){
+				frsFlag = 1;
+				frsError = "FRS date must be entered";
+			} else {
+				frsYear = adoptedFrs.substring(0,4);
+				frsMonth = adoptedFrs.substring(5,7);
+				frsDay = adoptedFrs.substring(8,10);
+				var formattedAdoptedDate = new Date(frsYear, frsMonth - 1, frsDay);
+				if (formattedAdoptedDate > today){
+					frsFlag = 1;
+					frsError = "Date FRS adopted should not be later than today";
+				}
+			}
+			if (companyUEN == "" || directorFlag == 1 || companyPrincipalActivities == "" || companyAdd == "" || frsFlag == 1 || currency == ""){
+				if (companyUEN == ""){
+					alert("Company UEN must be entered");
+				}
+				if (directorFlag == 1){
+					alert(directorError);
+				}
+				if (companyPrincipalActivities == ""){
+					alert("Company Principal Activities must be entered");
+				}
+				if (companyAdd == ""){
+					alert("Company address must be entered");
+				}
+				if (frsFlag == 1){
+					alert(frsError);
+				}
+				if (currency == ""){
+					alert("Currency must be entered");
+				}
+				submitBtn.disabled = false;
+				return false;
+			} else {
+				return true;
+			}
+		}
 
 		function addDirectorFunction(){
 
@@ -719,7 +781,6 @@ include '../general/navigation_clientadmin.php';
 			}
 		}
 
-		// TODO: this function should happen after a validation for empty fields
 		function updateDirectors(){
 			tempDirectorArray = [];
 			tempDateArray = [];
@@ -730,20 +791,20 @@ include '../general/navigation_clientadmin.php';
 				tempDirectorName = document.getElementById('directorName' + i).value;
 				tempDirectorDate = document.getElementById('directorNameApptDate' + i).value;
 				tempDirectorStartShare = document.getElementById('directorStartShare' + i).value;
-                                tempDirectorEndShare = document.getElementById('directorEndShare' + i).value;
+        tempDirectorEndShare = document.getElementById('directorEndShare' + i).value;
 
-                                if(tempDirectorName != ""){
-                                    tempDirectorArray.push(tempDirectorName);
-                                    tempDateArray.push(tempDirectorDate);
-                                    tempStartShareArray.push(tempDirectorStartShare);
-                                    tempEndShareArray.push(tempDirectorEndShare);
-                                }
+        // if(tempDirectorName != ""){
+        tempDirectorArray.push(tempDirectorName);
+        tempDateArray.push(tempDirectorDate);
+        tempStartShareArray.push(tempDirectorStartShare);
+        tempEndShareArray.push(tempDirectorEndShare);
+        // }
 
 			}
 			document.getElementById('tempDirectorArray').value = tempDirectorArray;
 			document.getElementById('tempDateArray').value = tempDateArray;
 			document.getElementById('tempStartShareArray').value = tempStartShareArray;
-                        document.getElementById('tempEndShareArray').value = tempEndShareArray;
+      document.getElementById('tempEndShareArray').value = tempEndShareArray;
 
 		}
 </script>
