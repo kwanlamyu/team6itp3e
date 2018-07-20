@@ -17,6 +17,8 @@
                 if (isset($_GET['deleteWorkAccount'])) {
                     $accountants = $_GET['deleteWorkAccount'];
 //                echo'after post statement';
+//                $userID = $_SESSION["username"];
+                    
                 }
                 ?>
                 <p><a href="client_admin_dashboard.php">Return to dashboard</a></p>
@@ -26,6 +28,7 @@
                         <th>UEN/ACRA No.</th>
                         <th>Company Name</th>
                         <th>File Number</th>
+                        <th>Account Creator</th>
                         <th>Account Manager(s)</th>
                         <th>Delete Details</th>
                         </thead>
@@ -33,14 +36,26 @@
 
                         <tbody>
                             <?php
+                            $userID = "Jerome";
 ////                            echo'after table body';
-//                            $sql = $DB_con->prepare("SELECT * FROM user WHERE role_id = 3");
-////                            echo'statement prepared';
-//                            $sql->execute();
-//                            $users = $sql->fetchAll();
-////                            echo'statement executed';
+                            $query = "SELECT "
+                                    . "B.UEN AS UEN, A.companyName AS companyName, A.fileNumber AS fileNumber, "
+                                    . "B.account_user_username AS accountCreator, B.user_username AS accountManagers "
+                                    . "FROM "
+                                    . "account A, userManageAccount B "
+                                    . "WHERE "
+                                    . "B.account_user_username='$userID' AND B.user_role_id = '3'";    
+                            $sql = $DB_con->prepare($query);
+//                            echo'statement prepared';
+                            echo $query;
+                            $sql->execute();
+                            $users = $sql->fetchAll();
+                            echo'statement executed';
+                            echo count($users);
                             if (count($users) == 0) {
+                                echo '';
                                 echo '<tr>'
+                                . '<td>Nil</td>'
                                 . '<td>Nil</td>'
                                 . '<td>Nil</td>'
                                 . '<td>Nil</td>'
@@ -57,7 +72,8 @@
                                         . "<td id='account_uen" . $counter . "'>{$row['UEN']}</td>"
                                         . "<td id='account_companyName" . $counter . "'>{$row['companyName']}</td>"
                                         . "<td id='account_fileNumber" . $counter . "'>{$row['fileNumber']}</td>"
-                                        . "<td id='account_accountManagers" . $counter . "'>{$row['companyName']}</td>"
+                                        . "<td id='account_accountCreator" . $counter . "'>{$row['accountCreator']}</td>"
+                                        . "<td id='account_accountManagers" . $counter . "'>{$row['accountManagers']}</td>"
                                         . "<td>"
                                             . "<button type='button' name='deleteButton' id='deleteButton' class='btn btn-danger delete_data' data-toggle='modal' data-target='#deleteModal' onclick='updateUsername(" . $counter . ")'>"
                                             . "<i class='fa fa-trash' aria-hidden='true'></i> Delete "
