@@ -1,10 +1,14 @@
+<?php 
+    //check for username and role_id
+    //if(isset($_SESSION['username']) && $_SESSION['role_id']==='2'){?>
 <?php include '../general/header.php'; ?>
 <?php require_once '../db_connection/db.php';?>
 <?php include '../general/navigation_clientadmin.php'; ?>
-
 <div class="row">
     <div class="card">
         <div class="card-body">
+            <p><a href="../user_client_admin/client_admin_dashboard.php">Return to dashboard</a></p>
+            <hr>
             <form id="createAccountant" name="createAccountant" action="create_accountant.php" method="POST">
                 <?php include('create_accountant_validation.php'); ?>
 
@@ -56,7 +60,7 @@
 
             </form>
             <hr>
-            <p><a href="client_admin_dashboard.php">Return to dashboard</a></p>
+            <p><a href="../user_client_admin/client_admin_dashboard.php">Return to dashboard</a></p>
 
         </div>
 
@@ -64,4 +68,15 @@
 </div>
 
 <?php include '../general/footer_content.php'; ?>
-<?php include '../general/footer.php'; ?>
+<?php include '../general/footer.php'; 
+//}//end of session and role_id checking
+//    elseif(isset($_SESSION['username']) && $_SESSION['role_id']==='1'){
+//        header('Location: ../user_super_admin/userdashboard.php');
+//    }
+//    elseif(isset($_SESSION['username']) && $_SESSION['role_id']==='3'){
+//        header('Location: ../user_client_admin/client_admin_dashboard.php');
+//    }
+//    else{
+//        header('Location: ../user_login/login.php');
+//    }
+?>

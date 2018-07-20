@@ -1,3 +1,6 @@
+<?php 
+    //check for username and role_id
+    //if(isset($_SESSION['username']) && $_SESSION['role_id']==='2'){?>
 <?php include '../general/header.php';?>
 <?php include '../general/navigation_clientadmin.php';?>
 <?php include '../db_connection/db.php';?>
@@ -22,7 +25,6 @@
                     <thead>
                     <th>User</th>
                     <th>Email</th>
-                    <th>Position</th>
                     <th>Edit Details</th>
                     </thead>
                     <?php // echo'after table head';?>
@@ -40,7 +42,6 @@
                             . '<td>Nil</td>'
                             . '<td>Nil</td>'
                             . '<td>Nil</td>'
-                            . '<td>Nil</td>'
                             . '</tr>';
                         } else {
 //                                echo'else condition reached';
@@ -52,7 +53,6 @@
                                 . "<tr>"
                                     . "<td id='accountant_username" . $counter . "'>{$row['username']}</td>"
                                     . "<td id='accountant_email" . $counter . "'>{$row['email']}</td>"
-                                    . "<td>Accountant</td>"
                                     . "<td id='edit'>"
                                         . "<button type='button' name='editButton' id='editButton' class='btn btn-success edit_data'data-toggle='modal' data-target='#editModal' onclick='updateUsername(" . $counter . ")'>"
                                             . "<i class='far fa-edit'></i> Edit "
@@ -135,4 +135,15 @@
 
 </script>
 <?php include '../general/footer_content.php'; ?>
-<?php include '../general/footer.php'; ?>
+<?php include '../general/footer.php'; 
+//}//end of session and role_id checking
+//    elseif(isset($_SESSION['username']) && $_SESSION['role_id']==='1'){
+//        header('Location: ../user_super_admin/userdashboard.php');
+//    }
+//    elseif(isset($_SESSION['username']) && $_SESSION['role_id']==='3'){
+//        header('Location: ../user_client_admin/client_admin_dashboard.php');
+//    }
+//    else{
+//        header('Location: ../user_login/login.php');
+//    }
+?>

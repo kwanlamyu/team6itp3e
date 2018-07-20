@@ -1,3 +1,6 @@
+<?php 
+    //check for username and role_id
+    //if(isset($_SESSION['username']) && $_SESSION['role_id']==='2'){?>
 <?php include '../general/header.php';?>
 <?php include '../general/navigation_clientadmin.php';?>
 <?php include '../db_connection/db.php';?>
@@ -25,7 +28,6 @@
                         <thead>
                         <th>User</th>
                         <th>Email</th>
-                        <th>Position</th>
                         <th>Delete Details</th>
                         </thead>
                         <?php // echo'after table head';?>
@@ -53,7 +55,6 @@
                                     . "<tr>"
                                         . "<td id='accountant_username" . $counter . "'>{$row['username']}</td>"
                                         . "<td id='accountant_email" . $counter . "'>{$row['email']}</td>"
-                                        . "<td>Accountant</td>"
                                         . "<td>"
                                             . "<button type='button' name='deleteButton' id='deleteButton' class='btn btn-danger delete_data' data-toggle='modal' data-target='#deleteModal' onclick='updateUsername(" . $counter . ")'>"
                                             . "<i class='fa fa-trash' aria-hidden='true'></i> Delete "
@@ -84,7 +85,7 @@
                 </div>
                 <div class="modal-body">
                     <p> Are you sure you want to delete this user</p>
-                    <form id="editAccountant" name="deleteAccountant" action="delete_accountant_validation.php" method="POST">
+                    <form id="editAccountant" name="deleteAccountant" action="delete_accountant.php" method="POST">
                         <?php include('../user_client_admin/delete_accountant_validation.php'); ?>
                         <div class="form-group">
                             <label for="accountantid">Username</label>
@@ -148,4 +149,15 @@
         
     
 <?php include '../general/footer_content.php';?>
-<?php include '../general/footer.php';?>
+<?php include '../general/footer.php';
+//}//end of session and role_id checking
+//    elseif(isset($_SESSION['username']) && $_SESSION['role_id']==='1'){
+//        header('Location: ../user_super_admin/userdashboard.php');
+//    }
+//    elseif(isset($_SESSION['username']) && $_SESSION['role_id']==='3'){
+//        header('Location: ../user_client_admin/client_admin_dashboard.php');
+//    }
+//    else{
+//        header('Location: ../user_login/login.php');
+//    }
+?>
