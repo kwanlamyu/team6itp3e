@@ -13141,7 +13141,8 @@ strong {
 		height: 100%
 	}
 	.m-stack.m-stack--desktop.m-stack--ver>.m-stack__item.m-stack__item--fluid {
-		width: 100%
+		width: 100%;
+		background-color: #169b53
 	}
 	.m-stack.m-stack--desktop.m-stack--ver>.m-stack__item.m-stack__item--fit {
 		line-height: 0
@@ -46562,18 +46563,18 @@ body.m-content--skin-light2 {
 }
 
 .m-topbar .m-topbar__nav.m-nav>.m-nav__item>.m-nav__link .m-topbar__usericon .m-nav__link-icon-wrapper {
-	background: #1dd775;
-	border: 1px solid #1dd775
+	background: #169b53;
+	border: 1px solid white
 }
 
 .m-topbar .m-topbar__nav.m-nav>.m-nav__item>.m-nav__link .m-topbar__usericon .m-nav__link-icon-wrapper>i {
-	color: #fff
+	color: #white;
 }
 
 .m-topbar .m-topbar__nav.m-nav>.m-nav__item>.m-nav__link .m-topbar__usericon.m-nav__link-icon--active .m-nav__link-icon-wrapper,
 .m-topbar .m-topbar__nav.m-nav>.m-nav__item>.m-nav__link .m-topbar__usericon:hover .m-nav__link-icon-wrapper {
-	background: #0091d5;
-	border: 1px solid #0091d5
+	background: #1dd775;
+	border: 1px solid #1dd775
 }
 
 @media (min-width:1025px) and (max-width:1200px) {
@@ -48325,7 +48326,7 @@ body.m-content--skin-light2 {
 		background-color: #b8bece
 	}
 	.m-header-menu.m-header-menu--skin-light .m-menu__nav>.m-menu__item>.m-menu__link .m-menu__link-text {
-		color: #676c7b
+		color: white
 	}
 	.m-header-menu.m-header-menu--skin-light .m-menu__nav>.m-menu__item>.m-menu__link .m-menu__hor-arrow {
 		color: #b9c1d4
@@ -50882,7 +50883,7 @@ body.m-content--skin-light2 {
 }
 
 .m-aside-menu.m-aside-menu--skin-light {
-	background-color: #fff
+	background-color: #283252
 }
 
 .m-aside-menu.m-aside-menu--skin-light .m-menu__nav>.m-menu__item>.m-menu__heading .m-menu__link-text,

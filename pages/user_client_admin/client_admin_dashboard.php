@@ -3,7 +3,6 @@
 <?php include '../general/header.php';?>
 <?php require_once '../db_connection/db.php';?>
 <?php include '../general/navigation_clientadmin.php';?>
-<?php include '../db_connection/db.php'; ?>
 
 <div class="m-grid__item m-grid__item--fluid m-wrapper">
 	<!-- BEGIN: Subheader -->
