@@ -3395,7 +3395,7 @@ foreach ($fullArray as $key1 => $value1) { // [ Bank Balances] => Array of value
 
                             // create notes table
                             $table1->addRow();
-                            
+
 //                            $table1->addListItem(htmlspecialchars(strtoupper($key1)), 0, null, $nestedListStyle);
                             // Displaying the heading
                             $table1->addCell($firstCellValueNotes);
@@ -4979,6 +4979,7 @@ if (in_array("share capital", $categoryArray)) {
                 $cellNotes->addText(number_format($shareCapital[0]), $fontstyleName, $centerAlignment);
             }
         }
+        array_push($beginningArray, $shareCapital[0]);
     }
     // More than 1 TB inserted
     else {
@@ -4993,7 +4994,6 @@ if (in_array("share capital", $categoryArray)) {
                         $cellNotes->addText(number_format($shareCapital[$i - 1]), $fontstyleName, $centerAlignment);
                     }
                 } else {
-
                     if ($shareCapital[$i] < 0) {
                         $cellNotes = $table2->addCell($cellValue);
                         $cellNotes->addText("(" . number_format($shareCapital[$i]) . ")", $fontstyleName, $centerAlignment);
@@ -5003,6 +5003,7 @@ if (in_array("share capital", $categoryArray)) {
                     }
                 }
             }
+
             if ($i == count($shareCapital)) {
                 array_push($beginningArray, $shareCapital[$i - 1]);
             } else {
