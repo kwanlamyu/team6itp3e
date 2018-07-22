@@ -16,47 +16,62 @@
 //                echo'after post statement';
             }
             ?>
-            <p><a href="client_admin_dashboard.php">Return to dashboard</a></p>
+            <p><a href="../user_client_admin/client_admin_dashboard.php">Return to dashboard</a></p>
             <div class="table-responsive table-scroll">
                 <table class="table table-hover table-room">
                     <thead>
                     <th>UEN/ACRA No.</th>
-                    <th>Account Creator</th>
-                    <th>Account Manager(s)</th>
-                    <th>Edit Details</th>
+                        <th>Company Name</th>
+                        <th>File Number</th>
+                        <th>Account Manager(s)</th>
+                        <th>Edit Details</th>
                     </thead>
                     <?php // echo'after table head';?>
 
                     <tbody>
                         <?php
                         //$userID = $_SESSION["username"];
-                        $userID = 'Jerome';
-//                            echo'after table body';
-                        $sql = $DB_con->prepare("SELECT * FROM userManageAccount WHERE account_user_username = '".$userID."'");
+                        $userID = 'jerome';
+                        $query = "SELECT "
+                                    ."account.UEN AS UEN, "
+                                    ."account.companyName AS companyName, "
+                                    ."account.fileNumber AS fileNumber, "
+                                    ."usermanageaccount.user_username AS accountManagers "
+                                    ."FROM "
+                                    ."account "
+                                    ."INNER JOIN "
+                                    ."usermanageaccount "
+                                    ."ON "
+                                    ."account.UEN = usermanageaccount.account_UEN  "
+                                    ."AND usermanageaccount.account_user_username = '$userID'";
+                        //$query= "SELECT * FROM userManageAccount WHERE account_user_username = '".$userID."'";
+                        $sql = $DB_con->prepare($query);
 //                            echo'statement prepared';
                         $sql->execute();
                         $users = $sql->fetchAll();
 //                            echo'statement executed';
                         if (count($users) == 0) {
-                            echo '<tr>'
-                                    . '<td>Nil</td>'
-                                    . '<td>Nil</td>'
-                                    . '<td>Nil</td>'
-                                    . '<td>Nil</td>'
+                            echo '';
+                                echo '<tr>'
+                                . '<td>Nil</td>'
+                                . '<td>Nil</td>'
+                                . '<td>Nil</td>'
+                                . '<td>Nil</td>'
+                                . '<td>Nil</td>'
                                 . '</tr>';
                         } else {
 //                                echo'else condition reached';
                             $counter = 0;
                             foreach ($users as $row) {
-//                                    echo'rows echoed';
-
+//                                    echo'rows echoed';                                    
                                 echo ""
                                 . "<tr>"
-                                    . "<td id='account_uen" . $counter . "'>{$row['account_UEN']}</td>"
-                                    . "<td id='account_account_user_username" . $counter . "'>{$row['account_user_username']}</td>"
-                                    . "<td id='account_user_username" . $counter . "'>{$row['user_username']}</td>"
+                                    . "<td id='account_uen" . $counter . "'>{$row['UEN']}</td>"
+                                    . "<td id='account_companyName" . $counter . "'>{$row['companyName']}</td>"
+                                    . "<td id='account_fileNumber" . $counter . "'>{$row['fileNumber']}</td>"
+                                    . "<td id='account_accountManagers" . $counter . "'>{$row['accountManagers']}</td>"
                                     . "<td id='edit'>"
-                                        . "<button type='button' name='editButton' id='editButton' class='btn btn-success edit_data'data-toggle='modal' data-target='#editModal' onclick='updateUEN(" . $counter . ")'>"
+                                        . "<button type='button' name='editAccountButton' id='editButton' class='btn btn-success edit_data'data-toggle='modal' data-target='#editModal' onclick='updateUEN(" . $counter . ")'>"
                                             . "<i class='far fa-edit'></i> Edit "
                                         . "</button>"
                                     . "</td>"
@@ -70,7 +85,7 @@
                 </table>
             </div>
             <hr>
-            <p><a href="client_admin_dashboard.php">Return to dashboard</a></p>
+            <p><a href="../user_client_admin/client_admin_dashboard.php">Return to dashboard</a></p>
         </div>
     </div>
 </div>
@@ -84,8 +99,8 @@
                 <h4 class="modal-title">Edit Details</h4>
             </div>
             <div class="modal-body">
-                <form id="editAccountant" name="editAccountant" action="#" method="POST">
-                    <?php //include('edit_accountant_validation.php'); ?>
+                <form id="editAccountant" name="editAccountant" action="edit_work_validation.php" method="POST">
+                    <?php include('../user_client_admin/edit_work_validation.php'); ?>
                     
                     <div class="form-group">
                             <label for="uenid">UEN/ACRA No.</label>
@@ -143,7 +158,7 @@
                     </div>
 
                     <div class="form-group">
-                        <button type="submit" name="updateButton" id="updateButton" class="btn btn-primary"><i class="fas fa-check"></i> Update Detail </button>
+                        <button type="submit" name="updateAccountButton" id="updateAccountButton" class="btn btn-primary"><i class="fas fa-check"></i> Update Detail </button>
                     </div>
 
                 </form>

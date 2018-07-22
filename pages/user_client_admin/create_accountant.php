@@ -9,8 +9,8 @@
         <div class="card-body">
             <p><a href="../user_client_admin/client_admin_dashboard.php">Return to dashboard</a></p>
             <hr>
-            <form id="createAccountant" name="createAccountant" action="create_accountant.php" method="POST">
-                <?php include('create_accountant_validation.php'); ?>
+            <form id="createAccountant" name="createAccountant" action="../user_client_admin/create_accountant.php" method="POST">
+                <?php include('../user_client_admin/create_accountant_validation.php'); ?>
 
                 <div class="form-group">
                     <label for="accountantid">Username</label>

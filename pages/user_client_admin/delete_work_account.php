@@ -21,7 +21,7 @@
                     
                 }
                 ?>
-                <p><a href="client_admin_dashboard.php">Return to dashboard</a></p>
+                <p><a href="../user_client_admin/client_admin_dashboard.php">Return to dashboard</a></p>
                 <div class="table-responsive table-scroll">
                     <table class="table table-hover table-room">
                         <thead>
@@ -92,7 +92,7 @@
                     </table>
                 </div>
                 <hr>
-                <p><a href="client_admin_dashboard.php">Return to dashboard</a></p>
+                <p><a href="../user_client_admin/client_admin_dashboard.php">Return to dashboard</a></p>
             </div>
         </div>
     </div>
@@ -107,7 +107,7 @@
                 </div>
                 <div class="modal-body">
                     <p> Are you sure you want to delete this user</p>
-                    <form id="editAccountant" name="deleteAccountant" action="delete_work_account.php" method="POST">
+                    <form id="editAccountant" name="deleteAccountant" action="../user_client_admin/delete_work_account.php" method="POST">
                         <?php include('../user_client_admin/delete_work_validation.php'); ?>
                         <div class="form-group">
                             <label for="viewid">UEN/ACRA No.</label>
@@ -154,10 +154,8 @@
         document.getElementById('uenid').value = uen;
         var company = document.getElementById("account_companyName" + x).innerHTML;
         document.getElementById('viewcompany').value = company;
-        var company = document.getElementById("account_fileNumber" + x).innerHTML;
-        document.getElementById('filenumber').value = company;
-//        var pass = document.getElementById("accountant_password" + x).innerHTML;
-//        document.getElementById('accountantpassword').value = pass;
+        var filenumber = document.getElementById("account_fileNumber" + x).innerHTML;
+        document.getElementById('filenumber').value = filenumber;
         
     }
      

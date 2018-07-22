@@ -5,9 +5,9 @@
 <div class="row">
         <div class="card">
             <div class="card-body">
-                <p><a href="client_admin_dashboard.php">Return to dashboard</a></p>
-                <form id="createWorkAccount" name="createWorkAccount" action="create_work_account.php" method="POST">
-                    <?php include'create_work_validation.php'?>
+                <p><a href="../user_client_admin/client_admin_dashboard.php">Return to dashboard</a></p>
+                <form id="createWorkAccount" name="createWorkAccount" action="../user_client_admin/create_work_account.php" method="POST">
+                    <?php include'../user_client_admin/create_work_validation.php'?>
 
                     <div class="form-group">
                         <label for="companyname">Company Name</label>
@@ -32,7 +32,7 @@
                     
                 </form>
                 <hr>
-                <p><a href="client_admin_dashboard.php">Return to dashboard</a></p>
+                <p><a href="../user_client_admin/client_admin_dashboard.php">Return to dashboard</a></p>
             </div>
         </div>
     </div>

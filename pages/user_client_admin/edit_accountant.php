@@ -19,7 +19,7 @@
 //                echo'after post statement';
             }
             ?>
-            <p><a href="client_admin_dashboard.php">Return to dashboard</a></p>
+            <p><a href="../user_client_admin/client_admin_dashboard.php">Return to dashboard</a></p>
             <div class="table-responsive table-scroll">
                 <table class="table table-hover table-room">
                     <thead>
@@ -68,7 +68,7 @@
                 </table>
             </div>
             <hr>
-            <p><a href="client_admin_dashboard.php">Return to dashboard</a></p>
+            <p><a href="../user_client_admin/client_admin_dashboard.php">Return to dashboard</a></p>
         </div>
     </div>
 </div>
@@ -82,8 +82,8 @@
                 <h4 class="modal-title">Edit Details</h4>
             </div>
             <div class="modal-body">
-                <form id="editAccountant" name="editAccountant" action="edit_accountant.php" method="POST">
-                    <?php include('edit_accountant_validation.php'); ?>
+                <form id="editAccountant" name="editAccountant" action="../user_client_admin/edit_accountant.php" method="POST">
+                    <?php include('../user_client_admin/edit_accountant_validation.php'); ?>
                     
                     <div class="form-group" style="display: none;">
                         <label for="accountantid">Username</label>

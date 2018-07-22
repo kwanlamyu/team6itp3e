@@ -14,8 +14,8 @@
 //                echo'after post statement';
                 }
                 ?>
-                <p><a href="client_admin_dashboard.php">Return to dashboard</a></p>               
-                <form id="manageWorkAccount" name="manageWorkAccount" action="manage_work_account.php" method="POST">
+                <p><a href="../user_client_admin/client_admin_dashboard.php">Return to dashboard</a></p>               
+                <form id="manageWorkAccount" name="manageWorkAccount" action="../user_client_admin/manage_work_account.php" method="POST">
                     <?php include('../user_client_admin/manage_work_validation.php'); ?>
                     <div class="form-group">
                         <label for="select_uen">Account UEN</label>
@@ -96,7 +96,7 @@
                     
                 </form>
                 <hr>
-                <p><a href="client_admin_dashboard.php">Return to dashboard</a></p>
+                <p><a href="../user_client_admin/client_admin_dashboard.php">Return to dashboard</a></p>
             </div>
         </div>
     </div>
