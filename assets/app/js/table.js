@@ -1411,23 +1411,18 @@ var Dashboard = function() {
                     columns: [{
                         field: "username",
                         title: "Username",
+                        //width: 200,
 						sortable: "asc",
-                        filterable: !1,
-                        width: 200,
-						responsive: {
-                            visible: "lg"
-                        }
+                        filterable: !0,
+						template: "{{username}}"
                     }, {
                         field: "email",
                         title: "Email",
 						sortable: "asc",
                         filterable: !1,
-						width: 200,
-						responsive: {
-                            visible: "lg"
-                        }
+						//width: 200
                     },  {
-                        field: "Actions",
+                        field: "",
                         width: 100,
                         title: "Actions",
                         sortable: !1,
