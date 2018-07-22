@@ -28,7 +28,6 @@
                         <th>UEN/ACRA No.</th>
                         <th>Company Name</th>
                         <th>File Number</th>
-                        <th>Account Creator</th>
                         <th>Account Manager(s)</th>
                         <th>Delete Details</th>
                         </thead>
@@ -36,26 +35,31 @@
 
                         <tbody>
                             <?php
-                            $userID = "Jerome";
-////                            echo'after table body';
+                            
+                            $userID = "jerome";
+//                          echo'after table body';
                             $query = "SELECT "
-                                    . "B.UEN AS UEN, A.companyName AS companyName, A.fileNumber AS fileNumber, "
-                                    . "B.account_user_username AS accountCreator, B.user_username AS accountManagers "
-                                    . "FROM "
-                                    . "account A, userManageAccount B "
-                                    . "WHERE "
-                                    . "B.account_user_username='$userID' AND B.user_role_id = '3'";    
+                                    ."account.UEN AS UEN, "
+                                    ."account.companyName AS companyName, "
+                                    ."account.fileNumber AS fileNumber, "
+                                    ."usermanageaccount.user_username AS accountManagers "
+                                    ."FROM "
+                                    ."account "
+                                    ."INNER JOIN "
+                                    ."usermanageaccount "
+                                    ."ON "
+                                    ."account.UEN = usermanageaccount.account_UEN  "
+                                    ."AND usermanageaccount.account_user_username = '$userID'";    
                             $sql = $DB_con->prepare($query);
 //                            echo'statement prepared';
                             echo $query;
                             $sql->execute();
                             $users = $sql->fetchAll();
-                            echo'statement executed';
-                            echo count($users);
+//                            echo'statement executed';
+//                            echo count($users);
                             if (count($users) == 0) {
                                 echo '';
                                 echo '<tr>'
-                                . '<td>Nil</td>'
                                 . '<td>Nil</td>'
                                 . '<td>Nil</td>'
                                 . '<td>Nil</td>'
@@ -72,10 +76,9 @@
                                         . "<td id='account_uen" . $counter . "'>{$row['UEN']}</td>"
                                         . "<td id='account_companyName" . $counter . "'>{$row['companyName']}</td>"
                                         . "<td id='account_fileNumber" . $counter . "'>{$row['fileNumber']}</td>"
-                                        . "<td id='account_accountCreator" . $counter . "'>{$row['accountCreator']}</td>"
                                         . "<td id='account_accountManagers" . $counter . "'>{$row['accountManagers']}</td>"
                                         . "<td>"
-                                            . "<button type='button' name='deleteButton' id='deleteButton' class='btn btn-danger delete_data' data-toggle='modal' data-target='#deleteModal' onclick='updateUsername(" . $counter . ")'>"
+                                            . "<button type='button' name='deleteButton' id='deleteButton' class='btn btn-danger delete_data' data-toggle='modal' data-target='#deleteModal' onclick='deleteAccount(" . $counter . ")'>"
                                             . "<i class='fa fa-trash' aria-hidden='true'></i> Delete "
                                             . "</button>"
                                         . "</td>"
@@ -100,40 +103,34 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
-                    <h4 class="modal-title">Delete User</h4>
+                    <h4 class="modal-title">Delete Account</h4>
                 </div>
                 <div class="modal-body">
                     <p> Are you sure you want to delete this user</p>
-                    <form id="editAccountant" name="deleteAccountant" action="#" method="POST">
-                        <?php //include('../user_client_admin/delete_accountant_validation.php'); ?>
+                    <form id="editAccountant" name="deleteAccountant" action="delete_work_account.php" method="POST">
+                        <?php include('../user_client_admin/delete_work_validation.php'); ?>
                         <div class="form-group">
-                            <label for="accountantid">Username</label>
+                            <label for="viewid">UEN/ACRA No.</label>
                             <input type="text" class="form-control" id="viewid" name="viewid" disabled>                               
                         </div>
                         
                         <div class="form-group" style="display: none;">
-                            <label for="accountantid">Username</label>     
-                            <input type="text" class="form-control" id="accountantid" name="accountantid">                            
+                            <label for="uenid">UEN/ACRA No.</label>     
+                            <input type="text" class="form-control" id="uenid" name="uenid">                            
                         </div>
                         
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="viewemail" name="viewemail" disabled>                               
-                        </div>
-
-                        <div class="form-group" style="display: none;">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="accountantemail" name="accountantemail">
-                        </div>
-
-                        <div class="form-group" style="display: none;">
-                            <label for="accountantpassword">Password</label>
-                            <input type="password" class="form-control" id="accountantpassword" name="accountantpassword" placeholder="Password">
-                            <!--<span class="error"><?php echo $passErr; ?></span>-->
+                            <label for="viewcompany">Company Name</label>
+                            <input type="text" class="form-control" id="viewcompany" name="viewcompany" disabled>                               
                         </div>
                         
                         <div class="form-group">
-                            <button type="submit" name="deleteButton" id="deleteButton" class="btn btn-danger">
+                            <label for="filenumber">File No.</label>
+                            <input type="text" class="form-control" id="filenumber" name="filenumber" disabled>                               
+                        </div>
+                        
+                        <div class="form-group">
+                            <button type="submit" name="deleteAccountButton" id="deleteButton" class="btn btn-danger">
                                 <i class='fa fa-trash' aria-hidden='true'></i>Delete User
                             </button>
                         </div>
@@ -151,13 +148,14 @@
     <!--  Modal Script-->
     <script>
         
-    function updateUsername(x){
-        var username = document.getElementById("accountant_username" + x).innerHTML;
-        document.getElementById('accountantid').value = username;
-        document.getElementById('viewid').value = username;
-        var email = document.getElementById("accountant_email" + x).innerHTML;
-        document.getElementById('accountantemail').value = email;
-        document.getElementById('viewemail').value = email;
+    function deleteAccount(x){
+        var uen = document.getElementById("account_uen" + x).innerHTML;
+        document.getElementById('viewid').value = uen;
+        document.getElementById('uenid').value = uen;
+        var company = document.getElementById("account_companyName" + x).innerHTML;
+        document.getElementById('viewcompany').value = company;
+        var company = document.getElementById("account_fileNumber" + x).innerHTML;
+        document.getElementById('filenumber').value = company;
 //        var pass = document.getElementById("accountant_password" + x).innerHTML;
 //        document.getElementById('accountantpassword').value = pass;
         
