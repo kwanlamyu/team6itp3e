@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //            foreach($selectCollaborators as $collaborator){
 //                $selected .=$selectCollaborators.",";
 //            }
-            echo "Manager(s): ".$selectCollaborators."<br>";
+//            echo "Manager(s): ".$selectCollaborators."<br>";
         }
         
         
@@ -38,8 +38,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //$roleID = $_SESSION["role_id"];
         $userID = "Jerome";
         $roleID = "3";
-        echo "username: ".$userID."<br>";
-        echo "role ID: ".$roleID."<br>";
+//        echo "username: ".$userID."<br>";
+//        echo "role ID: ".$roleID."<br>";
         echo gettype($valid).'<br>';
         
         if ($valid == TRUE) {
@@ -51,11 +51,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                VALUES ('".$selectuen."', '".$userID."', '".$selectCollaborators."', '".$roleID."')";
             $insertsql = $DB_con->prepare($collaboratorsql);
             
-            echo $collaboratorsql."<br>";
+//            echo $collaboratorsql."<br>";
             try{
             $insertsql->execute();
 //            if ($insertsql->execute()) {
-                echo "after sql execute";
+//                echo "after sql execute";
                 echo '<div class="alert alert-success" role="alert">'
                         . '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close"></a>'
                         . ' Account Manager(s) successfully added'

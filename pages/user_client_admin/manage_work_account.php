@@ -15,8 +15,8 @@
                 }
                 ?>
                 <p><a href="client_admin_dashboard.php">Return to dashboard</a></p>               
-                <form id="manageWorkAccount" name="manageWorkAccount" action="manage_work_validation.php" method="POST">
-                    
+                <form id="manageWorkAccount" name="manageWorkAccount" action="manage_work_account.php" method="POST">
+                    <?php include('../user_client_admin/manage_work_validation.php'); ?>
                     <div class="form-group">
                         <label for="select_uen">Account UEN</label>
                         <select  class="form-control" id="select_uen" name="select_uen">
