@@ -22,7 +22,7 @@
 //                echo'after post statement';
                 }
                 ?>
-                <p><a href="client_admin_dashboard.php">Return to dashboard</a></p>
+                <p><a href="../user_client_admin/client_admin_dashboard.php">Return to dashboard</a></p>
                 <div class="table-responsive table-scroll">
                     <table class="table table-hover table-room">
                         <thead>
@@ -70,7 +70,7 @@
                     </table>
                 </div>
                 <hr>
-                <p><a href="client_admin_dashboard.php">Return to dashboard</a></p>
+                <p><a href="../user_client_admin/client_admin_dashboard.php">Return to dashboard</a></p>
             </div>
         </div>
     </div>
@@ -85,7 +85,7 @@
                 </div>
                 <div class="modal-body">
                     <p> Are you sure you want to delete this user</p>
-                    <form id="editAccountant" name="deleteAccountant" action="delete_accountant.php" method="POST">
+                    <form id="editAccountant" name="deleteAccountant" action="../user_client_admin/delete_accountant.php" method="POST">
                         <?php include('../user_client_admin/delete_accountant_validation.php'); ?>
                         <div class="form-group">
                             <label for="accountantid">Username</label>
@@ -139,8 +139,6 @@
         var email = document.getElementById("accountant_email" + x).innerHTML;
         document.getElementById('accountantemail').value = email;
         document.getElementById('viewemail').value = email;
-//        var pass = document.getElementById("accountant_password" + x).innerHTML;
-//        document.getElementById('accountantpassword').value = pass;
         
     }
      
