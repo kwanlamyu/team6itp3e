@@ -73,13 +73,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         
  //       $companyName = $_SESSION['company'];
-        //$companyName = "jerome pte ltd";
+        $companyName = "jerome pte ltd";
         
         if ($valid == TRUE) {
             if ($uname !== "") {
                 $hashpass = password_hash($pass,PASSWORD_DEFAULT);
-                $sql = $DB_con->prepare("INSERT INTO user(username, email, password, role_id)
-                                           VALUES ('$uname', '$email', '$hashpass', '3')");
+                $sql = $DB_con->prepare("INSERT INTO user(username, email, password, role_id, companyName)
+                                           VALUES ('$uname', '$email', '$hashpass', '3', '$companyName')");
             }
             if ($sql->execute()) {
                 //header('Location: ../user_management/create_accountant.php');
@@ -88,20 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         . ' Accountant successfully created '
                     . '</div>';
 
-                //                echo'
-                //                    
-                //                    <div class="row">
-                //                        <div class"card">
-                //                            <div class="card-body">
-                //                                <h2>Success</h2><hr>
-                //                                <p>Accountant account successfully updated</p><br>
-                //                                <p><a href="create_accountant.php">Add another account</a></p><br>
-                //                                <p><a href="../client_admin_dashboard.php">Return to dashboard</a></p>
-                //                            </div>
-                //                        </div>
-                //                    </div>
-                //                                                    
-                //                ';
+               
             } else {
                 echo '<div class="alert alert-warning mmbsm" role="alert">Error: ' . $sql . '<br>' . $DB_con->error . '</div>';
             }
@@ -110,24 +97,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-<!--     Modal 
-    <div class="modal fade" id="alertModal" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">User Successfully Created</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <h4>User Successfully Created</h4>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>-->
+
 
 
