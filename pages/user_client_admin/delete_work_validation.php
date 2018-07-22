@@ -1,6 +1,6 @@
 <?php
 require_once '../db_connection/db.php';
-$uname = $email = $pass = "";
+$uen= "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['deleteAccountButton'])) {
 //        echo "post update button <br>";
