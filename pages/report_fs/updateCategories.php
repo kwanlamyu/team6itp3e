@@ -65,7 +65,7 @@ $reader->setReadDataOnly(true);
                                     <i class="la la-gear"></i>
                                 </span>
                                 <h3 class="m-portlet__head-text">
-                                    Update Categories
+                                    Update Sub Categories
                                 </h3>
                             </div>
                         </div>
@@ -408,9 +408,12 @@ $reader->setReadDataOnly(true);
 
                                 $result = $query->setFetchMode(PDO::FETCH_ASSOC);
                                 $result = $query->fetchAll();
+
+                                $originalValue = array();
+                                $accountValue = array();
                                 ?>
 
-                                <form method="post" name="updateCategoryForm" action="upload.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+                                <form method="post" name="updateCategoryForm" action="updateCategoriesMain.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
                                     <?php
                                     for ($i = 0; $i < count($allAccounts); $i++) {
                                         echo "<hr/><b>Account name: </b> $allAccounts[$i] <br/>";
@@ -422,7 +425,11 @@ $reader->setReadDataOnly(true);
                                             for ($j = 0; $j < count($underThisAccount); $j++) {
                                                 if (strcasecmp($underThisAccount[$j], $allAccounts[$i]) === 0) {
                                                     echo "<b>Matching account category: </b>";
-                                                    echo "<input type='text' id='category" . $i . "' value='" . $result[$x]['sub_account'] . "'> <br/>";
+                                                    echo "<input type='text' id='category" . $i . "' name='category[]' value='" . $result[$x]['sub_account'] . "'> <br/>";
+
+                                                    array_push($originalValue, $result[$x]['sub_account']);
+                                                    array_push($accountValue, $allAccounts[$i]);
+
                                                     $foundSubCat = 1;
                                                     break;
                                                 }
@@ -430,7 +437,10 @@ $reader->setReadDataOnly(true);
                                         }
                                         if ($foundSubCat == 0) {
                                             echo "<b>Matching account category: </b>";
-                                            echo "<input type='text' id='category" . $i . "'> ***";
+                                            echo "<input type='text' name='category[]' id='category" . $i . "'> ***";
+
+                                            array_push($originalValue, " ");
+                                            array_push($accountValue, $allAccounts[$i]);
                                         }
                                     }
                                 } catch (PDOException $e) {
@@ -457,6 +467,20 @@ $reader->setReadDataOnly(true);
 
                             <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
                             <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
+
+                            <?php
+                            foreach ($accountValue as $v) {
+                                echo "<input type='hidden' name='accountValue[]' value='" . $v . "'/>";
+                            }
+
+                            echo "<hr>";
+                            print_r($accountValue);
+                            echo "<hr>";
+
+                            foreach ($originalValue as $value) {
+                                echo "<input type='hidden' name='originalValue[]' value='" . $value . "'/>";
+                            }
+                            ?>
 
                             <input type="submit" value="Submit" name="submit" class="btn btn-brand">
                         </form>

@@ -138,7 +138,7 @@ include '../general/navigation_clientadmin.php';
                 }
 
                 echo "<br/>";
-
+                
                 $trialBalanceArray = array();
                 $yearlyUndefinedRows = array();
                 $endedAtArray = array();
