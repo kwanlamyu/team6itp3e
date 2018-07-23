@@ -463,11 +463,6 @@ $reader->setReadDataOnly(true);
                         <?php
                     }
                     ?>
-
-                    <div id="test">
-
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -483,37 +478,18 @@ $reader->setReadDataOnly(true);
 
 <script type="text/javascript">
 
-//    function check() {
-//        var submitBtn = document.forms['updateCategoryForm']['submit'];
-//        submitBtn.disabled = true;
-//
-//        var allAccountCount = <?php echo count($allAccounts); ?>;
-//        var allAccountArray = <?php echo json_encode($allAccounts); ?>;
-//
-//        var category = ["PHOEBE"];
-//
-//        document.getElementById("test").innerHTML += document.getElementById('category56').value;
-//
-//        for (i = 0; i < allAccountCount; i++) {
-//            if (document.getElementById('category' + i).value === "") {
-//                alert('Please fill in all fields.');
-//                return false;
-//            } else {
-//                // If value keyed in wrongly 
-//                if (allAccountArray[i] !== document.getElementById('category' + i)) {
-//                    // update database here 
-//                    
-//                } else {
-//                    // proceed normally 
-//                    
-//                    
-//                }
-//            } 
-//        }
-//
-//        document.getElementById("test").innerHTML += category.toString();
-//
-//        return false;
-//    }
+    function check() {
+
+        var allAccountCount = <?php echo count($allAccounts); ?>;
+
+        for (i = 0; i < allAccountCount; i++) {
+            if (document.getElementById('category' + i).value === "") {
+                alert('Please fill in all fields.');
+                return false;
+            }
+        }
+
+        return true;
+    }
 
 </script>
