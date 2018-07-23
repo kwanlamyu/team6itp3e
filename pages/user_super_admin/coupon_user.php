@@ -1,5 +1,9 @@
 <?php
-require_once 'db.php';
+//check for username and role_id
+//if(isset($_SESSION['username']) && $_SESSION['role_id']==='1'){
+require_once '../db_connection/db.php';
+include '../general/header.php';
+include '../general/navigation_superadmin.php';
 
 // Retrieve all of the registered coupon code 
 $select = $DB_con->prepare("SELECT * FROM coupon");
@@ -94,3 +98,19 @@ if (isset($_POST['coupon'])) {
         </form> 
     </body>
 </html>
+
+<?php
+//include footer and footer content
+include '../general/footer_content.php';
+include '../general/footer.php';
+//    }//end of session and role_id checking
+//    elseif(isset($_SESSION['username']) && $_SESSION['role_id']==='2'){
+//        header('Location: ../user_client_admin/client_admin_dashboard.php');
+//    }
+//    elseif(isset($_SESSION['username']) && $_SESSION['role_id']==='3'){
+//        header('Location: ../user_client_admin/client_admin_dashboard.php');
+//    }
+//    else{
+//        header('Location: ../user_login/login.php');
+//    }
+?>

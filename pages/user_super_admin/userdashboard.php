@@ -1,10 +1,9 @@
-<?php 
-    //check for username and role_id
-    //if(isset($_SESSION['username']) && $_SESSION['role_id']==='1'){
-    require_once '../db_connection/db.php';
-    include '../general/header.php';
-    include '../general/navigation_superadmin.php';
-     
+<?php
+//check for username and role_id
+//if(isset($_SESSION['username']) && $_SESSION['role_id']==='1'){
+require_once '../db_connection/db.php';
+include '../general/header.php';
+include '../general/navigation_superadmin.php';
 ?>
 
 <div class="m-grid__item m-grid__item--fluid m-wrapper" > <!-- style="background: url(../../assets/app/media/img/bg/repeatbg.png); background-repeat: repeat;" -->
@@ -46,16 +45,16 @@
                                 <!--BEGIN: Search -->
                                 <div class="col-lg-3">
 
-                                        <div class="input-group">
-												<div class="input-group-prepend">
-															<span class="input-group-text" id="basic-addon2">
-																<i class="flaticon-search"></i>
-															</span>
-														</div>
-												
-												<input autocomplete="off" type="text" name="q" class="form-control m-input" value="" placeholder="Search..." id="m_quicksearch_input" onkeyup="filterTable()">
-                                                
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon2">
+                                                <i class="flaticon-search"></i>
+                                            </span>
                                         </div>
+
+                                        <input autocomplete="off" type="text" name="q" class="form-control m-input" value="" placeholder="Search..." id="m_quicksearch_input" onkeyup="filterTable()">
+
+                                    </div>
 
                                 </div>
                                 <!--END: Search -->
@@ -129,10 +128,10 @@
 
     }
 </script>
-<?php 
-    //include footer and footer content
-    include '../general/footer_content.php';
-    include '../general/footer.php'; 
+<?php
+//include footer and footer content
+include '../general/footer_content.php';
+include '../general/footer.php';
 //    }//end of session and role_id checking
 //    elseif(isset($_SESSION['username']) && $_SESSION['role_id']==='2'){
 //        header('Location: ../user_client_admin/client_admin_dashboard.php');
@@ -143,4 +142,4 @@
 //    else{
 //        header('Location: ../user_login/login.php');
 //    }    
-    ?>
+?>
