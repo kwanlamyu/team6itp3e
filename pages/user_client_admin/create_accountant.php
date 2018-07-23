@@ -1,9 +1,10 @@
-<?php 
-    //check for username and role_id
-    //if(isset($_SESSION['username']) && $_SESSION['role_id']==='2'){?>
-<?php include '../general/header.php'; ?>
-<?php require_once '../db_connection/db.php';?>
-<?php include '../general/navigation_clientadmin.php'; ?>
+<?php
+//check for username and role_id
+//if(isset($_SESSION['username']) && $_SESSION['role_id']==='2'){
+include '../general/header.php';
+require_once '../db_connection/db.php';
+include '../general/navigation_clientadmin.php';
+?>
 <div class="row">
     <div class="card">
         <div class="card-body">
@@ -67,8 +68,9 @@
     </div>
 </div>
 
-<?php include '../general/footer_content.php'; ?>
-<?php include '../general/footer.php'; 
+<?php 
+include '../general/footer_content.php';
+include '../general/footer.php';
 //}//end of session and role_id checking
 //    elseif(isset($_SESSION['username']) && $_SESSION['role_id']==='1'){
 //        header('Location: ../user_super_admin/userdashboard.php');

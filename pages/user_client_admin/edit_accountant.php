@@ -1,9 +1,10 @@
-<?php 
-    //check for username and role_id
-    //if(isset($_SESSION['username']) && $_SESSION['role_id']==='2'){?>
-<?php include '../general/header.php';?>
-<?php include '../general/navigation_clientadmin.php';?>
-<?php include '../db_connection/db.php';?>
+<?php
+//check for username and role_id
+//if(isset($_SESSION['username']) && $_SESSION['role_id']==='2'){
+include '../general/header.php';
+require_once '../db_connection/db.php';
+include '../general/navigation_clientadmin.php';
+?>
 
 <div class="row">
     <div class="card">
@@ -51,13 +52,13 @@
 
                                 echo ""
                                 . "<tr>"
-                                    . "<td id='accountant_username" . $counter . "'>{$row['username']}</td>"
-                                    . "<td id='accountant_email" . $counter . "'>{$row['email']}</td>"
-                                    . "<td id='edit'>"
-                                        . "<button type='button' name='editButton' id='editButton' class='btn btn-success edit_data'data-toggle='modal' data-target='#editModal' onclick='updateUsername(" . $counter . ")'>"
-                                            . "<i class='far fa-edit'></i> Edit "
-                                        . "</button>"
-                                    . "</td>"
+                                . "<td id='accountant_username" . $counter . "'>{$row['username']}</td>"
+                                . "<td id='accountant_email" . $counter . "'>{$row['email']}</td>"
+                                . "<td id='edit'>"
+                                . "<button type='button' name='editButton' id='editButton' class='btn btn-success edit_data'data-toggle='modal' data-target='#editModal' onclick='updateUsername(" . $counter . ")'>"
+                                . "<i class='far fa-edit'></i> Edit "
+                                . "</button>"
+                                . "</td>"
                                 . "</tr>\n";
                                 $counter++;
                             }
@@ -84,7 +85,7 @@
             <div class="modal-body">
                 <form id="editAccountant" name="editAccountant" action="../user_client_admin/edit_accountant.php" method="POST">
                     <?php include('../user_client_admin/edit_accountant_validation.php'); ?>
-                    
+
                     <div class="form-group" style="display: none;">
                         <label for="accountantid">Username</label>
                         <input type="text" class="form-control" id="accountantid" name="accountantid">                            
@@ -101,13 +102,13 @@
                         <input type="password" class="form-control" id="accountantpassword" name="accountantpassword" placeholder="Password">
                         <span class="error"><?php echo $passErr; ?></span>
                     </div>
-                    
+
                     <div class="form-group">
-                            <label for="accountantcpassword">Confirm Password</label>
-                            <input type="password" class="form-control" id="accountantcpassword" name="accountantcpassword" placeholder="Retype Password">
-                            <span class="error"><?php echo $cpassErr; ?></span>
-                            <span class="error"><?php echo $twopassErr; ?></span>
-                        </div>
+                        <label for="accountantcpassword">Confirm Password</label>
+                        <input type="password" class="form-control" id="accountantcpassword" name="accountantcpassword" placeholder="Retype Password">
+                        <span class="error"><?php echo $cpassErr; ?></span>
+                        <span class="error"><?php echo $twopassErr; ?></span>
+                    </div>
 
                     <div class="form-group">
                         <button type="submit" name="updateButton" id="updateButton" class="btn btn-primary"><i class="fas fa-check"></i> Update Detail </button>
@@ -134,8 +135,9 @@
     }
 
 </script>
-<?php include '../general/footer_content.php'; ?>
-<?php include '../general/footer.php'; 
+<?php
+include '../general/footer_content.php';
+include '../general/footer.php';
 //}//end of session and role_id checking
 //    elseif(isset($_SESSION['username']) && $_SESSION['role_id']==='1'){
 //        header('Location: ../user_super_admin/userdashboard.php');
