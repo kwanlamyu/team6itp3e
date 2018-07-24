@@ -25,56 +25,68 @@ $originalValue = $_POST['originalValue'];
 $inputCategory = $_POST['category'];
 $accountValue = $_POST['accountValue'];
 
+$tempStoreArray = array();
+$categoryTempArray = array();
+$temp = array();
+
 for ($i = 0; $i < count($originalValue); $i++) {
     if ($originalValue[$i] != $inputCategory[$i]) {
-        echo "Input Category: " . $inputCategory[$i] . "<br>";
-
         if ($originalValue[$i] == " ") {
             for ($j = 0; $j < count($result); $j++) {
                 if ($inputCategory[$i] == $result[$j]['sub_account']) {
-
-                    $foundAccount = $result[$j]['account_names'];
-                    $foundAccount = $result[$j]['account_names'] . "," . $accountValue[$i];
-                    echo "Account names: " . $foundAccount . "<br>";
-
-//                    $update = "UPDATE sub_category SET account_names=? WHERE sub_account=?";
-//                    $result = $DB_con->prepare($update);
-//                    $result->execute([$foundAccount, $inputCategory[$i]]);
-
-                    $update = "UPDATE sub_category SET account_names= '" . $foundAccount . "' WHERE sub_account= '" . $inputCategory[$i] . "'";
-                    $stmt = $DB_con->prepare($update);
-                    $stmt->execute();
-
-                    // current situation is will overwrite if under the same sub_account
-                    
+                    array_push($tempStoreArray, $result[$j]['account_names']);
+                    array_push($tempStoreArray, $accountValue[$i]);
+                    $categoryTempArray[$inputCategory[$i]] = $tempStoreArray;
                 } else {
-                    // redirect to main ?? or ??
+                    // auto add in to the main ?? 
                 }
             }
         } else {
-            // pull from the db, delete away the current account one -> use update 
-            // pull from the db, replace the new account in -> use update
+            // check if $categoryTempArray key is the input sub value 
+            // if it is, add into the array. 
+            // else create a new entry 
             for ($j = 0; $j < count($result); $j++) {
-                if ($inputCategory[$i] == $result[$j]['sub_account']) {
+                // take the existing value and add in 
+                if (in_array($inputCategory[$i], $categoryTempArray)) {
+                    foreach ($categoryTempArray as $key => $array) {
+                        // for updating the new rows
+                        if ($key == $result[$j]['sub_account']) {
+                            array_push($array, $result[$j]['account_names']);
+                            array_push($array, $accountValue[$i]);
+                            $categoryTempArray[$key] = $array;
+                        }
+                    }
+                }
+                // just create a new entry 
+                else {
                     // for updating the new rows
-                    $foundAccount = $result[$j]['account_names'];
-                    $foundAccount = $result[$j]['account_names'] . "," . $accountValue[$i];
-                    $update = "UPDATE sub_category SET account_names= '" . $foundAccount . "' WHERE sub_account= '" . $inputCategory[$i] . "'";
-                    $stmt = $DB_con->prepare($update);
-                    $stmt->execute();
+                    if ($inputCategory[$i] == $result[$j]['sub_account']) {
+                        array_push($tempStoreArray, $result[$j]['account_names']);
+                        array_push($tempStoreArray, $accountValue[$i]);
+                        $categoryTempArray[$inputCategory[$i]] = $tempStoreArray;
+                    }
                 }
 
+                // for updating the current rows, delete away the existing one
                 if (strpos($result[$j]['account_names'], $accountValue[$i]) !== false) {
-                    // for updating the current rows, delete away the existing one
                     $foundAccount = $result[$j]['account_names'];
                     $replacedString = str_replace($accountValue[$i], '', $result[$j]['account_names']);
-                   
-                    $update = "UPDATE sub_category SET account_names= '" . $replacedString . "' WHERE sub_account= '" . $result[$j]['sub_account'] . "'";
-                    $stmt = $DB_con->prepare($update);
-                    $stmt->execute();
+                    array_push($temp, $replacedString);
+                    $categoryTempArray[$result[$j]['sub_account']] = $temp;
                 }
             }
         }
+    }
+}
+
+if (!empty($categoryTempArray)) {
+    foreach ($categoryTempArray as $category => $array) {
+        $uniqueArray = array_unique($array);
+        $implode = implode(",", $uniqueArray);
+
+        $update = "UPDATE sub_category SET account_names= '" . $implode . "' WHERE sub_account= '" . $category . "' AND company_name = '" . $_SESSION['companyName'] . "' AND client_company = '" . $_POST['clientCompany'] . "'";
+        $stmt = $DB_con->prepare($update);
+        $stmt->execute();
     }
 }
 ?>
@@ -137,11 +149,13 @@ for ($i = 0; $i < count($originalValue); $i++) {
 
 
                     <?php
+                    echo "<hr>";
+                    print_r($categoryTempArray);
                     echo "<hr> account <hr>";
                     print_r($accountValue);
-                    echo "<hr> original <hr>";
+                    echo "<hr> original category <hr>";
                     print_r($originalValue);
-                    echo "<hr>";
+                    echo "<hr> input category value <hr>";
                     print_r($inputCategory);
                     ?>
 
