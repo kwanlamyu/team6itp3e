@@ -1,9 +1,8 @@
 <?php
-session_start();
+require_once '../db_connection/db.php';
 //check for username and role_id
 if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
     include '../general/header.php';
-    require_once '../db_connection/db.php';
     include '../general/navigation_clientadmin.php';
     ?>
 
@@ -18,7 +17,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
 //                echo'after post statement';
                 }
                 ?>
-                <p><a href="../user_client_admin/client_admin_dashboard.php">Return to dashboard</a></p>               
+                <p><a href="../user_client_admin/client_admin_dashboard.php">Return to dashboard</a></p>
                 <form id="manageWorkAccount" name="manageWorkAccount" action="../user_client_admin/manage_work_validation.php" method="POST">
                     <?php include('../user_client_admin/manage_work_validation.php'); ?>
                     <div class="form-group">
@@ -37,7 +36,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                 echo '<option> </option>';
                             } else {
                                 //select UENs
-//                                
+//
                                 $counter = 0;
                                 foreach ($uenNum as $row) {
 //                                    echo'rows echoed';

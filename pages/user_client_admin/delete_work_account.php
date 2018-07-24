@@ -1,5 +1,4 @@
 <?php
-session_start();
 //check for username and role_id
 if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
     include '../general/header.php';
@@ -16,7 +15,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                 format table with delete button at side
                 when button is clicked, modal popup to ask for confirmation
                 on confirmation then delete row
-                -->                
+                -->
 
 
                 <?php
@@ -115,22 +114,22 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                         <?php include('../user_client_admin/delete_work_validation.php'); ?>
                         <div class="form-group">
                             <label for="viewid">UEN/ACRA No.</label>
-                            <input type="text" class="form-control" id="viewid" name="viewid" disabled>                               
+                            <input type="text" class="form-control" id="viewid" name="viewid" disabled>
                         </div>
 
                         <div class="form-group" style="display: none;">
-                            <label for="uenid">UEN/ACRA No.</label>     
-                            <input type="text" class="form-control" id="uenid" name="uenid">                            
+                            <label for="uenid">UEN/ACRA No.</label>
+                            <input type="text" class="form-control" id="uenid" name="uenid">
                         </div>
 
                         <div class="form-group">
                             <label for="viewcompany">Company Name</label>
-                            <input type="text" class="form-control" id="viewcompany" name="viewcompany" disabled>                               
+                            <input type="text" class="form-control" id="viewcompany" name="viewcompany" disabled>
                         </div>
 
                         <div class="form-group">
                             <label for="filenumber">File No.</label>
-                            <input type="text" class="form-control" id="filenumber" name="filenumber" disabled>                               
+                            <input type="text" class="form-control" id="filenumber" name="filenumber" disabled>
                         </div>
 
                         <div class="form-group">
