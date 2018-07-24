@@ -35,8 +35,8 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
 
                         <tbody>
                             <?php
-                            //$userID = $_SESSION["username"];
-                            $userID = 'jerome';
+                            $userID = $_SESSION["username"];
+//                            $userID = 'jerome';
                             $query = "SELECT "
                                     . "account.UEN AS UEN, "
                                     . "account.companyName AS companyName, "

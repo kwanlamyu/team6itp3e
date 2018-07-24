@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once '../db_connection/db.php';
 $unameErr = $companynameErr = $uennumberErr = $filenumberErr="";
 $uname = $companyname = $uen = $filenumber="";
@@ -60,8 +61,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //            echo "Valid: ".$valid."<br>";
         }
         
-        //$uname = $_SESSION["username"];
-        $uname = "Jerome";
+        $uname = $_SESSION["username"];
+//        $uname = "Jerome";
 //        echo "username: ".$uname."<br>";
 //        echo gettype($valid).'<br>';
         

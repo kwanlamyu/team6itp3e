@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once '../db_connection/db.php';
 $uen= "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

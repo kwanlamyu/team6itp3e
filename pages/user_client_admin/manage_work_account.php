@@ -19,7 +19,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                 }
                 ?>
                 <p><a href="../user_client_admin/client_admin_dashboard.php">Return to dashboard</a></p>               
-                <form id="manageWorkAccount" name="manageWorkAccount" action="../user_client_admin/manage_work_account.php" method="POST">
+                <form id="manageWorkAccount" name="manageWorkAccount" action="../user_client_admin/manage_work_validation.php" method="POST">
                     <?php include('../user_client_admin/manage_work_validation.php'); ?>
                     <div class="form-group">
                         <label for="select_uen">Account UEN</label>

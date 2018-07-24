@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once '../db_connection/db.php';
 $edituen = $editedCollaborators = $userID= $roleID= $updateCollaborator="";
 $valid = TRUE; //this var scope ok
@@ -18,24 +19,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $editedCollaborators = implode(', ', $_POST['edit_Collaborator']);
         }
                 
-        //$userID = $_SESSION["username"];
-        //$roleID = $_SESSION["role_id"];
-        $userID = "Jerome";
-        $roleID = "3";
+        $userID = $_SESSION["username"];
+        $roleID = $_SESSION["role_id"];
+//        $userID = "Jerome";
+//        $roleID = "3";
         echo "username: ".$userID."<br>";
         echo "role ID: ".$roleID."<br>";
         echo gettype($valid).'<br>';
         
         if ($valid == TRUE) {
-//            
-            //prepare statement to insert into DB company name and UEN to
-            $updateCollaborator = "UPDATE usermanageaccount SET user_username='" . $editedCollaborators . "' WHERE account_UEN='" . $edituen . "'";
-            $updateSql = $DB_con->prepare($updateCollaborator);
-
-            echo $updateCollaborator . "<br>";
+            
             try {
-                $updateSql->execute();
                 
+                $deleteAccountSql = "DELETE FROM usermanageaccount WHERE account_UEN = '".$edituen."'";
+                $firstStatement = $DB_con->prepare($deleteAccountSql);
+                $firstStatement->execute();
+                
+                
+                $seperatedCollaborators = explode(',', $editedCollaborators);
+                foreach ($seperatedCollaborators as $collaborator ){
+                    //prepare statement to insert into DB company name and UEN to
+                    $updateCollaborator = "INSERT INTO userManageAccount(account_UEN, account_user_username, user_username, user_role_id)
+                                       VALUES ('".$edituen."', '".$userID."', '".$collaborator."', '3')";
+                    $updateSql = $DB_con->prepare($updateCollaborator);
+
+                    echo $updateCollaborator . "<br>";
+
+                    $updateSql->execute();
+                }
                 echo '<div class="alert alert-success" role="alert">'
                         . '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close"></a>'
                         . ' Account Manager(s) successfully changed'
