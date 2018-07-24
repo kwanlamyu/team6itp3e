@@ -72,8 +72,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
         
- //       $companyName = $_SESSION['company'];
-        $companyName = "jerome pte ltd";
+        $companyName = $_SESSION['company'];
+//        $companyName = "jerome pte ltd";
         
         if ($valid == TRUE) {
             if ($uname !== "") {

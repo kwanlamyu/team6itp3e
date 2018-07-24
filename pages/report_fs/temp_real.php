@@ -659,6 +659,17 @@ $query->execute();
 $result = $query->setFetchMode(PDO::FETCH_ASSOC);
 $result = $query->fetchAll();
 $accountAndCategory = array();
+$assetsArray = array();
+$capitalArray = array();
+$liabilitiesArray = array();
+$nonCurrentLiabilitiesArray = array();
+$bothLiabilitiesArray = array();
+$currentAssetsArray = array();
+$tradeLiabilitiesArray = array();
+$incomeArray = array();
+$expensesArray = array();
+$tradeGainArray = array();
+$nonTradeGainArray = array();
 echo $clientName;
 for ($i = 0; $i < count($result); $i++) {
     $mainAccountName = $result[$i]['main_account'];

@@ -1,19 +1,21 @@
-<?php 
-    //check for username and role_id
-    //if(isset($_SESSION['username']) && $_SESSION['role_id']==='2'){?>
-<?php include '../general/header.php';?>
-<?php include '../general/navigation_clientadmin.php';?>
-<?php include '../db_connection/db.php';?>
+<?php
+require_once '../db_connection/db.php';
+//check for username and role_id
+if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
+    include '../general/header.php';
+    include '../general/navigation_clientadmin.php';
+    
+    ?>
 
 
-<div class="row">
+    <div class="row">
         <div class="card">
             <div class="card-body">
-<!--            //retrieve table of accountants
-                //format table with delete button at side
-                //when button is clicked, modal popup to ask for confirmation
-                //on confirmation then delete row
--->                
+                <!--            //retrieve table of accountants
+                                //format table with delete button at side
+                                //when button is clicked, modal popup to ask for confirmation
+                                //on confirmation then delete row
+                -->                
 
 
                 <?php
@@ -53,13 +55,13 @@
 //                                    echo'rows echoed';
                                     echo ""
                                     . "<tr>"
-                                        . "<td id='accountant_username" . $counter . "'>{$row['username']}</td>"
-                                        . "<td id='accountant_email" . $counter . "'>{$row['email']}</td>"
-                                        . "<td>"
-                                            . "<button type='button' name='deleteButton' id='deleteButton' class='btn btn-danger delete_data' data-toggle='modal' data-target='#deleteModal' onclick='updateUsername(" . $counter . ")'>"
-                                            . "<i class='fa fa-trash' aria-hidden='true'></i> Delete "
-                                            . "</button>"
-                                        . "</td>"
+                                    . "<td id='accountant_username" . $counter . "'>{$row['username']}</td>"
+                                    . "<td id='accountant_email" . $counter . "'>{$row['email']}</td>"
+                                    . "<td>"
+                                    . "<button type='button' name='deleteButton' id='deleteButton' class='btn btn-danger delete_data' data-toggle='modal' data-target='#deleteModal' onclick='updateUsername(" . $counter . ")'>"
+                                    . "<i class='fa fa-trash' aria-hidden='true'></i> Delete "
+                                    . "</button>"
+                                    . "</td>"
                                     . "</tr>\n";
                                     $counter++;
                                 }
@@ -74,7 +76,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Modal -->
     <div class="modal fade" id="deleteModal" role="dialog">
         <div class="modal-dialog modal-lg">
@@ -91,12 +93,12 @@
                             <label for="accountantid">Username</label>
                             <input type="text" class="form-control" id="viewid" name="viewid" disabled>                               
                         </div>
-                        
+
                         <div class="form-group" style="display: none;">
                             <label for="accountantid">Username</label>     
                             <input type="text" class="form-control" id="accountantid" name="accountantid">                            
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input type="email" class="form-control" id="viewemail" name="viewemail" disabled>                               
@@ -112,13 +114,13 @@
                             <input type="password" class="form-control" id="accountantpassword" name="accountantpassword" placeholder="Password">
                             <!--<span class="error"><?php echo $passErr; ?></span>-->
                         </div>
-                        
+
                         <div class="form-group">
                             <button type="submit" name="deleteButton" id="deleteButton" class="btn btn-danger">
                                 <i class='fa fa-trash' aria-hidden='true'></i>Delete User
                             </button>
                         </div>
-                    
+
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -128,34 +130,33 @@
             </div>
         </div>
     </div>
-    
+
     <!--  Modal Script-->
     <script>
-        
-    function updateUsername(x){
-        var username = document.getElementById("accountant_username" + x).innerHTML;
-        document.getElementById('accountantid').value = username;
-        document.getElementById('viewid').value = username;
-        var email = document.getElementById("accountant_email" + x).innerHTML;
-        document.getElementById('accountantemail').value = email;
-        document.getElementById('viewemail').value = email;
-        
-    }
-     
+
+        function updateUsername(x) {
+            var username = document.getElementById("accountant_username" + x).innerHTML;
+            document.getElementById('accountantid').value = username;
+            document.getElementById('viewid').value = username;
+            var email = document.getElementById("accountant_email" + x).innerHTML;
+            document.getElementById('accountantemail').value = email;
+            document.getElementById('viewemail').value = email;
+
+        }
+
     </script>
-    
-        
-    
-<?php include '../general/footer_content.php';?>
-<?php include '../general/footer.php';
-//}//end of session and role_id checking
-//    elseif(isset($_SESSION['username']) && $_SESSION['role_id']==='1'){
-//        header('Location: ../user_super_admin/userdashboard.php');
-//    }
-//    elseif(isset($_SESSION['username']) && $_SESSION['role_id']==='3'){
-//        header('Location: ../user_client_admin/client_admin_dashboard.php');
-//    }
-//    else{
-//        header('Location: ../user_login/login.php');
-//    }
+
+
+
+    <?php
+    include '../general/footer_content.php';
+    include '../general/footer.php';
+}//end of session and role_id checking
+elseif (isset($_SESSION['username']) && $_SESSION['role_id'] === '1') {
+    header('Location: ../user_super_admin/userdashboard.php');
+} elseif (isset($_SESSION['username']) && $_SESSION['role_id'] === '3') {
+    header('Location: ../user_client_admin/client_admin_dashboard.php');
+} else {
+    header('Location: ../user_login/login.php');
+}
 ?>

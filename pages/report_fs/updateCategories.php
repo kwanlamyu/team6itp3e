@@ -65,7 +65,7 @@ $reader->setReadDataOnly(true);
                                     <i class="la la-gear"></i>
                                 </span>
                                 <h3 class="m-portlet__head-text">
-                                    Update Categories
+                                    Update Sub Categories
                                 </h3>
                             </div>
                         </div>
@@ -408,30 +408,68 @@ $reader->setReadDataOnly(true);
 
                                 $result = $query->setFetchMode(PDO::FETCH_ASSOC);
                                 $result = $query->fetchAll();
+
+                                $originalValue = array();
+                                $accountValue = array();
                                 ?>
 
-                                <form method="post" name="updateCategoryForm" action="upload.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+                                <form method="post" name="updateCategoryForm" action="updateCategoriesExtraMain.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
                                     <?php
                                     for ($i = 0; $i < count($allAccounts); $i++) {
                                         echo "<hr/><b>Account name: </b> $allAccounts[$i] <br/>";
+                                        echo "<b>Matching account category: </b>";
+                                        echo "<div>";
 
-                                        $foundSubCat = 0;
+                                        // echo "<select style='position:absolute;width:200px;height:25px;line-height:20px;margin:0;padding:0;' name='category[]' onchange='document.getElementById('displayValue" . $i . "').value=this.options[this.selectedIndex].text;document.getElementById('idValue" . $i . "').value=this.options['this.selectedIndex'].value;'>";
+                                        // echo "<option></option>";
+                                        $startDataList = "<input list='category" . $i . "' value='' class='form-control' name='category[]'/>";
+                                        $bodyDataList = "<datalist id='category" . $i . "'>";
+                                        $setCat = 0;
                                         for ($x = 0; $x < count($result); $x++) {
                                             $underThisAccount = $result[$x]['account_names'];
                                             $underThisAccount = explode(",", $underThisAccount);
-                                            for ($j = 0; $j < count($underThisAccount); $j++) {
-                                                if (strcasecmp($underThisAccount[$j], $allAccounts[$i]) === 0) {
-                                                    echo "<b>Matching account category: </b>";
-                                                    echo "<input type='text' id='category" . $i . "' value='" . $result[$x]['sub_account'] . "'> <br/>";
-                                                    $foundSubCat = 1;
-                                                    break;
+                                            $subCatResult = "";
+                                            $foundSubCat = 0;
+
+                                            if ($setCat == 0) {
+                                                for ($j = 0; $j < count($underThisAccount); $j++) {
+                                                    if (strcasecmp($underThisAccount[$j], $allAccounts[$i]) === 0) {
+                                                        // echo "<option selected='selected' value='" . $result[$x]['sub_account'] . "'>" . $result[$x]['sub_account'] . "</option>";
+                                                        // echo "<input type='text' id='category" . $i . "' name='category[]' value='" . $result[$x]['sub_account'] . "'> <br/>";
+
+                                                        array_push($originalValue, $result[$x]['sub_account']);
+                                                        array_push($accountValue, $allAccounts[$i]);
+
+                                                        $foundSubCat = 1;
+                                                        $startDataList = "<input list='category" . $i . "' value='" . $result[$x]['sub_account'] . "' class='form-control' name='category[]'/>";
+                                                        break;
+                                                    }
                                                 }
                                             }
+                                            if ($foundSubCat == 1) {
+                                                $setCat = 1;
+                                            }
+//                                             else {
+                                            // echo "<option value='" . $result[$x]['sub_account'] . "'>" . $result[$x]['sub_account'] . "</option>";
+                                            // }
+                                            $bodyDataList .= "<option value='" . $result[$x]['sub_account'] . "'>";
                                         }
-                                        if ($foundSubCat == 0) {
-                                            echo "<b>Matching account category: </b>";
-                                            echo "<input type='text' id='category" . $i . "'> ***";
+                                        if ($setCat == 0) {
+                                            array_push($originalValue, "");
+                                            array_push($accountValue, $allAccounts[$i]);
                                         }
+                                        // if ($foundSubCat == 0) {
+                                        //     echo "<b>Matching account category: </b>";
+                                        //     echo "<input type='text' name='category[]' id='category" . $i . "'> ***";
+                                        //
+                                        //     array_push($originalValue, " ");
+                                        //     array_push($accountValue, $allAccounts[$i]);
+                                        // }
+                                        // echo "</select><br/>";
+                                        // echo "<input style='position:absolute;width:183px;width:180px\9;#width:180px;height:21px;height:28px\9;#height:18px;border:1px solid #A9A9A9;' name='displayValue" . $i . "' placeholder='Input a new category' id='displayValue" . $i . "' onfocus='this.select();' type='text'/>";
+                                        // echo "<input name='idValue" . $i . "' id='idValue" . $i . "' type='hidden'/>";
+                                        echo "<label>Choose a category:" . $startDataList . "</label>" . $bodyDataList . "</datalist>";
+                                        echo "</div>";
                                     }
                                 } catch (PDOException $e) {
                                     echo 'Error: ' . $e->getMessage();
@@ -439,9 +477,7 @@ $reader->setReadDataOnly(true);
                             } else {
                                 die("Unable to find the accounts in your file, please ensure the column headings (Account, Debit, Credit) are present.");
                             }
-                            ?>
 
-                            <?php
                             foreach ($fileArray as $value) {
                                 echo "<input type='hidden' name='fileArray[]' value='" . $value . "'/>";
                             }
@@ -458,16 +494,25 @@ $reader->setReadDataOnly(true);
                             <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
                             <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
 
+                            <?php
+                            foreach ($accountValue as $v) {
+                                echo "<input type='hidden' name='accountValue[]' value='" . $v . "'/>";
+                            }
+
+                            echo "<hr>";
+                            print_r($accountValue);
+                            echo "<hr>";
+
+                            foreach ($originalValue as $value) {
+                                echo "<input type='hidden' name='originalValue[]' value='" . $value . "'/>";
+                            }
+                            ?>
+
                             <input type="submit" value="Submit" name="submit" class="btn btn-brand">
                         </form>
                         <?php
                     }
                     ?>
-
-                    <div id="test">
-
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -483,37 +528,18 @@ $reader->setReadDataOnly(true);
 
 <script type="text/javascript">
 
-//    function check() {
-//        var submitBtn = document.forms['updateCategoryForm']['submit'];
-//        submitBtn.disabled = true;
-//
-//        var allAccountCount = <?php echo count($allAccounts); ?>;
-//        var allAccountArray = <?php echo json_encode($allAccounts); ?>;
-//
-//        var category = ["PHOEBE"];
-//
-//        document.getElementById("test").innerHTML += document.getElementById('category56').value;
-//
-//        for (i = 0; i < allAccountCount; i++) {
-//            if (document.getElementById('category' + i).value === "") {
-//                alert('Please fill in all fields.');
-//                return false;
-//            } else {
-//                // If value keyed in wrongly 
-//                if (allAccountArray[i] !== document.getElementById('category' + i)) {
-//                    // update database here 
-//                    
-//                } else {
-//                    // proceed normally 
-//                    
-//                    
-//                }
-//            } 
-//        }
-//
-//        document.getElementById("test").innerHTML += category.toString();
-//
-//        return false;
-//    }
+    function check() {
+
+        var allAccountCount = <?php echo count($allAccounts); ?>;
+
+        for (i = 0; i < allAccountCount; i++) {
+            if (document.getElementById('category' + i).value === "") {
+                alert('Please fill in all fields.');
+                return false;
+            }
+        }
+
+        return true;
+    }
 
 </script>
