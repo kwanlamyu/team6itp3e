@@ -1,7 +1,7 @@
 <?php
 session_start();
 //check for username and role_id
-if (isset($_SESSION['username']) && $_SESSION['role_id'] === '2') {
+if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
     include '../general/header.php';
     include '../general/navigation_clientadmin.php';
     include '../db_connection/db.php';
