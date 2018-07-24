@@ -413,7 +413,7 @@ $reader->setReadDataOnly(true);
                                 $accountValue = array();
                                 ?>
 
-                                <form method="post" name="updateCategoryForm" action="updateCategoriesMain.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+                                <form method="post" name="updateCategoryForm" action="updateCategoriesExtraMain.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
                                     <?php
                                     for ($i = 0; $i < count($allAccounts); $i++) {
                                         echo "<hr/><b>Account name: </b> $allAccounts[$i] <br/>";
