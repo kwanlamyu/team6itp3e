@@ -1,4 +1,5 @@
 <?php
+session_start();
 //check for username and role_id
 if (isset($_SESSION['username']) && ($_SESSION['role_id'] === '2' || $_SESSION['role_id'] === '3')) {
     include '../general/header.php';

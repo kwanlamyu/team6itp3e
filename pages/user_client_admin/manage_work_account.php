@@ -1,4 +1,5 @@
 <?php
+session_start();
 //check for username and role_id
 if (isset($_SESSION['username']) && $_SESSION['role_id'] === '2') {
     include '../general/header.php';
@@ -79,7 +80,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] === '2') {
                                             . "<tr>"
                                             . "<td id='accountant_username" . $counter . "'>{$row['username']}</td>"
                                             . "<td id='select_users'>"
-                                            . "<input type='checkbox' name='select_Collaborator[]' id='select_Collaborator' value='" . $row['username'] . "'>"
+                                            . "<input type='checkbox' name='select_Collaborator[]' id='select_Collaborator" . $counter . "' value='" . $row['username'] . "'>"
                                             . "</td>"
                                             . "</tr>\n";
                                             $counter++;

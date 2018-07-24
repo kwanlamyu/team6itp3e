@@ -1,9 +1,10 @@
 <?php
+session_start();
 //check for username and role_id
-if (isset($_SESSION['username']) && ($_SESSION['role_id'] === '2' || $_SESSION['role_id'] === '3')) {
+if (isset($_SESSION['username'])) {
     include '../general/header.php';
     require_once '../db_connection/db.php';
-    if ($_SESSION['role_id'] === '2') {
+    if ($_SESSION['role_id'] == '2') {
         include '../general/navigation_clientadmin.php';
     } elseif ($_SESSION['role_id'] === '3') {
         include '../general/navigation_accountant.php';
