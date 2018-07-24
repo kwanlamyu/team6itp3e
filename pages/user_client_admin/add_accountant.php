@@ -1,6 +1,11 @@
-<?php include '../general/header.php'; ?>
-<?php require_once '../db_connection/db.php';?>
-<?php include '../general/navigation_clientadmin.php'; ?>
+<?php
+session_start();
+//check for username and role_id
+if (isset($_SESSION['username']) && $_SESSION['role_id'] === '2') {
+    include '../general/header.php';
+    require_once '../db_connection/db.php';
+    include '../general/navigation_clientadmin.php';
+    ?>
 
 <div class="m-grid__item m-grid__item--fluid m-wrapper">
 	<!-- BEGIN: Subheader -->
@@ -153,5 +158,15 @@
 
 
 
-	<?php include '../general/footer_content.php';?>
-	<?php include '../general/footer.php';?>
+<?php
+    include '../general/footer_content.php';
+    include '../general/footer.php';
+}//end of session and role_id checking
+elseif (isset($_SESSION['username']) && $_SESSION['role_id'] === '1') {
+    header('Location: ../user_super_admin/userdashboard.php');
+} elseif (isset($_SESSION['username']) && $_SESSION['role_id'] === '3') {
+    header('Location: ../user_client_admin/client_admin_dashboard.php');
+} else {
+    header('Location: ../user_login/login.php');
+}
+?>
