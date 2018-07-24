@@ -424,32 +424,39 @@ $reader->setReadDataOnly(true);
                                         // echo "<option></option>";
                                         $startDataList = "<input list='category" . $i . "' value='' class='form-control' name='category[]'/>";
                                         $bodyDataList = "<datalist id='category" . $i . "'>";
+                                        $setCat = 0;
                                         for ($x = 0; $x < count($result); $x++) {
                                             $underThisAccount = $result[$x]['account_names'];
                                             $underThisAccount = explode(",", $underThisAccount);
-                                            $foundSubCat = 0;
                                             $subCatResult = "";
+                                            $foundSubCat = 0;
 
-                                            for ($j = 0; $j < count($underThisAccount); $j++) {
-                                                if (strcasecmp($underThisAccount[$j], $allAccounts[$i]) === 0) {
-                                                    // echo "<option selected='selected' value='" . $result[$x]['sub_account'] . "'>" . $result[$x]['sub_account'] . "</option>";
-                                                    // echo "<input type='text' id='category" . $i . "' name='category[]' value='" . $result[$x]['sub_account'] . "'> <br/>";
+                                            if ($setCat == 0) {
+                                                for ($j = 0; $j < count($underThisAccount); $j++) {
+                                                    if (strcasecmp($underThisAccount[$j], $allAccounts[$i]) === 0) {
+                                                        // echo "<option selected='selected' value='" . $result[$x]['sub_account'] . "'>" . $result[$x]['sub_account'] . "</option>";
+                                                        // echo "<input type='text' id='category" . $i . "' name='category[]' value='" . $result[$x]['sub_account'] . "'> <br/>";
 
-                                                    array_push($originalValue, $result[$x]['sub_account']);
-                                                    array_push($accountValue, $allAccounts[$i]);
+                                                        array_push($originalValue, $result[$x]['sub_account']);
+                                                        array_push($accountValue, $allAccounts[$i]);
 
-                                                    $foundSubCat = 1;
-                                                    $startDataList = "<input list='category" . $i . "' value='" . $result[$x]['sub_account'] . "' class='form-control' name='category[]'/>";
-                                                    break;
+                                                        $foundSubCat = 1;
+                                                        $startDataList = "<input list='category" . $i . "' value='" . $result[$x]['sub_account'] . "' class='form-control' name='category[]'/>";
+                                                        break;
+                                                    }
                                                 }
                                             }
-                                            // if ($foundSubCat == 1){
-                                            //   continue;
-                                            // } else {
-
-                                              // echo "<option value='" . $result[$x]['sub_account'] . "'>" . $result[$x]['sub_account'] . "</option>";
+                                            if ($foundSubCat == 1) {
+                                                $setCat = 1;
+                                            }
+//                                             else {
+                                            // echo "<option value='" . $result[$x]['sub_account'] . "'>" . $result[$x]['sub_account'] . "</option>";
                                             // }
                                             $bodyDataList .= "<option value='" . $result[$x]['sub_account'] . "'>";
+                                        }
+                                        if ($setCat == 0) {
+                                            array_push($originalValue, "");
+                                            array_push($accountValue, $allAccounts[$i]);
                                         }
                                         // if ($foundSubCat == 0) {
                                         //     echo "<b>Matching account category: </b>";
@@ -470,7 +477,7 @@ $reader->setReadDataOnly(true);
                             } else {
                                 die("Unable to find the accounts in your file, please ensure the column headings (Account, Debit, Credit) are present.");
                             }
-                      
+
                             foreach ($fileArray as $value) {
                                 echo "<input type='hidden' name='fileArray[]' value='" . $value . "'/>";
                             }
