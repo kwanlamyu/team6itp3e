@@ -63,19 +63,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //                        echo"Welcome Super Admin";
                         //redirect to Super Admin Dash
                         echo "<meta http-equiv='refresh' content='3;url=../user_super_admin/userdashboard.php'> ";
-                        echo '<span class="text-success "><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Login succesful please wait</span>';
+                        echo '<span class="text-success "><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Welcome '.$uname.' please wait</span>';
 //                        header('Location: ../user_super_admin/userdashboard.php');
                     } elseif ($role_id == '2') {
 //                        echo"Welcome Client Admin";
                         //redirect to Client Admin Dash
                         echo "<meta http-equiv='refresh' content='3;url=../user_client_admin/client_admin_dashboard.php'> ";
-                        echo '<span class="text-success "><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Login succesful please wait</span>';
+                        echo '<span class="text-success "><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Welcome '.$uname.' please wait</span>';
 //                        header('Location: ../user_client_admin/client_admin_dashboard.php');
                     } elseif ($role_id == '3') {
-                        echo"Welcome Standard User";
+//                        echo"Welcome Standard User";
                         //redirect to Accountant Dash
                         echo "<meta http-equiv='refresh' content='3;url=../user_client_admin/client_admin_dashboard.php'> ";
-                        echo '<span class="text-success "><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Login succesful please wait</span>';
+                        echo '<span class="text-success "><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Welcome '.$uname.' please wait</span>';
 //                        header('Location: ../user_client_admin/client_admin_dashboard.php');
                     } else {
                         echo"User type not found";

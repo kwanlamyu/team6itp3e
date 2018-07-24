@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once '../db_connection/db.php';
 $unameErr = $emailErr = $passErr = $cpassErr = $checkErr = $twopassErr = "";
 $uname = $email = $pass = $cpass = $emailvalid = "";
@@ -72,8 +73,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
         
- //       $companyName = $_SESSION['company'];
-        $companyName = "jerome pte ltd";
+        $companyName = $_SESSION['company'];
+//        $companyName = "jerome pte ltd";
         
         if ($valid == TRUE) {
             if ($uname !== "") {
