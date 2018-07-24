@@ -62,74 +62,44 @@ for ($i = 0; $i < count($originalValue); $i++) {
 //                    array_push($tempSubArray, $inputCategory[$i]);
                 }
             }
-//        } else {
-//            for ($j = 0; $j < count($result); $j++) {
-//                if (in_array($inputCategory[$i], $categoryTempArray)) {
-//                    foreach ($categoryTempArray as $key => $array) {
-//                        // for updating the new rows
-//                        if ($key == $result[$j]['sub_account']) {
-//                            if (!empty($tempStoreArray)) {
-//                                for ($k = 0; $k < count($tempStoreArray); $k++) {
-//                                    if (strpos($tempStoreArray[$k], $result[$j]['account_names']) !== false) {
-//                                        array_push($array, $accountValue[$i]);
-//                                        $categoryTempArray[$key] = $array;
-//                                    } else {
-//                                        array_push($array, $result[$j]['account_names']);
-//                                        array_push($array, $accountValue[$i]);
-//                                        $categoryTempArray[$key] = $array;
-//                                    }
-//                                }
-//                            } else {
-//                                array_push($array, $result[$j]['account_names']);
-//                                array_push($array, $accountValue[$i]);
-//                                $categoryTempArray[$key] = $array;
-//                            }
-//                        }
-//                        // means not in the main category yet 
-//                        else {
-//                        // array_push($tempSubArray, $inputCategory[$i]);
-//                        }
-//                    }
-//                }
-//                // just create a new entry 
-//                else {
-//                    // for updating the new rows
-//                    if ($inputCategory[$i] == $result[$j]['sub_account']) {
-//                        if (!empty($tempStoreArray)) {
-//                            for ($k = 0; $k < count($tempStoreArray); $k++) {
-//                                if (strpos($tempStoreArray[$k], $result[$j]['account_names']) !== false) {
-//                                    array_push($tempStoreArray, $accountValue[$i]);
-//                                    $categoryTempArray[$inputCategory[$i]] = $tempStoreArray;
-//                                } else {
-//                                    array_push($tempStoreArray, $result[$j]['account_names']);
-//                                    array_push($tempStoreArray, $accountValue[$i]);
-//                                    $categoryTempArray[$inputCategory[$i]] = $tempStoreArray;
-//                                }
-//                            }
-//                        } else {
-//                            array_push($tempStoreArray, $result[$j]['account_names']);
-//                            array_push($tempStoreArray, $accountValue[$i]);
-//                            $categoryTempArray[$inputCategory[$i]] = $tempStoreArray;
-//                        }
-//                    }
-//                    // means not in the main category yet 
-//                    else {
-////                        array_push($tempSubArray, $inputCategory[$i]);
-//                    }
-//                }
-            // for updating the current rows, delete away the existing one
-//                if (strpos($result[$j]['account_names'], $accountValue[$i]) !== false) {
-//                    $foundAccount = $result[$j]['account_names'];
-//                    $replacedString = str_replace($accountValue[$i], '', $result[$j]['account_names']);
-//                    array_push($temp, $replacedString);
-//                    $categoryTempArray[$result[$j]['sub_account']] = $temp;
-//                }
+        } else {
+            for ($j = 0; $j < count($result); $j++) {
+                if ($inputCategory[$i] == $result[$j]['sub_account']) {
+                    if (!empty($categoryTempArray)) {
+                        if (in_array($inputCategory[$i], array_keys($categoryTempArray))) {
+                            foreach ($categoryTempArray as $key => $array) {
+                                if ($key == $inputCategory[$i]) {
+                                    array_push($array, $accountValue[$i]);
+                                    $categoryTempArray[$key] = $array;
+                                }
+                            }
+                        } else {
+                            array_push($tempStoreArray, $result[$j]['account_names']);
+                            array_push($tempStoreArray, $accountValue[$i]);
+                            $categoryTempArray[$inputCategory[$i]] = $tempStoreArray;
+                        }
+                    } else {
+                        array_push($tempStoreArray, $result[$j]['account_names']);
+                        array_push($tempStoreArray, $accountValue[$i]);
+                        $categoryTempArray[$inputCategory[$i]] = $tempStoreArray;
+                    }
+                } else {
+                    // means not in main category yet 
+                    // do something
+                }
+
+                if (strpos($result[$j]['account_names'], $accountValue[$i]) !== false) {
+                    $foundAccount = $result[$j]['account_names'];
+                    $replacedString = str_replace($accountValue[$i], '', $result[$j]['account_names']);
+                    array_push($temp, trim($replacedString));
+                    $categoryTempArray[$result[$j]['sub_account']] = $temp;
+                }
+            }
         }
     }
-         unset($tempStoreArray);
-            $tempStoreArray = array();
+    unset($tempStoreArray);
+    $tempStoreArray = array();
 }
-//}
 
 if (!empty($categoryTempArray)) {
     foreach ($categoryTempArray as $category => $array) {
