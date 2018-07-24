@@ -21,6 +21,24 @@ $query->execute();
 $result = $query->setFetchMode(PDO::FETCH_ASSOC);
 $result = $query->fetchAll();
 
+$mainQuery = $DB_con->prepare("SELECT * FROM main_category WHERE company_name =:companyName AND client_company = :clientName");
+$mainQuery->bindParam(':companyName', $_SESSION['companyName']);
+$mainQuery->bindParam(':clientName', $_POST['clientCompany']);
+$mainQuery->execute();
+
+$mainResult = $mainQuery->setFetchMode(PDO::FETCH_ASSOC);
+$mainResult = $mainQuery->fetchAll();
+
+$mainAccountArrayDB = array();
+for ($i = 0; $i < count($mainResult); $i++) {
+    array_push($mainAccountArrayDB, $mainResult[$i]['main_account']);
+}
+
+$subAccountArrayDB = array();
+for ($i = 0; $i < count($result); $i++) {
+    array_push($subAccountArrayDB, $result[$i]['sub_account']);
+}
+
 $originalValue = $_POST['originalValue'];
 $inputCategory = $_POST['category'];
 $accountValue = $_POST['accountValue'];
@@ -96,6 +114,14 @@ for ($i = 0; $i < count($originalValue); $i++) {
                 }
             }
         }
+
+        // For those category not added into Main
+        for ($j = 0; $j < count($result); $j++) {
+            if (!in_array($inputCategory[$i], $subAccountArrayDB)) {
+                array_push($tempSubArray, $inputCategory[$i]);
+                break;
+            }
+        }
     }
     unset($tempStoreArray);
     $tempStoreArray = array();
@@ -168,20 +194,22 @@ if (!empty($categoryTempArray)) {
                         </div>
                     </div>
                     <form method="post" name="updateCategoryForm" action="updateCategoriesMain.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
-                    
-                    <?php
-                    // display out 
-                    ?>
+                        <?php
+                        // change this line please omg 
+                        echo "Please choose which Main Category it belongs to! <br><br>";
 
-                    
-                    
-                    
-                    
-                    
+                        for ($i = 0; $i < count($tempSubArray); $i++) {
+                            echo "<b>Current Sub Account: </b>" . $tempSubArray[$i] . "<Br>";
+                            echo "<select>";
+                            for ($j = 0; $j < count($mainAccountArrayDB); $j++) {
+                                echo "<option value='" . $mainAccountArrayDB[$j] . "'>" . $mainAccountArrayDB[$j] . "</option>";
+                            }
+                            echo "</select>";
+                            echo "<hr>";
+                        }
+                        ?>
+                        <input type="submit" value="Submit" name="submit" class="btn btn-brand">
                     </form>              
-                    
-
-
                 </div>
             </div>
         </div>
