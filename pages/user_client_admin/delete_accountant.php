@@ -1,11 +1,10 @@
 <?php
-session_start();
+require_once '../db_connection/db.php';
 //check for username and role_id
 if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
     include '../general/header.php';
     include '../general/navigation_clientadmin.php';
-    include '../db_connection/db.php';
-    require_once '../db_connection/db.php';
+    
     ?>
 
 

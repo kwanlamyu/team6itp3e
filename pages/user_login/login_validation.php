@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once '../db_connection/db.php';
 $unameErr = $passErr = $loginErr = "";
 $uname = $pass = "";
@@ -14,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $valid = FALSE;
         } else {
             $uname = $_POST['username'];
-            
+
 //            echo "username: ".$uname."<br>";
         }
 
@@ -35,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $query = $DB_con->prepare($sql);
             $query->execute();
 //            echo '$query->execute()<br>';
-            
+
 
             $data = $query->fetchAll();
             if(count($data) == 0){

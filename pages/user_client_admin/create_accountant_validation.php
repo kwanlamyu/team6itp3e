@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once '../db_connection/db.php';
 $unameErr = $emailErr = $passErr = $cpassErr = $checkErr = $twopassErr = "";
 $uname = $email = $pass = $cpass = $emailvalid = "";
