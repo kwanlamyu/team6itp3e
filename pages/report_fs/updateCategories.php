@@ -499,10 +499,6 @@ $reader->setReadDataOnly(true);
                                 echo "<input type='hidden' name='accountValue[]' value='" . $v . "'/>";
                             }
 
-                            echo "<hr>";
-                            print_r($accountValue);
-                            echo "<hr>";
-
                             foreach ($originalValue as $value) {
                                 echo "<input type='hidden' name='originalValue[]' value='" . $value . "'/>";
                             }
