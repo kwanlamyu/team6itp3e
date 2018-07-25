@@ -1,10 +1,16 @@
 
 <?php
 require_once '../db_connection/db.php';
+require_once __DIR__ . '\..\..\vendor\autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSION['company'])){
     if ($_SESSION['role_id'] != 2 && $_SESSION['role_id'] != 3){
       header("Location: ../user_login/login.php");
     } else {
+      if (!isset($_POST['companyName'])){
+        header("Location: fs_index.php");
+      } else {
 include '../general/header.php';
 include '../general/navigation_clientadmin.php';
 ?>
@@ -120,9 +126,7 @@ include '../general/navigation_clientadmin.php';
                 // to change the path for autoload accordingly
                 //require_once 'C:\Users\weeko\vendor\autoload.php';
 
-                require_once __DIR__ . '\..\..\vendor\autoload.php';
 
-                use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 // use PhpOffice\PhpSpreadsheet\Reader\Csv;
                 // can change to read csv file as well
@@ -525,7 +529,7 @@ include '../general/navigation_clientadmin.php';
                                     Company Name
                             </label> -->
                             <!-- <div class="col-lg-3">
-                                    <input class="form-control m-input" type="text" id="companyName" name="companyName" value="<?php echo $companyName ?>">
+                                    <input class="form-control m-input" type="text" id="companyName" name="companyName" value="<?php// echo $companyName ?>">
                                     <span class="m-form__help">
                                             Please enter company name
                                     </span>
@@ -815,6 +819,7 @@ for ($i = 0; $i < count($trialBalanceArray); $i++) {
 </div>
 
 <?php
+}
 }
 } else {
 header("Location: ../user_login/login.php");

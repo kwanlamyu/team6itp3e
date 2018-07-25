@@ -5,7 +5,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
     if ($_SESSION['role_id'] != 2 && $_SESSION['role_id'] != 3){
       header("Location: ../user_login/login.php");
     } else {
-
+      if (!isset($_POST['companyName'])){
+        header("Location: fs_index.php");
+      } else {
 $mainCategory = $_POST['main'];
 $subCategory = $_POST['subAccount'];
 
@@ -73,6 +75,7 @@ if (!empty($tempArray)) {
 //    header('Location: updateCategoriesMain.php');
 }
 
+}
 }
 } else {
 header("Location: ../user_login/login.php");

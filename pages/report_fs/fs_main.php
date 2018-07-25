@@ -5,6 +5,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
     if ($_SESSION['role_id'] != 2 && $_SESSION['role_id'] != 3){
       header("Location: ../user_login/login.php");
     } else {
+      if (!isset($_POST['companyName'])){
+        header("Location: fs_index.php");
+      } else {
 include '../general/header.php';
 include '../general/navigation_accountant.php';
 // TODO: For testing only, requires to be changed to actual session check
@@ -232,6 +235,7 @@ $clientUEN = $_POST['uenNumber'];
     }
 </script>
 <?php
+}
 }
 } else {
 header("Location: ../user_login/login.php");

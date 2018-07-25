@@ -1,14 +1,19 @@
 <?php
 require_once '../db_connection/db.php';
+require_once __DIR__ . '\..\..\vendor\autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
 if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSION['company'])){
     if ($_SESSION['role_id'] != 2 && $_SESSION['role_id'] != 3){
       header("Location: ../user_login/login.php");
     } else {
+      if (!isset($_POST['companyName'])){
+        header("Location: fs_index.php");
+      } else {
 include '../general/header.php';
 include '../general/navigation_accountant.php';
-require_once __DIR__ . '\..\..\vendor\autoload.php';
 $clientUEN = $_POST['clientUEN'];
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 // use PhpOffice\PhpSpreadsheet\Reader\Csv;
 // can change to read csv file as well
@@ -524,6 +529,7 @@ $reader->setReadDataOnly(true);
 <!-- END: Subheader -->
 
 <?php
+}
    }
 } else {
   header("Location: ../user_login/login.php");
