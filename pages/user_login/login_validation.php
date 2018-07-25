@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     } elseif ($role_id == '3') {
 //                        echo"Welcome Standard User";
                         //redirect to Accountant Dash
-                        echo "<meta http-equiv='refresh' content='3;url=../user_client_admin/client_admin_dashboard.php'> ";
+                        echo "<meta http-equiv='refresh' content='3;url=../report_fs/fs_main.php'> ";
                         echo '<span class="text-success "><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Welcome '.$uname.' please wait</span>';
 //                        header('Location: ../user_client_admin/client_admin_dashboard.php');
                     } else {

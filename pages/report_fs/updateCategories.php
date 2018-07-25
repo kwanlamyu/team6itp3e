@@ -423,7 +423,7 @@ $reader->setReadDataOnly(true);
                                         // echo "<select style='position:absolute;width:200px;height:25px;line-height:20px;margin:0;padding:0;' name='category[]' onchange='document.getElementById('displayValue" . $i . "').value=this.options[this.selectedIndex].text;document.getElementById('idValue" . $i . "').value=this.options['this.selectedIndex'].value;'>";
                                         // echo "<option></option>";
                                         $startDataList = "<input list='category" . $i . "' value='' class='form-control' name='category[]'/>";
-                                        $bodyDataList = "<datalist id='category" . $i . "'>";
+                                        $bodyDataList = "<datalist id='category" . $i . "'style='overflow-y:scroll; height:10px;'>";
                                         $setCat = 0;
                                         for ($x = 0; $x < count($result); $x++) {
                                             $underThisAccount = $result[$x]['account_names'];
@@ -468,7 +468,7 @@ $reader->setReadDataOnly(true);
                                         // echo "</select><br/>";
                                         // echo "<input style='position:absolute;width:183px;width:180px\9;#width:180px;height:21px;height:28px\9;#height:18px;border:1px solid #A9A9A9;' name='displayValue" . $i . "' placeholder='Input a new category' id='displayValue" . $i . "' onfocus='this.select();' type='text'/>";
                                         // echo "<input name='idValue" . $i . "' id='idValue" . $i . "' type='hidden'/>";
-                                        echo "<label>Choose a category:" . $startDataList . "</label>" . $bodyDataList . "</datalist>";
+                                        echo "<label>Choose a category:" . $startDataList . "</label><div>" . $bodyDataList . "</datalist></div>";
                                         echo "</div>";
                                     }
                                 } catch (PDOException $e) {
