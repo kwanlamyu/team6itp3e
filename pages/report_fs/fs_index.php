@@ -23,21 +23,22 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
     for ($i = 0; $i < count($result); $i++){
       array_push($allUEN, $result[$i]['account_UEN']);
     }
-
-    $uenQuery = "SELECT * FROM account WHERE UEN = '";
-    for ($i = 0; $i < count($allUEN); $i++){
-      if ($i > 0){
-        $uenQuery .= " OR UEN ='";
-      }
-      $uenQuery .= $allUEN[$i] . "'";
-      if ($i == count($allUEN) - 1){
-        $uenQuery .= ";";
-      }
+    if (count($allUEN) != 0){
+        $uenQuery = "SELECT * FROM account WHERE UEN = '";
+        for ($i = 0; $i < count($allUEN); $i++){
+          if ($i > 0){
+            $uenQuery .= " OR UEN ='";
+          }
+          $uenQuery .= $allUEN[$i] . "'";
+          if ($i == count($allUEN) - 1){
+            $uenQuery .= ";";
+          }
+        }
+        $uenQuery = $DB_con->prepare($uenQuery);
+        $uenQuery->execute();
+        $uenResult = $uenQuery->setFetchMode(PDO::FETCH_ASSOC);
+        $uenResult = $uenQuery->fetchAll();
     }
-    $uenQuery = $DB_con->prepare($uenQuery);
-    $uenQuery->execute();
-    $uenResult = $uenQuery->setFetchMode(PDO::FETCH_ASSOC);
-    $uenResult = $uenQuery->fetchAll();
     ?>
     <div class="m-grid__item m-grid__item--fluid m-wrapper">
         <!-- BEGIN: Subheader -->
@@ -95,6 +96,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                             </div>
                         </div>
                         <div>
+                          <?php
+                          if (count($allUEN) != 0){
+                          ?>
                             <form name='companyUEN' method='post' action='fs_main.php' enctype="multipart/form-data" class="m-form m-form--fit m-form--label-align-right">
                             <select id='companyValue' onchange='setUEN()' name="companyValue">
                               <?php
@@ -114,28 +118,38 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                             </div>
                               <input type="submit" name="submit" id="submit"></input>
                             </form>
+                            <?php
+                          } else {
+                            ?>
+                            <span>You have not been assigned to a client yet</span>
+                            <?php
+                          }
+                          ?>
                           </div>
                       </div>
                   </div>
               </div>
           </div>
       </div>
-    <script>
+      <?php
+      if (count($allUEN) != 0){
+        ?>
+        <script>
 
-    function setUEN(){
-      var allCompany = <?php echo json_encode($uenResult);?>;
-      var companyValue = document.getElementById("companyValue").value;
-      for (i = 0; i < allCompany.length; i++){
-        if (allCompany[i]['companyName'] == companyValue){
-          document.getElementById("companyName").value = allCompany[i]['companyName'];
-          document.getElementById("uenNumber").value = allCompany[i]['UEN'];
+        function setUEN(){
+          var allCompany = <?php echo json_encode($uenResult);?>;
+          var companyValue = document.getElementById("companyValue").value;
+          for (i = 0; i < allCompany.length; i++){
+            if (allCompany[i]['companyName'] == companyValue){
+              document.getElementById("companyName").value = allCompany[i]['companyName'];
+              document.getElementById("uenNumber").value = allCompany[i]['UEN'];
+            }
+          }
         }
+
+        </script>
+        <?php
       }
-    }
-
-    </script>
-
-    <?php
   }
 } else {
   header("Location: ../user_login/login.php");
