@@ -44,6 +44,7 @@ $clientName = $_POST['clientCompany'];
 $fileArray = $_POST['fileArray'];
 $dateStart = $_POST['dateStart'];
 $dateEnd = $_POST['dateEnd'];
+$clientUEN = $_POST['clientUEN'];
 
 $originalValue = $_POST['originalValue'];
 $inputCategory = $_POST['category'];
@@ -195,7 +196,7 @@ if (!empty($categoryTempArray)) {
                     </div>
                     <form method="post" name="updateCategoryForm" action="updateCategoriesMain.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
                         <?php
-                        // change this line please omg 
+                        // change this line please omg
                         echo "Please choose which Main Category it belongs to! <br><br>";
 
                         for ($i = 0; $i < count($tempSubArray); $i++) {
@@ -227,9 +228,10 @@ if (!empty($categoryTempArray)) {
 
                         <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
                         <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
+                        <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
 
                         <input type="submit" value="Submit" name="submit" class="btn btn-brand">
-                    </form>              
+                    </form>
                 </div>
             </div>
         </div>

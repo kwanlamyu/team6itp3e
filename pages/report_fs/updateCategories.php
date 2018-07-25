@@ -3,7 +3,7 @@ require_once '../db_connection/db.php';
 include '../general/header.php';
 include '../general/navigation_accountant.php';
 require_once __DIR__ . '\..\..\vendor\autoload.php';
-
+$clientUEN = $_POST['clientUEN'];
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 // use PhpOffice\PhpSpreadsheet\Reader\Csv;
@@ -493,6 +493,7 @@ $reader->setReadDataOnly(true);
 
                             <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
                             <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
+                            <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
 
                             <?php
                             foreach ($accountValue as $v) {

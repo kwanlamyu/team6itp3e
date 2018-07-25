@@ -10,6 +10,7 @@ $clientName = $_POST['clientCompany'];
 $fileArray = $_POST['fileArray'];
 $dateStart = $_POST['dateStart'];
 $dateEnd = $_POST['dateEnd'];
+$clientUEN = $_POST['clientUEN'];
 
 $query = $DB_con->prepare("SELECT * FROM main_category WHERE company_name =:companyName AND client_company = :clientName");
 $query->bindParam(':companyName', $_SESSION['companyName']);
@@ -59,7 +60,7 @@ if (!empty($tempArray)) {
     foreach ($tempArray as $category => $array) {
 //        $uniqueArray = array_unique($array);
         $implode = implode(",", $array);
-        
+
         $update = "UPDATE main_category SET account_names= '" . $implode . "' WHERE main_account = '" . $category . "' AND company_name = '" . $_SESSION['companyName'] . "' AND client_company = '" . $_POST['clientCompany'] . "'";
         $stmt = $DB_con->prepare($update);
         $stmt->execute();

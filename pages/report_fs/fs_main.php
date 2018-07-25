@@ -5,7 +5,9 @@ require_once '../db_connection/db.php';
 include '../general/header.php';
 include '../general/navigation_accountant.php';
 // TODO: For testing only, requires to be changed to actual session check
-$_SESSION['companyName'] = "Abc Pte. Ltd.";
+$companyName = $_SESSION['company'];
+$clientCompany = $_POST['companyName'];
+$clientUEN = $_POST['uenNumber'];
 ?>
 
 <div class="m-grid__item m-grid__item--fluid m-wrapper">
@@ -81,10 +83,11 @@ $_SESSION['companyName'] = "Abc Pte. Ltd.";
                     </div>
                     <form name='uploadForm' action="updateCategories.php" method="post" enctype="multipart/form-data" class="m-form m-form--fit m-form--label-align-right" onsubmit="return validateForm()">
                         <div class="col-lg-3">
-                            <input class="form-control m-input" type="text" id="clientCompany" name="clientCompany" value="">
-                            <span class="m-form__help">
+                            <input class="form-control m-input" type="hidden" id="clientCompany" name="clientCompany" value="<?php echo $clientCompany;?>">
+                            <input class="form-control m-input" type="hidden" id="clientUEN" name="clientUEN" value="<?php echo $clientUEN;?>">
+                            <!-- <span class="m-form__help">
                                 Please enter company name
-                            </span>
+                            </span> -->
                         </div>
                         <div class="m-portlet__body" id="formForUploads">
                             <div class="form-group m-form__group">

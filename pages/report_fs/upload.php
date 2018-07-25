@@ -54,6 +54,7 @@ include '../general/navigation_clientadmin.php';
                 $query->bindParam(':clientName', $clientName);
                 $companyName = $_SESSION['companyName'];
                 $clientName = $_POST['clientCompany'];
+                $clientUEN = $_POST['clientUEN'];
                 $query->execute();
                 $result = $query->setFetchMode(PDO::FETCH_ASSOC);
                 $result = $query->fetchAll();
@@ -138,7 +139,7 @@ include '../general/navigation_clientadmin.php';
                 }
 
                 echo "<br/>";
-                
+
                 $trialBalanceArray = array();
                 $yearlyUndefinedRows = array();
                 $endedAtArray = array();
@@ -525,14 +526,14 @@ include '../general/navigation_clientadmin.php';
                                             Please enter company name
                                     </span>
                             </div> -->
-                            <label for="companyregID"class="col-lg-2 col-form-label">
+                            <!-- <label for="companyregID"class="col-lg-2 col-form-label">
                                 Company Registration No.
-                            </label>
+                            </label> -->
                             <div class="col-lg-3">
-                                <input class="form-control m-input" type="text" id="companyregID" name="companyregID">
-                                <span class="m-form__help">
+                                <input class="form-control m-input" type="hidden" id="companyregID" name="companyregID" value="<?php echo $clientUEN?>">;
+                                <!-- <span class="m-form__help">
                                     Please enter company registration number
-                                </span>
+                                </span> -->
                             </div>
                         </div>
                     </div>
