@@ -1,4 +1,8 @@
 <?php
+if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSION['company'])){
+    if ($_SESSION['role_id'] != 2 && $_SESSION['role_id'] != 3){
+      header("Location: ../user_login/login.php");
+    } else {
 $file = 'preview.docx';
 if (file_exists($file)) {
     header('Content-Description: File Transfer');
@@ -12,5 +16,9 @@ if (file_exists($file)) {
     exit;
 } else {
   echo "<script>alert('NOPE')</script>";
+}
+}
+} else {
+header("Location: ../user_login/login.php");
 }
 ?>

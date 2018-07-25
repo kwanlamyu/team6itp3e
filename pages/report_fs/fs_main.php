@@ -1,7 +1,10 @@
 
 <?php
 require_once '../db_connection/db.php';
-
+if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSION['company'])){
+    if ($_SESSION['role_id'] != 2 && $_SESSION['role_id'] != 3){
+      header("Location: ../user_login/login.php");
+    } else {
 include '../general/header.php';
 include '../general/navigation_accountant.php';
 // TODO: For testing only, requires to be changed to actual session check
@@ -228,6 +231,11 @@ $clientUEN = $_POST['uenNumber'];
         </div>";
     }
 </script>
-
+<?php
+}
+} else {
+header("Location: ../user_login/login.php");
+}
+?>
 <?php include '../general/footer_content.php'; ?>
 <?php include '../general/footer.php'; ?>

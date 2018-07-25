@@ -1,3 +1,9 @@
+<?php
+if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSION['company'])){
+    if ($_SESSION['role_id'] != 2 && $_SESSION['role_id'] != 3){
+      header("Location: ../user_login/login.php");
+    } else {
+?>
 <?php include '../general/header.php'; ?>
 <?php include '../general/navigation_accountant.php'; ?>
 
@@ -446,5 +452,11 @@ foreach ($tempUniqueCategoryArray as $insert) {
 //------------------------------------------------------------------------------------------
 
 </script>
+<?php
+}
+} else {
+header("Location: ../user_login/login.php");
+}
+?>
 <?php include '../general/footer_content.php'; ?>
 <?php include '../general/footer.php'; ?>

@@ -7,6 +7,10 @@
 // PHPWord depedency
 require_once __DIR__ . '\..\..\vendor\autoload.php';
 require_once '../db_connection/db.php';
+if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSION['company'])){
+    if ($_SESSION['role_id'] != 2 && $_SESSION['role_id'] != 3){
+      header("Location: ../user_login/login.php");
+    } else {
 
 //require_once 'C:\xampp\htdocs\phpWordsItp\vendor\autoload.php';
 $phpWord = new \PhpOffice\PhpWord\PhpWord();
@@ -6130,4 +6134,8 @@ $objWriter->save('preview.docx');
 
 //header("Location: " . URL . "download.php"); /* Redirect browser */
 //ob_end_flush();
+}
+} else {
+header("Location: ../user_login/login.php");
+}
 ?>

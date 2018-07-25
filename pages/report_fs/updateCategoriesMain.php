@@ -1,6 +1,10 @@
 <?php
 
 require_once '../db_connection/db.php';
+if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSION['company'])){
+    if ($_SESSION['role_id'] != 2 && $_SESSION['role_id'] != 3){
+      header("Location: ../user_login/login.php");
+    } else {
 
 $mainCategory = $_POST['main'];
 $subCategory = $_POST['subAccount'];
@@ -67,6 +71,11 @@ if (!empty($tempArray)) {
     }
 } else {
 //    header('Location: updateCategoriesMain.php');
+}
+
+}
+} else {
+header("Location: ../user_login/login.php");
 }
 
 print_r($tempArray);
