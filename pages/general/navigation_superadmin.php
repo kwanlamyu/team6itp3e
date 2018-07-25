@@ -9,7 +9,7 @@
                     <div class="m-stack__item m-brand ">
                         <div class="m-stack m-stack--ver m-stack--general">
                             <div class="m-stack__item m-stack__item--middle m-brand__logo">
-                                <a href="../user_login/index.php" class="m-brand__logo-wrapper">
+                                <a href="../user_login/login.php" class="m-brand__logo-wrapper">
                                     <img alt="" src="../../assets/app/media/img/logos/logo.png"/>
                                 </a>
                             </div>
@@ -50,11 +50,11 @@
                                 </li>
                             </ul>
                         </div>
-                        <!-- END: Horizontal Menu -->				
+                        <!-- END: Horizontal Menu -->
                         <!-- BEGIN: Topbar -->
                         <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
                             <div class="m-stack__item m-topbar__nav-wrapper">
-                                <ul class="m-topbar__nav m-nav m-nav--inline">	
+                                <ul class="m-topbar__nav m-nav m-nav--inline">
                                     <li class="m-nav__item m-topbar__user-profile  m-dropdown m-dropdown--medium m-dropdown--arrow  m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
                                         <a href="#" class="m-nav__link m-dropdown__toggle">
                                             <span class="m-topbar__userpic m--hide">
@@ -109,7 +109,7 @@
                 </div>
             </div>
         </header>
-        <!-- END: Header -->		
+        <!-- END: Header -->
         <!-- begin::Body -->
         <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
             <!-- BEGIN: Left Aside -->
@@ -125,11 +125,11 @@
                 </div>
                 <!-- END: Brand -->
                 <!-- BEGIN: Aside Menu -->
-                <div 
-                    id="m_ver_menu" 
-                    class="m-aside-menu  m-aside-menu--skin-light m-aside-menu--submenu-skin-light " 
+                <div
+                    id="m_ver_menu"
+                    class="m-aside-menu  m-aside-menu--skin-light m-aside-menu--submenu-skin-light "
                     data-menu-vertical="true"
-                    m-menu-scrollable="true" m-menu-dropdown-timeout="500"  
+                    m-menu-scrollable="true" m-menu-dropdown-timeout="500"
                     >
                     <ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
 
@@ -198,7 +198,7 @@
                             <a  href="javascript:;" class="m-menu__link m-menu__toggle">
                                 <i class="m-menu__link-icon flaticon-bag"></i>
                                 <span class="m-menu__link-text">
-                                    Licenses 
+                                    Licenses
                                 </span>
                                 <i class="m-menu__ver-arrow la la-angle-right"></i>
                             </a>

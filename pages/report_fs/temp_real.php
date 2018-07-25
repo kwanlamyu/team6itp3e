@@ -7,7 +7,19 @@
 // PHPWord depedency
 require_once __DIR__ . '\..\..\vendor\autoload.php';
 require_once '../db_connection/db.php';
-
+if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSION['company'])){
+    if ($_SESSION['role_id'] != 2 && $_SESSION['role_id'] != 3){
+      header('Location: ../user_super_admin/userdashboard.php');
+    } else {
+      if (!isset($_POST['companyName'])){
+        header("Location: fs_index.php");
+      } else {
+        include '../general/header.php';
+        if ($_SESSION['role_id'] == 2){
+          include '../general/navigation_clientadmin.php';
+        } else {
+          include '../general/navigation_accountant.php';
+        }
 //require_once 'C:\xampp\htdocs\phpWordsItp\vendor\autoload.php';
 $phpWord = new \PhpOffice\PhpWord\PhpWord();
 //Default font style
@@ -6130,4 +6142,9 @@ $objWriter->save('preview.docx');
 
 //header("Location: " . URL . "download.php"); /* Redirect browser */
 //ob_end_flush();
+}
+}
+} else {
+header("Location: ../user_login/login.php");
+}
 ?>

@@ -1,10 +1,22 @@
 <?php
 require_once '../db_connection/db.php';
-include '../general/header.php';
-include '../general/navigation_accountant.php';
 require_once __DIR__ . '\..\..\vendor\autoload.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSION['company'])){
+    if ($_SESSION['role_id'] != 2 && $_SESSION['role_id'] != 3){
+      header('Location: ../user_super_admin/userdashboard.php');
+    } else {
+      if (!isset($_POST['companyName'])){
+        header("Location: fs_index.php");
+      } else {
+include '../general/header.php';
+if ($_SESSION['role_id'] == 2){
+  include '../general/navigation_clientadmin.php';
+} else {
+  include '../general/navigation_accountant.php';
+}
+
 
 // use PhpOffice\PhpSpreadsheet\Reader\Csv;
 // can change to read csv file as well
@@ -44,6 +56,7 @@ $clientName = $_POST['clientCompany'];
 $fileArray = $_POST['fileArray'];
 $dateStart = $_POST['dateStart'];
 $dateEnd = $_POST['dateEnd'];
+$clientUEN = $_POST['clientUEN'];
 
 $originalValue = $_POST['originalValue'];
 $inputCategory = $_POST['category'];
@@ -210,7 +223,7 @@ if (!empty($tempSubArray)) {
                     </div>
                     <form method="post" name="updateCategoryForm" action="updateCategoriesMain.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
                         <?php
-                        // change this line please omg 
+                        // change this line please omg
                         echo "Please choose which Main Category it belongs to! <br><br>";
 
                         for ($i = 0; $i < count($tempSubArray); $i++) {
@@ -246,9 +259,10 @@ if (!empty($tempSubArray)) {
 
                         <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
                         <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
+                        <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
 
                         <input type="submit" value="Submit" name="submit" class="btn btn-brand">
-                    </form>              
+                    </form>
                 </div>
             </div>
         </div>
@@ -257,7 +271,13 @@ if (!empty($tempSubArray)) {
 <!--end::Portlet-->
 </div>
 <!-- END: Subheader -->
-
+<?php
+}
+}
+} else {
+header("Location: ../user_login/login.php");
+}
+ ?>
 
 <?php include '../general/footer_content.php'; ?>
 <?php include '../general/footer.php'; ?>

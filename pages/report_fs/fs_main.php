@@ -1,11 +1,22 @@
 
 <?php
 require_once '../db_connection/db.php';
-
+if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSION['company'])){
+    if ($_SESSION['role_id'] != 2 && $_SESSION['role_id'] != 3){
+      header('Location: ../user_super_admin/userdashboard.php');
+    } else {
+      if (!isset($_POST['companyName'])){
+        header("Location: fs_index.php");
+      } else {
 include '../general/header.php';
-include '../general/navigation_accountant.php';
-// TODO: For testing only, requires to be changed to actual session check
-$_SESSION['companyName'] = "Abc Pte. Ltd.";
+if ($_SESSION['role_id'] == 2){
+  include '../general/navigation_clientadmin.php';
+} else {
+  include '../general/navigation_accountant.php';
+}
+$companyName = $_SESSION['company'];
+$clientCompany = $_POST['companyName'];
+$clientUEN = $_POST['uenNumber'];
 ?>
 
 <div class="m-grid__item m-grid__item--fluid m-wrapper">
@@ -81,10 +92,11 @@ $_SESSION['companyName'] = "Abc Pte. Ltd.";
                     </div>
                     <form name='uploadForm' action="updateCategoriesSub.php" method="post" enctype="multipart/form-data" class="m-form m-form--fit m-form--label-align-right" onsubmit="return validateForm()">
                         <div class="col-lg-3">
-                            <input class="form-control m-input" type="text" id="clientCompany" name="clientCompany" value="">
-                            <span class="m-form__help">
+                            <input class="form-control m-input" type="hidden" id="clientCompany" name="clientCompany" value="<?php echo $clientCompany;?>">
+                            <input class="form-control m-input" type="hidden" id="clientUEN" name="clientUEN" value="<?php echo $clientUEN;?>">
+                            <!-- <span class="m-form__help">
                                 Please enter company name
-                            </span>
+                            </span> -->
                         </div>
                         <div class="m-portlet__body" id="formForUploads">
                             <div class="form-group m-form__group">
@@ -225,6 +237,12 @@ $_SESSION['companyName'] = "Abc Pte. Ltd.";
         </div>";
     }
 </script>
-
+<?php
+}
+}
+} else {
+header("Location: ../user_login/login.php");
+}
+?>
 <?php include '../general/footer_content.php'; ?>
 <?php include '../general/footer.php'; ?>

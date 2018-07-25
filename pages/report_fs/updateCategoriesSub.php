@@ -1,10 +1,23 @@
 <?php
 require_once '../db_connection/db.php';
-include '../general/header.php';
-include '../general/navigation_accountant.php';
 require_once __DIR__ . '\..\..\vendor\autoload.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
+if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSION['company'])){
+    if ($_SESSION['role_id'] != 2 && $_SESSION['role_id'] != 3){
+      header('Location: ../user_super_admin/userdashboard.php');
+    } else {
+      if (!isset($_POST['companyName'])){
+        header("Location: fs_index.php");
+      } else {
+include '../general/header.php';
+if ($_SESSION['role_id'] == 2){
+  include '../general/navigation_clientadmin.php';
+} else {
+  include '../general/navigation_accountant.php';
+}
+$clientUEN = $_POST['clientUEN'];
 
 // use PhpOffice\PhpSpreadsheet\Reader\Csv;
 // can change to read csv file as well
@@ -423,7 +436,7 @@ $reader->setReadDataOnly(true);
                                         // echo "<select style='position:absolute;width:200px;height:25px;line-height:20px;margin:0;padding:0;' name='category[]' onchange='document.getElementById('displayValue" . $i . "').value=this.options[this.selectedIndex].text;document.getElementById('idValue" . $i . "').value=this.options['this.selectedIndex'].value;'>";
                                         // echo "<option></option>";
                                         $startDataList = "<input list='category" . $i . "' value='' class='form-control' name='category[]'/>";
-                                        $bodyDataList = "<datalist id='category" . $i . "'>";
+                                        $bodyDataList = "<datalist id='category" . $i . "'style='overflow-y:scroll; height:10px;'>";
                                         $setCat = 0;
                                         for ($x = 0; $x < count($result); $x++) {
                                             $underThisAccount = $result[$x]['account_names'];
@@ -468,7 +481,7 @@ $reader->setReadDataOnly(true);
                                         // echo "</select><br/>";
                                         // echo "<input style='position:absolute;width:183px;width:180px\9;#width:180px;height:21px;height:28px\9;#height:18px;border:1px solid #A9A9A9;' name='displayValue" . $i . "' placeholder='Input a new category' id='displayValue" . $i . "' onfocus='this.select();' type='text'/>";
                                         // echo "<input name='idValue" . $i . "' id='idValue" . $i . "' type='hidden'/>";
-                                        echo "<label>Choose a category:" . $startDataList . "</label>" . $bodyDataList . "</datalist>";
+                                        echo "<label>Choose a category:" . $startDataList . "</label><div>" . $bodyDataList . "</datalist></div>";
                                         echo "</div>";
                                     }
                                 } catch (PDOException $e) {
@@ -493,6 +506,7 @@ $reader->setReadDataOnly(true);
 
                             <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
                             <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
+                            <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
 
                             <?php
                             foreach ($accountValue as $v) {
@@ -522,6 +536,12 @@ $reader->setReadDataOnly(true);
 </div>
 <!-- END: Subheader -->
 
+<?php
+}
+   }
+} else {
+  header("Location: ../user_login/login.php");
+} ?>
 
 <?php include '../general/footer_content.php'; ?>
 <?php include '../general/footer.php'; ?>

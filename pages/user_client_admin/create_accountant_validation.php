@@ -1,5 +1,6 @@
 <?php
 require_once '../db_connection/db.php';
+ob_start();
 $unameErr = $emailErr = $passErr = $cpassErr = $checkErr = $twopassErr = "";
 $uname = $email = $pass = $cpass = $emailvalid = "";
 $valid = TRUE; //this var scope ok
@@ -71,10 +72,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             }
         }
-        
+
         $companyName = $_SESSION['company'];
 //        $companyName = "jerome pte ltd";
-        
+
         if ($valid == TRUE) {
             if ($uname !== "") {
                 $hashpass = password_hash($pass,PASSWORD_DEFAULT);
@@ -88,15 +89,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         . ' Accountant successfully created '
                     . '</div>';
 
-               
             } else {
                 echo '<div class="alert alert-warning mmbsm" role="alert">Error: ' . $sql . '<br>' . $DB_con->error . '</div>';
             }
         }
-        header('Location: create_accountant.php');
+        header('refresh:5;Location: create_accountant.php');
+        ob_end_clean();
     }
 }
 ?>
-
-
-

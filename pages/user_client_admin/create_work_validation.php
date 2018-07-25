@@ -81,6 +81,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     . '</div>';
                 echo '<span class="text-success"><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Redirecting Please Wait</span>';
                 echo "<meta http-equiv='refresh' content='3;url=manage_work_account.php'> ";
+                $collaboratorsql = "INSERT INTO userManageAccount(account_UEN, account_user_username, user_username, user_role_id) VALUES ('$uen','$uname','$uname','2');";
+                $insertsql = $DB_con->prepare($collaboratorsql);
+                $insertsql->execute();
+
 
 
             } else {
