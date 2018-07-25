@@ -39,6 +39,12 @@ for ($i = 0; $i < count($result); $i++) {
     array_push($subAccountArrayDB, $result[$i]['sub_account']);
 }
 
+$companyName = $_SESSION['companyName'];
+$clientName = $_POST['clientCompany'];
+$fileArray = $_POST['fileArray'];
+$dateStart = $_POST['dateStart'];
+$dateEnd = $_POST['dateEnd'];
+
 $originalValue = $_POST['originalValue'];
 $inputCategory = $_POST['category'];
 $accountValue = $_POST['accountValue'];
@@ -74,11 +80,6 @@ for ($i = 0; $i < count($originalValue); $i++) {
                         $categoryTempArray[$inputCategory[$i]] = $tempStoreArray;
                     }
                 }
-                // means not in the main category yet 
-                else {
-                    // auto add in to the main ?? 
-//                    array_push($tempSubArray, $inputCategory[$i]);
-                }
             }
         } else {
             for ($j = 0; $j < count($result); $j++) {
@@ -101,9 +102,6 @@ for ($i = 0; $i < count($originalValue); $i++) {
                         array_push($tempStoreArray, $accountValue[$i]);
                         $categoryTempArray[$inputCategory[$i]] = $tempStoreArray;
                     }
-                } else {
-                    // means not in main category yet 
-                    // do something
                 }
 
                 if (strpos($result[$j]['account_names'], $accountValue[$i]) !== false) {
@@ -136,6 +134,8 @@ if (!empty($categoryTempArray)) {
         $stmt = $DB_con->prepare($update);
         $stmt->execute();
     }
+} else {
+//    header('Location: updateCategoriesMain.php');
 }
 ?>
 <div class="m-grid__item m-grid__item--fluid m-wrapper">
@@ -200,14 +200,34 @@ if (!empty($categoryTempArray)) {
 
                         for ($i = 0; $i < count($tempSubArray); $i++) {
                             echo "<b>Current Sub Account: </b>" . $tempSubArray[$i] . "<Br>";
-                            echo "<select>";
+                            echo "<select name='main[]'>";
                             for ($j = 0; $j < count($mainAccountArrayDB); $j++) {
                                 echo "<option value='" . $mainAccountArrayDB[$j] . "'>" . $mainAccountArrayDB[$j] . "</option>";
                             }
                             echo "</select>";
                             echo "<hr>";
                         }
+
+                        foreach ($tempSubArray as $v) {
+                            echo "<input type='hidden' name='subAccount[]' value='" . $v . "'/>";
+                        }
+
+                        foreach ($dateStart as $value) {
+                            echo "<input type='hidden' name='dateStart[]' value='" . $value . "'/>";
+                        }
+
+                        foreach ($dateEnd as $value) {
+                            echo "<input type='hidden' name='dateEnd[]' value='" . $value . "'/>";
+                        }
+
+                        foreach ($fileArray as $value) {
+                            echo "<input type='hidden' name='fileArray[]' value='" . $value . "'/>";
+                        }
                         ?>
+
+                        <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
+                        <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
+
                         <input type="submit" value="Submit" name="submit" class="btn btn-brand">
                     </form>              
                 </div>
