@@ -3,45 +3,188 @@ require_once '../db_connection/db.php';
 //check for username and role_id
 if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
     include '../general/header.php';
-    
+
     include '../general/navigation_clientadmin.php';
     ?>
 
+    <div class="m-grid__item m-grid__item--fluid m-wrapper">
 
-    <div class="row">
-        <div class="card">
-            <div class="card-body">
-                <!--
-                retrieve table of accountants
-                format table with delete button at side
-                when button is clicked, modal popup to ask for confirmation
-                on confirmation then delete row
-                -->
+        <!-- BEGIN: Subheader -->
+        <div class="m-subheader ">
+            <div class="d-flex align-items-center">
+                <div class="mr-auto">
+                    <h3 class="m-subheader__title m-subheader__title--separator">
+                        Financial Statement
+                    </h3>
+                    <!--                    <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                                            <li class="m-nav__item m-nav__item--home">
+                                                <a href="#" class="m-nav__link m-nav__link--icon">
+                                                    <i class="m-nav__link-icon la la-home"></i>
+                                                </a>
+                                            </li>
+                                            <li class="m-nav__separator">
+                                                -
+                                            </li>
+                                            <li class="m-nav__item">
+                                                <a href="" class="m-nav__link">
+                                                    <span class="m-nav__link-text">
+                                                        Generate Report
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li class="m-nav__separator">
+                                                -
+                                            </li>
+                                            <li class="m-nav__item">
+                                                <a href="" class="m-nav__link">
+                                                    <span class="m-nav__link-text">
+                                                        Financial Statement
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        </ul>-->
+
+                </div>
+            </div>
+        </div>
+
+        <div class="m-content">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!--begin::Portlet-->
+                    <div class="m-portlet">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon m--hide">
+                                        <i class="la la-gear"></i>
+                                    </span>
+                                    <h3 class="m-portlet__head-text">
+                                        Delete Accountant Account
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <!--BEGIN: Table-->
+                        <?php
+                        if (isset($_GET['deleteWorkAccount'])) {
+                            $accountants = $_GET['deleteWorkAccount'];
+//                            echo'after post statement';
+//                            $userID = $_SESSION["username"];
+                        }
+                        ?>
+
+                        <div class="table-responsive table-scroll">
+                            <table class="table table-hover table-room">
+                                <thead>
+                                <th>UEN/ACRA No.</th>
+                                <th>Company Name</th>
+                                <th>File Number</th>
+                                <th>Account Manager(s)</th>
+                                <th>Delete Details</th>
+                                </thead>
+                                <?php // echo'after table head'; ?>
+
+                                <tbody>
+                                    <?php
+                                    $userID = "jerome";
+                                    //                          echo'after table body';
+                                    $query = "SELECT "
+                                            . "account.UEN AS UEN, "
+                                            . "account.companyName AS companyName, "
+                                            . "account.fileNumber AS fileNumber, "
+                                            . "usermanageaccount.user_username AS accountManagers "
+                                            . "FROM "
+                                            . "account "
+                                            . "INNER JOIN "
+                                            . "usermanageaccount "
+                                            . "ON "
+                                            . "account.UEN = usermanageaccount.account_UEN  "
+                                            . "AND usermanageaccount.account_user_username = '$userID'";
+                                    $sql = $DB_con->prepare($query);
+                                    //                            echo'statement prepared';
+                                    echo $query;
+                                    $sql->execute();
+                                    $users = $sql->fetchAll();
+                                    //                            echo'statement executed';
+                                    //                            echo count($users);
+                                    if (count($users) == 0) {
+                                        echo '';
+                                        echo '<tr>'
+                                        . '<td>Nil</td>'
+                                        . '<td>Nil</td>'
+                                        . '<td>Nil</td>'
+                                        . '<td>Nil</td>'
+                                        . '<td>Nil</td>'
+                                        . '</tr>';
+                                    } else {
+                                        //                                echo'else condition reached';
+                                        $counter = 0;
+                                        foreach ($users as $row) {
+                                            //                                    echo'rows echoed';
+                                            echo ""
+                                            . "<tr>"
+                                            . "<td id='account_uen" . $counter . "'>{$row['UEN']}</td>"
+                                            . "<td id='account_companyName" . $counter . "'>{$row['companyName']}</td>"
+                                            . "<td id='account_fileNumber" . $counter . "'>{$row['fileNumber']}</td>"
+                                            . "<td id='account_accountManagers" . $counter . "'>{$row['accountManagers']}</td>"
+                                            . "<td>"
+                                            . "<button type='button' name='deleteButton' id='deleteButton' class='btn btn-danger delete_data' data-toggle='modal' data-target='#deleteModal' onclick='deleteAccount(" . $counter . ")'>"
+                                            . "<i class='fa fa-trash' aria-hidden='true'></i> Delete "
+                                            . "</button>"
+                                            . "</td>"
+                                            . "</tr>\n";
+                                            $counter++;
+                                        }
+                                    }
+                                    ?>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--END: Table-->
+                    </div>
+                    <!--end::Portlet-->
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-                <?php
-                if (isset($_GET['deleteWorkAccount'])) {
-                    $accountants = $_GET['deleteWorkAccount'];
-//                echo'after post statement';
-//                $userID = $_SESSION["username"];
-                }
-                ?>
-                <p><a href="../user_client_admin/client_admin_dashboard.php">Return to dashboard</a></p>
-                <div class="table-responsive table-scroll">
-                    <table class="table table-hover table-room">
-                        <thead>
-                        <th>UEN/ACRA No.</th>
-                        <th>Company Name</th>
-                        <th>File Number</th>
-                        <th>Account Manager(s)</th>
-                        <th>Delete Details</th>
-                        </thead>
-                        <?php // echo'after table head'; ?>
+    <!--    <div class="row">
+            <div class="card">
+                <div class="card-body">
+                    
+                    retrieve table of accountants
+                    format table with delete button at side
+                    when button is clicked, modal popup to ask for confirmation
+                    on confirmation then delete row
+                    
 
-                        <tbody>
+
+                    <?php
+                    if (isset($_GET['deleteWorkAccount'])) {
+                        $accountants = $_GET['deleteWorkAccount'];
+                //                echo'after post statement';
+                //                $userID = $_SESSION["username"];
+                    }
+                    ?>
+                    <p><a href="../user_client_admin/client_admin_dashboard.php">Return to dashboard</a></p>
+                    <div class="table-responsive table-scroll">
+                        <table class="table table-hover table-room">
+                            <thead>
+                            <th>UEN/ACRA No.</th>
+                            <th>Company Name</th>
+                            <th>File Number</th>
+                            <th>Account Manager(s)</th>
+                            <th>Delete Details</th>
+                            </thead>
+                            <?php // echo'after table head'; ?>
+
+                            <tbody>
                             <?php
                             $userID = "jerome";
-//                          echo'after table body';
+                        //                          echo'after table body';
                             $query = "SELECT "
                                     . "account.UEN AS UEN, "
                                     . "account.companyName AS companyName, "
@@ -55,12 +198,12 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                     . "account.UEN = usermanageaccount.account_UEN  "
                                     . "AND usermanageaccount.account_user_username = '$userID'";
                             $sql = $DB_con->prepare($query);
-//                            echo'statement prepared';
+                        //                            echo'statement prepared';
                             echo $query;
                             $sql->execute();
                             $users = $sql->fetchAll();
-//                            echo'statement executed';
-//                            echo count($users);
+                        //                            echo'statement executed';
+                        //                            echo count($users);
                             if (count($users) == 0) {
                                 echo '';
                                 echo '<tr>'
@@ -71,10 +214,10 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                 . '<td>Nil</td>'
                                 . '</tr>';
                             } else {
-//                                echo'else condition reached';
+                        //                                echo'else condition reached';
                                 $counter = 0;
                                 foreach ($users as $row) {
-//                                    echo'rows echoed';
+                        //                                    echo'rows echoed';
                                     echo ""
                                     . "<tr>"
                                     . "<td id='account_uen" . $counter . "'>{$row['UEN']}</td>"
@@ -92,14 +235,14 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                             }
                             ?>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr>
+                    <p><a href="../user_client_admin/client_admin_dashboard.php">Return to dashboard</a></p>
                 </div>
-                <hr>
-                <p><a href="../user_client_admin/client_admin_dashboard.php">Return to dashboard</a></p>
             </div>
-        </div>
-    </div>
+        </div>-->
 
     <!-- Modal -->
     <div class="modal fade" id="deleteModal" role="dialog">
