@@ -113,9 +113,12 @@ for ($i = 0; $i < count($originalValue); $i++) {
             }
         }
 
+        $tempArray = array();
         // For those category not added into Main
         for ($j = 0; $j < count($result); $j++) {
             if (!in_array($inputCategory[$i], $subAccountArrayDB)) {
+                array_push($tempArray, $accountValue[$i]);
+                $categoryTempArray[$inputCategory[$i]] = $tempArray;
                 array_push($tempSubArray, $inputCategory[$i]);
                 break;
             }
@@ -127,15 +130,27 @@ for ($i = 0; $i < count($originalValue); $i++) {
 
 if (!empty($categoryTempArray)) {
     foreach ($categoryTempArray as $category => $array) {
-        $uniqueArray = array_unique($array);
-        $implode = implode(",", $uniqueArray);
+        if (in_array($category, $subAccountArrayDB)) {
+            $implode = implode(",", $array);
 
-        $update = "UPDATE sub_category SET account_names= '" . $implode . "' WHERE sub_account= '" . $category . "' AND company_name = '" . $_SESSION['companyName'] . "' AND client_company = '" . $_POST['clientCompany'] . "'";
-        $stmt = $DB_con->prepare($update);
-        $stmt->execute();
+            $update = "UPDATE sub_category SET account_names= '" . $implode . "' WHERE sub_account= '" . $category . "' AND company_name = '" . $_SESSION['companyName'] . "' AND client_company = '" . $_POST['clientCompany'] . "'";
+            $stmt = $DB_con->prepare($update);
+            $stmt->execute();
+        } else {
+            $implode = implode(",", $array);
+
+            $insert = "INSERT INTO sub_category (company_name, client_company, sub_account, account_names)
+            VALUES ('" . $_SESSION['companyName'] . "', '" . $_POST['clientCompany'] . "', '" . $category . "' ,'" . $implode . "')";
+            // use exec() because no results are returned
+            $DB_con->exec($insert);
+        }
     }
 } else {
 //    header('Location: updateCategoriesMain.php');
+}
+
+if (!empty($tempSubArray)) {
+    
 }
 ?>
 <div class="m-grid__item m-grid__item--fluid m-wrapper">
@@ -222,6 +237,10 @@ if (!empty($categoryTempArray)) {
 
                         foreach ($fileArray as $value) {
                             echo "<input type='hidden' name='fileArray[]' value='" . $value . "'/>";
+                        }
+
+                        foreach ($accountValue as $v) {
+                            echo "<input type='hidden' name='accountValue[]' value='" . $v . "'/>";
                         }
                         ?>
 

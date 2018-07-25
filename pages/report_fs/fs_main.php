@@ -79,7 +79,7 @@ $_SESSION['companyName'] = "Abc Pte. Ltd.";
                         </select>
                         <span><br/>For multiple files: Please upload latest to oldest in sequence</span>
                     </div>
-                    <form name='uploadForm' action="updateCategories.php" method="post" enctype="multipart/form-data" class="m-form m-form--fit m-form--label-align-right" onsubmit="return validateForm()">
+                    <form name='uploadForm' action="updateCategoriesSub.php" method="post" enctype="multipart/form-data" class="m-form m-form--fit m-form--label-align-right" onsubmit="return validateForm()">
                         <div class="col-lg-3">
                             <input class="form-control m-input" type="text" id="clientCompany" name="clientCompany" value="">
                             <span class="m-form__help">
