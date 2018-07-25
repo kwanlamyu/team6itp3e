@@ -10,7 +10,11 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
       } else {
 ?>
 <?php include '../general/header.php'; ?>
-<?php include '../general/navigation_accountant.php'; ?>
+<?php   if ($_SESSION['role_id'] == 2){
+    include '../general/navigation_clientadmin.php';
+  } else {
+    include '../general/navigation_accountant.php';
+  } ?>
 
 
 <?php

@@ -9,8 +9,11 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
         header("Location: fs_index.php");
       } else {
 include '../general/header.php';
-include '../general/navigation_accountant.php';
-// TODO: For testing only, requires to be changed to actual session check
+if ($_SESSION['role_id'] == 2){
+  include '../general/navigation_clientadmin.php';
+} else {
+  include '../general/navigation_accountant.php';
+}
 $companyName = $_SESSION['company'];
 $clientCompany = $_POST['companyName'];
 $clientUEN = $_POST['uenNumber'];

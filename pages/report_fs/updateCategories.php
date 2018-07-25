@@ -12,7 +12,11 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
         header("Location: fs_index.php");
       } else {
 include '../general/header.php';
-include '../general/navigation_accountant.php';
+if ($_SESSION['role_id'] == 2){
+  include '../general/navigation_clientadmin.php';
+} else {
+  include '../general/navigation_accountant.php';
+}
 $clientUEN = $_POST['clientUEN'];
 
 // use PhpOffice\PhpSpreadsheet\Reader\Csv;

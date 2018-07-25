@@ -8,6 +8,13 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
       if (!isset($_POST['companyName'])){
         header("Location: fs_index.php");
       } else {
+        include '../general/header.php';
+
+        if ($_SESSION['role_id'] == 2){
+          include '../general/navigation_clientadmin.php';
+        } else {
+          include '../general/navigation_accountant.php';
+        }
 $mainCategory = $_POST['main'];
 $subCategory = $_POST['subAccount'];
 

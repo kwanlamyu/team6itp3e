@@ -5,7 +5,12 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
       header('Location: ../user_super_admin/userdashboard.php');
     } else {
     include "../general/header.php";
-    include '../general/navigation_accountant.php';
+    if ($_SESSION['role_id'] == 2){
+      include '../general/navigation_clientadmin.php';
+    } else {
+      include '../general/navigation_accountant.php';
+    }
+
 
     $query = $DB_con->prepare("SELECT * FROM usermanageaccount WHERE user_username=:userName");
     $username = $_SESSION['username'];
