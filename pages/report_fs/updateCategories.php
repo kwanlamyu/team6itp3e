@@ -6,7 +6,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSION['company'])){
     if ($_SESSION['role_id'] != 2 && $_SESSION['role_id'] != 3){
-      header("Location: ../user_login/login.php");
+      header('Location: ../user_super_admin/userdashboard.php');
     } else {
       if (!isset($_POST['companyName'])){
         header("Location: fs_index.php");
