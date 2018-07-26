@@ -10,14 +10,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo $sql;
         $statement = $DB_con->prepare($sql);
         $statement->execute();
-        $successEdit = "Client Deleted successfully.";
+        $successMessage = "Client Deleted successfully.";
         echo "<meta http-equiv='refresh' content='3;url=../user_super_admin/super_admin_dashboard.php'> ";
 
 
         } catch (PDOException $e) {
 
             echo $sql . "<br>" . $e->getMessage();
-            $failEdit = "Failed to Delete Client Details";
+            $failMessage = "Failed to Delete Client Details";
 
         }
     }

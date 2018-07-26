@@ -105,14 +105,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //            echo $uname.'<br>';
             try{
             $statement->execute();
-            $successEdit = "Client Details Changed successfully.";
+            $successMessage = "Client Details Changed successfully.";
             echo "<meta http-equiv='refresh' content='3;url=../user_super_admin/super_admin_dashboard.php'> ";
 
             } catch (PDOException $e) {
                 echo $sql . "<br>" . $e->getMessage();
             }
         }else {
-            $failEdit = "Failed to Change Client Details";
+            $failMessage = "Failed to Change Client Details";
         }
 //       header('Location: edit_accountant.php');
     }
