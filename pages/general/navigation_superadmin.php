@@ -39,9 +39,9 @@
                             <i class="la la-close"></i>
                         </button>
                         <div id="m_header_menu" class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas  m-header-menu--skin-light m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-light m-aside-header-menu-mobile--submenu-skin-light "  >
-                            <ul class="m-menu__nav  m-menu__nav--submenu-arrow ">
-                                <li class="m-menu__item  m-menu__item--submenu m-menu__item--rel"  m-menu-submenu-toggle="click" aria-haspopup="true">
-                                    <a href="../user_super_admin/super_admin_dashboard.php" class="m-menu__link m-menu__toggle">
+                           <ul class="m-menu__nav">
+                                <li class="m-menu__item  m-menu__item--submenu m-menu__item--rel" m-menu-submenu-toggle="click" aria-haspopup="true">
+                                    <a href="../user_super_admin/super_admin_dashboard.php" class="m-menu__link">
                                         <span class="m-menu__item-here"></span>
                                         <span class="m-menu__link-text">
                                             Dashboard
