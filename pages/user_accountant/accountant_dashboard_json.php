@@ -11,7 +11,7 @@ $userID= $_SESSION['username'];
 	FROM account 
 	INNER JOIN usermanageaccount 
 	ON account.UEN = usermanageaccount.account_UEN 
-	AND usermanageaccount.account_user_username = '$userID'");
+	AND usermanageaccount.user_username = '$userID'");
 	
 	$select->execute();
 	$rows = array();
@@ -19,7 +19,7 @@ $userID= $_SESSION['username'];
 		$rows[] = $result;
 	}
 	$userID = $_SESSION['username'];
-	$query = "SELECT COUNT(*) FROM account WHERE user_username ='".$userID."'";
+	$query = "SELECT COUNT(*) FROM usermanageaccount WHERE user_username ='".$userID."'";
 	$result = $DB_con->prepare($query); 
 	$result->execute(); 
 	$number_of_rows = $result->fetchColumn(); 

@@ -51,7 +51,6 @@ var DefaultDatatableDemoAccountant = function() {
                     field: "fileNumber",
                     title: "File Number",
                     sortable: "asc"
-                }
                 }]
             }), $("#m_datatable_clear").on("click", function() {
                 $("#m_datatable_console").html("")
