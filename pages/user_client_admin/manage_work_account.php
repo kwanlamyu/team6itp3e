@@ -68,13 +68,13 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                         if (isset($_GET['createWorkButton'])) {
                             $accountants = $_GET['createWorkButton'];
         //                $userID = $_SESSION["username"];
-                            $userID = "Jerome";
+                            // $userID = "Jerome";
         //                echo'after post statement';
                         }
                         ?>
                         <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="manageWorkAccount" name="manageWorkAccount" action="../user_client_admin/manage_work_account.php" method="POST">
                             <?php include('../user_client_admin/manage_work_validation.php'); ?>
-                            
+
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group row">
                                     <!-- Account UEN -->
@@ -165,7 +165,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </form>
                         <!--END: Table-->
                     </div>

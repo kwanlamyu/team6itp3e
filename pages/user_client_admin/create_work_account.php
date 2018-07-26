@@ -7,7 +7,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
     ?>
 
     <div class="m-grid__item m-grid__item--fluid m-wrapper">
-        
+
         <!-- BEGIN: Subheader -->
         <div class="m-subheader ">
             <div class="d-flex align-items-center">
@@ -18,7 +18,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                 </div>
             </div>
         </div>
-        
+
         <div class="m-content">
             <div class="row">
                 <div class="col-lg-12">

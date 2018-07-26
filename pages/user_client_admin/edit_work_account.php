@@ -1,12 +1,12 @@
 <?php
-session_start();
+require_once '../db_connection/db.php';
+
 //check for username and role_id
 if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
     include '../general/header.php';
-    require_once '../db_connection/db.php';
     include '../general/navigation_clientadmin.php';
     ?>
-<div class="m-grid__item m-grid__item--fluid m-wrapper">
+<!-- <div class="m-grid__item m-grid__item--fluid m-wrapper"> -->
 
         <!-- BEGIN: Subheader -->
         <div class="m-subheader ">
@@ -117,7 +117,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
         //                                echo'else condition reached';
                                         $counter = 0;
                                         foreach ($users as $row) {
-        //                                    echo'rows echoed';                                    
+        //                                    echo'rows echoed';
                                             echo ""
                                             . "<tr>"
                                             . "<td id='account_uen" . $counter . "'>{$row['UEN']}</td>"
@@ -144,7 +144,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                 </div>
             </div>
         </div>
-    </div>
+    <!-- </div> -->
 
 
 <!--    <div class="row">
@@ -208,7 +208,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
 //                                echo'else condition reached';
                                 $counter = 0;
                                 foreach ($users as $row) {
-//                                    echo'rows echoed';                                    
+//                                    echo'rows echoed';
                                     echo ""
                                     . "<tr>"
                                     . "<td id='account_uen" . $counter . "'>{$row['UEN']}</td>"
@@ -249,12 +249,12 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
 
                         <div class="form-group">
                             <label for="uenid">UEN/ACRA No.</label>
-                            <input type="text" class="form-control" id="viewid" name="viewid" disabled>                               
+                            <input type="text" class="form-control" id="viewid" name="viewid" disabled>
                         </div>
 
                         <div class="form-group" style="display: none;">
                             <!--<label for="uenid">Username</label>-->
-                            <input type="text" class="form-control" id="uenid" name="uenid">                            
+                            <input type="text" class="form-control" id="uenid" name="uenid">
                         </div>
 
                         <div class="form-group">
@@ -270,7 +270,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                     <tbody>
                                         <?php
 //                            echo'after table body';
-                                        $sql = $DB_con->prepare("SELECT username FROM user WHERE role_id = 3");
+                                        $sql = $DB_con->prepare("SELECT username FROM user WHERE role_id = 3 AND companyName='" . $_SESSION['company'] . "';");
 //                            echo'statement prepared';
                                         $sql->execute();
                                         $users = $sql->fetchAll();
