@@ -198,7 +198,7 @@ for ($i = 0; $i < count($categoryDataArray); $i++) {
     // Display the accounts for that particular category
     for ($j = 1; $j < count($individualNote); $j++) {
 
-        // use this to recognise the year 
+        // use this to recognise the year
         $getFirstCharacter = substr($individualNote[$j], 1, 1);
 
         // this is the rest of the value [account#value]
@@ -642,12 +642,11 @@ for ($i = 0; $i < count($years); $i++) {
 // KOKHOE
 // =============================================================================
 // retrieval and sorting of data
-// open txt file that contains all known administrative expenses category
 // variable clash, client name refers to the client this FS is for
 $clientName = $companyName;
 // service provider is the company name of the accountant/ client admin
 $serviceProvider = $_SESSION['companyName'];
-// TODO: change to data from database instead
+// retrieve from database the categories
 $query = $DB_con->prepare("SELECT * FROM main_category WHERE company_name = :companyName AND client_company = :clientName");
 $query->bindParam(':companyName', $serviceProvider);
 $query->bindParam(':clientName', $clientName);

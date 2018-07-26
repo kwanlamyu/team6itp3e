@@ -269,7 +269,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                                 $query->execute();
 
                                                 $mainAccount = "Current Liabilities";
-                                                $accountNames = "Trade Payables,GST Payables,Accruals,Amount owing to a Shareholder,Current Income Tax Liabilities";
+                                                $accountNames = "Current Income Tax Liabilities";
                                                 $query->execute();
 
                                                 $mainAccount = "Distribution and Marketing Expenses";
@@ -362,9 +362,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                                 $accountNames = "Income tax expense,Income Tax Payables,Income tax expenses";
                                                 $query->execute();
 
-                                                $subAccount = "Other Income";
-                                                $accountNames = "Unrealised exchange difference";
-                                                $query->execute();
+                                                // $subAccount = "Other Income";
+                                                // $accountNames = "Unrealised exchange difference";
+                                                // $query->execute();
 
                                                 $subAccount = "Plant and Equipment";
                                                 $accountNames = "Office Equipment at Cost,Office Equipment Accum Dep'n,Softwares at Cost,Softwares Accum Dep'n,Computer & servers - cost,Computer and servers - acc dep";
