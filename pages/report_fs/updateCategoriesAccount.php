@@ -230,7 +230,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         $query = $DB_con->prepare("SELECT * FROM main_category WHERE company_name = :companyName AND client_company = :clientName");
                                         $query->bindParam(':companyName', $companyName);
                                         $query->bindParam(':clientName', $clientName);
-                                        $companyName = $_SESSION['companyName'];
+                                        $companyName = $_SESSION['company'];
                                         $clientName = $_POST['clientCompany'];
 
                                         $query->execute();
@@ -240,7 +240,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         $subQuery = $DB_con->prepare("SELECT * FROM sub_category WHERE company_name = :companyName AND client_company = :clientName");
                                         $subQuery->bindParam(':companyName', $companyName);
                                         $subQuery->bindParam(':clientName', $clientName);
-                                        $companyName = $_SESSION['companyName'];
+                                        $companyName = $_SESSION['company'];
                                         $clientName = $_POST['clientCompany'];
 
                                         $subQuery->execute();
@@ -250,7 +250,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         $accountQuery = $DB_con->prepare("SELECT * FROM sub_category WHERE company_name = :companyName AND client_company = :clientName");
                                         $accountQuery->bindParam(':companyName', $companyName);
                                         $accountQuery->bindParam(':clientName', $clientName);
-                                        $companyName = $_SESSION['companyName'];
+                                        $companyName = $_SESSION['company'];
                                         $clientName = $_POST['clientCompany'];
 
                                         $accountQuery->execute();
@@ -294,7 +294,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $query->execute();
 
                                             $mainAccount = "Current Liabilities";
-                                            $accountNames = "Trade Payables,GST Payables,Accruals,Amount owing to a Shareholder,Current Income Tax Liabilities";
+                                            $accountNames = "Trade and other payables,Current Income Tax Liabilities";
                                             $query->execute();
 
                                             $mainAccount = "Distribution and Marketing Expenses";
@@ -388,9 +388,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $accountNames = "Income tax expense,Income Tax Payables,Income tax expenses";
                                             $query->execute();
 
-                                            $subAccount = "Other Income";
-                                            $accountNames = "Unrealised exchange difference";
-                                            $query->execute();
+                                            // $subAccount = "Other Income";
+                                            // $accountNames = "Unrealised exchange difference";
+                                            // $query->execute();
 
                                             $subAccount = "Plant and Equipment";
                                             $accountNames = "Office Equipment at Cost,Office Equipment Accum Dep'n,Softwares at Cost,Softwares Accum Dep'n,Computer & servers - cost,Computer and servers - acc dep";
@@ -441,17 +441,111 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $query->bindParam(':account', $account);
                                             $query->bindParam(':account_names', $accountNames);
 
-                                            $account = "Administrative expenses";
-                                            $accountNames = "Accounting fee,Administrative expenses,Bank charges,Compilation fee,Depreciation,Director’s remuneration,Entertainment,"
-                                                    . "Employment pass,Exchange loss - trade,Freight charges,Insurance,Internet expenses,Late penalty,Nominee director fee,Office supplies,"
-                                                    . "Postage and courier,Professional fee,Printing and stationery,Rental,Salaries,Secretarial fee,Skill development levy & SINDA,Taxation fee,Skill Development Levy";
+                                            $account = "Accounting fee";
+                                            $accountNames = "Accounting fee,Bookkeeping fee";
                                             $query->execute();
 
-                                            $account = "Distribution and marketing expenses";
-                                            $accountNames = "Travelling expenses,Transportation,Telephone expenses";
+                                            $account = "Administrative expense";
+                                            $accountNames = "Administrative expense";
                                             $query->execute();
 
-                                            $account = "Finance expenses";
+                                            $account = "Bank charges";
+                                            $accountNames = "Bank charges";
+                                            $query->execute();
+
+                                            $account = "Compilation fee";
+                                            $accountNames = "Compilation fee";
+                                            $query->execute();
+
+                                            $account = "Depreciation";
+                                            $accountNames = "Depreciation";
+                                            $query->execute();
+
+                                            $account = "Director's remuneration";
+                                            $accountNames = "Director's remuneration,Director remuneration";
+                                            $query->execute();
+
+                                            $account = "Entertainment";
+                                            $accountNames = "Entertainment,Business Entertainment";
+                                            $query->execute();
+
+                                            $account = "Employment pass";
+                                            $accountNames = "Employment pass,Staff cost - employment pass";
+                                            $query->execute();
+
+                                            $account = "Exchange loss - trade";
+                                            $accountNames = "Exchange loss - trade,Exchange difference,Unrealised exch - Non trade";
+                                            $query->execute();
+
+                                            $account = "Freight charges";
+                                            $accountNames = "Freight charges,Freight paid";
+                                            $query->execute();
+
+                                            $account = "Insurance";
+                                            $accountNames = "Insurance,Medical Expenses";
+                                            $query->execute();
+
+                                            $account = "Internet expenses";
+                                            $accountNames = "Internet expenses";
+                                            $query->execute();
+
+                                            $account = "Late penalty";
+                                            $accountNames = "Late Fees Paid,Late penalty";
+                                            $query->execute();
+
+                                            $account = "Nominee director fee";
+                                            $accountNames = "Nominee director fee,Nominee Director Services";
+                                            $query->execute();
+
+                                            $account = "Office supplies";
+                                            $accountNames = "Office Supplies";
+                                            $query->execute();
+
+                                            $account = "Postage and courier";
+                                            $accountNames = "Postage and courier";
+                                            $query->execute();
+
+                                            $account = "Professional fee";
+                                            $accountNames = "Professional fee";
+                                            $query->execute();
+
+                                            $account = "Printing and stationery";
+                                            $accountNames = "Printing and stationery";
+                                            $query->execute();
+
+                                            $account = "Rental";
+                                            $accountNames = "Rental,Rent";
+                                            $query->execute();
+
+                                            $account = "Salaries";
+                                            $accountNames = "Staff Salaries,Wages & Salaries";
+                                            $query->execute();
+
+                                            $account = "Secretarial fee";
+                                            $accountNames = "Secretarial fee,Secretarial services";
+                                            $query->execute();
+
+                                            $account = "Skill development levy & SINDA";
+                                            $accountNames = "Skill Development Levy,Skill development levy & SINDA";
+                                            $query->execute();
+
+                                            $account = "Taxation fee";
+                                            $accountNames = "Taxation fee,Taxation services";
+                                            $query->execute();
+
+                                            $account = "Travelling expenses";
+                                            $accountNames = "Travelling expenses,Travelling";
+                                            $query->execute();
+
+                                            $account = "Transportation";
+                                            $accountNames = "Transportation,Transport - Taxi fare";
+                                            $query->execute();
+
+                                            $account = "Telephone expenses";
+                                            $accountNames = "Telephone expenses,Telephone,Telephone charges";
+                                            $query->execute();
+
+                                            $account = "Interest on bank borrowings";
                                             $accountNames = "Interest on bank borrowings";
                                             $query->execute();
                                         }
@@ -565,4 +659,3 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
 <?php // include '../general/footer_content.php';  ?>
 <?php // include '../general/footer.php';  ?>
-

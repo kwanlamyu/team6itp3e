@@ -174,6 +174,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
             </div>
         </div>
     </div>
+  </div>
 
 
 <!--    <div class="row">
