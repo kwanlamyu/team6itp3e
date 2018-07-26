@@ -40,28 +40,26 @@ var DefaultDatatableDemo = function() {
                     input: $("#generalSearch")
                 },
                 columns: [{
-                    field: "username",
-                    title: "Client Admin User",
+                    field: "UEN",
+                    title: "Company UEN",
                     sortable: "asc"
                 }, {
                     field: "companyName",
                     title: "Company Name",
                     sortable: "asc"
                 },{
-                    field: "email",
-                    title: "Email",
+                    field: "fileNumber",
+                    title: "File Number",
                     sortable: "asc"
-                },{
+                },				{
                     field: "Actions",
                     width: 110,
                     title: "Actions",
                     sortable: !1,
-                    filterable: !1,
+					filterable: !1,
                     overflow: "visible",
                     template: function(t, a, e) {
-                        var stringUsername = "'" + t.username + "'";
-                        var stringEmail = "'" + t.email + "'";
-                        return '\t\t\t\t\t\t<div class="dropdown ' + (e.getPageSize() - a <= 4 ? "dropup" : "") + '">\t\t\t\t\t\t\t<!--edit button --><a href="#editModal" data-toggle="modal" onclick="updateEdit(' + stringUsername + ',' + stringEmail + ');" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\t\t\t\t\t\t\t<i class="la la-edit"></i>\t\t\t\t\t\t</a>\t\t\t\t\t\t<!-- delete button--><a href="#deleteModal" data-toggle="modal" onclick="updateDelete(' + stringUsername + ',' + stringEmail + ');" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">\t\t\t\t\t\t\t<i class="la la-trash"></i>\t\t\t\t\t\t</a>\t\t\t\t\t'
+                        return '\t\t\t\t\t\t<div class="dropdown ' + (e.getPageSize() - a <= 4 ? "dropup" : "") + '">\t\t\t\t\t\t\t<!--edit button --><a href="../user_client_admin/edit_work_account.php" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\t\t\t\t\t\t\t<i class="la la-edit"></i>\t\t\t\t\t\t</a>\t\t\t\t\t\t<!-- delete button--><a href="../user_client_admin/delete_work_account.php" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">\t\t\t\t\t\t\t<i class="la la-trash"></i>\t\t\t\t\t\t</a>\t\t\t\t\t'
                     }
                 }]
             }), $("#m_datatable_clear").on("click", function() {

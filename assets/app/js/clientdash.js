@@ -55,6 +55,7 @@ var DefaultDatatableDemoClient = function() {
 					filterable: !1,
                     overflow: "visible",
                     template: function(t, a, e) {
+                        var c = 0;
                         var stringUser = "'" + t.username + "'";
                         var stringEmail = "'" + t.email + "'";
                         return '\t\t\t\t\t\t<div class="dropdown ' + (e.getPageSize() - a <= 4 ? "dropup" : "") + '">\t\t\t\t\t\t\t\<a href="#editModal" data-toggle="modal" onclick="updateEdit(' + stringUser + ',' + stringEmail + ');" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\t\t\t\t\t\t\t<i class="la la-edit"></i>\t\t\t\t\t\t</a>\t\t\t\t\t\t\<a href="#deleteModal" data-toggle="modal" onclick="updateDelete(' + stringUser + ',' + stringEmail + ');" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">\t\t\t\t\t\t\t<i class="la la-trash"></i>\t\t\t\t\t\t</a>\t\t\t\t\t'

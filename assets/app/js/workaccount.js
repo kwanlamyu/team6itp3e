@@ -63,6 +63,7 @@ var DefaultDatatableDemoClientWork = function() {
 					filterable: !1,
                     overflow: "visible",
                     template: function(t, a, e) {
+                        var c = 0;
                         var stringUEN = "'" + t.UEN + "'";
                         var stringCompany = "'" + t.companyName + "'";
                         var stringFilenumber = "'" + t.fileNumber + "'";

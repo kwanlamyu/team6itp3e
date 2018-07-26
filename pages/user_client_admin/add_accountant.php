@@ -51,6 +51,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                 <span class="alert alert-danger" ><?php echo $failMessage; ?></span>
                             <?php } ?>
 
+
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group row">
                                     <label class="col-lg-2 col-form-label">
@@ -63,6 +64,12 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                         }
                                         ?>>
                                         <span class="error"><?php echo $unameErr; ?></span>
+
+
+
+
+
+
                                     </div>
                                     <label class="col-lg-2 col-form-label">
                                         Email:
@@ -76,6 +83,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                         <span class="error"><?php echo $emailErr; ?></span>
                                     </div>
                                 </div>
+
                                 <div class="form-group m-form__group row">
                                     <label class="col-lg-2 col-form-label">
                                         Password:
@@ -84,6 +92,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                         <input type="password" class="form-control" id="accountantpassword" name="accountantpassword" placeholder="Password">
                                         <span class="error"><?php echo $passErr; ?></span>
                                         <span class="error"><?php echo $twopassErr; ?></span>
+
                                     </div>
                                     <label class="col-lg-2 col-form-label">
                                         Confirm Password:
@@ -94,6 +103,9 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                         <span class="error"><?php echo $twopassErr; ?></span>
                                     </div>
                                 </div>
+
+
+
                             </div>
                             <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
                                 <div class="m-form__actions m-form__actions--solid">
@@ -108,18 +120,25 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                             </button>
                                         </div>
                                     </div>
+
+
                                 </div>
                             </div>
                         </form>
                         <!--end::Form-->
                     </div>
                     <!--end::Portlet-->
+
+
                 </div>
             </div>
         </div>
     </div>
     <!-- END: Subheader -->
     </div>
+
+
+
     <?php
     include '../general/footer_content.php';
     include '../general/footer.php';
