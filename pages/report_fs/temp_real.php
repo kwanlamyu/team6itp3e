@@ -20,13 +20,13 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             } else {
                 include '../general/navigation_accountant.php';
             }
-//require_once 'C:\xampp\htdocs\phpWordsItp\vendor\autoload.php';
+            //require_once 'C:\xampp\htdocs\phpWordsItp\vendor\autoload.php';
             $phpWord = new \PhpOffice\PhpWord\PhpWord();
-//Default font style
+            //Default font style
             $phpWord->setDefaultFontName('Arial');
             $phpWord->setDefaultFontSize(11);
 
-//Create font style
+            //Create font style
             $fontStyleBigBlack = 'ArialBlack14';
             $fontStyleBlack = 'ArialBlack11';
             $fontstyleName = 'Arial11';
