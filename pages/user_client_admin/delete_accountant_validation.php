@@ -9,14 +9,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "DELETE FROM user WHERE username='$uname' AND role_id=3 AND companyName = '" . $_SESSION['company'] . "'";
         $statement = $DB_con->prepare($sql);
         $statement->execute();
-        $successEdit = "Accountant deleted successfully.";
+        $successMessage = "Accountant deleted successfully.";
         echo "<meta http-equiv='refresh' content='3;url=../user_client_admin/client_admin_dashboard.php'> ";
 
 
         } catch (PDOException $e) {
 
-            echo $sql . "<br>" . $e->getMessage();
-            $failEdit = "Failed to Change Accountant Details";
+            //echo $sql . "<br>" . $e->getMessage();
+            $failMessage = "Error: ".$e->getMessage();
 
         }
     }

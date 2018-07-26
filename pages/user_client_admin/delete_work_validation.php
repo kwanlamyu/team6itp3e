@@ -24,17 +24,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $accountSql = "DELETE FROM account WHERE UEN = '".$uen."'";
             $secondStatement = $DB_con->prepare($accountSql);
             $secondStatement->execute();
-            
-            echo '<div class="alert alert-success" role="alert">'
-            . '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close"></a>'
-            . ' User successfully deleted'
-            . '</div>';
-            echo '<span class="text-success"><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Redirecting Please Wait</span>';
+            $successMessage = "Account has been Deleted successfully.";
+//            echo '<div class="alert alert-success" role="alert">'
+//            . '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close"></a>'
+//            . ' User successfully deleted'
+//            . '</div>';
+            //echo '<span class="text-success"><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Redirecting Please Wait</span>';
             echo "<meta http-equiv='refresh' content='3;url=../user_client_admin/all_work_account.php'> ";
 
         } catch (PDOException $e) {
             
-            echo $sql . "<br>" . $e->getMessage();
+            //echo $sql . "<br>" . $e->getMessage();
+            $failMessage = "Error: ".$e->getMessage();
             
         }
 //        if ($statement->execute()) {

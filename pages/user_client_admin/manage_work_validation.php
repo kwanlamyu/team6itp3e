@@ -4,7 +4,7 @@ $uname = $selectuen = $selected= $selectCollaborators="";
 $valid = TRUE; //this var scope ok
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['manageWorkButton'])) {
-        echo "post reg button <br>";
+//        echo "post reg button <br>";
 
         if (empty($_POST["select_uen"])) {
 
@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //            foreach($selectCollaborators as $collaborator){
 //                $selected .=$selectCollaborators.",";
 //            }
-            echo "Manager(s): ".$selectCollaborators."<br>";
+//            echo "Manager(s): ".$selectCollaborators."<br>";
         }
 
 
@@ -37,12 +37,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $userID = $_SESSION["username"];
 //        $roleID = $_SESSION["role_id"];
 //        $userID = "Jerome";
-        echo "username: ".$userID."<br>";
-        echo gettype($valid).'<br>';
+//        echo "username: ".$userID."<br>";
+//        echo gettype($valid).'<br>';
 
         if ($valid == TRUE) {
-//            $hashpass = SHA1($pass);
-//            $hashcpass = SHA1($cpass);
             try{
                 $seperatedCollaborators = explode(',', $selectCollaborators);
                 $collaboratorsql = "INSERT INTO userManageAccount(account_UEN, account_user_username, user_username, user_role_id) VALUES ";
