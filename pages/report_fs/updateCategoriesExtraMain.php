@@ -18,7 +18,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 include '../general/navigation_accountant.php';
             }
 
-
             // use PhpOffice\PhpSpreadsheet\Reader\Csv;
             // can change to read csv file as well
             $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();

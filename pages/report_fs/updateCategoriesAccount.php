@@ -58,7 +58,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
             //store sub category that haven't store into the Main category database
             $tempSubArray = array();
-
+            
             for ($i = 0; $i < count($originalValue); $i++) {
                 if ($originalValue[$i] != $inputCategory[$i]) {
                     if ($originalValue[$i] == "") {

@@ -70,7 +70,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         $tempAccountNameArray = array();
                     }
                 }
-                
+
                 if (!empty($tempArray)) {
                     foreach ($tempArray as $category => $array) {
 
@@ -101,14 +101,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 $allAccounts = $_POST['accountValue'];
                 $clientUEN = $_POST['clientUEN'];
             }
-
-            $subQuery = $DB_con->prepare("SELECT * FROM sub_category WHERE company_name =:companyName AND client_company = :clientName");
-            $subQuery->bindParam(':companyName', $_SESSION['company']);
-            $subQuery->bindParam(':clientName', $_POST['clientCompany']);
-            $subQuery->execute();
-
-            $subResult = $subQuery->setFetchMode(PDO::FETCH_ASSOC);
-            $subResult = $subQuery->fetchAll();
             ?>
             <div class="m-grid__item m-grid__item--fluid m-wrapper">
                 <div class="m-subheader ">
@@ -168,6 +160,22 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                                 <form method="post" name="mainCategory" action="updateCategoriesAccount.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
                                     <?php
+                                    $query = $DB_con->prepare("SELECT * FROM main_category WHERE company_name =:companyName AND client_company = :clientName");
+                                    $query->bindParam(':companyName', $_SESSION['company']);
+                                    $query->bindParam(':clientName', $_POST['clientCompany']);
+                                    $query->execute();
+
+                                    $result = $query->setFetchMode(PDO::FETCH_ASSOC);
+                                    $result = $query->fetchAll();
+
+                                    $subQuery = $DB_con->prepare("SELECT * FROM sub_category WHERE company_name =:companyName AND client_company = :clientName");
+                                    $subQuery->bindParam(':companyName', $_SESSION['company']);
+                                    $subQuery->bindParam(':clientName', $_POST['clientCompany']);
+                                    $subQuery->execute();
+
+                                    $subResult = $subQuery->setFetchMode(PDO::FETCH_ASSOC);
+                                    $subResult = $subQuery->fetchAll();
+
                                     $originalValue = array();
                                     $accountValue = array();
 
@@ -206,7 +214,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         }
                                         if ($setCat == 0) {
                                             array_push($originalValue, "");
-                                            array_push($accountValue, $allAccounts[$i]);
+                                            array_push($accountValue, $subResult[$i]['sub_account']);
                                         }
                                         echo "<label>Choose a category:" . $startDataList . "</label>" . $bodyDataList . "</datalist>";
                                         echo "</div>";

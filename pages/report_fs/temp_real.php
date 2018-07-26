@@ -2318,6 +2318,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         $cell->addText(number_format($issuanceShare), $fontstyleName, $centerAlignment);
                     }
                 }
+                
                 $table->addRow();
                 $cell = $table->addCell($equityFirstCell);
                 if ($netPandL[$i] < 0) {
