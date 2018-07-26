@@ -88,7 +88,7 @@ $clientUEN = $_POST['uenNumber'];
                         </select>
                         <span><br/>For multiple files: Please upload latest to oldest in sequence</span>
                     </div>
-                    <form name='uploadForm' action="updateCategoriesSub.php" method="post" enctype="multipart/form-data" class="m-form m-form--fit m-form--label-align-right" onsubmit="return validateForm()">
+                    <form name='uploadForm' action="updateCategoriesAccount.php" method="post" enctype="multipart/form-data" class="m-form m-form--fit m-form--label-align-right" onsubmit="return validateForm()">
                         <div class="col-lg-3">
                             <input class="form-control m-input" type="hidden" id="clientCompany" name="clientCompany" value="<?php echo $clientCompany;?>">
                             <input class="form-control m-input" type="hidden" id="clientUEN" name="clientUEN" value="<?php echo $clientUEN;?>">

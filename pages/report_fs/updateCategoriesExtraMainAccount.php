@@ -1,14 +1,11 @@
 <?php
 require_once '../db_connection/db.php';
-require_once __DIR__ . '\..\..\vendor\autoload.php';
-
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSION['company'])) {
     if ($_SESSION['role_id'] != 2 && $_SESSION['role_id'] != 3) {
         header('Location: ../user_super_admin/userdashboard.php');
     } else {
-        if (!isset($_POST['clientCompany'])) {
+        if (!isset($_POST['companyName'])) {
             header("Location: fs_index.php");
         } else {
             include '../general/header.php';
@@ -17,13 +14,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             } else {
                 include '../general/navigation_accountant.php';
             }
-            $clientUEN = $_POST['clientUEN'];
-
-            // use PhpOffice\PhpSpreadsheet\Reader\Csv;
-            // can change to read csv file as well
-            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-            // only read data
-            $reader->setReadDataOnly(true);
 
             $subCategory = $_POST['sub'];
             $accCategory = $_POST['accAccount'];
@@ -44,8 +34,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             $result = $query->setFetchMode(PDO::FETCH_ASSOC);
             $result = $query->fetchAll();
 
-//            print_r($subCategory);
-//            echo "<hr>";
+            print_r($subCategory);
+            echo "<hr>";
 
             $subAccountArrayDB = array();
             for ($i = 0; $i < count($result); $i++) {
@@ -105,6 +95,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 //    header('Location: updateCategoriesMain.php');
             }
             ?>
+
             <div class="m-grid__item m-grid__item--fluid m-wrapper">
                 <div class="m-subheader ">
                     <div class="d-flex align-items-center">
@@ -139,7 +130,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     </a>
                                 </li>
                             </ul>
-
                         </div>
                     </div>
                 </div>
@@ -156,100 +146,62 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                                 <i class="la la-gear"></i>
                                             </span>
                                             <h3 class="m-portlet__head-text">
-                                                Update Sub Categories
+                                                Update Main Categories
                                             </h3>
                                         </div>
                                     </div>
                                 </div>
-                                <?php
-                                if (isset($allAccounts)) {
-                                    try {
-                                        echo "<span>Company: " . $companyName . "</span><br/>";
-                                        echo "<span>Client: " . $clientName . "</span><br/> <hr/>";
+                                <form method="post" name="updateCategoryForm" action="updateCategoriesSub.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+            <?php
+            $query = $DB_con->prepare("SELECT * FROM main_category WHERE company_name =:companyName AND client_company = :clientName");
+            $query->bindParam(':companyName', $_SESSION['companyName']);
+            $query->bindParam(':clientName', $_POST['clientCompany']);
+            $query->execute();
 
-                                        // TODO: change to editable
-                                        $query = $DB_con->prepare("SELECT * FROM sub_category WHERE company_name =:companyName AND client_company = :clientName");
-                                        $query->bindParam(':companyName', $companyName);
-                                        $query->bindParam(':clientName', $clientName);
-                                        $query->execute();
+            $result = $query->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $query->fetchAll();
 
-                                        $result = $query->setFetchMode(PDO::FETCH_ASSOC);
-                                        $result = $query->fetchAll();
+            $mainAccountArrayDB = array();
+            for ($i = 0; $i < count($result); $i++) {
+                array_push($mainAccountArrayDB, $result[$i]['main_account']);
+            }
 
-                                        $originalValue = array();
-                                        $accountValue = array();
-                                        ?>
+            echo "Please choose which Main Category it belongs to! <br><br>";
 
-                                        <form method="post" name="updateCategoryForm" action="updateCategoriesExtraMain.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
-                                            <?php
-                                            for ($i = 0; $i < count($allAccounts); $i++) {
-                                                echo "<hr/><b>Account name: </b> $allAccounts[$i] <br/>";
-                                                echo "<b>Matching account category: </b>";
-                                                echo "<div>";
-                                                $startDataList = "<input list='category" . $i . "' value='' class='form-control' name='category[]'/>";
-                                                $bodyDataList = "<datalist id='category" . $i . "'style='overflow-y:scroll; height:10px;'>";
-                                                $setCat = 0;
-                                                for ($x = 0; $x < count($result); $x++) {
-                                                    $underThisAccount = $result[$x]['account_names'];
-                                                    $underThisAccount = explode(",", $underThisAccount);
-                                                    $subCatResult = "";
-                                                    $foundSubCat = 0;
+            for ($i = 0; $i < count($tempAccArray); $i++) {
+                echo "<b>Current Sub Account: </b>" . $tempAccArray[$i] . "<Br>";
+                echo "<select name='main[]'>";
+                for ($j = 0; $j < count($subAccountArrayDB); $j++) {
+                    echo "<option value='" . $subAccountArrayDB[$j] . "'>" . $subAccountArrayDB[$j] . "</option>";
+                }
+                echo "</select>";
+                echo "<hr>";
+            }
 
-                                                    if ($setCat == 0) {
-                                                        for ($j = 0; $j < count($underThisAccount); $j++) {
-                                                            if (strcasecmp($underThisAccount[$j], $allAccounts[$i]) === 0) {
-                                                                array_push($originalValue, $result[$x]['sub_account']);
-                                                                array_push($accountValue, $allAccounts[$i]);
+            foreach ($tempAccArray as $v) {
+                echo "<input type='hidden' name='accAccount[]' value='" . $v . "'/>";
+            }
 
-                                                                $foundSubCat = 1;
-                                                                $startDataList = "<input list='category" . $i . "' value='" . $result[$x]['sub_account'] . "' class='form-control' name='category[]'/>";
-                                                                break;
-                                                            }
-                                                        }
-                                                    }
-                                                    if ($foundSubCat == 1) {
-                                                        $setCat = 1;
-                                                    }
-                                                    $bodyDataList .= "<option value='" . $result[$x]['sub_account'] . "'>";
-                                                }
-                                                if ($setCat == 0) {
-                                                    array_push($originalValue, "");
-                                                    array_push($accountValue, $allAccounts[$i]);
-                                                }
+            foreach ($dateStart as $value) {
+                echo "<input type='hidden' name='dateStart[]' value='" . $value . "'/>";
+            }
 
-                                                echo "<label>Choose a category:" . $startDataList . "</label><div>" . $bodyDataList . "</datalist></div>";
-                                                echo "</div>";
-                                            }
-                                        } catch (PDOException $e) {
-                                            echo 'Error: ' . $e->getMessage();
-                                        }
-                                    } else {
-                                        die("Unable to find the accounts in your file, please ensure the column headings (Account, Debit, Credit) are present.");
-                                    }
+            foreach ($dateEnd as $value) {
+                echo "<input type='hidden' name='dateEnd[]' value='" . $value . "'/>";
+            }
 
-                                    foreach ($fileArray as $value) {
-                                        echo "<input type='hidden' name='fileArray[]' value='" . $value . "'/>";
-                                    }
-                                    foreach ($dateStart as $value) {
-                                        echo "<input type='hidden' name='dateStart[]' value='" . $value . "'/>";
-                                    }
-                                    foreach ($dateEnd as $value) {
-                                        echo "<input type='hidden' name='dateEnd[]' value='" . $value . "'/>";
-                                    }
-                                    ?>
+            foreach ($fileArray as $value) {
+                echo "<input type='hidden' name='fileArray[]' value='" . $value . "'/>";
+            }
+
+            foreach ($accountValue as $v) {
+                echo "<input type='hidden' name='accountValue[]' value='" . $v . "'/>";
+            }
+            ?>
 
                                     <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
                                     <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
                                     <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
-
-                                    <?php
-                                    foreach ($accountValue as $v) {
-                                        echo "<input type='hidden' name='accountValue[]' value='" . $v . "'/>";
-                                    }
-                                    foreach ($originalValue as $value) {
-                                        echo "<input type='hidden' name='originalValue[]' value='" . $value . "'/>";
-                                    }
-                                    ?>
 
                                     <input type="submit" value="Submit" name="submit" class="btn btn-brand">
                                 </form>
@@ -258,8 +210,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     </div>
                 </div>
             </div>
-            </div>
             <!--end::Portlet-->
+            </div>
+            <!-- END: Subheader -->
             <?php
         }
     }
@@ -270,21 +223,3 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
 <?php include '../general/footer_content.php'; ?>
 <?php include '../general/footer.php'; ?>
-
-<script type="text/javascript">
-
-    function check() {
-
-        var allAccountCount = <?php echo count($allAccounts); ?>;
-
-        for (i = 0; i < allAccountCount; i++) {
-            if (document.getElementById('category' + i).value === "") {
-                alert('Please fill in all fields.');
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-</script>

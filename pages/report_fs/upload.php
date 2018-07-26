@@ -126,13 +126,14 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     }
                 }
             } else {
-//    header('Location: updateCategoriesMain.php');
-
+            //    header('Location: updateCategoriesMain.php');
+            }
                 if ($_SESSION['role_id'] == 2) {
                     include '../general/navigation_clientadmin.php';
                 } else {
                     include '../general/navigation_accountant.php';
-                    ?>
+                }
+                  ?>
                     <div class="m-grid__item m-grid__item--fluid m-wrapper">
                         <div class="m-subheader ">
                             <div class="d-flex align-items-center">
@@ -931,14 +932,14 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         </div>
                     </div>
                     </div>
-                    </div>
-                    </div>
+                    
+                    
 
                     <?php
-                }
+                
             }
         }
-    }
+    
 } else {
     header("Location: ../user_login/login.php");
 }

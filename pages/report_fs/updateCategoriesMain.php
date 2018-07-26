@@ -88,12 +88,11 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         $DB_con->exec($insert);
                     }
 
-//        $uniqueArray = array_unique($array);
-                    $implode = implode(",", $array);
-
-                    $update = "UPDATE main_category SET account_names= '" . $implode . "' WHERE main_account = '" . $category . "' AND company_name = '" . $_SESSION['companyName'] . "' AND client_company = '" . $_POST['clientCompany'] . "'";
-                    $stmt = $DB_con->prepare($update);
-                    $stmt->execute();
+//                    $implode = implode(",", $array);
+//
+//                    $update = "UPDATE main_category SET account_names= '" . $implode . "' WHERE main_account = '" . $category . "' AND company_name = '" . $_SESSION['companyName'] . "' AND client_company = '" . $_POST['clientCompany'] . "'";
+//                    $stmt = $DB_con->prepare($update);
+//                    $stmt->execute();
                 }
             } else {
 //    header('Location: updateCategoriesMain.php');
@@ -233,6 +232,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                                     <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
                                     <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
+                                    <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
 
                                     <input type="submit" value="Submit" name="submit" class="btn btn-brand">
                                 </form>
@@ -248,6 +248,4 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 } else {
     header("Location: ../user_login/login.php");
 }
-
-print_r($tempArray);
 ?>
