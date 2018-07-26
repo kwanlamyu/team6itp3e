@@ -41,7 +41,7 @@
                         <div id="m_header_menu" class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas  m-header-menu--skin-light m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-light m-aside-header-menu-mobile--submenu-skin-light "  >
                             <ul class="m-menu__nav  m-menu__nav--submenu-arrow ">
                                 <li class="m-menu__item  m-menu__item--submenu m-menu__item--rel"  m-menu-submenu-toggle="click" aria-haspopup="true">
-                                    <a href="../user_login/index.php" class="m-menu__link m-menu__toggle">
+                                    <a href="../user_client_admin/client_admin_dashboard.php" class="m-menu__link m-menu__toggle">
                                         <span class="m-menu__item-here"></span>
                                         <span class="m-menu__link-text">
                                             Dashboard
@@ -66,7 +66,7 @@
                                                 </span>
                                             </span>
                                             <span class="m-topbar__username m--hide">
-                                                Nick
+                                                Client Admin
                                             </span>
                                         </a>
                                         <div class="m-dropdown__wrapper">
@@ -79,10 +79,10 @@
                                                         </div>
                                                         <div class="m-card-user__details">
                                                             <span class="m-card-user__name m--font-weight-500">
-                                                                Mark Andre
+                                                                Client Admin
                                                             </span>
                                                             <a href="" class="m-card-user__email m--font-weight-300 m-link">
-                                                                mark.andre@gmail.com
+                                                                client@company.com
                                                             </a>
                                                         </div>
                                                     </div>
@@ -119,7 +119,7 @@
             <div id="m_aside_left" class="m-grid__item	m-aside-left  m-aside-left--skin-light ">
                 <!-- BEGIN: Brand -->
                 <div class="m-brand  m-brand--skin-light ">
-                    <a href="../user_login/index.php" class="m-brand__logo">
+                    <a href="../user_client_admin/client_admin_dashboard.php" class="m-brand__logo">
                         <img alt="" src="../../assets/app/media/img/logos/logo.png"/>
                     </a>
                 </div>
@@ -160,18 +160,10 @@
                                         </a>
                                     </li>
                                     <li class="m-menu__item " aria-haspopup="true"  m-menu-link-redirect="1">
-                                        <a  href="#" class="m-menu__link ">
+                                        <a  href="../user_client_admin/client_admin_dashboard.php" class="m-menu__link ">
                                             <i class="m-menu__link-icon la la-commenting"></i>
                                             <span class="m-menu__link-text">
                                                 All Accountants
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="m-menu__item " aria-haspopup="true"  m-menu-link-redirect="1">
-                                        <a  href="#" class="m-menu__link ">
-                                            <i class="m-menu__link-icon la la-commenting"></i>
-                                            <span class="m-menu__link-text">
-                                                Password Reset
                                             </span>
                                         </a>
                                     </li>
@@ -203,14 +195,6 @@
                                             <i class="m-menu__link-icon la la-commenting"></i>
                                             <span class="m-menu__link-text">
                                                 New Report
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="m-menu__item " aria-haspopup="true"  m-menu-link-redirect="1">
-                                        <a  href="#" class="m-menu__link ">
-                                            <i class="m-menu__link-icon la la-commenting"></i>
-                                            <span class="m-menu__link-text">
-                                                My Reports
                                             </span>
                                         </a>
                                     </li>
@@ -276,7 +260,7 @@
                                     </li>
 
                                     <li class="m-menu__item " aria-haspopup="true"  m-menu-link-redirect="1">
-                                        <a  href="#" class="m-menu__link ">
+                                        <a  href="../user_client_admin/create_work_account.php" class="m-menu__link ">
                                             <i class="m-menu__link-icon la la-commenting"></i>
                                             <span class="m-menu__link-text">
                                                 Add Client
@@ -284,7 +268,7 @@
                                         </a>
                                     </li>
                                     <li class="m-menu__item " aria-haspopup="true"  m-menu-link-redirect="1">
-                                        <a  href="../user_super_admin/userdashboard.php" class="m-menu__link ">
+                                        <a  href="../user_client_admin/all_work_account.php" class="m-menu__link ">
                                             <i class="m-menu__link-icon la la-commenting"></i>
                                             <span class="m-menu__link-text">
                                                 All Clients

@@ -1,4 +1,4 @@
-var DefaultDatatableDemoClient = function() {
+var DefaultDatatableDemoClientWork = function() {
     var e = function(t) {
         var a = $("#m_datatable_console_client").append(t + "\t\n");
         $(a).scrollTop(a[0].scrollHeight - $(a).height())
@@ -6,13 +6,13 @@ var DefaultDatatableDemoClient = function() {
     return {
         init: function() {
             var t;
-            t = $(".client_dash_table").mDatatable({
+            t = $(".client_work_account").mDatatable({
                 data: {
                     type: "remote",
                     source: {
                         read: {
                             url://"https://keenthemes.com/metronic/preview/inc/api/datatables/demos/default.php"
-							"../../pages/user_client_admin/client_admin_dashboard_json.php"
+							"../../pages/user_client_admin/all_work_account_json.php"
                         }
                     },
                     pageSize: 5,
@@ -40,12 +40,20 @@ var DefaultDatatableDemoClient = function() {
                     input: $("#generalSearch")
                 },
                 columns: [{
-                    field: "username",
-                    title: "Username",
+                    field: "UEN",
+                    title: "Company UEN",
                     sortable: "asc"
                 }, {
-                    field: "email",
-                    title: "Email",
+                    field: "companyName",
+                    title: "Company Name",
+                    sortable: "asc"
+                },{
+                    field: "fileNumber",
+                    title: "File Number",
+                    sortable: "asc"
+                },{
+                    field: "accountManagers",
+                    title: "Account Manager(s)",
                     sortable: "asc"
                 }, {
                     field: "Actions",
@@ -87,5 +95,5 @@ var DefaultDatatableDemoClient = function() {
     }
 }();
 jQuery(document).ready(function() {
-    DefaultDatatableDemoClient.init()
+    DefaultDatatableDemoClientWork.init()
 });

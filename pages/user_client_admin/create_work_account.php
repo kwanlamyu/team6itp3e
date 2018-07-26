@@ -12,37 +12,9 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
         <div class="m-subheader ">
             <div class="d-flex align-items-center">
                 <div class="mr-auto">
-                    <h3 class="m-subheader__title m-subheader__title--separator">
-                        Financial Statement
+                    <h3 class="m-subheader__title">
+                        Add Client
                     </h3>
-<!--                    <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
-                        <li class="m-nav__item m-nav__item--home">
-                            <a href="#" class="m-nav__link m-nav__link--icon">
-                                <i class="m-nav__link-icon la la-home"></i>
-                            </a>
-                        </li>
-                        <li class="m-nav__separator">
-                            -
-                        </li>
-                        <li class="m-nav__item">
-                            <a href="" class="m-nav__link">
-                                <span class="m-nav__link-text">
-                                    Generate Report
-                                </span>
-                            </a>
-                        </li>
-                        <li class="m-nav__separator">
-                            -
-                        </li>
-                        <li class="m-nav__item">
-                            <a href="" class="m-nav__link">
-                                <span class="m-nav__link-text">
-                                    Financial Statement
-                                </span>
-                            </a>
-                        </li>
-                    </ul>-->
-
                 </div>
             </div>
         </div>
@@ -53,6 +25,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                     <!--begin::Portlet-->
                     <div class="m-portlet">
                         <div class="m-portlet__head">
+                            <div class="m-portlet__head">
                             <div class="m-portlet__head-caption">
                                 <div class="m-portlet__head-title">
                                     <span class="m-portlet__head-icon m--hide">
@@ -64,9 +37,10 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                 </div>
                             </div>
                         </div>
+                        </div>
                         <!--begin::Form-->
-                        <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="createWorkAccount" name="createWorkAccount" action="../user_client_admin/create_work_account.php" method="POST">
-                            <?php include'../user_client_admin/create_work_validation.php' ?>
+                        <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="createWorkAccount" name="createWorkAccount" action="create_work_account.php" method="POST">
+                            <?php include('create_work_validation.php'); ?>
 
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group row">
@@ -118,6 +92,8 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
             </div>
         </div>
     </div>
+	<!-- END: Subheader -->
+	</div>
 
 
 <!--    <div class="row">
