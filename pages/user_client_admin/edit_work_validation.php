@@ -4,12 +4,12 @@ $edituen = $editedCollaborators = $userID= $roleID= $updateCollaborator="";
 $valid = TRUE; //this var scope ok
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['updateAccountButton'])) {
-        echo "post reg button <br>";
+//        echo "post reg button <br>";
 
-        if (empty($_POST["uenid"])) {
+        if (empty($_POST["edituenid"])) {
             $valid = FALSE;
         } else{
-            $edituen =($_POST["uenid"]);
+            $edituen =($_POST["edituenid"]);
         }
 
         if (empty($_POST["edit_Collaborator"])) {
@@ -22,9 +22,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $roleID = $_SESSION["role_id"];
 //        $userID = "Jerome";
 //        $roleID = "3";
-        echo "username: ".$userID."<br>";
-        echo "role ID: ".$roleID."<br>";
-        echo gettype($valid).'<br>';
+//        echo "username: ".$userID."<br>";
+//        echo "role ID: ".$roleID."<br>";
+//        echo gettype($valid).'<br>';
 
         if ($valid == TRUE) {
 
@@ -42,10 +42,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                        VALUES ('".$edituen."', '".$userID."', '".$collaborator."', '3')";
                     $updateSql = $DB_con->prepare($updateCollaborator);
 
-                    echo $updateCollaborator . "<br>";
+//                    echo $updateCollaborator . "<br>";
 
                     $updateSql->execute();
                 }
+                $clientAdminSql = "INSERT INTO userManageAccount(account_UEN, account_user_username, user_username, user_role_id) VALUES ('$edituen','$userID','$userID','2');";
+                $updateAdminsql = $DB_con->prepare($clientAdminSql);
+                $updateAdminsql->execute();
                 
 //                $collaboratorsql = "INSERT INTO userManageAccount(account_UEN, account_user_username, user_username, user_role_id) VALUES ";
 //                for ($i = 0; $i < count($seperatedCollaborators); $i++){
@@ -64,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         . ' Account Manager(s) successfully changed'
                     . '</div>';
                 echo '<span class="text-success"><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Redirecting please wait</span>';
-                echo "<meta http-equiv='refresh' content='3;url=../user_client_admin/client_admin_dashboard.php'> ";
+                echo "<meta http-equiv='refresh' content='3;url=../user_client_admin/all_work_account.php'> ";
             } catch (PDOException $e) {
                 echo $e->getMessage();
             }

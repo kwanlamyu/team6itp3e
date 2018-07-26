@@ -4,7 +4,7 @@ $uen= "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['deleteAccountButton'])) {
 //        echo "post update button <br>";
-        $uen = ($_POST["uenid"]);
+        $uen = ($_POST["deleteuenid"]);
 //        echo 'Username: ' . $uname . ' <br>';
 //        $email = ($_POST["accountantemail"]);
 //        echo 'Email: ' . $email . '<br>';
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             . ' User successfully deleted'
             . '</div>';
             echo '<span class="text-success"><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Redirecting Please Wait</span>';
-            echo "<meta http-equiv='refresh' content='3;url=../user_client_admin/delete_work_account.php'> ";
+            echo "<meta http-equiv='refresh' content='3;url=../user_client_admin/all_work_account.php'> ";
 
         } catch (PDOException $e) {
             

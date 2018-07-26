@@ -4,7 +4,7 @@ $uname = $selectuen = $selected= $selectCollaborators="";
 $valid = TRUE; //this var scope ok
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['manageWorkButton'])) {
-        echo "post reg button <br>";
+//        echo "post reg button <br>";
 
         if (empty($_POST["select_uen"])) {
 
@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //            foreach($selectCollaborators as $collaborator){
 //                $selected .=$selectCollaborators.",";
 //            }
-            echo "Manager(s): ".$selectCollaborators."<br>";
+//            echo "Manager(s): ".$selectCollaborators."<br>";
         }
 
 
@@ -37,8 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $userID = $_SESSION["username"];
 //        $roleID = $_SESSION["role_id"];
 //        $userID = "Jerome";
-        echo "username: ".$userID."<br>";
-        echo gettype($valid).'<br>';
+//        echo "username: ".$userID."<br>";
+//        echo gettype($valid).'<br>';
 
         if ($valid == TRUE) {
 //            $hashpass = SHA1($pass);
@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         . ' Account Manager(s) successfully added'
                     . '</div>';
                 echo '<span class="text-success"><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Redirecting please wait</span>';
-                echo "<meta http-equiv='refresh' content='3;url=client_admin_dashboard.php'> ";
+                echo "<meta http-equiv='refresh' content='3;url=../user_client_admin/client_admin_dashboard.php'> ";
             }catch (PDOException $e) {
                 echo $e->getMessage();
             }

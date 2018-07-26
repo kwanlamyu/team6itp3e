@@ -3,14 +3,14 @@
 
 <?php
 	$select = $DB_con->prepare("SELECT * FROM user
-	WHERE role_id=3");
+	WHERE role_id=3 AND companyName ='".$_SESSION['company']."'");
 	$select->execute();
 	$rows = array();
 	while ($result = $select->fetch(PDO::FETCH_ASSOC)) {
 		$rows[] = $result;
 	}
 	
-	$result = $DB_con->prepare("SELECT COUNT(*) FROM user WHERE role_id=3"); 
+	$result = $DB_con->prepare("SELECT COUNT(*) FROM user WHERE role_id=3 AND companyName ='".$_SESSION['company']."'"); 
 	$result->execute(); 
 	$number_of_rows = $result->fetchColumn(); 
 
