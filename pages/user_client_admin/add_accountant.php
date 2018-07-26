@@ -67,9 +67,18 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] === '2') {
                             </div>
                         </div>
                         <!--begin::Form-->
-                        <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="createAccountant" name="createAccountant" action="create_accountant.php" method="POST">
+                        <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="createAccountant" name="createAccountant" action="add_accountant.php" method="POST">
 
                             <?php include('create_accountant_validation.php'); ?>
+
+                            <?php if (!empty($successMessage)) { ?>
+                                <span class="alert alert-success" ><?php echo $successMessage; ?></span>
+                            <?php } ?>
+
+                            <?php if (!empty($failMessage)) { ?>
+                                <span class="alert alert-danger" ><?php echo $failMessage; ?></span>
+                            <?php } ?>
+
 
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group row">

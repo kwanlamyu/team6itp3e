@@ -2,7 +2,7 @@
 require_once '../db_connection/db.php';
 ob_start();
 $unameErr = $emailErr = $passErr = $cpassErr = $checkErr = $twopassErr = "";
-$uname = $email = $pass = $cpass = $emailvalid = "";
+$uname = $email = $pass = $cpass = $emailvalid = $successMessage = $failMessage = "";
 $valid = TRUE; //this var scope ok
 
 function test_input($data) {
@@ -77,12 +77,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //        $companyName = "jerome pte ltd";
 
         if ($valid == TRUE) {
+            
+            
             if ($uname !== "") {
                 $hashpass = password_hash($pass,PASSWORD_DEFAULT);
                 $sql = $DB_con->prepare("INSERT INTO user(username, email, password, role_id, companyName)
                                            VALUES ('$uname', '$email', '$hashpass', '3', '$companyName')");
+                
+               
             }
             if ($sql->execute()) {
+                
+                $successMessage = "Accountant has been registered successfully."; 
+                
                 //header('Location: ../user_management/create_accountant.php');
                 echo '<div class="alert alert-success" role="alert">'
                         . '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close"></a>'
@@ -90,10 +97,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     . '</div>';
 
             } else {
+                
                 echo '<div class="alert alert-warning mmbsm" role="alert">Error: ' . $sql . '<br>' . $DB_con->error . '</div>';
             }
+        } else {
+            $failMessage = "Failed to register accountant."; 
         }
-        header('refresh:5;Location: create_accountant.php');
+//        header('refresh:5;Location: create_accountant.php');
         ob_end_clean();
     }
 }
