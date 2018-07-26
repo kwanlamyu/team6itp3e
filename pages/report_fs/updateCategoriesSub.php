@@ -228,7 +228,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $query = $DB_con->prepare("SELECT * FROM main_category WHERE company_name = :companyName AND client_company = :clientName");
                                             $query->bindParam(':companyName', $companyName);
                                             $query->bindParam(':clientName', $clientName);
-                                            $companyName = $_SESSION['companyName'];
+                                            $companyName = $_SESSION['company'];
                                             $clientName = $_POST['clientCompany'];
                                             $query->execute();
                                             $result = $query->setFetchMode(PDO::FETCH_ASSOC);
@@ -410,7 +410,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             echo "<span>Company: " . $companyName . "</span><br/>";
                                             echo "<span>Client: " . $clientName . "</span><br/> <hr/>";
 
-                                            // TODO: change to editable
                                             $query = $DB_con->prepare("SELECT * FROM sub_category WHERE company_name =:companyName AND client_company = :clientName");
                                             $query->bindParam(':companyName', $companyName);
                                             $query->bindParam(':clientName', $clientName);
@@ -432,7 +431,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                                                     // echo "<select style='position:absolute;width:200px;height:25px;line-height:20px;margin:0;padding:0;' name='category[]' onchange='document.getElementById('displayValue" . $i . "').value=this.options[this.selectedIndex].text;document.getElementById('idValue" . $i . "').value=this.options['this.selectedIndex'].value;'>";
                                                     // echo "<option></option>";
-                                                    $startDataList = "<input list='category" . $i . "' value='' class='form-control' name='category[]'/>";
+                                                    $startDataList = "<input id='category" . $i . "' list='category" . $i . "' value='' class='form-control' name='category[]'/>";
                                                     $bodyDataList = "<datalist id='category" . $i . "'style='overflow-y:scroll; height:10px;'>";
                                                     $setCat = 0;
                                                     for ($x = 0; $x < count($result); $x++) {
