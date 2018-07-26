@@ -180,6 +180,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     $accountValue = array();
 
                                     for ($i = 0; $i < count($subResult); $i++) {
+                                      if (strcasecmp($subResult[$i]['sub_account'],"exchanges") !== false){
+
                                         echo "<b>Account name: </b> " . $subResult[$i]['sub_account'] . "<br/>";
                                         echo "<b>Matching account category: </b>";
                                         echo "<div>";
@@ -218,6 +220,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         }
                                         echo "<label>Choose a category:" . $startDataList . "</label>" . $bodyDataList . "</datalist>";
                                         echo "</div>";
+                                      }
                                     }
 
                                     foreach ($dateStart as $value) {
