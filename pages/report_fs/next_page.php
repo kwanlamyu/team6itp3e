@@ -73,36 +73,9 @@ foreach ($tempUniqueCategoryArray as $insert) {
     <div class="m-subheader ">
         <div class="d-flex align-items-center">
             <div class="mr-auto">
-                <h3 class="m-subheader__title m-subheader__title--separator">
+                <h3 class="m-subheader__title">
                     Financial Statement
                 </h3>
-                <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
-                    <li class="m-nav__item m-nav__item--home">
-                        <a href="#" class="m-nav__link m-nav__link--icon">
-                            <i class="m-nav__link-icon la la-home"></i>
-                        </a>
-                    </li>
-                    <li class="m-nav__separator">
-                        -
-                    </li>
-                    <li class="m-nav__item">
-                        <a href="" class="m-nav__link">
-                            <span class="m-nav__link-text">
-                                Generate Report
-                            </span>
-                        </a>
-                    </li>
-                    <li class="m-nav__separator">
-                        -
-                    </li>
-                    <li class="m-nav__item">
-                        <a href="" class="m-nav__link">
-                            <span class="m-nav__link-text">
-                                Financial Statement
-                            </span>
-                        </a>
-                    </li>
-                </ul>
 
             </div>
         </div>
@@ -115,11 +88,27 @@ foreach ($tempUniqueCategoryArray as $insert) {
         <div class="row">
             <div class="col-lg-12">
                 <div class="m-portlet m-portlet--tab">
-
+				
+				 <div class="m-portlet__head">
+                                    <div class="m-portlet__head-caption">
+                                        <div class="m-portlet__head-title">
+                                            <span class="m-portlet__head-icon m--hide">
+                                                <i class="la la-gear"></i>
+                                            </span>
+                                            <h3 class="m-portlet__head-text">
+                                                Category
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+				
+				
+<div class="m-portlet__body">
                     <p id="data"></p>
                     <p id="test"></p>
 
                 </div>
+				</div>
             </div>
         </div>
     </div>
@@ -176,7 +165,7 @@ foreach ($tempUniqueCategoryArray as $insert) {
     // Creation of form
     var formElement = "<form id='form' name='passDataForm' method='post' action='temp_real.php' onsubmit='return submitForm()'>\n\
                     <b>Category:</b> <input type='text' name='category' value='" + categoryArray[counter] + "' id='categoryLooper'>\n\
-                    <button type='button' id='skipBtn'>Skip</button>";
+                    <button type='button' id='skipBtn' class='btn btn-brand'>Skip</button>";
 
     formElement += "<br><br>\n\
                     <b>TB Accounts:</b>\n\
@@ -187,22 +176,22 @@ foreach ($tempUniqueCategoryArray as $insert) {
     }
 
     formElement += "<p id='helpingWords'><b>Helping Keys:</b><br></p>\n\
-                    <button type='button' id='addManualBtn'>Add Manual Input Boxes</button><br/><br/>\n\
-                    <p id='inputField'> Manual Accounts: <input type='text' id='mAccount0'> \n\
-                    Values: <input type='text' id='mValue0'>";
+                    <button class='btn btn-brand' type='button' id='addManualBtn'>Add Manual Input Boxes</button><br/><br/>\n\
+                    <p id='inputField'> Manual Accounts: <input class='form-control' type='text' id='mAccount0'> \n\ <br>
+                    Values: <input class='form-control' type='text' id='mValue0'>";
 
 //    formElement += "<select id='dropdownYear'>";
 
     for (var t = 0; t < yearsCount; t++) {
 //        formElement += "<option value='" + years[t] + "'>" + years[t] + "</option>";
-        formElement += "<input type='radio' name='0' id='date0" + t + "' value='" + years[t] + "'>" + years[t];
+        formElement += "<input class='form-control' type='radio' name='0' id='date0" + t + "' value='" + years[t] + "'>" + years[t];
     }
 
 //    formElement += "</select>";
 
     formElement += "<br><br></p>\n\
-                    <button type='button' id='nextBtn'>Next</button>\n\
-                    <button type='submit' id='submitBtn'>Submit</button>\n\
+                    <button class='btn btn-success' type='button' id='nextBtn'>Next</button>\n\ &nbsp
+                    <button class='btn btn-success' type='submit' id='submitBtn'>Submit</button>\n\
                     <input type='hidden' name='passData' value='" + storeCategory + "' id='passData'/>\n\
                     <input type='hidden' name='years[]' value='" + years + "'/>\n\
                     <input type='hidden' name='numberOfYears' value='" + numberOfSheets + "'/>\n\

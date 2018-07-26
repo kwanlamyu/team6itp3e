@@ -8,7 +8,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSION['company'])) {
     if ($_SESSION['role_id'] != 2 && $_SESSION['role_id'] != 3) {
-        header('Location: ../user_super_admin/userdashboard.php');
+        header('Location: ../user_super_admin/super_admin_dashboard.php');
     } else {
         if (!isset($_POST['clientCompany'])) {
             header("Location: fs_index.php");
@@ -27,40 +27,15 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             // only read data
             $reader->setReadDataOnly(true);
             ?>
+
             <div class="m-grid__item m-grid__item--fluid m-wrapper">
+                <!-- BEGIN: Subheader -->
                 <div class="m-subheader ">
                     <div class="d-flex align-items-center">
                         <div class="mr-auto">
-                            <h3 class="m-subheader__title m-subheader__title--separator">
+                            <h3 class="m-subheader__title">
                                 Financial Statement
                             </h3>
-                            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
-                                <li class="m-nav__item m-nav__item--home">
-                                    <a href="#" class="m-nav__link m-nav__link--icon">
-                                        <i class="m-nav__link-icon la la-home"></i>
-                                    </a>
-                                </li>
-                                <li class="m-nav__separator">
-                                    -
-                                </li>
-                                <li class="m-nav__item">
-                                    <a href="" class="m-nav__link">
-                                        <span class="m-nav__link-text">
-                                            Generate Report
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="m-nav__separator">
-                                    -
-                                </li>
-                                <li class="m-nav__item">
-                                    <a href="" class="m-nav__link">
-                                        <span class="m-nav__link-text">
-                                            Financial Statement
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
 
                         </div>
                     </div>
@@ -83,7 +58,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         </div>
                                     </div>
                                 </div>
-
+								<div class="m-portlet__body" id="formForUploads">
                                 <?php
                                 $fileArray = array();
                                 $target_dir = "../../pages/report_fs/uploads/";
@@ -581,11 +556,11 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         <form method="post" name="updateCategoryForm" action="updateCategoriesExtraMain.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
                                             <?php
                                             for ($i = 0; $i < count($allAccounts); $i++) {
-                                                echo "<b>Account name: </b> $allAccounts[$i] <br/>";
+                                                echo "<br><b>Account name: </b> $allAccounts[$i] <br/>";
                                                 echo "<b>Matching account category: </b>";
                                                 echo "<div>";
                                                 $startDataList = "<input id='category" . $i . "' list='category" . $i . "' value='' class='form-control' name='category[]'/>";
-                                                $bodyDataList = "<datalist id='category" . $i . "'style='overflow-y:scroll; height:20px;'>";
+                                                $bodyDataList = "<datalist  id='category" . $i . "'style='overflow-y:scroll; height:20px;'>";
                                                 $setCat = 0;
                                                 for ($x = 0; $x < count($result); $x++) {
                                                     $underThisAccount = $result[$x]['account_names'];
@@ -600,7 +575,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                                                 array_push($accountValue, $allAccounts[$i]);
 
                                                                 $foundSubCat = 1;
-                                                                $startDataList = "<input list='category" . $i . "' value='" . $result[$x]['sub_account'] . "' class='form-control' name='category[]'/>";
+                                                                $startDataList = "<input  list='category" . $i . "' value='" . $result[$x]['sub_account'] . "' class='form-control' name='category[]'/>";
                                                                 break;
                                                             }
                                                         }
@@ -653,28 +628,24 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         echo "<input type='hidden' name='originalValue[]' value='" . $value . "'/>";
                                     }
                                     ?>
-
-                                    <input type="submit" value="Submit" name="submit" class="btn btn-brand">
-                                </form>
+<br>
+                                    <input type="submit" value="Submit" name="submit" class="btn btn-success">
+                                 
+									
+                            </form>
+							</div>
                             </div>
+
+                            <!--end::Form-->
                         </div>
                     </div>
-                </div>
-            </div>
+</div>
             </div>
             <!--end::Portlet-->
-            <?php
-        }
-    }
-} else {
-    header("Location: ../user_login/login.php");
-}
-?>
+            <!-- END: Subheader -->
+            </div>
 
-<?php include '../general/footer_content.php'; ?>
-<?php include '../general/footer.php'; ?>
-
-<script type="text/javascript">
+            <script type="text/javascript">
 
     function check() {
 
@@ -691,3 +662,12 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
     }
 
 </script>
+            <?php
+        }
+    }
+} else {
+    header("Location: ../user_login/login.php");
+}
+?>
+<?php include '../general/footer_content.php'; ?>
+<?php include '../general/footer.php'; ?>
