@@ -167,6 +167,14 @@
                                             </span>
                                         </a>
                                     </li>
+									<li class="m-menu__item " aria-haspopup="true"  m-menu-link-redirect="1">
+                                        <a  href="../user_client_admin/manage_work_account.php" class="m-menu__link ">
+                                            <i class="m-menu__link-icon la la-commenting"></i>
+                                            <span class="m-menu__link-text">
+                                                Tag Accountants
+                                            </span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>

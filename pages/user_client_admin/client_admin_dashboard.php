@@ -4,7 +4,7 @@ require_once '../db_connection/db.php';
 if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
     include '../general/header.php';
     include '../general/navigation_clientadmin.php';
-     
+
     ?>
 
     <div class="m-grid__item m-grid__item--fluid m-wrapper">
@@ -81,7 +81,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
             </div>
 
         </div>
-        
+
         <!-- Edit Modal -->
         <div class="modal fade" id="editModal" role="dialog">
             <div class="modal-dialog modal-lg">
@@ -96,7 +96,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
 
                             <div class="form-group" style="display: none;">
                                 <label for="editaccountantid">Username</label>
-                                <input type="text" class="form-control" id="editaccountantid" name="editaccountantid">                            
+                                <input type="text" class="form-control" id="editaccountantid" name="editaccountantid">
                             </div>
 
                             <div class="form-group">
@@ -130,7 +130,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                 </div>
             </div>
         </div>
-        
+
         <!-- Delete Modal -->
         <div class="modal fade" id="deleteModal" role="dialog">
             <div class="modal-dialog modal-lg">
@@ -145,22 +145,22 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                             <?php include('../user_client_admin/delete_accountant_validation.php'); ?>
                             <div class="form-group">
                                 <label for="deleteaccountantid">Username</label>
-                                <input type="text" class="form-control" id="viewid" name="viewid" disabled>                               
+                                <input type="text" class="form-control" id="viewid" name="viewid" disabled>
                             </div>
 
                             <div class="form-group" style="display: none;">
-                                <label for="deleteaccountantid">Username</label>     
-                                <input type="text" class="form-control" id="accountantid" name="deleteaccountantid">                            
+                                <label for="deleteaccountantid">Username</label>
+                                <input type="text" class="form-control" id="deleteaccountantid" name="deleteaccountantid">
                             </div>
 
                             <div class="form-group">
                                 <label for="deleteaccountantemail">Email</label>
-                                <input type="email" class="form-control" id="viewemail" name="viewemail" disabled>                               
+                                <input type="email" class="form-control" id="viewemail" name="viewemail" disabled>
                             </div>
 
                             <div class="form-group" style="display: none;">
                                 <label for="deleteaccountantemail">Email</label>
-                                <input type="email" class="form-control" id="accountantemail" name="deleteaccountantemail">
+                                <input type="email" class="form-control" id="deleteaccountantemail" name="deleteaccountantemail">
                             </div>
 
                             <div class="form-group">
@@ -178,7 +178,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                 </div>
             </div>
         </div>
-        
+
     </div>
     </div>
     <script>
@@ -192,13 +192,13 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
             document.getElementById('editaccountantemail').value = email;
 
         }
-        
+
         function updateDelete(username,email) {
 //            var username = document.getElementById("accountant_username" + x).innerHTML;
-            document.getElementById('editaccountantid').value = username;
+            document.getElementById('deleteaccountantid').value = username;
             document.getElementById('viewid').value = username;
 //            var email = document.getElementById("accountant_email" + x).innerHTML;
-            document.getElementById('editaccountantemail').value = email;
+            document.getElementById('deleteaccountantemail').value = email;
             document.getElementById('viewemail').value = email;
 
         }
@@ -216,5 +216,3 @@ elseif (isset($_SESSION['username']) && $_SESSION['role_id'] == '1') {
     header('Location: ../user_login/login.php');
 }
 ?>
-
-    

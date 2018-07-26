@@ -1,10 +1,14 @@
 <?php
-require_once '../db_connection/db.php';
+session_start();
 //check for username and role_id
-if (isset($_SESSION['username']) && $_SESSION['role_id'] == '1') {
-    
+if (isset($_SESSION['username']) && ($_SESSION['role_id'] == '2' || $_SESSION['role_id'] == '3')) {
     include '../general/header.php';
-    include '../general/navigation_superadmin.php';
+    require_once '../db_connection/db.php';
+    if ($_SESSION['role_id'] == '2') {
+        include '../general/navigation_clientadmin.php';
+    } elseif ($_SESSION['role_id'] == '3') {
+        include '../general/navigation_accountant.php';
+    }
     ?>
 
 <div class="m-grid__item m-grid__item--fluid m-wrapper">
@@ -13,7 +17,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '1') {
 						<div class="d-flex align-items-center">
 							<div class="mr-auto">
 								<h3 class="m-subheader__title">
-									Super Admin Dashboard
+									Client Admin Dashboard
 								</h3>
 								
 								
@@ -30,7 +34,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '1') {
 										<div class="m-portlet__head-caption">
 											<div class="m-portlet__head-title">
 												<h3 class="m-portlet__head-text">
-													Client Accounts
+													Accountant Accounts
 												</h3>
 											</div>
 										</div>
@@ -72,8 +76,8 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '1') {
 								<!--end: Search Form -->
 									
 										<!--begin: Datatable -->
-										<div class="super_admin_table" id="super_admin_table"></div>
-										<span id="m_datatable_console" style="display: none;"class=" form-control m--margin-top-30" cols="100" rows="10" title="Console" readonly="readonly"></span>
+										<div class="m_datatable" id="api_events"></div>
+										<textarea id="m_datatable_console" class="form-control m--margin-top-30" cols="100" rows="10" title="Console" readonly="readonly"></textarea>
 										<!--end: Datatable -->
 									</div>
 								</div>
@@ -84,15 +88,35 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '1') {
 								</div>
 								</div>
 
+<script language='javascript'>
+/*
+    function filterTable() {
+        var input = document.getElementById("m_quicksearch_input");
+        var filter = input.value.toUpperCase();
+        var table = document.getElementById("accountantTable");
+        var tr = table.getElementsByTagName("tr");
+
+        for (var i = 1; i < tr.length; i++) {
+            var tds = tr[i].getElementsByTagName("td");
+            var firstCol = tds[0].textContent.toUpperCase();
+            var secondCol = tds[1].textContent.toUpperCase();
+            if (firstCol.indexOf(filter) > -1 || secondCol.indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+
+    }
+	*/
+</script>
+
 <?php
-    //include footer and footer content
     include '../general/footer_content.php';
     include '../general/footer.php';
 }//end of session and role_id checking
-elseif (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
-    header('Location: ../user_client_admin/client_admin_dashboard.php');
-} elseif (isset($_SESSION['username']) && $_SESSION['role_id'] == '3') {
-    header('Location: ../user_accountant/accountant_dashboard.php');
+elseif (isset($_SESSION['username']) && $_SESSION['role_id'] === '1') {
+    header('Location: ../user_super_admin/userdashboard.php');
 } else {
     header('Location: ../user_login/login.php');
 }
