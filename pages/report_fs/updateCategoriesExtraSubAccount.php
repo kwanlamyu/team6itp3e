@@ -57,17 +57,23 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             if ($key == $inputCategory[$i]) {
                                                 array_push($array, $accountValue[$i]);
                                                 $categoryTempArray[$inputCategory[$i]] = $array;
+//                                                print_r($categoryTempArray);
+//                                                echo "<hr>";
                                             }
                                         }
                                     } else {
                                         array_push($tempStoreArray, $result[$j]['account_names']);
                                         array_push($tempStoreArray, $accountValue[$i]);
                                         $categoryTempArray[$inputCategory[$i]] = $tempStoreArray;
+//                                        print_r($categoryTempArray);
+//                                        echo "<hr>";
                                     }
                                 } else {
                                     array_push($tempStoreArray, $result[$j]['account_names']);
                                     array_push($tempStoreArray, $accountValue[$i]);
                                     $categoryTempArray[$inputCategory[$i]] = $tempStoreArray;
+//                                    print_r($categoryTempArray);
+//                                    echo "<hr>";
                                 }
                             }
                         }
@@ -80,17 +86,23 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             if ($key == $inputCategory[$i]) {
                                                 array_push($array, $accountValue[$i]);
                                                 $categoryTempArray[$key] = $array;
+//                                                print_r($categoryTempArray);
+//                                                echo "<hr>";
                                             }
                                         }
                                     } else {
                                         array_push($tempStoreArray, $result[$j]['account_names']);
                                         array_push($tempStoreArray, $accountValue[$i]);
                                         $categoryTempArray[$inputCategory[$i]] = $tempStoreArray;
+//                                        print_r($categoryTempArray);
+//                                                echo "<hr>";
                                     }
                                 } else {
                                     array_push($tempStoreArray, $result[$j]['account_names']);
                                     array_push($tempStoreArray, $accountValue[$i]);
                                     $categoryTempArray[$inputCategory[$i]] = $tempStoreArray;
+//                                    print_r($categoryTempArray);
+//                                                echo "<hr>";
                                 }
                             }
 
@@ -135,8 +147,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         $DB_con->exec($insert);
                     }
                 }
-            } else { ?>
-                <form method="post" id = "categoryForm" name="myForm" action="updateCategoriesSub.php">
+            } else {
+                ?>
+                <form method="post" id = "categoryForm" name="myForm" action="upload.php">
                     <?php
                     foreach ($tempAccArray as $v) {
                         echo "<input type='hidden' name='accAccount[]' value='" . $v . "'/>";
@@ -228,7 +241,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         </div>
                                     </div>
                                 </div>
-                                <form method="post" name="updateCategoryForm" action="updateCategoriesSub.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+                                <form method="post" name="updateCategoryForm" action="upload.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
                                     <?php
                                     $query = $DB_con->prepare("SELECT * FROM sub_category WHERE company_name =:companyName AND client_company = :clientName");
                                     $query->bindParam(':companyName', $_SESSION['companyName']);
@@ -244,6 +257,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     }
 
                                     echo "Please choose which Sub Category it belongs to! <br><br>";
+
+                                    $tempAccArray = array_unique($tempAccArray);
 
                                     for ($i = 0; $i < count($tempAccArray); $i++) {
                                         echo "<b>Current Sub Account: </b>" . $tempAccArray[$i] . "<Br>";

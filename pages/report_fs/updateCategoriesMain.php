@@ -16,7 +16,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             }
 
             $query = $DB_con->prepare("SELECT * FROM main_category WHERE company_name =:companyName AND client_company = :clientName");
-            $query->bindParam(':companyName', $_SESSION['companyName']);
+            $query->bindParam(':companyName', $_SESSION['company']);
             $query->bindParam(':clientName', $_POST['clientCompany']);
             $query->execute();
 
@@ -24,9 +24,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             $result = $query->fetchAll();
 
             if ($_POST['key'] == "yes") {
-
-
-
                 $mainCategory = $_POST['main'];
                 $subCategory = $_POST['subAccount'];
 
@@ -37,7 +34,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 $dateEnd = $_POST['dateEnd'];
                 $allAccounts = $_POST['accountValue'];
                 $clientUEN = $_POST['clientUEN'];
-
 
                 $mainAccountArrayDB = array();
                 for ($i = 0; $i < count($result); $i++) {
@@ -74,21 +70,21 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         $tempAccountNameArray = array();
                     }
                 }
-
+                
                 if (!empty($tempArray)) {
                     foreach ($tempArray as $category => $array) {
 
                         if (in_array($category, $mainAccountArrayDB)) {
                             $implode = implode(",", $array);
 
-                            $update = "UPDATE main_category SET account_names= '" . $implode . "' WHERE main_account = '" . $category . "' AND company_name = '" . $_SESSION['companyName'] . "' AND client_company = '" . $_POST['clientCompany'] . "'";
+                            $update = "UPDATE main_category SET account_names= '" . $implode . "' WHERE main_account = '" . $category . "' AND company_name = '" . $_SESSION['company'] . "' AND client_company = '" . $_POST['clientCompany'] . "'";
                             $stmt = $DB_con->prepare($update);
                             $stmt->execute();
                         } else {
                             $implode = implode(",", $array);
 
                             $insert = "INSERT INTO main_category (company_name, client_company, sub_account, account_names)
-            VALUES ('" . $_SESSION['companyName'] . "', '" . $_POST['clientCompany'] . "', '" . $category . "' ,'" . $implode . "')";
+                            VALUES ('" . $_SESSION['company'] . "', '" . $_POST['clientCompany'] . "', '" . $category . "' ,'" . $implode . "')";
                             // use exec() because no results are returned
                             $DB_con->exec($insert);
                         }
@@ -97,9 +93,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     //    header('Location: updateCategoriesMain.php');
                 }
             } else if ($_POST['key'] == "no") {
-
-
-                $companyName = $_SESSION['companyName'];
+                $companyName = $_SESSION['company'];
                 $clientName = $_POST['clientCompany'];
                 $fileArray = $_POST['fileArray'];
                 $dateStart = $_POST['dateStart'];
@@ -109,7 +103,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             }
 
             $subQuery = $DB_con->prepare("SELECT * FROM sub_category WHERE company_name =:companyName AND client_company = :clientName");
-            $subQuery->bindParam(':companyName', $_SESSION['companyName']);
+            $subQuery->bindParam(':companyName', $_SESSION['company']);
             $subQuery->bindParam(':clientName', $_POST['clientCompany']);
             $subQuery->execute();
 
@@ -172,13 +166,13 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     </div>
                                 </div>
 
-                                <form method="post" name="mainCategory" action="upload.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+                                <form method="post" name="mainCategory" action="updateCategoriesAccount.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
                                     <?php
                                     $originalValue = array();
                                     $accountValue = array();
 
                                     for ($i = 0; $i < count($subResult); $i++) {
-                                        echo "<hr/><b>Account name: </b> " . $subResult[$i]['sub_account'] . "<br/>";
+                                        echo "<b>Account name: </b> " . $subResult[$i]['sub_account'] . "<br/>";
                                         echo "<b>Matching account category: </b>";
                                         echo "<div>";
 

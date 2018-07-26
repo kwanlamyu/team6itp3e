@@ -10,8 +10,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
     } else {
       include '../general/navigation_accountant.php';
     }
-
-
+    
     $query = $DB_con->prepare("SELECT * FROM usermanageaccount WHERE user_username=:userName");
     $username = $_SESSION['username'];
     $query->bindParam(':userName', $username);
