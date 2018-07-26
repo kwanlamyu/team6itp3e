@@ -181,6 +181,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                 if ($errorFlag == 1) {
                                     echo "Sorry, your file was not uploaded.";
                                 } else {
+                                    $allAccounts = array();
                                     for ($i = 0; $i < count($fileArray); $i++) {
                                         $target_file = $fileArray[$i];
                                         $spreadsheet = $reader->load($target_file);
@@ -211,7 +212,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         if ($accountColFound == 0) {
                                             die("Please ensure headings are included in the file.(Account, Debit, Credit)");
                                         } else {
-                                            $allAccounts = array();
                                             for ($x = $headingRow; $x < count($sheetData); $x++) {
                                                 $currentData = trim($sheetData[$x][$accountColumn]);
                                                 if (empty($currentData) || in_array($currentData, $allAccounts)) {
@@ -456,8 +456,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $accountNames = "Accounting fee,Bookkeeping fee";
                                             $query->execute();
 
-                                            $account = "Administrative expense";
-                                            $accountNames = "Administrative expense";
+                                            $account = "Administrative expenses";
+                                            $accountNames = "Administrative expenses";
                                             $query->execute();
 
                                             $account = "Bank charges";
@@ -533,7 +533,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $query->execute();
 
                                             $account = "Secretarial fee";
-                                            $accountNames = "Secretarial fee,Secretarial services";
+                                            $accountNames = "Secretarial fee,Secretarial services,Secretarial  fee";
                                             $query->execute();
 
                                             $account = "Skill development levy & SINDA";

@@ -242,6 +242,10 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     foreach ($accountValue as $v) {
                                         echo "<input type='hidden' name='accountValue[]' value='" . $v . "'/>";
                                     }
+
+                                    foreach ($allAccounts as $v) {
+                                        echo "<input type='hidden' name='allAccounts[]' value='" . $v . "'/>";
+                                    }
                                     ?>
 
                                     <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>

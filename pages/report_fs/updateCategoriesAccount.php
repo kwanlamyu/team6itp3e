@@ -1,7 +1,5 @@
 <?php
 require_once '../db_connection/db.php';
-include '../general/header.php';
-include '../general/navigation_accountant.php';
 require_once __DIR__ . '\..\..\vendor\autoload.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -29,8 +27,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             $inputCategory = $_POST['category'];
             $originalValue = $_POST['originalValue'];
             $accountValue = $_POST['accountValue'];
-            
-            $allAccounts = $_POST['accountValue'];
+
+            $allAccounts = $_POST['allAccounts'];
 
             $companyName = $_SESSION['companyName'];
             $clientName = $_POST['clientCompany'];
@@ -58,7 +56,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
             //store sub category that haven't store into the Main category database
             $tempSubArray = array();
-            
+
             for ($i = 0; $i < count($originalValue); $i++) {
                 if ($originalValue[$i] != $inputCategory[$i]) {
                     if ($originalValue[$i] == "") {
@@ -220,13 +218,64 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         $result = $accountQuery->setFetchMode(PDO::FETCH_ASSOC);
                                         $result = $accountQuery->fetchAll();
 
+                                        $subQuery = $DB_con->prepare("SELECT * FROM sub_category WHERE company_name =:companyName AND client_company = :clientName");
+                                        $subQuery->bindParam(':companyName', $_SESSION['company']);
+                                        $subQuery->bindParam(':clientName', $_POST['clientCompany']);
+                                        $subQuery->execute();
+
+                                        $subResult = $subQuery->setFetchMode(PDO::FETCH_ASSOC);
+                                        $subResult = $subQuery->fetchAll();
+
                                         $originalValue = array();
                                         $accountValue = array();
                                         ?>
 
                                         <form method="post" name="updateCategoryForm" action="updateCategoriesExtraSubAccount.php" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
                                             <?php
+                                            $underAdminExpense = array();
+                                            $underDistriExpense = array();
+                                            $underFinanceExpense = array();
+                                            for ($k = 0; $k < count($subResult); $k++){
+                                              if (stripos($subResult[$k]['sub_account'],"Administrative Expense") !== false){
+                                                $underAdminExpense = $subResult[$k]['account_names'];
+                                              }
+                                              if (stripos($subResult[$k]['sub_account'],"Distribution and Marketing Expense") !== false){
+                                                $underDistriExpense = $subResult[$k]['account_names'];
+                                              }
+                                              if (stripos($subResult[$k]['sub_account'],"Finance Expense") !== false){
+                                                $underFinanceExpense = $subResult[$k]['account_names'];
+                                              }
+                                            }
+
+                                            $underAdminExpense = explode(",",$underAdminExpense);
+                                            $underDistriExpense = explode(",",$underDistriExpense);
+                                            $underFinanceExpense = explode(",",$underFinanceExpense);
+
                                             for ($i = 0; $i < count($allAccounts); $i++) {
+                                                $validAccount = 0;
+                                                for ($k = 0; $k < count($underAdminExpense); $k++){
+                                                  if (stripos($allAccounts[$i],$underAdminExpense[$k]) !== false){
+                                                    $validAccount = 1;
+                                                    break;
+                                                  }
+                                                }
+                                                if ($validAccount == 0){
+                                                  for ($k = 0; $k < count($underDistriExpense); $k++){
+                                                    if (stripos($allAccounts[$i],$underDistriExpense[$k]) !== false){
+                                                      $validAccount = 1;
+                                                      break;
+                                                    }
+                                                  }
+                                                }
+                                                if ($validAccount == 0){
+                                                  for ($k = 0; $k < count($underFinanceExpense); $k++){
+                                                    if (stripos($allAccounts[$i],$underFinanceExpense[$k]) !== false){
+                                                      $validAccount = 1;
+                                                      break;
+                                                    }
+                                                  }
+                                                }
+                                                if ($validAccount == 1){
                                                 echo "<b>Account name: </b> $allAccounts[$i] <br/>";
                                                 echo "<b>Matching account category: </b>";
                                                 echo "<div>";
@@ -265,7 +314,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                                 }
                                                 echo "<label>Choose a category:" . $startDataList . "</label><div>" . $bodyDataList . "</datalist></div>";
                                                 echo "</div>";
+                                              }
                                             }
+
                                         } catch (PDOException $e) {
                                             echo 'Error: ' . $e->getMessage();
                                         }
@@ -276,7 +327,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     foreach ($fileArray as $value) {
                                         echo "<input type='hidden' name='fileArray[]' value='" . $value . "'/>";
                                     }
-  
+
                                     foreach ($dateStart as $value) {
                                         echo "<input type='hidden' name='dateStart[]' value='" . $value . "'/>";
                                     }
