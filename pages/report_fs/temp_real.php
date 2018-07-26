@@ -2318,7 +2318,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         $cell->addText(number_format($issuanceShare), $fontstyleName, $centerAlignment);
                     }
                 }
-                
+
                 $table->addRow();
                 $cell = $table->addCell($equityFirstCell);
                 if ($netPandL[$i] < 0) {
@@ -5406,7 +5406,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             $section->addText("\tCredit risk is the risk that companies and other parties will be unable to meet their \tobligations to the Company resulting in financial loss to the Company. The Company \tmanages such risks by dealing with a diverse of credit-worthy counterparties to \tmitigate any significant concentration of credit risk. Credit policy includes assessing \tand evaluation of existing and new customers' credit reliability and monitoring of \treceivable collections. The Company places its cash and cash equivalents with \tcreditworthy institutions."
                     , $fontstyleName, $paragraphStyle);
 
-//Page 20
+            //Page 20
             $section = $phpWord->addSection();
 
             $textrun = $section->addTextRun();

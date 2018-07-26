@@ -336,6 +336,10 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $accountNames = "Exchange Gain - Trade,Exchange difference";
                                             $query->execute();
 
+                                            $mainAccount = "Cost of sales";
+                                            $accountNames = "Cost of sales";
+                                            $query->execute();
+
                                             // Sub category ---------------------------------------------------------
                                             $query = $DB_con->prepare("INSERT INTO sub_category (company_name, client_company, sub_account, account_names) VALUES (:company_name, :client_company, :sub_account, :account_names)");
                                             $query->bindParam(':company_name', $companyName);
@@ -443,6 +447,10 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $query->bindParam(':client_company', $clientName);
                                             $query->bindParam(':account', $account);
                                             $query->bindParam(':account_names', $accountNames);
+
+                                            $account = "Accounting fee";
+                                            $accountNames = "Accounting fee,Bookkeeping fee";
+                                            $query->execute();
 
                                             $account = "Accounting fee";
                                             $accountNames = "Accounting fee,Bookkeeping fee";
