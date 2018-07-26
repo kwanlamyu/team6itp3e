@@ -97,6 +97,15 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                                 //                            echo'statement prepared';
                                                 $sql->execute();
                                                 $users = $sql->fetchAll();
+
+                                                $alreadyAssignedQuery = $DB_con->prepare("SELECT user_username FROM usermanageaccount WHERE user_role_id = 3");
+                                                $alreadyAssignedQuery->execute();
+                                                $alreadyAssignedUser = $alreadyAssignedQuery->fetchAll();
+
+
+
+
+
                                                 //                            echo'statement executed';
                                                 if (count($users) == 0) {
                                                     echo '<tr>'
@@ -107,6 +116,14 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                                     //                                echo'else condition reached';
                                                     $counter = 0;
                                                     foreach ($users as $row) {
+                                                      $errFlag = 0;
+                                                      for ($i = 0; $i < count($alreadyAssignedUser);$i++){
+                                                        if (strcasecmp($row['username'],$alreadyAssignedUser[$i]['user_username']) === 0){
+                                                          $errFlag = 1;
+                                                          break;
+                                                        }
+                                                      }
+                                                      if ($errFlag == 0){
                                                         //                                    echo'rows echoed';
                                                         echo ""
                                                         . "<tr>"
@@ -116,6 +133,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                                         . "</td>"
                                                         . "</tr>\n";
                                                         $counter++;
+                                                      }
                                                     }
                                                 }
                                                 ?>
