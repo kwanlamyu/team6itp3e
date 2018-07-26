@@ -372,7 +372,7 @@ foreach ($tempUniqueCategoryArray as $insert) {
       }
 
       document.getElementById("passData").value = storeCategory;
-      document.getElementById("test").innerHTML += document.getElementById("passData").value + "<br>";
+//      document.getElementById("test").innerHTML += document.getElementById("passData").value + "<br>";
       // Reset the form - clear all checked checkbox and input field
       document.getElementById("form").reset();
       // Change the data displayed for category

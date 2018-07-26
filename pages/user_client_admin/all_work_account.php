@@ -80,7 +80,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
             </div>
 
         </div>
-        
+
         <!-- Edit Modal -->
         <div class="modal fade" id="editModal" role="dialog">
             <div class="modal-dialog modal-lg">
@@ -160,7 +160,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                 </div>
             </div>
         </div>
-        
+
         <!-- Delete Modal -->
         <div class="modal fade" id="deleteModal" role="dialog">
             <div class="modal-dialog modal-lg">
@@ -208,7 +208,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                 </div>
             </div>
         </div>
-        
+
     </div>
     </div>
     <script>
@@ -220,7 +220,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
 
 
         }
-        
+
         function deleteAccount(uen,company,filenumber) {
             //var uen = document.getElementById("account_uen" + x).innerHTML;
             document.getElementById('deleteviewid').value = uen;
@@ -233,7 +233,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
         }
 
     </script>
-    
+
     <?php
     include '../general/footer_content.php';
     include '../general/footer.php';

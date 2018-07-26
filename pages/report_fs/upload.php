@@ -20,6 +20,198 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             } else {
                 include '../general/navigation_accountant.php';
             }
+
+            if ($_POST['key'] == "yes") {
+                $inputCategory = $_POST['sub'];
+//                $originalValue = $_POST['originalValue'];
+                $accountValue = $_POST['accountValue'];
+
+                $companyName = $_SESSION['company'];
+                $clientName = $_POST['clientCompany'];
+                $fileArray = $_POST['fileArray'];
+                $dateStart = $_POST['dateStart'];
+                $dateEnd = $_POST['dateEnd'];
+                $clientUEN = $_POST['clientUEN'];
+
+                $subQuery = $DB_con->prepare("SELECT * FROM sub_category WHERE company_name =:companyName AND client_company = :clientName");
+                $subQuery->bindParam(':companyName', $_SESSION['company']);
+                $subQuery->bindParam(':clientName', $_POST['clientCompany']);
+                $subQuery->execute();
+
+                $result = $subQuery->setFetchMode(PDO::FETCH_ASSOC);
+                $result = $subQuery->fetchAll();
+
+                
+                $subAccountArrayDB = array();
+                for ($i = 0; $i < count($result); $i++) {
+                    array_push($subAccountArrayDB, $result[$i]['sub_account']);
+                }
+
+                $tempAccountNameArray = array();
+                $tempArray = array();
+
+                for ($i = 0; $i < count($result); $i++) {
+                    for ($j = 0; $j < count($inputCategory); $j++) {
+                        if ($result[$i]['sub_account'] == $inputCategory[$j]) {
+
+                            if (empty($tempArray)) {
+                                array_push($tempAccountNameArray, $result[$i]['account_names']);
+                                array_push($tempAccountNameArray, $accountValue[$j]);
+                                $tempArray[$inputCategory[$j]] = $tempAccountNameArray;
+                            } else {
+                                if (in_array($inputCategory[$j], array_keys($tempArray))) {
+                                    foreach ($tempArray as $key => $array) {
+                                        if ($key == $inputCategory[$j]) {
+                                            array_push($array, $accountValue[$j]);
+                                            $tempArray[$inputCategory[$j]] = $array;
+                                        }
+                                    }
+                                } else {
+                                    array_push($tempAccountNameArray, $result[$i]['account_names']);
+                                    array_push($tempAccountNameArray, $accountValue[$j]);
+                                    $tempArray[$inputCategory[$j]] = $tempAccountNameArray;
+                                }
+                            }
+                        }
+                        unset($tempAccountNameArray);
+                        $tempAccountNameArray = array();
+                    }
+                }
+
+                if (!empty($tempArray)) {
+                    foreach ($tempArray as $category => $array) {
+                        if (in_array($category, $subAccountArrayDB)) {
+                            $implode = implode(",", $array);
+
+                            $update = "UPDATE main_category SET account_names= '" . $implode . "' WHERE main_account = '" . $category . "' AND company_name = '" . $_SESSION['company'] . "' AND client_company = '" . $_POST['clientCompany'] . "'";
+                            $stmt = $DB_con->prepare($update);
+                            $stmt->execute();
+                        } else {
+                            $implode = implode(",", $array);
+
+                            $insert = "INSERT INTO main_category (company_name, client_company, sub_account, account_names)
+                            VALUES ('" . $_SESSION['company'] . "', '" . $_POST['clientCompany'] . "', '" . $category . "' ,'" . $implode . "')";
+                            // use exec() because no results are returned
+                            $DB_con->exec($insert);
+                        }
+                    }
+                }
+                
+                
+                
+                
+                
+                
+                
+//                $mainAccountArrayDB = array();
+//                for ($i = 0; $i < count($result); $i++) {
+//                    array_push($mainAccountArrayDB, $result[$i]['main_account']);
+//                }
+//
+//                $tempStoreArray = array();
+//                $categoryTempArray = array();
+//                $temp = array();
+//
+//                //store sub category that haven't store into the Main category database
+//                $tempSubArray = array();
+//
+//                for ($i = 0; $i < count($originalValue); $i++) {
+//                    if ($originalValue[$i] != $inputCategory[$i]) {
+//                        if ($originalValue[$i] == "") {
+//                            for ($j = 0; $j < count($result); $j++) {
+//                                if ($inputCategory[$i] == $result[$j]['main_account']) {
+//                                    if (!empty($categoryTempArray)) {
+//                                        if (in_array($inputCategory[$i], array_keys($categoryTempArray))) {
+//                                            foreach ($categoryTempArray as $key => $array) {
+//                                                if ($key == $inputCategory[$i]) {
+//                                                    array_push($array, $accountValue[$i]);
+//                                                    $categoryTempArray[$inputCategory[$i]] = $array;
+//                                                }
+//                                            }
+//                                        } else {
+//                                            array_push($tempStoreArray, $result[$j]['account_names']);
+//                                            array_push($tempStoreArray, $accountValue[$i]);
+//                                            $categoryTempArray[$inputCategory[$i]] = $tempStoreArray;
+//                                        }
+//                                    } else {
+//                                        array_push($tempStoreArray, $result[$j]['account_names']);
+//                                        array_push($tempStoreArray, $accountValue[$i]);
+//                                        $categoryTempArray[$inputCategory[$i]] = $tempStoreArray;
+//                                    }
+//                                }
+//                            }
+//                        } else {
+//                            for ($j = 0; $j < count($result); $j++) {
+//                                if ($inputCategory[$i] == $result[$j]['main_account']) {
+//                                    if (!empty($categoryTempArray)) {
+//                                        if (in_array($inputCategory[$i], array_keys($categoryTempArray))) {
+//                                            foreach ($categoryTempArray as $key => $array) {
+//                                                if ($key == $inputCategory[$i]) {
+//                                                    array_push($array, $accountValue[$i]);
+//                                                    $categoryTempArray[$key] = $array;
+//                                                }
+//                                            }
+//                                        } else {
+//                                            array_push($tempStoreArray, $result[$j]['account_names']);
+//                                            array_push($tempStoreArray, $accountValue[$i]);
+//                                            $categoryTempArray[$inputCategory[$i]] = $tempStoreArray;
+//                                        }
+//                                    } else {
+//                                        array_push($tempStoreArray, $result[$j]['account_names']);
+//                                        array_push($tempStoreArray, $accountValue[$i]);
+//                                        $categoryTempArray[$inputCategory[$i]] = $tempStoreArray;
+//                                    }
+//                                }
+//
+//                                if (strpos($result[$j]['account_names'], $accountValue[$i]) !== false) {
+//                                    $foundAccount = $result[$j]['account_names'];
+//                                    $replacedString = str_replace($accountValue[$i], '', $result[$j]['account_names']);
+//                                    array_push($temp, trim($replacedString));
+//                                    $categoryTempArray[$result[$j]['main_account']] = $temp;
+//                                }
+//                            }
+//
+//                            // For those category not added into Main
+//                            for ($j = 0; $j < count($result); $j++) {
+//                                if (!in_array($inputCategory[$i], $mainAccountArrayDB)) {
+//                                    array_push($tempSubArray, $inputCategory[$i]);
+//                                    break;
+//                                }
+//                            }
+//                        }
+//                        unset($tempStoreArray);
+//                        $tempStoreArray = array();
+//                    }
+//                    if (!empty($categoryTempArray)) {
+//                        foreach ($categoryTempArray as $category => $array) {
+//                            if (in_array($category, $mainAccountArrayDB)) {
+//                                $implode = implode(",", $array);
+//
+//                                $update = "UPDATE account_category SET account_names= '" . $implode . "' WHERE main_account = '" . $category . "' AND company_name = '" . $_SESSION['company'] . "' AND client_company = '" . $_POST['clientCompany'] . "'";
+//                                $stmt = $DB_con->prepare($update);
+//                                $stmt->execute();
+//                            } else {
+//                                $implode = implode(",", $array);
+//
+//                                $insert = "INSERT INTO main_category (company_name, client_company, sub_account, account_names)
+//                                VALUES ('" . $_SESSION['company'] . "', '" . $_POST['clientCompany'] . "', '" . $category . "' ,'" . $implode . "')";
+//                                // use exec() because no results are returned
+//                                $DB_con->exec($insert);
+//                            }
+//                        }
+//                    } else {
+//                        //    header('Location: updateCategoriesMain.php');
+//                    }
+//                }
+            } else if ($_POST['key'] == "no") {
+                $companyName = $_SESSION['company'];
+                $clientName = $_POST['clientCompany'];
+                $fileArray = $_POST['fileArray'];
+                $dateStart = $_POST['dateStart'];
+                $dateEnd = $_POST['dateEnd'];
+                $allAccounts = $_POST['accountValue'];
+                $clientUEN = $_POST['clientUEN'];
+            }
             ?>
             <div class="m-grid__item m-grid__item--fluid m-wrapper">
                 <div class="m-subheader ">
