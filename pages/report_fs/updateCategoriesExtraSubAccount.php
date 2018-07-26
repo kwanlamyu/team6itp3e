@@ -15,7 +15,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 include '../general/navigation_accountant.php';
             }
 
-            $companyName = $_SESSION['companyName'];
+            $companyName = $_SESSION['company'];
             $clientName = $_POST['clientCompany'];
             $fileArray = $_POST['fileArray'];
             $dateStart = $_POST['dateStart'];
@@ -26,9 +26,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             $inputCategory = $_POST['category'];
             $accountValue = $_POST['accountValue'];
 
-            $query = $DB_con->prepare("SELECT * FROM account_category WHERE company_name =:companyName AND client_company = :clientName");
-            $query->bindParam(':companyName', $companyName);
-            $query->bindParam(':clientName', $clientName);
+            $query = $DB_con->prepare("SELECT * FROM account_category WHERE company_name =:company AND client_company = :clientName");
+            $query->bindParam(':company', $_SESSION['company']);
+            $query->bindParam(':clientName', $_POST['clientCompany']);
             $query->execute();
 
             $result = $query->setFetchMode(PDO::FETCH_ASSOC);
@@ -129,20 +129,22 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 unset($tempStoreArray);
                 $tempStoreArray = array();
             }
+            
+            print_r($tempAccArray);
 
             if (!empty($categoryTempArray)) {
                 foreach ($categoryTempArray as $category => $array) {
                     if (in_array($category, $accountArrayDB)) {
                         $implode = implode(",", $array);
 
-                        $update = "UPDATE account_category SET account_names= '" . $implode . "' WHERE account= '" . $category . "' AND company_name = '" . $_SESSION['companyName'] . "' AND client_company = '" . $_POST['clientCompany'] . "'";
+                        $update = "UPDATE account_category SET account_names= '" . $implode . "' WHERE account= '" . $category . "' AND company_name = '" . $_SESSION['company'] . "' AND client_company = '" . $_POST['clientCompany'] . "'";
                         $stmt = $DB_con->prepare($update);
                         $stmt->execute();
                     } else {
                         $implode = implode(",", $array);
 
                         $insert = "INSERT INTO account_category (company_name, client_company, account, account_names)
-                            VALUES ('" . $_SESSION['companyName'] . "', '" . $_POST['clientCompany'] . "', '" . $category . "' ,'" . $implode . "')";
+                            VALUES ('" . $_SESSION['company'] . "', '" . $_POST['clientCompany'] . "', '" . $category . "' ,'" . $implode . "')";
                         // use exec() because no results are returned
                         $DB_con->exec($insert);
                     }
@@ -244,7 +246,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                 <form method="post" name="updateCategoryForm" action="upload.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
                                     <?php
                                     $query = $DB_con->prepare("SELECT * FROM sub_category WHERE company_name =:companyName AND client_company = :clientName");
-                                    $query->bindParam(':companyName', $_SESSION['companyName']);
+                                    $query->bindParam(':companyName', $_SESSION['company']);
                                     $query->bindParam(':clientName', $_POST['clientCompany']);
                                     $query->execute();
 

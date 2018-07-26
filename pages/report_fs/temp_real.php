@@ -523,6 +523,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     }
                 }
             }
+                $arrayAddition = array();
 
 // Phoebe Calculation
             if (in_array("plant and equipment", $categoryArray)) {
@@ -569,7 +570,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     $depCounter ++;
                 }
 
-                $arrayAddition = array();
 
                 for ($i = count($years) - 1; $i >= 0; $i--) {
 
@@ -2973,7 +2973,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             $netCashEquivalent = array();
             for ($i = 0; $i < count($netCashGenerated); $i++) {
                 $tempValue = $netCashGenerated[$i];
-                $tempValue += $netCashInvestment[$i];
+                if (isset($netCashInvestment[$i])) {
+                    $tempValue += $netCashInvestment[$i];
+                }
                 $tempValue += $netCashFinancing[$i];
                 array_push($netCashEquivalent, $tempValue);
             }
