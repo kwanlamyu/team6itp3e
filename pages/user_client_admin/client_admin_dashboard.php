@@ -141,7 +141,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                     </div>
                     <div class="modal-body">
                         <p> Are you sure you want to delete this user</p>
-                        <form id="delete" name="delete" action="../user_client_admin/delete_accountant.php" method="POST">
+                        <form id="delete" name="delete" action="../user_client_admin/client_admin_dashboard.php" method="POST">
                             <?php include('../user_client_admin/delete_accountant_validation.php'); ?>
                             <div class="form-group">
                                 <label for="deleteaccountantid">Username</label>
