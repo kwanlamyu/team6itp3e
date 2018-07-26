@@ -1,18 +1,18 @@
-var DefaultDatatableDemoClient = function() {
+var DefaultDatatableDemoAccountant = function() {
     var e = function(t) {
-        var a = $("#m_datatable_console_client").append(t + "\t\n");
+        var a = $("#m_datatable_console_accountant").append(t + "\t\n");
         $(a).scrollTop(a[0].scrollHeight - $(a).height())
     };
     return {
         init: function() {
             var t;
-            t = $(".client_dash_table").mDatatable({
+            t = $(".accountant_dash").mDatatable({
                 data: {
                     type: "remote",
                     source: {
                         read: {
                             url://"https://keenthemes.com/metronic/preview/inc/api/datatables/demos/default.php"
-							"../../pages/user_client_admin/client_admin_dashboard_json.php"
+							"../../pages/user_accountant/accountant_dashboard_json.php"
                         }
                     },
                     pageSize: 5,
@@ -40,23 +40,17 @@ var DefaultDatatableDemoClient = function() {
                     input: $("#generalSearch")
                 },
                 columns: [{
-                    field: "username",
-                    title: "Username",
+                    field: "UEN",
+                    title: "Company UEN",
                     sortable: "asc"
                 }, {
-                    field: "email",
-                    title: "Email",
+                    field: "companyName",
+                    title: "Company Name",
                     sortable: "asc"
-                }, {
-                    field: "Actions",
-                    width: 110,
-                    title: "Actions",
-                    sortable: !1,
-					filterable: !1,
-                    overflow: "visible",
-                    template: function(t, a, e) {
-                        return '\t\t\t\t\t\t<div class="dropdown ' + (e.getPageSize() - a <= 4 ? "dropup" : "") + '">\t\t\t\t\t\t\t<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\t\t\t\t\t\t\t<i class="la la-edit"></i>\t\t\t\t\t\t</a>\t\t\t\t\t\t<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">\t\t\t\t\t\t\t<i class="la la-trash"></i>\t\t\t\t\t\t</a>\t\t\t\t\t'
-                    }
+                },{
+                    field: "fileNumber",
+                    title: "File Number",
+                    sortable: "asc"
                 }]
             }), $("#m_datatable_clear").on("click", function() {
                 $("#m_datatable_console").html("")
@@ -87,5 +81,5 @@ var DefaultDatatableDemoClient = function() {
     }
 }();
 jQuery(document).ready(function() {
-    DefaultDatatableDemoClient.init()
+    DefaultDatatableDemoAccountant.init()
 });

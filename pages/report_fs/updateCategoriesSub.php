@@ -180,15 +180,16 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         $accountValue = array();
                                         ?>
 
+
                                         <form method="post" name="updateCategoryForm" action="updateCategoriesExtraMain.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
                                             <?php
                                             for ($i = 0; $i < count($allAccounts); $i++) {
                                                 echo "<hr/><b>Account name: </b> $allAccounts[$i] <br/>";
                                                 echo "<b>Matching account category: </b>";
                                                 echo "<div>";
-                                                $startDataList = "<input list='category" . $i . "' value='' class='form-control' name='category[]'/>";
-                                                $bodyDataList = "<datalist id='category" . $i . "'style='overflow-y:scroll; height:10px;'>";
-                                                $setCat = 0;
+                                                $startDataList = "<input id='category" . $i . "' list='category" . $i . "' value='' class='form-control' name='category[]'/>";
+                                                    $bodyDataList = "<datalist id='category" . $i . "'style='overflow-y:scroll; height:20px;'>";
+                                                    $setCat = 0;
                                                 for ($x = 0; $x < count($result); $x++) {
                                                     $underThisAccount = $result[$x]['account_names'];
                                                     $underThisAccount = explode(",", $underThisAccount);
@@ -203,7 +204,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                                                                 $foundSubCat = 1;
                                                                 $startDataList = "<input list='category" . $i . "' value='" . $result[$x]['sub_account'] . "' class='form-control' name='category[]'/>";
-                                                                break;
+                                                                break;                                            
                                                             }
                                                         }
                                                     }

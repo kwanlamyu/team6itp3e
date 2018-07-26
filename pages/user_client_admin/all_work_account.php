@@ -17,7 +17,7 @@ if (isset($_SESSION['username']) && ($_SESSION['role_id'] == '2' || $_SESSION['r
 						<div class="d-flex align-items-center">
 							<div class="mr-auto">
 								<h3 class="m-subheader__title">
-									Client Admin Dashboard
+									All Clients
 								</h3>
 								
 								
@@ -34,7 +34,7 @@ if (isset($_SESSION['username']) && ($_SESSION['role_id'] == '2' || $_SESSION['r
 										<div class="m-portlet__head-caption">
 											<div class="m-portlet__head-title">
 												<h3 class="m-portlet__head-text">
-													Accountant Accounts
+													Company Accounts
 												</h3>
 											</div>
 										</div>
@@ -76,7 +76,7 @@ if (isset($_SESSION['username']) && ($_SESSION['role_id'] == '2' || $_SESSION['r
 								<!--end: Search Form -->
 									
 										<!--begin: Datatable -->
-										<div class="client_dash_table" id="client_dash_table"></div>
+										<div class="client_work_account" id="client_work_account"></div>
 										<textarea id="m_datatable_console_client" class="form-control m--margin-top-30" style="display: none;"cols="100" rows="10" title="Console" readonly="readonly"></textarea>
 										<!--end: Datatable -->
 									</div>

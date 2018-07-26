@@ -1,14 +1,10 @@
 <?php
 require_once '../db_connection/db.php';
 //check for username and role_id
-if (isset($_SESSION['username']) && ($_SESSION['role_id'] == '2' || $_SESSION['role_id'] == '3')) {
-    include '../general/header.php';
+if (isset($_SESSION['username']) && $_SESSION['role_id'] == '1') {
     
-    if ($_SESSION['role_id'] == '2') {
-        include '../general/navigation_clientadmin.php';
-    } elseif ($_SESSION['role_id'] == '3') {
-        include '../general/navigation_accountant.php';
-    }
+    include '../general/header.php';
+    include '../general/navigation_superadmin.php';
     ?>
 
 <div class="m-grid__item m-grid__item--fluid m-wrapper">
@@ -17,7 +13,7 @@ if (isset($_SESSION['username']) && ($_SESSION['role_id'] == '2' || $_SESSION['r
 						<div class="d-flex align-items-center">
 							<div class="mr-auto">
 								<h3 class="m-subheader__title">
-									Client Admin Dashboard
+									Super Admin Dashboard
 								</h3>
 								
 								
@@ -34,7 +30,7 @@ if (isset($_SESSION['username']) && ($_SESSION['role_id'] == '2' || $_SESSION['r
 										<div class="m-portlet__head-caption">
 											<div class="m-portlet__head-title">
 												<h3 class="m-portlet__head-text">
-													Accountant Accounts
+													Client Accounts
 												</h3>
 											</div>
 										</div>
@@ -76,8 +72,8 @@ if (isset($_SESSION['username']) && ($_SESSION['role_id'] == '2' || $_SESSION['r
 								<!--end: Search Form -->
 									
 										<!--begin: Datatable -->
-										<div class="client_dash_table" id="client_dash_table"></div>
-										<textarea id="m_datatable_console_client" class="form-control m--margin-top-30" style="display: none;"cols="100" rows="10" title="Console" readonly="readonly"></textarea>
+										<div class="super_admin_table" id="super_admin_table"></div>
+										<span id="m_datatable_console" style="display: none;"class=" form-control m--margin-top-30" cols="100" rows="10" title="Console" readonly="readonly"></span>
 										<!--end: Datatable -->
 									</div>
 								</div>
@@ -87,12 +83,16 @@ if (isset($_SESSION['username']) && ($_SESSION['role_id'] == '2' || $_SESSION['r
 								</div>
 								</div>
 								</div>
+
 <?php
+    //include footer and footer content
     include '../general/footer_content.php';
     include '../general/footer.php';
 }//end of session and role_id checking
-elseif (isset($_SESSION['username']) && $_SESSION['role_id'] === '1') {
-    header('Location: ../user_super_admin/super_admin_dahsboard.php');
+elseif (isset($_SESSION['username']) && $_SESSION['role_id'] === '2') {
+    header('Location: ../user_client_admin/client_admin_dashboard.php');
+} elseif (isset($_SESSION['username']) && $_SESSION['role_id'] === '3') {
+    header('Location: ../user_client_admin/client_admin_dashboard.php');
 } else {
     header('Location: ../user_login/login.php');
 }
