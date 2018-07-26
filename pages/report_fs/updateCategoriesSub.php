@@ -426,13 +426,13 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                                 <?php
                                                 for ($i = 0; $i < count($allAccounts); $i++) {
                                                     echo "<hr/><b>Account name: </b> $allAccounts[$i] <br/>";
-                                                    echo "<b>Matching account category: </b>";
+                                                    // echo "<b>Matching account category: </b>";
                                                     echo "<div>";
 
                                                     // echo "<select style='position:absolute;width:200px;height:25px;line-height:20px;margin:0;padding:0;' name='category[]' onchange='document.getElementById('displayValue" . $i . "').value=this.options[this.selectedIndex].text;document.getElementById('idValue" . $i . "').value=this.options['this.selectedIndex'].value;'>";
                                                     // echo "<option></option>";
                                                     $startDataList = "<input id='category" . $i . "' list='category" . $i . "' value='' class='form-control' name='category[]'/>";
-                                                    $bodyDataList = "<datalist id='category" . $i . "'style='overflow-y:scroll; height:10px;'>";
+                                                    $bodyDataList = "<datalist id='category" . $i . "'style='overflow-y:scroll; height:20px;'>";
                                                     $setCat = 0;
                                                     for ($x = 0; $x < count($result); $x++) {
                                                         $underThisAccount = $result[$x]['account_names'];

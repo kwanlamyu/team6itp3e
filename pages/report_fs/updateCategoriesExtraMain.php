@@ -164,7 +164,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             }
 
             if (!empty($tempSubArray)) {
-                
+
             }
             ?>
             <div class="m-grid__item m-grid__item--fluid m-wrapper">
@@ -226,14 +226,18 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     <?php
                                     // change this line please omg
                                     echo "Please choose which Main Category it belongs to! <br><br>";
-
                                     for ($i = 0; $i < count($tempSubArray); $i++) {
-                                        echo "<b>Current Sub Account: </b>" . $tempSubArray[$i] . "<Br>";
-                                        echo "<select name='main[]'>";
+                                        echo "<b>Current Sub Account: </b>" . $tempSubArray[$i] . "<br>";
+                                        $startDataList = "<input id='category" . $i . "' list='category" . $i . "' value='' class='form-control' name='main[]'/>";
+                                        $bodyDataList = "<datalist id='category" . $i . "'style='overflow-y:scroll; height:10px;'>";
+                                        // echo "<select name='main[]'>";
                                         for ($j = 0; $j < count($mainAccountArrayDB); $j++) {
-                                            echo "<option value='" . $mainAccountArrayDB[$j] . "'>" . $mainAccountArrayDB[$j] . "</option>";
+                                            // echo "<option value='" . $mainAccountArrayDB[$j] . "'>" . $mainAccountArrayDB[$j] . "</option>";
+                                            $bodyDataList .= "<option value='" . $mainAccountArrayDB[$j] . "'>";
                                         }
-                                        echo "</select>";
+                                        echo "<label>Choose a category:" . $startDataList . "</label><div>" . $bodyDataList . "</datalist></div>";
+
+                                        // echo "</select>";
                                         echo "<hr>";
                                     }
 
