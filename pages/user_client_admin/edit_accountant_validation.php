@@ -13,10 +13,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['updateButton'])) {
 //        echo "post update button <br>";
       
-        $uname = ($_POST["accountantid"]);
+        $uname = ($_POST["editaccountantid"]);
         
         $regex = '/^[-a-z0-9_~!$%^&*=+}{\'?]+(\.[-a-z0-9_~!$%^&*=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i';
-        if (empty($_POST["accountantemail"])) {
+        if (empty($_POST["editaccountantemail"])) {
 //            echo'$_POST["accountantemail"] is empty<br>';
             $emailErr = "* Email is required";
             $valid = FALSE;
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
         } else {
             
-            $email = test_input($_POST["accountantemail"]);
+            $email = test_input($_POST["editaccountantemail"]);
 //            echo 'else statement: test_input($_POST["accountantemail"])'.$email.'<br>';
             if ((!filter_var($email, FILTER_VALIDATE_EMAIL)) || (!preg_match($regex, $email))) {
 //                echo'filter_var/regex fail<br>';
@@ -37,31 +37,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
             } else {
                 
-                $email = ($_POST["accountantemail"]);
+                $email = ($_POST["editaccountantemail"]);
 //                echo 'email passed: '.$email.'<br>';
             
                 
             }
         }
 //        echo 'Email: '.$email.'<br>';
-        if (empty($_POST["accountantpassword"])) {
+        if (empty($_POST["editaccountantpassword"])) {
             //$passErr = "* Password is required";
             //$valid = FALSE;
             $pass ="";
         } else {
-            $pass = ($_POST["accountantpassword"]);
+            $pass = ($_POST["editaccountantpassword"]);
             if ((strlen($pass) < 8) || !ctype_alnum($pass)) {
                 $passErr = "* Password must be 8 alphanumeric long";
                 $valid = FALSE;
             }
         }
         
-        if (empty($_POST["accountantcpassword"])) {
+        if (empty($_POST["editaccountantcpassword"])) {
             //$passErr = "* Password is required";
             //$valid = FALSE;
             $cpass ="";
         }else {
-            $cpass = ($_POST["accountantcpassword"]);
+            $cpass = ($_POST["editaccountantcpassword"]);
             if ((strlen($cpass) < 8) || !ctype_alnum($pass)) {
                 $cpassErr = "* Password must be 8 alphanumeric long";
 //                echo"C Password: ".$cpassErr."<br>";
@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //            echo"C Password: ".$cpass."<br>";
         }
         
-        if (!empty($_POST["accountantpassword"]) && empty($_POST["accountantcpassword"])) {
+        if (!empty($_POST["editaccountantpassword"]) && empty($_POST["editaccountantcpassword"])) {
             $cpassErr = "* Please retype your password";
 //            echo"C Password: ".$cpassErr."<br>";
             $valid = FALSE;
@@ -104,38 +104,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //            echo $sql.'<br>';
 //            echo $email.'<br>';
 //            echo $uname.'<br>';
-            
-           
-            if ($statement->execute()) {
-                //echo "<meta http-equiv='refresh' content='3;url=edit_accountant.php'> ";
-                echo '<div class="alert alert-success" role="alert">'
-                        . '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close"></a>'
-                        . ' Details successfully changed'
-                    . '</div>';
-                echo '<span class="text-success"><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Redirecting Please Wait</span>';
-                echo "<meta http-equiv='refresh' content='3;url=edit_accountant.php'> ";
-//                header('Location: edit_accountant.php'); 
-//                echo'
-//                    <div class="row">
-//                        <div class"card">
-//                            <div class="card-body">
-//                                <h2>Success</h2><hr>
-//                                <p>Accountant account successfully updated</p><br>
-//                                <p><a href="edit_accountant.php">Edit another account</a></p><br>
-//                                <p><a href="../client_admin_dashboard.php">Return to dashboard</a></p>
-//                            </div>
-//                        </div>
-//                    </div>
-//                    
-//                ';
+            try{
+            $statement->execute();
+            $successEdit = "Accountant Details Changed successfully.";
+            echo "<meta http-equiv='refresh' content='3;url=../user_client_admin/client_admin_dashboard.php'> ";
+
                                      
-            } else {
-                echo '<div class="alert alert-warning mmbsm" role="alert">Error: ' . $sql . '<br>' . $DB_con->error . '</div>';
+            } catch (PDOException $e) {
+                echo $sql . "<br>" . $e->getMessage();
             }
-        }else{
-            echo '<div class="alert alert-danger" role="alert">'
-                        . '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close"></a>'
-                . '</div>';
+        }else {
+            $failEdit = "Failed to Change Accountant Details"; 
         }
 //       header('Location: edit_accountant.php'); 
     }

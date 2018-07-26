@@ -6,10 +6,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['updateAccountButton'])) {
         echo "post reg button <br>";
 
-        if (empty($_POST["uenid"])) {
+        if (empty($_POST["edituenid"])) {
             $valid = FALSE;
         } else{
-            $edituen =($_POST["uenid"]);
+            $edituen =($_POST["edituenid"]);
         }
 
         if (empty($_POST["edit_Collaborator"])) {
@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         . ' Account Manager(s) successfully changed'
                     . '</div>';
                 echo '<span class="text-success"><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Redirecting please wait</span>';
-                echo "<meta http-equiv='refresh' content='3;url=../user_client_admin/client_admin_dashboard.php'> ";
+                echo "<meta http-equiv='refresh' content='3;url=../user_client_admin/all_work_account.php'> ";
             } catch (PDOException $e) {
                 echo $e->getMessage();
             }

@@ -70,7 +70,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                         if (isset($_GET['deleteWorkAccount'])) {
                             $accountants = $_GET['deleteWorkAccount'];
 //                            echo'after post statement';
-//                            $userID = $_SESSION["username"];
+                            $userID = $_SESSION["username"];
                         }
                         ?>
 
@@ -87,8 +87,9 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
 
                                 <tbody>
                                     <?php
-                                    $userID = "jerome";
+//                                    $userID = "jerome";
                                     //                          echo'after table body';
+                                    $userID = $_SESSION["username"];
                                     $query = "SELECT "
                                             . "account.UEN AS UEN, "
                                             . "account.companyName AS companyName, "
@@ -100,10 +101,10 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                             . "usermanageaccount "
                                             . "ON "
                                             . "account.UEN = usermanageaccount.account_UEN  "
-                                            . "AND usermanageaccount.account_user_username = '$userID'";
+                                            . "AND usermanageaccount.account_user_username = '".$userID."'";
                                     $sql = $DB_con->prepare($query);
                                     //                            echo'statement prepared';
-                                    echo $query;
+//                                    echo $query;
                                     $sql->execute();
                                     $users = $sql->fetchAll();
                                     //                            echo'statement executed';
@@ -149,7 +150,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
             </div>
         </div>
     </div>
-
+</div>
 
     <!--    <div class="row">
             <div class="card">
@@ -315,9 +316,9 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
     include '../general/footer.php';
 }//end of session and role_id checking
 elseif (isset($_SESSION['username']) && $_SESSION['role_id'] === '1') {
-    header('Location: ../user_super_admin/userdashboard.php');
+    header('Location: ../user_super_admin/super_admin_dashboard.php');
 } elseif (isset($_SESSION['username']) && $_SESSION['role_id'] === '3') {
-    header('Location: ../user_client_admin/client_admin_dashboard.php');
+    header('Location: ../user_accountant/accountant_dashboard.php');
 } else {
     header('Location: ../user_login/login.php');
 }

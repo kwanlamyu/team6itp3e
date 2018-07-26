@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         . ' Account Manager(s) successfully added'
                     . '</div>';
                 echo '<span class="text-success"><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Redirecting please wait</span>';
-                echo "<meta http-equiv='refresh' content='3;url=client_admin_dashboard.php'> ";
+                echo "<meta http-equiv='refresh' content='3;url=../user_client_admin/client_admin_dashboard.php'> ";
             }catch (PDOException $e) {
                 echo $e->getMessage();
             }

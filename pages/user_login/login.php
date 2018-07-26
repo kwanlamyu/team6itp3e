@@ -24,7 +24,7 @@
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                                 <span class="error"><?php echo $passErr; ?></span>
                             </div>
-                            <div class="row m-login__form-sub">
+<!--                            <div class="row m-login__form-sub">
                                 <div class="col m--align-left m-login__form-left">
                                     <label class="m-checkbox  m-checkbox--focus">
                                         <input type="checkbox" name="remember">
@@ -36,11 +36,11 @@
                                     <a href="forgotPassword.php" id="m_login_forget_password" class="m-link">
                                         Forget Password ?
                                     </a>
-    <!--                            <a href="javascript:;" id="m_login_forget_password" class="m-link">
+                                <a href="javascript:;" id="m_login_forget_password" class="m-link">
                                     Forget Password ?
-                                </a>-->
+                                </a>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="m-login__form-action">
                                 <button id="m_login_signin_submit" type="submit" name="m_login_signin_submit"  class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air m-login__btn m-login__btn--primary">
                                     LOGIN
