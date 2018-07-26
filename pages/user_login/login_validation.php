@@ -61,9 +61,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     if ($role_id == '1') {
 //                        echo"Welcome Super Admin";
                         //redirect to Super Admin Dash
-                        echo "<meta http-equiv='refresh' content='3;url=../user_super_admin/userdashboard.php'> ";
+                        echo "<meta http-equiv='refresh' content='3;url=../user_super_admin/super_admin_dashboard.php'> ";
                         echo '<span class="text-success "><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Welcome '.$uname.' please wait</span>';
-//                        header('Location: ../user_super_admin/userdashboard.php');
+//                        header('Location: ../user_super_admin/super_admin_dashboard.php');
                     } elseif ($role_id == '2') {
 //                        echo"Welcome Client Admin";
                         //redirect to Client Admin Dash
