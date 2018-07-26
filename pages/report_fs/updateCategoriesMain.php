@@ -73,7 +73,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                 if (!empty($tempArray)) {
                     foreach ($tempArray as $category => $array) {
-
                         if (in_array($category, $mainAccountArrayDB)) {
                             $implode = implode(",", $array);
 
@@ -89,8 +88,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                             $DB_con->exec($insert);
                         }
                     }
-                } else {
-                    //    header('Location: updateCategoriesMain.php');
                 }
             } else if ($_POST['key'] == "no") {
                 $companyName = $_SESSION['company'];
@@ -179,48 +176,77 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     $originalValue = array();
                                     $accountValue = array();
 
-                                    for ($i = 0; $i < count($subResult); $i++) {
-                                      if (strcasecmp($subResult[$i]['sub_account'],"exchanges") !== 0){
+                                    $matchedSubArray = array();
 
-                                        echo "<b>Account name: </b> " . $subResult[$i]['sub_account'] . "<br/>";
-                                        echo "<b>Matching account category: </b>";
-                                        echo "<div>";
+                                    for ($i = 0; $i < count($allAccounts); $i++) {
+                                        for ($j = 0; $j < count($subResult); $j++) {
+                                            // check TB with sub account's account name 
+                                            // if same, store the sub account into an array 
+                                            // then proceed as per normal 
 
-                                        $startDataList = "<input list='category" . $i . "' value='' class='form-control' name='category[]'/>";
-                                        $bodyDataList = "<datalist id='category" . $i . "'>";
+                                            $inTB = $subResult[$j]['account_names'];
+                                            $inTB = explode(",", $inTB);
 
-                                        $setCat = 0;
-                                        for ($j = 0; $j < count($result); $j++) {
-                                            $underThisAccount = $result[$j]['account_names'];
-                                            $underThisAccount = explode(",", $underThisAccount);
-
-                                            $foundSubCat = 0;
-                                            if ($setCat == 0) {
-                                                for ($k = 0; $k < count($underThisAccount); $k++) {
-                                                    if (strcasecmp($underThisAccount[$k], $subResult[$i]['sub_account']) === 0) {
-                                                        array_push($originalValue, $result[$j]['main_account']);
-                                                        array_push($accountValue, $subResult[$i]['sub_account']);
-
-                                                        $foundSubCat = 1;
-                                                        $startDataList = "<input list='category" . $i . "' value='" . $result[$j]['main_account'] . "' class='form-control' name='category[]'/>";
-                                                        break;
-                                                    }
+                                            for ($k = 0; $k < count($inTB); $k++) {
+                                                if (strcasecmp($allAccounts[$i], $inTB[$k]) === 0) {
+                                                    array_push($matchedSubArray, $subResult[$j]['sub_account']);
+                                                    // use $matchSubArray to check with 
                                                 }
                                             }
+                                        }
+                                    }
+                                    
+                                    $matchedSubArray = array_unique($matchedSubArray);
+                                    $matched = array();
+                                    foreach ($matchedSubArray as $value) {
+                                        array_push($matched, $value);
+                                    }
+                                    
+                                    for ($k = 0; $k < count($matched); $k++) {
+                                        for ($i = 0; $i < count($subResult); $i++) {
+                                            if (strcasecmp($subResult[$i]['sub_account'], $matched[$k]) === 0) {
+                                                echo "<b>Account name: </b> " . $matched[$k] . "<br/>";
+                                                echo "<b>Matching account category: </b>";
+                                                echo "<div>";
 
-                                            if ($foundSubCat == 1) {
-                                                $setCat = 1;
+                                                $startDataList = "<input list='category" . $i . "' value='' class='form-control' name='category[]'/>";
+                                                $bodyDataList = "<datalist id='category" . $i . "'>";
+
+                                                $setCat = 0;
+                                                for ($a = 0; $a < count($result); $a++) {
+                                                    $underThisAccount = $result[$a]['account_names'];
+                                                    $underThisAccount = explode(",", $underThisAccount);
+
+                                                    $foundSubCat = 0;
+                                                    if ($setCat == 0) {
+                                                        for ($b = 0; $b < count($underThisAccount); $b++) {
+                                                            if (strcasecmp($underThisAccount[$b], $subResult[$i]['sub_account']) === 0) {
+                                                                array_push($originalValue, $result[$a]['main_account']);
+                                                                array_push($accountValue, $subResult[$i]['sub_account']);
+
+                                                                $foundSubCat = 1;
+                                                                $startDataList = "<input list='category" . $i . "' value='" . $result[$a]['main_account'] . "' class='form-control' name='category[]'/>";
+                                                                break;
+                                                            }
+                                                        }
+                                                    }
+
+                                                    if ($foundSubCat == 1) {
+                                                        $setCat = 1;
+                                                    }
+
+                                                    $bodyDataList .= "<option value='" . $result[$a]['main_account'] . "'>";
+                                                }
+
+                                                if ($setCat == 0) {
+                                                    array_push($originalValue, "");
+                                                    array_push($accountValue, $subResult[$i]['sub_account']);
+                                                }
+
+                                                echo "<label>Choose a category:" . $startDataList . "</label>" . $bodyDataList . "</datalist>";
+                                                echo "</div>";
                                             }
-
-                                            $bodyDataList .= "<option value='" . $result[$j]['main_account'] . "'>";
                                         }
-                                        if ($setCat == 0) {
-                                            array_push($originalValue, "");
-                                            array_push($accountValue, $subResult[$i]['sub_account']);
-                                        }
-                                        echo "<label>Choose a category:" . $startDataList . "</label>" . $bodyDataList . "</datalist>";
-                                        echo "</div>";
-                                      }
                                     }
 
                                     foreach ($dateStart as $value) {
