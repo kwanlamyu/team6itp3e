@@ -645,7 +645,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 // variable clash, client name refers to the client this FS is for
             $clientName = $companyName;
 // service provider is the company name of the accountant/ client admin
-            $serviceProvider = $_SESSION['companyName'];
+            $serviceProvider = $_SESSION['company'];
 // retrieve from database the categories
             $query = $DB_con->prepare("SELECT * FROM main_category WHERE company_name = :companyName AND client_company = :clientName");
             $query->bindParam(':companyName', $serviceProvider);
@@ -765,6 +765,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         if ($j == 2) {
                             $amount = $data[$i][$x][$j - 1];
                             // category cross check with list in txt file
+                            if (in_array($currentData, $tradeLiabilitiesArray)){
+                              $currentData = "Trade and other payables";
+                            }
                             if (in_array($currentData, $assetsArray)) {
                                 $debitOrCredit = $data[$i][$x][$j + 1];
                                 if (stripos($currentData, "amount owing from a shareholder") !== false) {
@@ -891,6 +894,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 }
                 array_push($calculatedAssets, $tempArray);
             }
+
 // number of columns for each statement, 1 column heading, 1 for notes, maximum 5 years allowed. 7 + 1 for array end point therefore 8
             $maxColumns = 7;
             $cellValue = 1750;
@@ -2229,6 +2233,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 }
                 array_push($calculatedRetainedProfits, $tempValue);
             }
+
 
             $retainedProfitsFromTB = array();
             $shareCapitalFromTB = array();
@@ -5803,6 +5808,16 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 $cell->addText("$", $fontstyleName, $centerAlignment);
             }
 
+
+            $accountQuery = $DB_con->prepare("SELECT * FROM account_category WHERE company_name =:companyName AND client_company = :clientName");
+            $accountQuery->bindParam(':companyName', $_SESSION['company']);
+            $accountQuery->bindParam(':clientName', $clientName);
+            $accountQuery->execute();
+
+            $result = $accountQuery->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $accountQuery->fetchAll();
+
+
             $finalAdminAccountName = array();
             $finalAdminAccountAmount = array();
             for ($i = 0; $i < count($adminAccount); $i++) {
@@ -5844,9 +5859,36 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 }
             }
 
+            $toSkipAdmin = array();
+            $toPrintAdmin = array();
+            for ($i = 0; $i < count($result); $i++){
+              $holder = false;
+              for ($x = 0; $x < count($finalAdminAccountName); $x++){
+                if (!in_array($x,$toSkipAdmin)){
+                  $individualAccountNames = explode(",",$result[$i]['account_names']);
+                  if (in_array($finalAdminAccountName[$x], $individualAccountNames)){
+                    $finalAdminAccountName[$x] = $result[$i]['account'];
+                    array_push($toSkipAdmin,$x);
+                    if (strcasecmp(gettype($holder),"boolean") === 0){
+                      $holder = $x;
+                      array_push($toPrintAdmin, $holder);
+                    } else {
+                      for ($j = 0; $j < count($finalAdminAccountAmount[$holder]); $j++){
+                        $finalAdminAccountAmount[$holder][$j] += $finalAdminAccountAmount[$x][$j];
+                      }
+                    }
+
+                  }
+                }
+              }
+            }
+
+
+
             $table->addRow();
             $table->addCell($appendixFirstCell)->addText("Administrative expenses", $fontstyleBottomUnderline);
             for ($i = 0; $i < count($finalAdminAccountAmount); $i++) {
+              if (in_array($i, $toPrintAdmin)){
                 $table->addRow();
                 $table->addCell($appendixFirstCell)->addText(htmlspecialchars($finalAdminAccountName[$i]), $fontstyleName, $noSpace);
                 for ($x = 0; $x < count($finalAdminAccountAmount[$i]); $x++) {
@@ -5890,6 +5932,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     }
                     $cell->addText($tempValue, $fontstyleName, $centerAlignment);
                 }
+              }
             }
 
             for ($i = 0; $i < count($calculatedAdminExpense); $i++) {
@@ -5952,7 +5995,32 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 }
             }
 
+            $toSkipDistri = array();
+            $toPrintDistri = array();
+            for ($i = 0; $i < count($result); $i++){
+              $holder = false;
+              for ($x = 0; $x < count($finalDistriAccountName); $x++){
+                if (!in_array($x,$toSkipDistri)){
+                  $individualAccountNames = explode(",",$result[$i]['account_names']);
+                  if (in_array($finalDistriAccountName[$x], $individualAccountNames)){
+                    $finalDistriAccountName[$x] = $result[$i]['account'];
+                    array_push($toSkipDistri,$x);
+                    if (strcasecmp(gettype($holder),"boolean") === 0){
+                      $holder = $x;
+                      array_push($toPrintDistri, $holder);
+                    } else {
+                      for ($j = 0; $j < count($finalDistriAccountAmount[$holder]); $j++){
+                        $finalDistriAccountAmount[$holder][$j] += $finalDistriAccountAmount[$x][$j];
+                      }
+                    }
+
+                  }
+                }
+              }
+            }
+
             for ($i = 0; $i < count($finalDistriAccountAmount); $i++) {
+                if (in_array($i,$toPrintDistri)){
                 $table->addRow();
                 $table->addCell($appendixFirstCell)->addText(htmlspecialchars($finalDistriAccountName[$i]), $fontstyleName, $noSpace);
                 for ($x = 0; $x < count($finalDistriAccountAmount[$i]); $x++) {
@@ -5996,6 +6064,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     }
                     $cell->addText($tempValue, $fontstyleName, $centerAlignment);
                 }
+              }
             }
 
 
@@ -6058,7 +6127,32 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 }
             }
 
+            $toSkipFinance = array();
+            $toPrintFinance = array();
+            for ($i = 0; $i < count($result); $i++){
+              $holder = false;
+              for ($x = 0; $x < count($finalFinanceAccountName); $x++){
+                if (!in_array($x,$toSkipFinance)){
+                  $individualAccountNames = explode(",",$result[$i]['account_names']);
+                  if (in_array($finalFinanceAccountName[$x], $individualAccountNames)){
+                    $finalFinanceAccountName[$x] = $result[$i]['account'];
+                    array_push($toSkipFinance,$x);
+                    if (strcasecmp(gettype($holder),"boolean") === 0){
+                      $holder = $x;
+                      array_push($toPrintFinance, $holder);
+                    } else {
+                      for ($j = 0; $j < count($finalFinanceAccountAmount[$holder]); $j++){
+                        $finalFinanceAccountAmount[$holder][$j] += $finalFinanceAccountAmount[$x][$j];
+                      }
+                    }
+
+                  }
+                }
+              }
+            }
+
             for ($i = 0; $i < count($finalFinanceAccountAmount); $i++) {
+              if (in_array($i,$toPrintFinance)){
                 $table->addRow();
                 $table->addCell($appendixFirstCell)->addText(htmlspecialchars($finalFinanceAccountName[$i]), $fontstyleName, $noSpace);
                 for ($x = 0; $x < count($finalFinanceAccountAmount[$i]); $x++) {
@@ -6102,6 +6196,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     }
                     $cell->addText($tempValue, $fontstyleName, $centerAlignment);
                 }
+              }
             }
 
             $finalFinanceExpense = array();

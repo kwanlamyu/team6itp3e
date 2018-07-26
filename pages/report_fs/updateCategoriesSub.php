@@ -325,7 +325,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $query->execute();
 
                                             $mainAccount = "Trade and other payables";
-                                            $accountNames = "Accruals,GST Payables,Amount owing to a Shareholder,Trade Payables";
+                                            $accountNames = "Trade and other payables,Accruals,GST Payables,Amount owing to a Shareholder,Trade Payables";
                                             $query->execute();
 
                                             $mainAccount = "Exchange Gain - Non-trade";
@@ -461,7 +461,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $query->execute();
 
                                             $account = "Bank charges";
-                                            $accountNames = "Bank charges";
+                                            $accountNames = "Bank Charges";
                                             $query->execute();
 
                                             $account = "Compilation fee";
@@ -473,11 +473,11 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $query->execute();
 
                                             $account = "Director's remuneration";
-                                            $accountNames = "Director's remuneration,Director remuneration";
+                                            $accountNames = "Director's Remuneration,Director Remuneration";
                                             $query->execute();
 
                                             $account = "Entertainment";
-                                            $accountNames = "Entertainment,Business Entertainment";
+                                            $accountNames = "Entertainment,Business entertainment";
                                             $query->execute();
 
                                             $account = "Employment pass";
@@ -517,7 +517,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $query->execute();
 
                                             $account = "Professional fee";
-                                            $accountNames = "Professional fee";
+                                            $accountNames = "Professional Fee";
                                             $query->execute();
 
                                             $account = "Printing and stationery";

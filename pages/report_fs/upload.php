@@ -116,7 +116,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                             $query = $DB_con->prepare("SELECT * FROM sub_category WHERE company_name = :companyName AND client_company = :clientName");
                             $query->bindParam(':companyName', $companyName);
                             $query->bindParam(':clientName', $clientName);
-                            $companyName = $_SESSION['companyName'];
+                            $companyName = $_SESSION['company'];
                             $clientName = $_POST['clientCompany'];
                             $query->execute();
                             $result = $query->setFetchMode(PDO::FETCH_ASSOC);
@@ -157,7 +157,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                             $endedAtArray = array();
 
                             $yearEnded = "";
-
+                            $allData = array();
                             for ($j = 0; $j < count($fileArray); $j++) {
                                 $target_file = $fileArray[$j];
                                 $spreadsheet = $reader->load($target_file);
@@ -207,7 +207,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         break;
                                     }
                                 }
-                               
+
                                 for ($i = 0; $i < count($sheetData); $i++) {
                                     $accountName = $sheetData[$i][$accountColumn];
                                     $catFound = 0;
@@ -250,7 +250,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         }
                                     }
                                 }
-
                                 $modifiedCategoryArray = array();
                                 $undefinedRows = array();
                                 $rowCounter = 0;
@@ -305,6 +304,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                                 array_push($yearlyUndefinedRows[$j], $yearEnded);
                                 array_push($yearlyUndefinedRows[$j], $undefinedRows);
+                                $allData[$j] = $sheetData;
                             }
                             // end loop here
                             //begin::Company Name
@@ -470,12 +470,10 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                             <br>
                             <form name='detailsForm' action="next_page.php" method="post" onsubmit="return validateForm()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
-
-
                                 <div class="m-portlet__body">
                                     <div class="form-group m-form__group row">
                                         <div class="col-lg-3">
-                                            <input class="form-control m-input" type="hidden" id="companyregID" name="companyregID" value="<?php echo $clientUEN ?>">; 
+                                            <input class="form-control m-input" type="hidden" id="companyregID" name="companyregID" value="<?php echo $clientUEN ?>">;
                                         </div>
                                     </div>
                                 </div>
@@ -532,9 +530,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                 </div>
 
                                 <input type="hidden" class="form-control" id="todayDate" name="todayDate" value="<?php echo date("Y-m-d"); ?>"/>
-                               
+
                                 <input type="hidden" class="form-control" id="secondBalanceDate" name="secondBalanceDate" value="<?php echo date_format($previousdate, "Y-m-d"); ?>"/>
-                               
+
                                 <input type="hidden" class="form-control" id="thirdBalanceDate" name="thirdBalanceDate" value="<?php echo date_format($date, "Y-m-d"); ?>"/>
 
                                 <div class="form-group">
@@ -570,6 +568,14 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         }
                                     }
                                 }
+
+                                // for ($i = 0; $i < count($allData); $i++){
+                                //   for ($x = 0; $x < count($allData[$i]); $x++){
+                                //     for ($j = 0; $j < count($allData[$i][$x]); $j++){
+                                //       echo "<input type='hidden' name='allData[$i][$x][$j]' value='$allData[$i][$x][$j]'/>";
+                                //     }
+                                //   }
+                                // }
                                 ?>
                                 <input name="submit" type="submit" value="Submit" class="btn btn-brand">
                             </form>
