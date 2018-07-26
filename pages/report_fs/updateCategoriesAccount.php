@@ -21,107 +21,106 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             }
             $clientUEN = $_POST['clientUEN'];
 
-// use PhpOffice\PhpSpreadsheet\Reader\Csv;
-// can change to read csv file as well
+            // use PhpOffice\PhpSpreadsheet\Reader\Csv;
+            // can change to read csv file as well
             $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-// only read data
+            // only read data
             $reader->setReadDataOnly(true);
             ?>
-            <!--<div class="m-grid__item m-grid__item--fluid m-wrapper">-->
-            <!--                <div class="m-subheader ">
-                                <div class="d-flex align-items-center">
-                                    <div class="mr-auto">
-                                        <h3 class="m-subheader__title m-subheader__title--separator">
-                                            Financial Statement
-                                        </h3>
-                                        <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
-                                            <li class="m-nav__item m-nav__item--home">
-                                                <a href="#" class="m-nav__link m-nav__link--icon">
-                                                    <i class="m-nav__link-icon la la-home"></i>
-                                                </a>
-                                            </li>
-                                            <li class="m-nav__separator">
-                                                -
-                                            </li>
-                                            <li class="m-nav__item">
-                                                <a href="" class="m-nav__link">
-                                                    <span class="m-nav__link-text">
-                                                        Generate Report
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li class="m-nav__separator">
-                                                -
-                                            </li>
-                                            <li class="m-nav__item">
-                                                <a href="" class="m-nav__link">
-                                                    <span class="m-nav__link-text">
-                                                        Financial Statement
-                                                    </span>
-                                                </a>
-                                            </li>
-                                        </ul>
-
-                                    </div>
-                                </div>
-                            </div>-->
-
-            <!--begin::Portlet-->
-            <div class="m-content">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="m-portlet m-portlet--tab">
-                            <div class="m-portlet__head">
-                                <div class="m-portlet__head-caption">
-                                    <div class="m-portlet__head-title">
-                                        <span class="m-portlet__head-icon m--hide">
-                                            <i class="la la-gear"></i>
+            <div class="m-grid__item m-grid__item--fluid m-wrapper">
+                <div class="m-subheader ">
+                    <div class="d-flex align-items-center">
+                        <div class="mr-auto">
+                            <h3 class="m-subheader__title m-subheader__title--separator">
+                                Financial Statement
+                            </h3>
+                            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                                <li class="m-nav__item m-nav__item--home">
+                                    <a href="#" class="m-nav__link m-nav__link--icon">
+                                        <i class="m-nav__link-icon la la-home"></i>
+                                    </a>
+                                </li>
+                                <li class="m-nav__separator">
+                                    -
+                                </li>
+                                <li class="m-nav__item">
+                                    <a href="" class="m-nav__link">
+                                        <span class="m-nav__link-text">
+                                            Generate Report
                                         </span>
-                                        <h3 class="m-portlet__head-text">
-                                            Update Categories
-                                        </h3>
+                                    </a>
+                                </li>
+                                <li class="m-nav__separator">
+                                    -
+                                </li>
+                                <li class="m-nav__item">
+                                    <a href="" class="m-nav__link">
+                                        <span class="m-nav__link-text">
+                                            Financial Statement
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!--begin::Portlet-->
+                <div class="m-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="m-portlet m-portlet--tab">
+                                <div class="m-portlet__head">
+                                    <div class="m-portlet__head-caption">
+                                        <div class="m-portlet__head-title">
+                                            <span class="m-portlet__head-icon m--hide">
+                                                <i class="la la-gear"></i>
+                                            </span>
+                                            <h3 class="m-portlet__head-text">
+                                                Update Categories
+                                            </h3>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <?php
-                            $fileArray = array();
-                            $target_dir = "../../pages/report_fs/uploads/";
-                            $errorFlag = 0;
-                            $fileExist = 0;
-                            $fileUpload = 0;
-                            $fileTypeMismatch = 0;
-                            for ($i = 0; $i < count($_FILES["trialBalances"]["name"]); $i++) {
-                                $target_file = $target_dir . basename($_FILES["trialBalances"]["name"][$i]);
-                                $uploadOk = 1;
-                                $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+                                <?php
+                                $fileArray = array();
+                                $target_dir = "../../pages/report_fs/uploads/";
+                                $errorFlag = 0;
+                                $fileExist = 0;
+                                $fileUpload = 0;
+                                $fileTypeMismatch = 0;
+                                for ($i = 0; $i < count($_FILES["trialBalances"]["name"]); $i++) {
+                                    $target_file = $target_dir . basename($_FILES["trialBalances"]["name"][$i]);
+                                    $uploadOk = 1;
+                                    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-                                // Check if file already exists
-                                if (file_exists($target_file)) {
-                                    unlink($target_file);
-                                    $fileExist = 1;
-                                }
+                                    // Check if file already exists
+                                    if (file_exists($target_file)) {
+                                        unlink($target_file);
+                                        $fileExist = 1;
+                                    }
 
-                                if ($imageFileType != "csv" && $imageFileType != "xlsx") {
-                                    $fileTypeMismatch = 1;
-                                    $uploadOk = 0;
-                                }
-                                // Check if $uploadOk is set to 0 by an error
-                                if ($uploadOk == 0) {
-                                    $errorFlag = 1;
-                                    // echo "Sorry, your file was not uploaded.";
-                                    // if everything is ok, try to upload file
-                                } else {
-                                    if (move_uploaded_file($_FILES["trialBalances"]["tmp_name"][$i], $target_file)) {
-                                        $fileUpload = 0;
-                                        array_push($fileArray, $target_file);
+                                    if ($imageFileType != "csv" && $imageFileType != "xlsx") {
+                                        $fileTypeMismatch = 1;
+                                        $uploadOk = 0;
+                                    }
+                                    // Check if $uploadOk is set to 0 by an error
+                                    if ($uploadOk == 0) {
+                                        $errorFlag = 1;
+                                        // if everything is ok, try to upload file
                                     } else {
-                                        $fileUpload = 1;
+                                        if (move_uploaded_file($_FILES["trialBalances"]["tmp_name"][$i], $target_file)) {
+                                            $fileUpload = 0;
+                                            array_push($fileArray, $target_file);
+                                        } else {
+                                            $fileUpload = 1;
+                                        }
                                     }
                                 }
-                            }
-                            if ($fileTypeMismatch == 1) {
-                                echo '<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+                                if ($fileTypeMismatch == 1) {
+                                    echo '<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
 				<div class="m-alert__icon">
 					<i class="flaticon-exclamation-1"></i>
 					<span></span>
@@ -133,9 +132,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
 				</div>
 			</div>';
-                            }
-                            if ($fileExist == 1) {
-                                echo ' <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show " role="alert">
+                                }
+                                if ($fileExist == 1) {
+                                    echo ' <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show " role="alert">
 				<div class="m-alert__icon">
 					<i class="flaticon-exclamation-1"></i>
 					<span></span>
@@ -147,9 +146,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
 				</div>
 			</div>';
-                            }
-                            if ($fileUpload == 0) {
-                                echo '<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-success alert-dismissible fade show" role="alert">
+                                }
+                                if ($fileUpload == 0) {
+                                    echo '<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-success alert-dismissible fade show" role="alert">
 						<div class="m-alert__icon">
 							<i class="flaticon-exclamation-1"></i>
 							<span></span>
@@ -161,8 +160,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 							<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
 						</div>
 					</div>';
-                            } else {
-                                echo '<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+                                } else {
+                                    echo '<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
 		<div class="m-alert__icon">
 			<i class="flaticon-exclamation-1"></i>
 			<span></span>
@@ -174,50 +173,51 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
 		</div>
 	</div>';
-                            }
-                            if ($errorFlag == 1) {
-                                echo "Sorry, your file was not uploaded.";
-                            } else {
-                                for ($i = 0; $i < count($fileArray); $i++) {
-                                    $target_file = $fileArray[$i];
-                                    $spreadsheet = $reader->load($target_file);
-                                    $numberOfSheets = $spreadsheet->getSheetCount();
-                                    if ($numberOfSheets > 1) {
-                                        die("Please upload only 1 sheet per trial balance.<br/><a href='fs_main.php'>Upload again</a>");
-                                    }
-                                    // implementation only allows 1 sheet in file
-                                    $activeSheet = 0;
-                                    $sheetData = $spreadsheet->getSheet($activeSheet)->toArray();
-                                    $accountColumn = false;
-                                    $accountColFound = 0;
-                                    $headingRow = false;
-                                    for ($x = 0; $x < count($sheetData); $x++) {
-                                        for ($j = 0; $j < count($sheetData[$x]); $j++) {
-                                            $currentData = $sheetData[$x][$j];
-                                            if (stripos($currentData, "account") !== false) {
-                                                $accountColumn = $j;
+                                }
+                                if ($errorFlag == 1) {
+                                    echo "Sorry, your file was not uploaded.";
+                                } else {
+                                    for ($i = 0; $i < count($fileArray); $i++) {
+                                        $target_file = $fileArray[$i];
+                                        $spreadsheet = $reader->load($target_file);
+                                        $numberOfSheets = $spreadsheet->getSheetCount();
+                                        if ($numberOfSheets > 1) {
+                                            die("Please upload only 1 sheet per trial balance.<br/><a href='fs_main.php'>Upload again</a>");
+                                        }
+                                        // implementation only allows 1 sheet in file
+                                        $activeSheet = 0;
+                                        $sheetData = $spreadsheet->getSheet($activeSheet)->toArray();
+                                        $accountColumn = false;
+                                        $accountColFound = 0;
+                                        $headingRow = false;
+                                        for ($x = 0; $x < count($sheetData); $x++) {
+                                            for ($j = 0; $j < count($sheetData[$x]); $j++) {
+                                                $currentData = $sheetData[$x][$j];
+                                                if (stripos($currentData, "account") !== false) {
+                                                    $accountColumn = $j;
+                                                    break;
+                                                }
+                                            }
+                                            if (strcasecmp(gettype($accountColumn), "boolean") !== 0) {
+                                                $accountColFound = 1;
+                                                $headingRow = $x + 1;
                                                 break;
                                             }
                                         }
-                                        if (strcasecmp(gettype($accountColumn), "boolean") !== 0) {
-                                            $accountColFound = 1;
-                                            $headingRow = $x + 1;
-                                            break;
-                                        }
-                                    }
-                                    if ($accountColFound == 0) {
-                                        die("Please ensure headings are included in the file.(Account, Debit, Credit)");
-                                    } else {
-                                        $allAccounts = array();
-                                        for ($x = $headingRow; $x < count($sheetData); $x++) {
-                                            $currentData = trim($sheetData[$x][$accountColumn]);
-                                            if (empty($currentData) || in_array($currentData, $allAccounts)) {
-                                                continue;
-                                            } else {
-                                                if (stripos($currentData, "Total:") !== false) {
+                                        if ($accountColFound == 0) {
+                                            die("Please ensure headings are included in the file.(Account, Debit, Credit)");
+                                        } else {
+                                            $allAccounts = array();
+                                            for ($x = $headingRow; $x < count($sheetData); $x++) {
+                                                $currentData = trim($sheetData[$x][$accountColumn]);
+                                                if (empty($currentData) || in_array($currentData, $allAccounts)) {
                                                     continue;
                                                 } else {
-                                                    array_push($allAccounts, $currentData);
+                                                    if (stripos($currentData, "Total:") !== false) {
+                                                        continue;
+                                                    } else {
+                                                        array_push($allAccounts, $currentData);
+                                                    }
                                                 }
                                             }
                                         }
@@ -247,7 +247,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         $subResult = $subQuery->setFetchMode(PDO::FETCH_ASSOC);
                                         $subResult = $subQuery->fetchAll();
 
-                                        $accountQuery = $DB_con->prepare("SELECT * FROM sub_category WHERE company_name = :companyName AND client_company = :clientName");
+                                        $accountQuery = $DB_con->prepare("SELECT * FROM account_category WHERE company_name = :companyName AND client_company = :clientName");
                                         $accountQuery->bindParam(':companyName', $companyName);
                                         $accountQuery->bindParam(':clientName', $clientName);
                                         $companyName = $_SESSION['company'];
@@ -565,88 +565,90 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         $accountValue = array();
                                         ?>
 
-                                        <form method="post" name="updateCategoryForm" action="updateCategoriesExtraSubAccount.php" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
-                                            <?php
-                                            for ($i = 0; $i < count($allAccounts); $i++) {
-                                                echo "<hr/><b>Account name: </b> $allAccounts[$i] <br/>";
-                                                echo "<b>Matching account category: </b>";
-                                                echo "<div>";
+                                            <form method="post" name="updateCategoryForm" action="updateCategoriesExtraSubAccount.php" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+                                                <?php
+                                                for ($i = 0; $i < count($allAccounts); $i++) {
+                                                    echo "<hr/><b>Account name: </b> $allAccounts[$i] <br/>";
+                                                    echo "<b>Matching account category: </b>";
+                                                    echo "<div>";
 
-                                                $startDataList = "<input list='category" . $i . "' value='' class='form-control' name='category[]'/>";
-                                                $bodyDataList = "<datalist id='category" . $i . "'style='overflow-y:scroll; height:10px;'>";
-                                                $setCat = 0;
-                                                for ($x = 0; $x < count($result); $x++) {
-                                                    $underThisAccount = $result[$x]['account_names'];
-                                                    $underThisAccount = explode(",", $underThisAccount);
-                                                    $subCatResult = "";
-                                                    $foundSubCat = 0;
+                                                    $startDataList = "<input list='category" . $i . "' value='' class='form-control' name='category[]'/>";
+                                                    $bodyDataList = "<datalist id='category" . $i . "'style='overflow-y:scroll; height:10px;'>";
+                                                    $setCat = 0;
+                                                    for ($x = 0; $x < count($result); $x++) {
+                                                        $underThisAccount = $result[$x]['account_names'];
+                                                        $underThisAccount = explode(",", $underThisAccount);
+                                                        $subCatResult = "";
+                                                        $foundSubCat = 0;
 
-                                                    if ($setCat == 0) {
-                                                        for ($j = 0; $j < count($underThisAccount); $j++) {
-                                                            if (strcasecmp($underThisAccount[$j], $allAccounts[$i]) === 0) {
-                                                                array_push($originalValue, $result[$x]['account']);
-                                                                array_push($accountValue, $allAccounts[$i]);
+                                                        if ($setCat == 0) {
+                                                            for ($j = 0; $j < count($underThisAccount); $j++) {
+                                                                if (strcasecmp($underThisAccount[$j], $allAccounts[$i]) === 0) {
+                                                                    array_push($originalValue, $result[$x]['account']);
+                                                                    array_push($accountValue, $allAccounts[$i]);
 
-                                                                $foundSubCat = 1;
-                                                                $startDataList = "<input list='category" . $i . "' value='" . $result[$x]['account'] . "' class='form-control' name='category[]'/>";
-                                                                break;
+                                                                    $foundSubCat = 1;
+                                                                    $startDataList = "<input list='category" . $i . "' value='" . $result[$x]['account'] . "' class='form-control' name='category[]'/>";
+                                                                    break;
+                                                                }
                                                             }
                                                         }
-                                                    }
 
-                                                    if ($foundSubCat == 1) {
-                                                        $setCat = 1;
-                                                    }
+                                                        if ($foundSubCat == 1) {
+                                                            $setCat = 1;
+                                                        }
 
-                                                    $bodyDataList .= "<option value='" . $result[$x]['account'] . "'>";
+                                                        $bodyDataList .= "<option value='" . $result[$x]['account'] . "'>";
+                                                    }
+                                                    if ($setCat == 0) {
+                                                        array_push($originalValue, "");
+                                                        array_push($accountValue, $allAccounts[$i]);
+                                                    }
+                                                    echo "<label>Choose a category:" . $startDataList . "</label><div>" . $bodyDataList . "</datalist></div>";
+                                                    echo "</div>";
                                                 }
-                                                if ($setCat == 0) {
-                                                    array_push($originalValue, "");
-                                                    array_push($accountValue, $allAccounts[$i]);
-                                                }
-                                                echo "<label>Choose a category:" . $startDataList . "</label><div>" . $bodyDataList . "</datalist></div>";
-                                                echo "</div>";
+                                            } catch (PDOException $e) {
+                                                echo 'Error: ' . $e->getMessage();
                                             }
-                                        } catch (PDOException $e) {
-                                            echo 'Error: ' . $e->getMessage();
+                                        } else {
+                                            die("Unable to find the accounts in your file, please ensure the column headings (Account, Debit, Credit) are present.");
                                         }
-                                    } else {
-                                        die("Unable to find the accounts in your file, please ensure the column headings (Account, Debit, Credit) are present.");
-                                    }
 
-                                    foreach ($fileArray as $value) {
-                                        echo "<input type='hidden' name='fileArray[]' value='" . $value . "'/>";
-                                    }
-                                    $dateStart = $_POST['yearStart'];
-                                    $dateEnd = $_POST['yearEnd'];
-                                    foreach ($dateStart as $value) {
-                                        echo "<input type='hidden' name='dateStart[]' value='" . $value . "'/>";
-                                    }
-                                    foreach ($dateEnd as $value) {
-                                        echo "<input type='hidden' name='dateEnd[]' value='" . $value . "'/>";
-                                    }
-                                    foreach ($accountValue as $v) {
-                                        echo "<input type='hidden' name='accountValue[]' value='" . $v . "'/>";
-                                    }
-                                    foreach ($originalValue as $value) {
-                                        echo "<input type='hidden' name='originalValue[]' value='" . $value . "'/>";
-                                    }
-                                    ?>
+                                        foreach ($fileArray as $value) {
+                                            echo "<input type='hidden' name='fileArray[]' value='" . $value . "'/>";
+                                        }
+                                        $dateStart = $_POST['yearStart'];
+                                        $dateEnd = $_POST['yearEnd'];
+                                        foreach ($dateStart as $value) {
+                                            echo "<input type='hidden' name='dateStart[]' value='" . $value . "'/>";
+                                        }
+                                        foreach ($dateEnd as $value) {
+                                            echo "<input type='hidden' name='dateEnd[]' value='" . $value . "'/>";
+                                        }
+                                        foreach ($accountValue as $v) {
+                                            echo "<input type='hidden' name='accountValue[]' value='" . $v . "'/>";
+                                        }
+                                        foreach ($originalValue as $value) {
+                                            echo "<input type='hidden' name='originalValue[]' value='" . $value . "'/>";
+                                        }
+                                        ?>
 
-                                    <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
-                                    <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
-                                    <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
 
-                                    <input type="submit" value="Submit" name="submit" class="btn btn-brand">
-                                </form>
-                                <?php
-                            }
-                            ?>
+                                        <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
+                                        <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
+                                        <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
+
+                                        <input type="submit" value="Submit" name="submit" class="btn btn-brand">
+                                    </form>
+                                    <?php
+                                }
+                                ?>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--</div>-->
+            </div>
             <!--end::Portlet-->
 
             <?php

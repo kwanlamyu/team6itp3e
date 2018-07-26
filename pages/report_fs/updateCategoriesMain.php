@@ -15,17 +15,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 include '../general/navigation_accountant.php';
             }
 
-            $mainCategory = $_POST['main'];
-            $subCategory = $_POST['subAccount'];
-
-            $companyName = $_SESSION['companyName'];
-            $clientName = $_POST['clientCompany'];
-            $fileArray = $_POST['fileArray'];
-            $dateStart = $_POST['dateStart'];
-            $dateEnd = $_POST['dateEnd'];
-            $allAccounts = $_POST['accountValue'];
-            $clientUEN = $_POST['clientUEN'];
-
             $query = $DB_con->prepare("SELECT * FROM main_category WHERE company_name =:companyName AND client_company = :clientName");
             $query->bindParam(':companyName', $_SESSION['companyName']);
             $query->bindParam(':clientName', $_POST['clientCompany']);
@@ -34,70 +23,90 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             $result = $query->setFetchMode(PDO::FETCH_ASSOC);
             $result = $query->fetchAll();
 
-            $mainAccountArrayDB = array();
-            for ($i = 0; $i < count($result); $i++) {
-                array_push($mainAccountArrayDB, $result[$i]['main_account']);
-            }
+            if ($_POST['key'] == "yes") {
 
-            $tempAccountNameArray = array();
-            $tempArray = array();
 
-            for ($i = 0; $i < count($result); $i++) {
-                for ($j = 0; $j < count($mainCategory); $j++) {
-                    if ($result[$i]['main_account'] == $mainCategory[$j]) {
 
-                        if (empty($tempArray)) {
-                            array_push($tempAccountNameArray, $result[$i]['account_names']);
-                            array_push($tempAccountNameArray, $subCategory[$j]);
-                            $tempArray[$mainCategory[$j]] = $tempAccountNameArray;
-                        } else {
-                            if (in_array($mainCategory[$j], array_keys($tempArray))) {
-                                foreach ($tempArray as $key => $array) {
-                                    if ($key == $mainCategory[$j]) {
-                                        array_push($array, $subCategory[$j]);
-                                        $tempArray[$mainCategory[$j]] = $array;
-                                    }
-                                }
-                            } else {
+                $mainCategory = $_POST['main'];
+                $subCategory = $_POST['subAccount'];
+
+                $companyName = $_SESSION['companyName'];
+                $clientName = $_POST['clientCompany'];
+                $fileArray = $_POST['fileArray'];
+                $dateStart = $_POST['dateStart'];
+                $dateEnd = $_POST['dateEnd'];
+                $allAccounts = $_POST['accountValue'];
+                $clientUEN = $_POST['clientUEN'];
+
+
+                $mainAccountArrayDB = array();
+                for ($i = 0; $i < count($result); $i++) {
+                    array_push($mainAccountArrayDB, $result[$i]['main_account']);
+                }
+
+                $tempAccountNameArray = array();
+                $tempArray = array();
+
+                for ($i = 0; $i < count($result); $i++) {
+                    for ($j = 0; $j < count($mainCategory); $j++) {
+                        if ($result[$i]['main_account'] == $mainCategory[$j]) {
+
+                            if (empty($tempArray)) {
                                 array_push($tempAccountNameArray, $result[$i]['account_names']);
                                 array_push($tempAccountNameArray, $subCategory[$j]);
                                 $tempArray[$mainCategory[$j]] = $tempAccountNameArray;
+                            } else {
+                                if (in_array($mainCategory[$j], array_keys($tempArray))) {
+                                    foreach ($tempArray as $key => $array) {
+                                        if ($key == $mainCategory[$j]) {
+                                            array_push($array, $subCategory[$j]);
+                                            $tempArray[$mainCategory[$j]] = $array;
+                                        }
+                                    }
+                                } else {
+                                    array_push($tempAccountNameArray, $result[$i]['account_names']);
+                                    array_push($tempAccountNameArray, $subCategory[$j]);
+                                    $tempArray[$mainCategory[$j]] = $tempAccountNameArray;
+                                }
                             }
                         }
+                        unset($tempAccountNameArray);
+                        $tempAccountNameArray = array();
                     }
-                    unset($tempAccountNameArray);
-                    $tempAccountNameArray = array();
                 }
-            }
 
-            if (!empty($tempArray)) {
-                foreach ($tempArray as $category => $array) {
+                if (!empty($tempArray)) {
+                    foreach ($tempArray as $category => $array) {
 
-                    if (in_array($category, $mainAccountArrayDB)) {
-                        $implode = implode(",", $array);
+                        if (in_array($category, $mainAccountArrayDB)) {
+                            $implode = implode(",", $array);
 
-                        $update = "UPDATE main_category SET account_names= '" . $implode . "' WHERE main_account = '" . $category . "' AND company_name = '" . $_SESSION['companyName'] . "' AND client_company = '" . $_POST['clientCompany'] . "'";
-                        $stmt = $DB_con->prepare($update);
-                        $stmt->execute();
-                    } else {
-                        $implode = implode(",", $array);
+                            $update = "UPDATE main_category SET account_names= '" . $implode . "' WHERE main_account = '" . $category . "' AND company_name = '" . $_SESSION['companyName'] . "' AND client_company = '" . $_POST['clientCompany'] . "'";
+                            $stmt = $DB_con->prepare($update);
+                            $stmt->execute();
+                        } else {
+                            $implode = implode(",", $array);
 
-                        $insert = "INSERT INTO main_category (company_name, client_company, sub_account, account_names)
+                            $insert = "INSERT INTO main_category (company_name, client_company, sub_account, account_names)
             VALUES ('" . $_SESSION['companyName'] . "', '" . $_POST['clientCompany'] . "', '" . $category . "' ,'" . $implode . "')";
-                        // use exec() because no results are returned
-                        $DB_con->exec($insert);
+                            // use exec() because no results are returned
+                            $DB_con->exec($insert);
+                        }
                     }
-
-//                    $implode = implode(",", $array);
-//
-//                    $update = "UPDATE main_category SET account_names= '" . $implode . "' WHERE main_account = '" . $category . "' AND company_name = '" . $_SESSION['companyName'] . "' AND client_company = '" . $_POST['clientCompany'] . "'";
-//                    $stmt = $DB_con->prepare($update);
-//                    $stmt->execute();
+                } else {
+                    //    header('Location: updateCategoriesMain.php');
                 }
-            } else {
-//    header('Location: updateCategoriesMain.php');
-            }
+            } else if ($_POST['key'] == "no") {
 
+
+                $companyName = $_SESSION['companyName'];
+                $clientName = $_POST['clientCompany'];
+                $fileArray = $_POST['fileArray'];
+                $dateStart = $_POST['dateStart'];
+                $dateEnd = $_POST['dateEnd'];
+                $allAccounts = $_POST['accountValue'];
+                $clientUEN = $_POST['clientUEN'];
+            }
 
             $subQuery = $DB_con->prepare("SELECT * FROM sub_category WHERE company_name =:companyName AND client_company = :clientName");
             $subQuery->bindParam(':companyName', $_SESSION['companyName']);

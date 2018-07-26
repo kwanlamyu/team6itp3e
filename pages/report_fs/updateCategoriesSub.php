@@ -25,84 +25,124 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             // only read data
             $reader->setReadDataOnly(true);
 
-            $subCategory = $_POST['sub'];
-            $accCategory = $_POST['accAccount'];
+            if ($_POST['key'] == "yes") {
 
-            $companyName = $_SESSION['companyName'];
-            $clientName = $_POST['clientCompany'];
-            $fileArray = $_POST['fileArray'];
-            $dateStart = $_POST['dateStart'];
-            $dateEnd = $_POST['dateEnd'];
-            $allAccounts = $_POST['accountValue'];
-            $clientUEN = $_POST['clientUEN'];
+                $subCategory = $_POST['sub'];
+                $accCategory = $_POST['accAccount'];
 
-            $query = $DB_con->prepare("SELECT * FROM sub_category WHERE company_name =:companyName AND client_company = :clientName");
-            $query->bindParam(':companyName', $_SESSION['companyName']);
-            $query->bindParam(':clientName', $_POST['clientCompany']);
-            $query->execute();
+                $companyName = $_SESSION['companyName'];
+                $clientName = $_POST['clientCompany'];
+                $fileArray = $_POST['fileArray'];
+                $dateStart = $_POST['dateStart'];
+                $dateEnd = $_POST['dateEnd'];
+                $allAccounts = $_POST['accountValue'];
+                $clientUEN = $_POST['clientUEN'];
 
-            $result = $query->setFetchMode(PDO::FETCH_ASSOC);
-            $result = $query->fetchAll();
+                $query = $DB_con->prepare("SELECT * FROM sub_category WHERE company_name =:companyName AND client_company = :clientName");
+                $query->bindParam(':companyName', $_SESSION['companyName']);
+                $query->bindParam(':clientName', $_POST['clientCompany']);
+                $query->execute();
 
-//            print_r($subCategory);
-//            echo "<hr>";
+                $result = $query->setFetchMode(PDO::FETCH_ASSOC);
+                $result = $query->fetchAll();
 
-            $subAccountArrayDB = array();
-            for ($i = 0; $i < count($result); $i++) {
-                array_push($subAccountArrayDB, $result[$i]['sub_account']);
-            }
+                $subAccountArrayDB = array();
+                for ($i = 0; $i < count($result); $i++) {
+                    array_push($subAccountArrayDB, $result[$i]['sub_account']);
+                }
 
-            $tempAccountNameArray = array();
-            $tempArray = array();
+                $tempAccountNameArray = array();
+                $tempArray = array();
 
-            for ($i = 0; $i < count($result); $i++) {
-                for ($j = 0; $j < count($subCategory); $j++) {
-                    if ($result[$i]['sub_account'] == $subCategory[$j]) {
+                for ($i = 0; $i < count($result); $i++) {
+                    for ($j = 0; $j < count($subCategory); $j++) {
+                        if ($result[$i]['sub_account'] == $subCategory[$j]) {
 
-                        if (empty($tempArray)) {
-                            array_push($tempAccountNameArray, $result[$i]['account_names']);
-                            array_push($tempAccountNameArray, $accCategory[$j]);
-                            $tempArray[$subCategory[$j]] = $tempAccountNameArray;
-                        } else {
-                            if (in_array($subCategory[$j], array_keys($tempArray))) {
-                                foreach ($tempArray as $key => $array) {
-                                    if ($key == $subCategory[$j]) {
-                                        array_push($array, $accCategory[$j]);
-                                        $tempArray[$subCategory[$j]] = $array;
-                                    }
-                                }
-                            } else {
+                            if (empty($tempArray)) {
                                 array_push($tempAccountNameArray, $result[$i]['account_names']);
                                 array_push($tempAccountNameArray, $accCategory[$j]);
                                 $tempArray[$subCategory[$j]] = $tempAccountNameArray;
+                            } else {
+                                if (in_array($subCategory[$j], array_keys($tempArray))) {
+                                    foreach ($tempArray as $key => $array) {
+                                        if ($key == $subCategory[$j]) {
+                                            array_push($array, $accCategory[$j]);
+                                            $tempArray[$subCategory[$j]] = $array;
+                                        }
+                                    }
+                                } else {
+                                    array_push($tempAccountNameArray, $result[$i]['account_names']);
+                                    array_push($tempAccountNameArray, $accCategory[$j]);
+                                    $tempArray[$subCategory[$j]] = $tempAccountNameArray;
+                                }
                             }
                         }
+                        unset($tempAccountNameArray);
+                        $tempAccountNameArray = array();
                     }
-                    unset($tempAccountNameArray);
-                    $tempAccountNameArray = array();
                 }
-            }
 
-            if (!empty($tempArray)) {
-                foreach ($tempArray as $category => $array) {
+                if (!empty($tempArray)) {
+                    foreach ($tempArray as $category => $array) {
 
-                    if (in_array($category, $subAccountArrayDB)) {
-                        $implode = implode(",", $array);
+                        if (in_array($category, $subAccountArrayDB)) {
+                            $implode = implode(",", $array);
 
-                        $update = "UPDATE sub_category SET account_names= '" . $implode . "' WHERE sub_account = '" . $category . "' AND company_name = '" . $_SESSION['companyName'] . "' AND client_company = '" . $_POST['clientCompany'] . "'";
-                        $stmt = $DB_con->prepare($update);
-                        $stmt->execute();
-                    } else {
-                        $implode = implode(",", $array);
+                            $update = "UPDATE sub_category SET account_names= '" . $implode . "' WHERE sub_account = '" . $category . "' AND company_name = '" . $_SESSION['companyName'] . "' AND client_company = '" . $_POST['clientCompany'] . "'";
+                            $stmt = $DB_con->prepare($update);
+                            $stmt->execute();
+                        } else {
+                            $implode = implode(",", $array);
 
-                        $insert = "INSERT INTO sub_category (company_name, client_company, sub_account, account_names)
+                            $insert = "INSERT INTO sub_category (company_name, client_company, sub_account, account_names)
                         VALUES ('" . $_SESSION['companyName'] . "', '" . $_POST['clientCompany'] . "', '" . $category . "' ,'" . $implode . "')";
-                        // use exec() because no results are returned
-                        $DB_con->exec($insert);
+                            // use exec() because no results are returned
+                            $DB_con->exec($insert);
+                        }
                     }
+                } else {
+                    ?>
+                    <form method="post" id="categoryForm" action="updateCategoriesMain.php">
+                        <?php
+                        foreach ($dateStart as $value) {
+                            echo "<input type='hidden' name='dateStart[]' value='" . $value . "'/>";
+                        }
+
+                        foreach ($dateEnd as $value) {
+                            echo "<input type='hidden' name='dateEnd[]' value='" . $value . "'/>";
+                        }
+
+                        foreach ($fileArray as $value) {
+                            echo "<input type='hidden' name='fileArray[]' value='" . $value . "'/>";
+                        }
+
+                        foreach ($accountValue as $v) {
+                            echo "<input type='hidden' name='accountValue[]' value='" . $v . "'/>";
+                        }
+                        ?>
+
+                        <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
+                        <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
+                        <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
+
+                        <input type="hidden" name="key" value="no"/>
+
+                        <input type="submit" value="Submit" name="sub" class="btn btn-brand">
+                    </form>
+
+                    <script>
+                        document.getElementById('categoryForm').submit();
+                    </script>
+                    <?php
                 }
-            } else {
-                //    header('Location: updateCategoriesMain.php');
+            } else if ($_POST['key'] == "no") {
+                $companyName = $_SESSION['companyName'];
+                $clientName = $_POST['clientCompany'];
+                $fileArray = $_POST['fileArray'];
+                $dateStart = $_POST['dateStart'];
+                $dateEnd = $_POST['dateEnd'];
+                $allAccounts = $_POST['accountValue'];
+                $clientUEN = $_POST['clientUEN'];
             }
             ?>
             <div class="m-grid__item m-grid__item--fluid m-wrapper">
@@ -188,8 +228,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                                 echo "<b>Matching account category: </b>";
                                                 echo "<div>";
                                                 $startDataList = "<input id='category" . $i . "' list='category" . $i . "' value='' class='form-control' name='category[]'/>";
-                                                    $bodyDataList = "<datalist id='category" . $i . "'style='overflow-y:scroll; height:20px;'>";
-                                                    $setCat = 0;
+                                                $bodyDataList = "<datalist id='category" . $i . "'style='overflow-y:scroll; height:20px;'>";
+                                                $setCat = 0;
                                                 for ($x = 0; $x < count($result); $x++) {
                                                     $underThisAccount = $result[$x]['account_names'];
                                                     $underThisAccount = explode(",", $underThisAccount);
@@ -204,7 +244,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                                                                 $foundSubCat = 1;
                                                                 $startDataList = "<input list='category" . $i . "' value='" . $result[$x]['sub_account'] . "' class='form-control' name='category[]'/>";
-                                                                break;                                            
+                                                                break;
                                                             }
                                                         }
                                                     }
@@ -238,6 +278,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         echo "<input type='hidden' name='dateEnd[]' value='" . $value . "'/>";
                                     }
                                     ?>
+
+                                    <input type="hidden" name="key" value="yes"/>        
 
                                     <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
                                     <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
