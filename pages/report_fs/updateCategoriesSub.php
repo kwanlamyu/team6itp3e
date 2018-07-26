@@ -8,7 +8,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
     if ($_SESSION['role_id'] != 2 && $_SESSION['role_id'] != 3) {
         header('Location: ../user_super_admin/userdashboard.php');
     } else {
-        if (!isset($_POST['companyName'])) {
+        if (!isset($_POST['clientCompany'])) {
             header("Location: fs_index.php");
         } else {
             include '../general/header.php';
@@ -64,8 +64,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     </div>
                 </div>
 
-
-
                 <!--begin::Portlet-->
                 <div class="m-content">
                     <div class="row">
@@ -83,7 +81,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         </div>
                                     </div>
                                 </div>
-
 
                                 <?php
                                 $fileArray = array();

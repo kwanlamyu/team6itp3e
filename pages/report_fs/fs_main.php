@@ -59,8 +59,6 @@ $clientUEN = $_POST['uenNumber'];
         </div>
     </div>
 
-
-
     <!--begin::Portlet-->
     <div class="m-content">
         <div class="row">
