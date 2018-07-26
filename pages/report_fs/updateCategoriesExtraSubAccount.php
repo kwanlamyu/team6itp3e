@@ -118,8 +118,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 $tempStoreArray = array();
             }
 
-            print_r($categoryTempArray);
-
             if (!empty($categoryTempArray)) {
                 foreach ($categoryTempArray as $category => $array) {
                     if (in_array($category, $accountArrayDB)) {
@@ -137,10 +135,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         $DB_con->exec($insert);
                     }
                 }
-            } else {
-
-                echo "hi";
-                ?>
+            } else { ?>
                 <form method="post" id = "categoryForm" name="myForm" action="updateCategoriesSub.php">
                     <?php
                     foreach ($tempAccArray as $v) {

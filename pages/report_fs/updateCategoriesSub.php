@@ -27,12 +27,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
             if ($_POST['key'] == "yes") {
 
-
-
                 $subCategory = $_POST['sub'];
                 $accCategory = $_POST['accAccount'];
-
-
 
                 $companyName = $_SESSION['companyName'];
                 $clientName = $_POST['clientCompany'];
@@ -49,9 +45,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                 $result = $query->setFetchMode(PDO::FETCH_ASSOC);
                 $result = $query->fetchAll();
-
-//            print_r($subCategory);
-//            echo "<hr>";
 
                 $subAccountArrayDB = array();
                 for ($i = 0; $i < count($result); $i++) {
@@ -108,7 +101,39 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         }
                     }
                 } else {
-                    //    header('Location: updateCategoriesMain.php');
+                    ?>
+                    <form method="post" id="categoryForm" action="updateCategoriesMain.php">
+                        <?php
+                        foreach ($dateStart as $value) {
+                            echo "<input type='hidden' name='dateStart[]' value='" . $value . "'/>";
+                        }
+
+                        foreach ($dateEnd as $value) {
+                            echo "<input type='hidden' name='dateEnd[]' value='" . $value . "'/>";
+                        }
+
+                        foreach ($fileArray as $value) {
+                            echo "<input type='hidden' name='fileArray[]' value='" . $value . "'/>";
+                        }
+
+                        foreach ($accountValue as $v) {
+                            echo "<input type='hidden' name='accountValue[]' value='" . $v . "'/>";
+                        }
+                        ?>
+
+                        <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
+                        <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
+                        <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
+
+                        <input type="hidden" name="key" value="no"/>
+
+                        <input type="submit" value="Submit" name="sub" class="btn btn-brand">
+                    </form>
+
+                    <script>
+                        document.getElementById('categoryForm').submit();
+                    </script>
+                    <?php
                 }
             } else if ($_POST['key'] == "no") {
                 $companyName = $_SESSION['companyName'];
@@ -253,6 +278,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         echo "<input type='hidden' name='dateEnd[]' value='" . $value . "'/>";
                                     }
                                     ?>
+
+                                    <input type="hidden" name="key" value="yes"/>        
 
                                     <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
                                     <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
