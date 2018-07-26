@@ -105,7 +105,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 //                } else {
 //                    ?>
                     <!--<form method="post" id="categoryForm" action="updateCategoriesMain.php">-->
-                        //<?php
+                        <?php
 //                        foreach ($dateStart as $value) {
 //                            echo "<input type='hidden' name='dateStart[]' value='" . $value . "'/>";
 //                        }
@@ -135,7 +135,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     <script>
                         document.getElementById('categoryForm').submit();
                     </script>-->
-                    //<?php
+                    <?php
 //                }
 //            } else if ($_POST['key'] == "no") {
 //                $companyName = $_SESSION['companyName'];
@@ -203,7 +203,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <?php
                                 $fileArray = array();
                                 $target_dir = "../../pages/report_fs/uploads/";
@@ -239,7 +239,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         }
                                     }
                                 }
-                                
+
                                 if ($fileTypeMismatch == 1) {
                                     echo '<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
 				<div class="m-alert__icon">
@@ -254,7 +254,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 				</div>
 			</div>';
                                 }
-                                
+
                                 if ($fileExist == 1) {
                                     echo ' <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show " role="alert">
 				<div class="m-alert__icon">
@@ -269,7 +269,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 				</div>
 			</div>';
                                 }
-                                
+
                                 if ($fileUpload == 0) {
                                     echo '<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-success alert-dismissible fade show" role="alert">
 						<div class="m-alert__icon">
@@ -297,7 +297,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 		</div>
 	</div>';
                                 }
-                                
+
                                 if ($errorFlag == 1) {
                                     echo "Sorry, your file was not uploaded.";
                                 } else {
@@ -347,7 +347,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         }
                                     }
                                 }
-                             
+
                                 if (isset($allAccounts)) {
                                     try {
                                         $query = $DB_con->prepare("SELECT * FROM main_category WHERE company_name = :companyName AND client_company = :clientName");
@@ -672,7 +672,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $accountNames = "Interest on bank borrowings";
                                             $query->execute();
                                         }
-                                        
+
                                         echo "<span>Company: " . $companyName . "</span><br/>";
                                         echo "<span>Client: " . $clientName . "</span><br/> <hr/>";
 
@@ -739,7 +739,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                                     $dateStart = $_POST['yearStart'];
                                     $dateEnd = $_POST['yearEnd'];
-                                    
+
                                     foreach ($fileArray as $value) {
                                         echo "<input type='hidden' name='fileArray[]' value='" . $value . "'/>";
                                     }
@@ -751,7 +751,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     }
                                     ?>
 
-                                    <input type="hidden" name="key" value="yes"/>        
+                                    <input type="hidden" name="key" value="yes"/>
 
                                     <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
                                     <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
