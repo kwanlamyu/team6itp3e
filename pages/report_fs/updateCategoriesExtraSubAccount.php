@@ -118,6 +118,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 $tempStoreArray = array();
             }
 
+            print_r($categoryTempArray);
+
             if (!empty($categoryTempArray)) {
                 foreach ($categoryTempArray as $category => $array) {
                     if (in_array($category, $accountArrayDB)) {
@@ -136,9 +138,45 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     }
                 }
             } else {
-                //    header('Location: updateCategoriesMain.php');
-            }
-            ?>
+
+                echo "hi";
+                ?>
+                <form method="post" id = "categoryForm" name="myForm" action="updateCategoriesSub.php">
+                    <?php
+                    foreach ($tempAccArray as $v) {
+                        echo "<input type='hidden' name='accAccount[]' value='" . $v . "'/>";
+                    }
+
+                    foreach ($dateStart as $value) {
+                        echo "<input type='hidden' name='dateStart[]' value='" . $value . "'/>";
+                    }
+
+                    foreach ($dateEnd as $value) {
+                        echo "<input type='hidden' name='dateEnd[]' value='" . $value . "'/>";
+                    }
+
+                    foreach ($fileArray as $value) {
+                        echo "<input type='hidden' name='fileArray[]' value='" . $value . "'/>";
+                    }
+
+                    foreach ($accountValue as $v) {
+                        echo "<input type='hidden' name='accountValue[]' value='" . $v . "'/>";
+                    }
+                    ?>
+
+                    <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
+                    <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
+                    <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
+
+                    <input type="hidden" name="key" value="no"/>
+
+                    <input type="submit" value="Submit" name="s" class="btn btn-brand">
+                </form>
+
+                <script>
+                    document.getElementById('categoryForm').submit();
+                </script>
+            <?php } ?>
 
             <div class="m-grid__item m-grid__item--fluid m-wrapper">
                 <div class="m-subheader ">
@@ -247,6 +285,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
                                     <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
 
+                                    <input type="hidden" name="key" value="yes"/>
+
                                     <input type="submit" value="Submit" name="submit" class="btn btn-brand">
                                 </form>
                             </div>
@@ -267,3 +307,12 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
 <?php include '../general/footer_content.php'; ?>
 <?php include '../general/footer.php'; ?>
+
+<script>
+    function submit() {
+//        document.getElementById('submit').submit();
+
+        document.myForm.submit();
+
+    }
+</script>

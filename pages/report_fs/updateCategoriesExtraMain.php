@@ -150,17 +150,18 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         $update = "UPDATE sub_category SET account_names= '" . $implode . "' WHERE sub_account= '" . $category . "' AND company_name = '" . $_SESSION['companyName'] . "' AND client_company = '" . $_POST['clientCompany'] . "'";
                         $stmt = $DB_con->prepare($update);
                         $stmt->execute();
+                        
                     } else {
                         $implode = implode(",", $array);
 
                         $insert = "INSERT INTO sub_category (company_name, client_company, sub_account, account_names)
-            VALUES ('" . $_SESSION['companyName'] . "', '" . $_POST['clientCompany'] . "', '" . $category . "' ,'" . $implode . "')";
+                VALUES ('" . $_SESSION['companyName'] . "', '" . $_POST['clientCompany'] . "', '" . $category . "' ,'" . $implode . "')";
                         // use exec() because no results are returned
                         $DB_con->exec($insert);
                     }
                 }
             } else {
-//    header('Location: updateCategoriesMain.php');
+                //    header('Location: updateCategoriesMain.php');
             }
 
             if (!empty($tempSubArray)) {
@@ -226,6 +227,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     <?php
                                     // change this line please omg
                                     echo "Please choose which Main Category it belongs to! <br><br>";
+                                    
+                                    $tempSubArray = array_unique($tempSubArray);
+                                    
                                     for ($i = 0; $i < count($tempSubArray); $i++) {
                                         echo "<b>Current Sub Account: </b>" . $tempSubArray[$i] . "<br>";
                                         $startDataList = "<input id='category" . $i . "' list='category" . $i . "' value='' class='form-control' name='main[]'/>";
