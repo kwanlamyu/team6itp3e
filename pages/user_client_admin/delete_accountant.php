@@ -84,7 +84,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                 <tbody>
                                     <?php
                                     //                            echo'after table body';
-                                    $sql = $DB_con->prepare("SELECT * FROM user WHERE role_id = 3");
+                                    $sql = $DB_con->prepare("SELECT * FROM user WHERE role_id = 3 AND companyName = '" . $_SESSION['company'] . "';");
                                     //                            echo'statement prepared';
                                     $sql->execute();
                                     $users = $sql->fetchAll();
@@ -135,7 +135,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                     //format table with delete button at side
                     //when button is clicked, modal popup to ask for confirmation
                     //on confirmation then delete row
-                                    
+
 
 
                     <?php
@@ -157,7 +157,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                             <tbody>
                     <?php
                 //                            echo'after table body';
-                    $sql = $DB_con->prepare("SELECT * FROM user WHERE role_id = 3");
+                    $sql = $DB_con->prepare("SELECT * FROM user WHERE role_id = 3 AND companyName = '" . $_SESSION['company'] . "';");
                 //                            echo'statement prepared';
                     $sql->execute();
                     $users = $sql->fetchAll();
@@ -186,7 +186,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                             $counter++;
                         }
                     }
-                    ?>          
+                    ?>
 
                             </tbody>
                         </table>
@@ -211,17 +211,17 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                         <?php include('../user_client_admin/delete_accountant_validation.php'); ?>
                         <div class="form-group">
                             <label for="accountantid">Username</label>
-                            <input type="text" class="form-control" id="viewid" name="viewid" disabled>                               
+                            <input type="text" class="form-control" id="viewid" name="viewid" disabled>
                         </div>
 
                         <div class="form-group" style="display: none;">
-                            <label for="accountantid">Username</label>     
-                            <input type="text" class="form-control" id="accountantid" name="accountantid">                            
+                            <label for="accountantid">Username</label>
+                            <input type="text" class="form-control" id="accountantid" name="accountantid">
                         </div>
 
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" id="viewemail" name="viewemail" disabled>                               
+                            <input type="email" class="form-control" id="viewemail" name="viewemail" disabled>
                         </div>
 
                         <div class="form-group" style="display: none;">
