@@ -235,12 +235,12 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         }
                     }
 
-                    document.getElementById('inputField').innerHTML += "Manual Accounts: <input type='text' id='mAccount" + count + "'> \n\
-                Values: <input type='text' id='mValue" + count + "'> ";
+                    document.getElementById('inputField').innerHTML += "Manual Accounts: <input class='form-control' type='text' id='mAccount" + count + "'> \n\
+                Values: <input class='form-control' type='text' id='mValue" + count + "'> ";
 
 
                     for (t = 0; t < yearsCount; t++) {
-                        document.getElementById('inputField').innerHTML += "<input type='radio' name='" + c + "' id='date" + (count) + t + "' value='" + years[t] + "'>" + years[t];
+                        document.getElementById('inputField').innerHTML += "<input class='form-control' type='radio' name='" + c + "' id='date" + (count) + t + "' value='" + years[t] + "'>" + years[t];
                     }
                     c++;
 
