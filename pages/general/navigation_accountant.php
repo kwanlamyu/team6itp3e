@@ -82,9 +82,6 @@ $result = $query->fetchAll();
                                             <div class="m-dropdown__inner">
                                                 <div class="m-dropdown__header m--align-center">
                                                     <div class="m-card-user m-card-user--skin-light">
-                                                        <div class="m-card-user__pic">
-                                                            <img src="../../assets/app/media/img/users/user4.jpg" class="m--img-rounded m--marginless" alt=""/>
-                                                        </div>
                                                         <div class="m-card-user__details">
                                                             <span class="m-card-user__name m--font-weight-500">
                                                                 <?php echo $result[0]['username'];?>
