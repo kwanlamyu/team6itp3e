@@ -73,7 +73,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                           if (count($allUEN) != 0){
                           ?>
                             <form name='companyUEN' method='post' action='fs_main.php' enctype="multipart/form-data" class="m-form m-form--fit m-form--label-align-right">
-                            <select id='companyValue' onchange='setUEN()' name="companyValue" class="form-control m-input col-lg-4">
+                            <select id='companyValue' onchange='setUEN()' name="companyValue">
                               <?php
                               for ($i = 0; $i < count($uenResult); $i++){
                                 ?>
@@ -88,9 +88,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                 }
                               }
                               ?>
-							  </select>
                             </div>
-                              <input class="btn btn-success" type="submit" name="submit" id="submit"></input>
+                              <input type="submit" name="submit" id="submit"></input>
                             </form>
                             <?php
                           } else {

@@ -161,9 +161,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 ?>
                 <form method="post" id = "categoryForm" name="myForm" action="updateCategoriesMain.php">
                     <?php
-//                    foreach ($tempAccArray as $v) {
-//                        echo "<input type='hidden' name='accAccount[]' value='" . $v . "'/>";
-//                    }
+                    foreach ($tempAccArray as $v) {
+                        echo "<input type='hidden' name='accAccount[]' value='" . $v . "'/>";
+                    }
 
                     foreach ($dateStart as $value) {
                         echo "<input type='hidden' name='dateStart[]' value='" . $value . "'/>";
@@ -200,9 +200,36 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 <div class="m-subheader ">
                     <div class="d-flex align-items-center">
                         <div class="mr-auto">
-                            <h3 class="m-subheader__title">
+                            <h3 class="m-subheader__title m-subheader__title--separator">
                                 Financial Statement
                             </h3>
+                            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                                <li class="m-nav__item m-nav__item--home">
+                                    <a href="#" class="m-nav__link m-nav__link--icon">
+                                        <i class="m-nav__link-icon la la-home"></i>
+                                    </a>
+                                </li>
+                                <li class="m-nav__separator">
+                                    -
+                                </li>
+                                <li class="m-nav__item">
+                                    <a href="" class="m-nav__link">
+                                        <span class="m-nav__link-text">
+                                            Generate Report
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="m-nav__separator">
+                                    -
+                                </li>
+                                <li class="m-nav__item">
+                                    <a href="" class="m-nav__link">
+                                        <span class="m-nav__link-text">
+                                            Financial Statement
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -224,91 +251,89 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="m-portlet__body" id="formForUploads">
-                                    <?php if (!empty($tempSubArray)) { ?>
-                                        <form method="post" name="updateCategoryForm" action="updateCategoriesMain.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
-                                            <?php
-                                            echo "Please choose which Main Category it belongs to! <br><br>";
-
-                                            $tempSubArray = array_unique($tempSubArray);
-                                            for ($i = 0; $i < count($tempSubArray); $i++) {
-                                                echo "<b>Current Sub Account: </b>" . $tempSubArray[$i] . "<br>";
-
-                                                $startDataList = "<input id='category" . $i . "' list='category" . $i . "' value='' class='form-control' name='main[]'/>";
-                                                $bodyDataList = "<datalist id='category" . $i . "'style='overflow-y:scroll; height:10px;'>";
-
-                                                for ($j = 0; $j < count($mainAccountArrayDB); $j++) {
-                                                    $bodyDataList .= "<option value='" . $mainAccountArrayDB[$j] . "'>";
-                                                }
-
-                                                echo "<label>Choose a category:" . $startDataList . "</label><div>" . $bodyDataList . "</datalist></div>";
-                                                echo "<hr>";
+                                <?php if (!empty($tempSubArray)) { ?>
+                                    <form method="post" name="updateCategoryForm" action="updateCategoriesMain.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+                                        <?php
+                                        echo "Please choose which Main Category it belongs to! <br><br>";
+                                        
+                                        $tempSubArray = array_unique($tempSubArray);
+                                        for ($i = 0; $i < count($tempSubArray); $i++) {
+                                            echo "<b>Current Sub Account: </b>" . $tempSubArray[$i] . "<br>";
+                                            
+                                            $startDataList = "<input id='category" . $i . "' list='category" . $i . "' value='' class='form-control' name='main[]'/>";
+                                            $bodyDataList = "<datalist id='category" . $i . "'style='overflow-y:scroll; height:10px;'>";
+                                            
+                                            for ($j = 0; $j < count($mainAccountArrayDB); $j++) {
+                                                $bodyDataList .= "<option value='" . $mainAccountArrayDB[$j] . "'>";
                                             }
+                                            
+                                            echo "<label>Choose a category:" . $startDataList . "</label><div>" . $bodyDataList . "</datalist></div>";
+                                            echo "<hr>";
+                                        }
 
-                                            foreach ($tempSubArray as $v) {
-                                                echo "<input type='hidden' name='subAccount[]' value='" . $v . "'/>";
-                                            }
+                                        foreach ($tempSubArray as $v) {
+                                            echo "<input type='hidden' name='subAccount[]' value='" . $v . "'/>";
+                                        }
 
-                                            foreach ($dateStart as $value) {
-                                                echo "<input type='hidden' name='dateStart[]' value='" . $value . "'/>";
-                                            }
+                                        foreach ($dateStart as $value) {
+                                            echo "<input type='hidden' name='dateStart[]' value='" . $value . "'/>";
+                                        }
 
-                                            foreach ($dateEnd as $value) {
-                                                echo "<input type='hidden' name='dateEnd[]' value='" . $value . "'/>";
-                                            }
+                                        foreach ($dateEnd as $value) {
+                                            echo "<input type='hidden' name='dateEnd[]' value='" . $value . "'/>";
+                                        }
 
-                                            foreach ($fileArray as $value) {
-                                                echo "<input type='hidden' name='fileArray[]' value='" . $value . "'/>";
-                                            }
+                                        foreach ($fileArray as $value) {
+                                            echo "<input type='hidden' name='fileArray[]' value='" . $value . "'/>";
+                                        }
 
-                                            foreach ($accountValue as $v) {
-                                                echo "<input type='hidden' name='accountValue[]' value='" . $v . "'/>";
-                                            }
-                                            ?>
+                                        foreach ($accountValue as $v) {
+                                            echo "<input type='hidden' name='accountValue[]' value='" . $v . "'/>";
+                                        }
+                                        ?>
 
-                                            <input type="hidden" name="key" value="yes"/>
+                                        <input type="hidden" name="key" value="yes"/>
+                                        
+                                        <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
+                                        <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
+                                        <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
 
-                                            <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
-                                            <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
-                                            <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
+                                        <input type="submit" value="Submit" name="submit" class="btn btn-brand">
+                                    </form>
+                                <?php } else { ?>
+                                    <form method="post" id = "categoryForm" name="myForm" action="updateCategoriesMain.php">
+                                        <?php
+                                        
+                                        foreach ($dateStart as $value) {
+                                            echo "<input type='hidden' name='dateStart[]' value='" . $value . "'/>";
+                                        }
 
-                                            <input type="submit" value="Submit" name="submit" class="btn btn-brand">
-                                        </form>
-                                    <?php } else { ?>
-                                        <form method="post" id = "categoryForm" name="myForm" action="updateCategoriesMain.php">
-                                            <?php
-                                            foreach ($dateStart as $value) {
-                                                echo "<input type='hidden' name='dateStart[]' value='" . $value . "'/>";
-                                            }
+                                        foreach ($dateEnd as $value) {
+                                            echo "<input type='hidden' name='dateEnd[]' value='" . $value . "'/>";
+                                        }
 
-                                            foreach ($dateEnd as $value) {
-                                                echo "<input type='hidden' name='dateEnd[]' value='" . $value . "'/>";
-                                            }
+                                        foreach ($fileArray as $value) {
+                                            echo "<input type='hidden' name='fileArray[]' value='" . $value . "'/>";
+                                        }
 
-                                            foreach ($fileArray as $value) {
-                                                echo "<input type='hidden' name='fileArray[]' value='" . $value . "'/>";
-                                            }
+                                        foreach ($accountValue as $v) {
+                                            echo "<input type='hidden' name='accountValue[]' value='" . $v . "'/>";
+                                        }
+                                        ?>
 
-                                            foreach ($accountValue as $v) {
-                                                echo "<input type='hidden' name='accountValue[]' value='" . $v . "'/>";
-                                            }
-                                            ?>
+                                        <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
+                                        <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
+                                        <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
 
-                                            <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
-                                            <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
-                                            <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
+                                        <input type="hidden" name="key" value="no"/>
 
-                                            <input type="hidden" name="key" value="no"/>
+                                        <input type="submit" value="Submit" name="s" class="btn btn-brand">
+                                    </form>
 
-                                            <input type="submit" value="Submit" name="s" class="btn btn-brand">
-                                        </form>
-
-                                        <script>
-                                            document.getElementById('categoryForm').submit();
-                                        </script>
-                                    <?php } ?>
-                                </div>
+                                    <script>
+                                        document.getElementById('categoryForm').submit();
+                                    </script>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>

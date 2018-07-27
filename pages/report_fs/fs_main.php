@@ -24,9 +24,36 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 <div class="m-subheader ">
                     <div class="d-flex align-items-center">
                         <div class="mr-auto">
-                            <h3 class="m-subheader__title">
+                            <h3 class="m-subheader__title m-subheader__title--separator">
                                 Financial Statement
                             </h3>
+                            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                                <li class="m-nav__item m-nav__item--home">
+                                    <a href="#" class="m-nav__link m-nav__link--icon">
+                                        <i class="m-nav__link-icon la la-home"></i>
+                                    </a>
+                                </li>
+                                <li class="m-nav__separator">
+                                    -
+                                </li>
+                                <li class="m-nav__item">
+                                    <a href="" class="m-nav__link">
+                                        <span class="m-nav__link-text">
+                                            Generate Report
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="m-nav__separator">
+                                    -
+                                </li>
+                                <li class="m-nav__item">
+                                    <a href="" class="m-nav__link">
+                                        <span class="m-nav__link-text">
+                                            Financial Statement
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
 
                         </div>
                     </div>
@@ -52,7 +79,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                 <!--begin::Form-->
                                 <div>
                                     <span>Select number of trial balances to upload</span>
-                                    <select name="numberOfTB" onchange="changeFileUploadForm()" id="tbNumber" class="form-control m-input col-lg-1">
+                                    <select name="numberOfTB" onchange="changeFileUploadForm()" id="tbNumber">
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
@@ -61,8 +88,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     </select>
                                     <span><br/>For multiple files: Please upload latest to oldest in sequence</span>
                                 </div>
-								<br>
-
+                                
                                 <form name='uploadForm' action="updateCategoriesSub.php" method="post" enctype="multipart/form-data" class="m-form m-form--fit m-form--label-align-right" onsubmit="return validateForm()">
                                     <div class="col-lg-3">
                                         <input class="form-control m-input" type="hidden" id="clientCompany" name="clientCompany" value="<?php echo $clientCompany; ?>">
@@ -71,9 +97,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             Please enter company name
                                         </span> -->
                                     </div>
-
                                     <div class="m-portlet__body" id="formForUploads">
-
+                                        <div class="form-group m-form__group">
                                             <span class="m-input-icon__icon m-input-icon__icon--right">
                                                 <span>
                                                     <i class="la la-thumb-tack"></i>
@@ -85,25 +110,22 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                                                 <input type="file" class="m-dropzone dropzone m-dropzone--success" name="trialBalances[]" id="file0" accept=".xlsx" >
                                             </div>
-
-
-
-											<br>
                                             <label for='yearStart0'>Financial Year Start:</label>
-                                            <input type='date' class='form-control col-lg-3' id='yearStart0' name='yearStart[]' value=''/>
+                                            <input type='date' class='form-control' id='yearStart0' name='yearStart[]' value=''/>
                                             <label for='yearEnd0'>Financial Year End:</label>
-                                            <input type='date' class='form-control col-lg-3' id='yearEnd0' name='yearEnd[]' value=''/>
-                                       <br>
-                                            <input type="submit" class="btn btn-success" value="Upload File" name="submit">
-
+                                            <input type='date' class='form-control' id='yearEnd0' name='yearEnd[]' value=''/>
+                                        </div>
+                                        <div class="m-form__actions">
+                                            <input type="submit" class="btn btn-accent" value="Upload File" name="submit">
+                                        </div>
                                     </div>
-									</div>
                             </div>
                             </form>
 
                             <!--end::Form-->
                         </div>
                     </div>
+                </div>
             </div>
             <!--end::Portlet-->
             <!-- END: Subheader -->
