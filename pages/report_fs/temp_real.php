@@ -1,8 +1,14 @@
 <?php
 // use this when live
 // define('URL', 'https://3ecomply.com/');
-define('URL', '');
-ob_start();
+
+
+
+//define('URL', '');
+//ob_start();
+
+
+
 //include 'header.php';
 // PHPWord depedency
 require_once __DIR__ . '\..\..\vendor\autoload.php';
@@ -6229,8 +6235,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
             $objWriter->save('preview.docx');
 
-header("Location: " . URL . "download.php"); /* Redirect browser */
-ob_end_flush();
+//header("Location: " . URL . "download.php"); /* Redirect browser */
+//ob_end_flush();
         }
     }
 } else {

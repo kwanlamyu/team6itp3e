@@ -180,7 +180,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         for ($i = 0; $i < count($subResult); $i++) {
                                             if (strcasecmp($subResult[$i]['sub_account'], $matched[$k]) === 0) {
                                                 echo "<br><b>Account name: </b> " . $matched[$k] . "<br/>";
-                                                echo "<b>Matching account category: </b>";
+//                                                echo "<b>Matching account category: </b>";
                                                 echo "<div>";
 
                                                 $startDataList = "<input list='category" . $i . "' value='' class='form-control' name='category[]'/>";
