@@ -49,7 +49,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         </div>
                                     </div>
                                 </div>
-								<div class="m-portlet__body" id="formForUploads">
                                 <!--begin::Form-->
                                 <div>
                                     <span>Select number of trial balances to upload</span>
@@ -63,7 +62,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     <span><br/>For multiple files: Please upload latest to oldest in sequence</span>
                                 </div>
 								<br>
-                                
+
                                 <form name='uploadForm' action="updateCategoriesSub.php" method="post" enctype="multipart/form-data" class="m-form m-form--fit m-form--label-align-right" onsubmit="return validateForm()">
                                     <div class="col-lg-3">
                                         <input class="form-control m-input" type="hidden" id="clientCompany" name="clientCompany" value="<?php echo $clientCompany; ?>">
@@ -72,8 +71,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             Please enter company name
                                         </span> -->
                                     </div>
-                                    
-                                        
+
+                                    <div class="m-portlet__body" id="formForUploads">
+
                                             <span class="m-input-icon__icon m-input-icon__icon--right">
                                                 <span>
                                                     <i class="la la-thumb-tack"></i>
@@ -85,9 +85,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                                                 <input type="file" class="m-dropzone dropzone m-dropzone--success" name="trialBalances[]" id="file0" accept=".xlsx" >
                                             </div>
-											
-											
-											
+
+
+
 											<br>
                                             <label for='yearStart0'>Financial Year Start:</label>
                                             <input type='date' class='form-control col-lg-3' id='yearStart0' name='yearStart[]' value=''/>
@@ -95,7 +95,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             <input type='date' class='form-control col-lg-3' id='yearEnd0' name='yearEnd[]' value=''/>
                                        <br>
                                             <input type="submit" class="btn btn-success" value="Upload File" name="submit">
-                                        
+
                                     </div>
 									</div>
                             </div>
