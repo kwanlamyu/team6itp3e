@@ -2,7 +2,7 @@
 <?php require_once '../db_connection/db.php';?>
 
 <?php
-	$select = $DB_con->prepare("SELECT * FROM user WHERE role_id = 2 AND companyName='".$_SESSION['company']."'");;
+	$select = $DB_con->prepare("SELECT * FROM user WHERE role_id = 2");
 	$select->execute();
 	$rows = array();
 	while ($result = $select->fetch(PDO::FETCH_ASSOC)) {
