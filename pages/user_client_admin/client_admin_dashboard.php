@@ -39,15 +39,6 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                             </div>
                         </div>
                         <div class="m-portlet__body">
-                            <?php include_once '../user_client_admin/edit_accountant_validation.php'; ?>
-                            <?php include_once '../user_client_admin/delete_accountant_validation.php'; ?>
-                            <?php if (!empty($successMessage)) { ?>
-                                <span class="alert alert-success" ><?php echo $successMessage; ?></span>
-                            <?php } ?>
-
-                            <?php if (!empty($failMessage)) { ?>
-                                <span class="alert alert-danger" ><?php echo $failMessage; ?></span>
-                            <?php } ?>
                             <!--begin: Search Form -->
                             <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
                                 <div class="row align-items-center">
