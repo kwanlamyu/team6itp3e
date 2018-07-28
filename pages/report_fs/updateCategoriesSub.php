@@ -452,10 +452,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $accountNames = "Accounting fee,Bookkeeping fee";
                                             $query->execute();
 
-                                            $account = "Accounting fee";
-                                            $accountNames = "Accounting fee,Bookkeeping fee";
-                                            $query->execute();
-
                                             $account = "Administrative expenses";
                                             $accountNames = "Administrative expenses";
                                             $query->execute();

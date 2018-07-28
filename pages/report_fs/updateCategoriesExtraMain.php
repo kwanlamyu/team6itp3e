@@ -161,10 +161,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 ?>
                 <form method="post" id = "categoryForm" name="myForm" action="updateCategoriesMain.php">
                     <?php
-                    foreach ($tempAccArray as $v) {
-                        echo "<input type='hidden' name='accAccount[]' value='" . $v . "'/>";
-                    }
-
                     foreach ($dateStart as $value) {
                         echo "<input type='hidden' name='dateStart[]' value='" . $value . "'/>";
                     }
