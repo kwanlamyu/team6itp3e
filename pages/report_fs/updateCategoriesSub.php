@@ -61,7 +61,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     </a>
                                 </li>
                             </ul>
-
                         </div>
                     </div>
                 </div>

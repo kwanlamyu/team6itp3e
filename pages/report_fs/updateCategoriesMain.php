@@ -285,11 +285,15 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     </div>
                 </div>
             </div>
+</div>
             <!--end::Portlet-->
             <?php
         }
     }
 } else {
     header("Location: ../user_login/login.php");
-}
+} ?>
+
+<?php include '../general/footer_content.php'; ?>
+<?php include '../general/footer.php'; ?>
 ?>
