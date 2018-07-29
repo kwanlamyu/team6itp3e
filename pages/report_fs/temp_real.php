@@ -5993,7 +5993,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     for ($x = 0; $x < count($finalAdminAccountAmount[$i]); $x++) {
                         if (count($finalAdminAccountName) > 1) {
                             if (count($finalAdminAccountAmount[$i]) > 1) {
-                                if ($i == count($finalAdminAccountAmount) - 1) {
+                                if ($printCount == count($toPrintAdmin) - 1) {
                                     if ($x == count($finalAdminAccountAmount[$i]) - 1) {
                                         $cell = $table->addCell($cellValue, $borderBottomAndRight);
                                     } else if ($x == 0) {
@@ -6001,7 +6001,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     } else {
                                         $cell = $table->addCell($cellValue, $cellBottomBorder);
                                     }
-                                } else if ($i == 0) {
+                                } else if ($printCount == 0) {
                                     if ($x == count($finalAdminAccountAmount[$i]) - 1) {
                                         $cell = $table->addCell($cellValue, $borderTopAndRight);
                                     } else if ($x == 0) {
@@ -6135,7 +6135,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     for ($x = 0; $x < count($finalDistriAccountAmount[$i]); $x++) {
                         if (count($finalDistriAccountName) > 1) {
                             if (count($finalDistriAccountAmount[$i]) > 1) {
-                                if ($i == count($finalDistriAccountAmount) - 1) {
+                                if ($printCount == count($toPrintDistri) - 1) {
                                     if ($x == count($finalDistriAccountAmount[$i]) - 1) {
                                         $cell = $table->addCell($cellValue, $borderBottomAndRight);
                                     } else if ($x == 0) {
@@ -6278,7 +6278,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     for ($x = 0; $x < count($finalFinanceAccountAmount[$i]); $x++) {
                         if (count($finalFinanceAccountName) > 1) {
                             if (count($finalFinanceAccountAmount[$i]) > 1) {
-                                if ($i == count($finalFinanceAccountAmount) - 1) {
+                                if ($printCount == count($toPrintFinance) - 1) {
                                     if ($x == count($finalFinanceAccountAmount[$i]) - 1) {
                                         $cell = $table->addCell($cellValue, $borderBottomAndRight);
                                     } else if ($x == 0) {
