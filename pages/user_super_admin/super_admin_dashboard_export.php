@@ -25,7 +25,7 @@ while($rec =$stmt->FETCH(PDO::FETCH_ASSOC))
  
  
 header("Content-type: application/octet-stream");
-header("Content-Disposition: attachment; filename=Companies.xls");
+header("Content-Disposition: attachment; filename=Companies.xlsx");
 header("Pragma: no-cache");
 header("Expires: 0");
  

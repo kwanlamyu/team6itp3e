@@ -15,7 +15,7 @@ FROM (account.UEN AS UEN,
 	INNER JOIN usermanageaccount
 	ON account.UEN = usermanageaccount.account_UEN
 	AND usermanageaccount.account_user_username = '$userID'
-	AND usermanageaccount.user_role_id = '3') AND (UEN LIKE '%".$vari."%' OR companyName LIKE '%".$vari."%' OR fileNumber LIKE '%".$vari."%' OR accountManagers LIKE '%".$vari."%')");
+	AND usermanageaccount.user_role_id =3) AND (UEN LIKE '%".$vari."%' OR companyName LIKE '%".$vari."%' OR fileNumber LIKE '%".$vari."%' OR accountManagers LIKE '%".$vari."%')");
 	
 $stmt->execute();
  
@@ -39,7 +39,7 @@ while($rec =$stmt->FETCH(PDO::FETCH_ASSOC))
  
  
 header("Content-type: application/octet-stream");
-header("Content-Disposition: attachment; filename=CompanyAccounts.xls");
+header("Content-Disposition: attachment; filename=CompanyAccounts.xlsx");
 header("Pragma: no-cache");
 header("Expires: 0");
  
