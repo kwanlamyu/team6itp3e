@@ -6228,7 +6228,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 // Saving the document as OOXML file
             $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
             try {
-              $objWriter->save($companyName . '.docx');
+              $objWriter->save("./files generated/" . $companyName . '.docx');
             } catch (Exception $e){
               echo "<script>alert(" . $e . ");</script>";
             }
