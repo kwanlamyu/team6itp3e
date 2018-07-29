@@ -51,7 +51,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                         <div class="form-group m-form__group row align-items-center">
                                             <div class="col-md-4">
                                                 <div class="m-input-icon m-input-icon--left">
-                                                    <input type="text" class="form-control m-input" placeholder="Search..." id="generalSearch">
+                                                    <input type="text" class="form-control m-input" placeholder="Search..." id="generalSearch" name="generalSearch" form="csvForm">
                                                     <span class="m-input-icon__icon m-input-icon__icon--left">
                                                         <span>
                                                             <i class="la la-search"></i>
@@ -62,14 +62,10 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                         </div>
                                     </div>
                                     <div class="col-xl-4 order-1 order-xl-2 m--align-right">
-                                        <a href="#" class="btn btn-accent m-btn m-btn--custom m-btn--pill m-btn--icon m-btn--air">
-                                            <span>
-                                                <i class="la la-file-excel-o"></i>
-                                                <span>
-                                                    Export
-                                                </span>
-                                            </span>
-                                        </a>
+                                        <form method="post" action="../user_client_admin/all_work_account_export.php" id="csvForm">
+											<input type="submit" class="btn btn-accent m-btn m-btn--custom m-btn--pill m-btn--icon m-btn--air" name="export" value="Export Table"/>
+											
+										</form> 
                                         <div class="m-separator m-separator--dashed d-xl-none"></div>
                                     </div>
                                 </div>
