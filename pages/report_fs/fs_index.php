@@ -10,7 +10,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
     } else {
       include '../general/navigation_accountant.php';
     }
-    
+
     $query = $DB_con->prepare("SELECT * FROM usermanageaccount WHERE user_username=:userName");
     $username = $_SESSION['username'];
     $query->bindParam(':userName', $username);
@@ -75,28 +75,32 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                             <form name='companyUEN' method='post' action='fs_main.php' enctype="multipart/form-data" class="m-form m-form--fit m-form--label-align-right">
                             <select id='companyValue' onchange='setUEN()' name="companyValue" class="form-control">
                               <?php
+                              $tempUEN = "";
+                              $tempCompany = "";
                               for ($i = 0; $i < count($uenResult); $i++){
                                 ?>
                                 <option value='<?php echo $uenResult[$i]['companyName'];?>'><?php echo $uenResult[$i]['companyName'];?></option>
                                 <?php
                                 if ($i == 0){
                                   ?>
-                                  <div class="col-lg-3">
                                   <?php
-                                  echo "<input type='hidden' name='companyName' id='companyName' value='" . $uenResult[$i]['companyName'] . "'/>";
-                                  echo "<input type='hidden' name='uenNumber' id='uenNumber' value='" . $uenResult[$i]['UEN'] . "'/>";
+                                  $tempUEN = $uenResult[$i]['UEN'];
+                                  $tempCompany = $uenResult[$i]['companyName'];
                                 }
                               }
                               ?>
-                            </div>
+                            </select>
+                            <br/>
+                              <input type='hidden' name='companyName' id='companyName' value='<?php echo $tempCompany;?>'/>
+                              <input type='hidden' name='uenNumber' id='uenNumber' value='<?php echo $tempUEN;?>'/>
                               <input class="btn btn-success" type="submit" name="submit" id="submit"></input>
                             </form>
                             <?php
                           } else {
                             ?>
-							
+
                             <span class="m-section__sub">You have not been assigned a client.</span>
-							
+
                             <?php
                           }
                           ?>

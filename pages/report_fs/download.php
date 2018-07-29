@@ -1,6 +1,8 @@
 <?php
 if (isset($_GET['filename'])){
-    $file = $_GET['filename'] . ".docx";
+    $dir = "files generated/";
+    $filename = $_GET['filename'] . ".docx";
+    $file = $dir . $filename;
     if (file_exists($file)) {
         $basename = basename($file);
         $length = sprintf("%u", filesize($file));
