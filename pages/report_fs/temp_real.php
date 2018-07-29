@@ -60,6 +60,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             $borderBottomAndLeft = array('borderBottomSize' => 1, 'borderBottomColor' => '#000000', 'borderLeftSize' => 1, 'borderLeftColor' => '#000000');
             $borderBottomAndRight = array('borderBottomSize' => 1, 'borderBottomColor' => '#000000', 'borderRightSize' => 1, 'borderRightColor' => '#000000');
             $allBorders = array('borderTopSize' => 1, 'borderTopColor' => '#000000', 'borderLeftSize' => 1, 'borderLeftColor' => '#000000', 'borderRightSize' => 1, 'borderRightColor' => '#000000', 'borderBottomSize' => 1, 'borderBottomColor' => '#000000');
+            $borderTopLeftRight = array('borderTopSize' => 1, 'borderTopColor' => '#000000', 'borderLeftSize' => 1, 'borderLeftColor' => '#000000', 'borderRightColor' => '#000000', 'borderRightSize' => 1);
+            $borderLeftRight = array('borderLeftSize' => 1, 'borderLeftColor' => '#000000', 'borderRightSize' => 1, 'borderRightColor' => '#000000');
+            $borderLeftRightBottom = array('borderBottomSize' => 1, 'borderBottomColor' => '#000000', 'borderLeftSize' => 1, 'borderLeftColor' => '#000000', 'borderRightColor' => '#000000', 'borderRightSize' => 1);
 
 //Create listing style
             $listingStyle = 'multilevel';
@@ -5973,12 +5976,14 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
             $table->addRow();
             $table->addCell($appendixFirstCell)->addText("Administrative expenses", $fontstyleBottomUnderline);
+            $printCount = 0;
             for ($i = 0; $i < count($finalAdminAccountAmount); $i++) {
                 if (in_array($i, $toPrintAdmin)) {
                     $table->addRow();
                     $table->addCell($appendixFirstCell)->addText(htmlspecialchars($finalAdminAccountName[$i]), $fontstyleName, $noSpace);
                     for ($x = 0; $x < count($finalAdminAccountAmount[$i]); $x++) {
                         if (count($finalAdminAccountName) > 1) {
+                          if (count($finalAdminAccountAmount[$i]) > 1){
                             if ($i == count($finalAdminAccountAmount) - 1) {
                                 if ($x == count($finalAdminAccountAmount[$i]) - 1) {
                                     $cell = $table->addCell($cellValue, $borderBottomAndRight);
@@ -6004,10 +6009,19 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     $cell = $table->addCell($cellValue);
                                 }
                             }
+                          } else {
+                            if ($printCount == 0){
+                              $cell = $table->addCell($cellValue, $borderTopLeftRight);
+                            } else if ($printCount == (count($toPrintAdmin) - 1)){
+                              $cell = $table->addCell($cellValue,$borderLeftRightBottom);
+                            } else {
+                              $cell = $table->addCell($cellValue,$borderLeftRight);
+                            }
+                          }
                         } else {
                             $cell = $table->addCell($cellValue, $allBorders);
                         }
-
+                        $printCount++;
                         $tempValue = $finalAdminAccountAmount[$i][$x];
                         if ($tempValue == 0) {
                             $tempValue = "-";
@@ -6105,11 +6119,13 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             }
 
             for ($i = 0; $i < count($finalDistriAccountAmount); $i++) {
+                $printCount = 0;
                 if (in_array($i, $toPrintDistri)) {
                     $table->addRow();
                     $table->addCell($appendixFirstCell)->addText(htmlspecialchars($finalDistriAccountName[$i]), $fontstyleName, $noSpace);
                     for ($x = 0; $x < count($finalDistriAccountAmount[$i]); $x++) {
                         if (count($finalDistriAccountName) > 1) {
+                          if (count($finalDistriAccountAmount[$i]) > 1){
                             if ($i == count($finalDistriAccountAmount) - 1) {
                                 if ($x == count($finalDistriAccountAmount[$i]) - 1) {
                                     $cell = $table->addCell($cellValue, $borderBottomAndRight);
@@ -6135,6 +6151,15 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     $cell = $table->addCell($cellValue);
                                 }
                             }
+                          } else {
+                            if ($printCount == 0){
+                              $cell = $table->addCell($cellValue, $borderTopLeftRight);
+                            } else if ($printCount == (count($toPrintDistri) - 1)){
+                              $cell = $table->addCell($cellValue,$borderLeftRightBottom);
+                            } else {
+                              $cell = $table->addCell($cellValue,$borderLeftRight);
+                            }
+                          }
                         } else {
                             $cell = $table->addCell($cellValue, $allBorders);
                         }
@@ -6152,6 +6177,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 }
             }
 
+            $printCount++;
 
             for ($i = 0; $i < count($calculatedDistriExpense); $i++) {
                 $calculatedDistriExpense[$i] = 0 - $calculatedDistriExpense[$i];
@@ -6236,11 +6262,13 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             }
 
             for ($i = 0; $i < count($finalFinanceAccountAmount); $i++) {
+                $printCount = 0;
                 if (in_array($i, $toPrintFinance)) {
                     $table->addRow();
                     $table->addCell($appendixFirstCell)->addText(htmlspecialchars($finalFinanceAccountName[$i]), $fontstyleName, $noSpace);
                     for ($x = 0; $x < count($finalFinanceAccountAmount[$i]); $x++) {
                         if (count($finalFinanceAccountName) > 1) {
+                          if (count($finalFinanceAccountAmount[$i]) > 1) {
                             if ($i == count($finalFinanceAccountAmount) - 1) {
                                 if ($x == count($finalFinanceAccountAmount[$i]) - 1) {
                                     $cell = $table->addCell($cellValue, $borderBottomAndRight);
@@ -6266,10 +6294,19 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     $cell = $table->addCell($cellValue);
                                 }
                             }
+                          } else {
+                            if ($printCount == 0){
+                              $cell = $table->addCell($cellValue, $borderTopLeftRight);
+                            } else if ($printCount == (count($toPrintFinance) - 1)){
+                              $cell = $table->addCell($cellValue,$borderLeftRightBottom);
+                            } else {
+                              $cell = $table->addCell($cellValue,$borderLeftRight);
+                            }
+                          }
                         } else {
                             $cell = $table->addCell($cellValue, $allBorders);
                         }
-
+                        $printCount++;
                         $tempValue = $finalFinanceAccountAmount[$i][$x];
                         if ($tempValue == 0) {
                             $tempValue = "-";
