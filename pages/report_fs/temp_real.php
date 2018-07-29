@@ -64,7 +64,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             $borderLeftRight = array('borderLeftSize' => 1, 'borderLeftColor' => '#000000', 'borderRightSize' => 1, 'borderRightColor' => '#000000');
             $borderLeftRightBottom = array('borderBottomSize' => 1, 'borderBottomColor' => '#000000', 'borderLeftSize' => 1, 'borderLeftColor' => '#000000', 'borderRightColor' => '#000000', 'borderRightSize' => 1);
 
-//Create listing style
+            //Create listing style
             $listingStyle = 'multilevel';
             $phpWord->addNumberingStyle(
                     $listingStyle, array(
@@ -3634,7 +3634,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 foreach ($profitBeforeIncomeTaxArray as $key1 => $value1) { //  [Depreciation of plant and equipment] => Array ( [December 2016] => 3014 )
                     // Display the category heading
                     $table1->addRow();
-                    $table1->addCell($firstCellValue)->addText($key1);
+                    $table1->addCell($firstCellValue)->addText(ucfirst($key1));
 
                     $counter++;
 
@@ -3674,7 +3674,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                 }
 
                                 if ($key2 == $years[$h]) {
-                                    $cellNotes->addText(number_format(ceil($value2)), $fontstyleName, $centerAlignment);
+                                    $cellNotes->addText(number_format(round($value2)), $fontstyleName, $centerAlignment);
                                 } else {
                                     $cellNotes->addText("-", $fontstyleName, $centerAlignment);
                                 }
@@ -3928,7 +3928,11 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 for ($i = 0; $i < count($beforeIncomeTax); $i++) {
                     $tempIT = ($beforeIncomeTax[$i] / 100) * 17;
                     $cellNotes = $table1->addCell($cellValue);
-                    $cellNotes->addText(number_format(round($tempIT)), $fontstyleName, $centerAlignment);
+                    if ($tempIT > 0) {
+                        $cellNotes->addText(number_format(round($tempIT)), $fontstyleName, $centerAlignment);
+                    } else {
+                        $cellNotes->addText("(" + number_format(round($tempIT)) + ")", $fontstyleName, $centerAlignment);
+                    }
                 }
 
                 $table1->addRow();
@@ -3945,8 +3949,10 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     foreach ($value as $k => $v) {
                                         // if don't need dash, just print everything out
                                         if ($numberOfSheets == count($value)) {
+
+                                            $withoutFirstCharacter = substr($v, 1);
                                             $cellNotes = $table1->addCell($cellValue);
-                                            $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
+                                            $cellNotes->addText("(" . number_format(ceil($withoutFirstCharacter)) . ")", $fontstyleName, $centerAlignment);
 
                                             // for checking if the value matches with total
                                             for ($h = 0; $h < count($years); $h++) {
@@ -3969,7 +3975,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             for ($h = 0; $h < count($years); $h++) {
                                                 $cellNotes = $table1->addCell($cellValue);
                                                 if ($k == $years[$h]) {
-                                                    $cellNotes->addText("(" . number_format(ceil($v)) . ")", $fontstyleName, $centerAlignment);
+
+                                                    $withoutFirstCharacter = substr($v, 1);
+                                                    $cellNotes->addText("(" . number_format(ceil($withoutFirstCharacter)) . ")", $fontstyleName, $centerAlignment);
 
                                                     // for checking if the value matches with total
                                                     if ($checkArray2[$years[$h]] == 0) {
@@ -4363,35 +4371,35 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     if (stripos($key, "trade receivable") === false) {
                         $table1->addRow();
                         $table1->addCell($firstCellValue)->addText(ucwords($key));
-                    }
 
-                    foreach ($value as $k => $v) { // [December 2015] => 54684.19
-                        if (!in_array($key, $temp)) {
+                        foreach ($value as $k => $v) { // [December 2015] => 54684.19
+                            if (!in_array($key, $temp)) {
 
-                            // if don't need dash, just print everything out
-                            if ($numberOfSheets == count($value)) {
-                                $cellNotes = $table1->addCell($cellValue);
-                                $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
-                            }
-                            // if not the same, then see which position it is
-                            else {
-                                for ($h = 0; $h < count($years); $h++) {
+                                // if don't need dash, just print everything out
+                                if ($numberOfSheets == count($value)) {
                                     $cellNotes = $table1->addCell($cellValue);
-                                    if ($k == $years[$h]) {
-                                        $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
-                                        if ($totalArray[$years[$h]] == 0) {
-                                            $totalArray[$years[$h]] = $v;
-                                        } else {
-                                            foreach ($totalArray as $totalKey => $totalValue) {
+                                    $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
+                                }
+                                // if not the same, then see which position it is
+                                else {
+                                    for ($h = 0; $h < count($years); $h++) {
+                                        $cellNotes = $table1->addCell($cellValue);
+                                        if ($k == $years[$h]) {
+                                            $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
+                                            if ($totalArray[$years[$h]] == 0) {
+                                                $totalArray[$years[$h]] = $v;
+                                            } else {
+                                                foreach ($totalArray as $totalKey => $totalValue) {
 
-                                                if ($totalKey == $years[$h]) {
-                                                    $totalValue = $v + (float) $totalValue;
-                                                    $totalArray[$years[$h]] = $totalValue;
+                                                    if ($totalKey == $years[$h]) {
+                                                        $totalValue = $v + (float) $totalValue;
+                                                        $totalArray[$years[$h]] = $totalValue;
+                                                    }
                                                 }
                                             }
+                                        } else {
+                                            $cellNotes->addText("-", $fontstyleName, $centerAlignment);
                                         }
-                                    } else {
-                                        $cellNotes->addText("-", $fontstyleName, $centerAlignment);
                                     }
                                 }
                             }
@@ -4579,52 +4587,53 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     if (stripos($key, "trade payable") === false) {
                         $table1->addRow();
                         $table1->addCell($firstCellValue)->addText(ucwords($key));
-                    }
 
-                    foreach ($value as $k => $v) { // [December 2015] => 54684.19
-                        if (!in_array($key, $temp)) {
 
-                            // if don't need dash, just print everything out
-                            if ($numberOfSheets == count($value)) {
-                                $cellNotes = $table1->addCell($cellValue);
-                                $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
+                        foreach ($value as $k => $v) { // [December 2015] => 54684.19
+                            if (!in_array($key, $temp)) {
 
-                                // For calculating the sub total
-                                for ($h = 0; $h < count($years); $h++) {
-                                    if ($k == $years[$h]) {
-                                        if ($totalArray[$years[$h]] == 0) {
-                                            $totalArray[$years[$h]] = $v;
-                                        } else {
-                                            foreach ($totalArray as $totalKey => $totalValue) {
-                                                if ($totalKey == $years[$h]) {
-                                                    $totalValue = (float) $totalValue + (float) $v;
-                                                    $totalArray[$years[$h]] = $totalValue;
+                                // if don't need dash, just print everything out
+                                if ($numberOfSheets == count($value)) {
+                                    $cellNotes = $table1->addCell($cellValue);
+                                    $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
+
+                                    // For calculating the sub total
+                                    for ($h = 0; $h < count($years); $h++) {
+                                        if ($k == $years[$h]) {
+                                            if ($totalArray[$years[$h]] == 0) {
+                                                $totalArray[$years[$h]] = $v;
+                                            } else {
+                                                foreach ($totalArray as $totalKey => $totalValue) {
+                                                    if ($totalKey == $years[$h]) {
+                                                        $totalValue = (float) $totalValue + (float) $v;
+                                                        $totalArray[$years[$h]] = $totalValue;
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
-                            }
-                            // if not the same, then see which position it is
-                            else {
-                                for ($h = 0; $h < count($years); $h++) {
-                                    $cellNotes = $table1->addCell($cellValue);
-                                    if ($k == $years[$h]) {
-                                        $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
+                                // if not the same, then see which position it is
+                                else {
+                                    for ($h = 0; $h < count($years); $h++) {
+                                        $cellNotes = $table1->addCell($cellValue);
+                                        if ($k == $years[$h]) {
+                                            $cellNotes->addText(number_format(ceil($v)), $fontstyleName, $centerAlignment);
 
-                                        // For calculating the sub total
-                                        if ($totalArray[$k] == 0) {
-                                            $totalArray[$k] = $v;
-                                        } else {
-                                            foreach ($totalArray as $totalKey => $totalValue) {
-                                                if ($totalKey == $k) {
-                                                    $totalValue = ((float) $totalValue + (float) $v);
-                                                    $totalArray[$k] = $totalValue;
+                                            // For calculating the sub total
+                                            if ($totalArray[$k] == 0) {
+                                                $totalArray[$k] = $v;
+                                            } else {
+                                                foreach ($totalArray as $totalKey => $totalValue) {
+                                                    if ($totalKey == $k) {
+                                                        $totalValue = ((float) $totalValue + (float) $v);
+                                                        $totalArray[$k] = $totalValue;
+                                                    }
                                                 }
                                             }
+                                        } else {
+                                            $cellNotes->addText("-", $fontstyleName, $centerAlignment);
                                         }
-                                    } else {
-                                        $cellNotes->addText("-", $fontstyleName, $centerAlignment);
                                     }
                                 }
                             }
@@ -5983,41 +5992,41 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     $table->addCell($appendixFirstCell)->addText(htmlspecialchars($finalAdminAccountName[$i]), $fontstyleName, $noSpace);
                     for ($x = 0; $x < count($finalAdminAccountAmount[$i]); $x++) {
                         if (count($finalAdminAccountName) > 1) {
-                          if (count($finalAdminAccountAmount[$i]) > 1){
-                            if ($i == count($finalAdminAccountAmount) - 1) {
-                                if ($x == count($finalAdminAccountAmount[$i]) - 1) {
-                                    $cell = $table->addCell($cellValue, $borderBottomAndRight);
-                                } else if ($x == 0) {
-                                    $cell = $table->addCell($cellValue, $borderBottomAndLeft);
+                            if (count($finalAdminAccountAmount[$i]) > 1) {
+                                if ($i == count($finalAdminAccountAmount) - 1) {
+                                    if ($x == count($finalAdminAccountAmount[$i]) - 1) {
+                                        $cell = $table->addCell($cellValue, $borderBottomAndRight);
+                                    } else if ($x == 0) {
+                                        $cell = $table->addCell($cellValue, $borderBottomAndLeft);
+                                    } else {
+                                        $cell = $table->addCell($cellValue, $cellBottomBorder);
+                                    }
+                                } else if ($i == 0) {
+                                    if ($x == count($finalAdminAccountAmount[$i]) - 1) {
+                                        $cell = $table->addCell($cellValue, $borderTopAndRight);
+                                    } else if ($x == 0) {
+                                        $cell = $table->addCell($cellValue, $borderTopAndLeft);
+                                    } else {
+                                        $cell = $table->addCell($cellValue, $borderTop);
+                                    }
                                 } else {
-                                    $cell = $table->addCell($cellValue, $cellBottomBorder);
-                                }
-                            } else if ($i == 0) {
-                                if ($x == count($finalAdminAccountAmount[$i]) - 1) {
-                                    $cell = $table->addCell($cellValue, $borderTopAndRight);
-                                } else if ($x == 0) {
-                                    $cell = $table->addCell($cellValue, $borderTopAndLeft);
-                                } else {
-                                    $cell = $table->addCell($cellValue, $borderTop);
+                                    if ($x == count($finalAdminAccountAmount[$i]) - 1) {
+                                        $cell = $table->addCell($cellValue, $borderRight);
+                                    } else if ($x == 0) {
+                                        $cell = $table->addCell($cellValue, $borderLeft);
+                                    } else {
+                                        $cell = $table->addCell($cellValue);
+                                    }
                                 }
                             } else {
-                                if ($x == count($finalAdminAccountAmount[$i]) - 1) {
-                                    $cell = $table->addCell($cellValue, $borderRight);
-                                } else if ($x == 0) {
-                                    $cell = $table->addCell($cellValue, $borderLeft);
+                                if ($printCount == 0) {
+                                    $cell = $table->addCell($cellValue, $borderTopLeftRight);
+                                } else if ($printCount == (count($toPrintAdmin) - 1)) {
+                                    $cell = $table->addCell($cellValue, $borderLeftRightBottom);
                                 } else {
-                                    $cell = $table->addCell($cellValue);
+                                    $cell = $table->addCell($cellValue, $borderLeftRight);
                                 }
                             }
-                          } else {
-                            if ($printCount == 0){
-                              $cell = $table->addCell($cellValue, $borderTopLeftRight);
-                            } else if ($printCount == (count($toPrintAdmin) - 1)){
-                              $cell = $table->addCell($cellValue,$borderLeftRightBottom);
-                            } else {
-                              $cell = $table->addCell($cellValue,$borderLeftRight);
-                            }
-                          }
                         } else {
                             $cell = $table->addCell($cellValue, $allBorders);
                         }
@@ -6125,41 +6134,41 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     $table->addCell($appendixFirstCell)->addText(htmlspecialchars($finalDistriAccountName[$i]), $fontstyleName, $noSpace);
                     for ($x = 0; $x < count($finalDistriAccountAmount[$i]); $x++) {
                         if (count($finalDistriAccountName) > 1) {
-                          if (count($finalDistriAccountAmount[$i]) > 1){
-                            if ($i == count($finalDistriAccountAmount) - 1) {
-                                if ($x == count($finalDistriAccountAmount[$i]) - 1) {
-                                    $cell = $table->addCell($cellValue, $borderBottomAndRight);
-                                } else if ($x == 0) {
-                                    $cell = $table->addCell($cellValue, $borderBottomAndLeft);
+                            if (count($finalDistriAccountAmount[$i]) > 1) {
+                                if ($i == count($finalDistriAccountAmount) - 1) {
+                                    if ($x == count($finalDistriAccountAmount[$i]) - 1) {
+                                        $cell = $table->addCell($cellValue, $borderBottomAndRight);
+                                    } else if ($x == 0) {
+                                        $cell = $table->addCell($cellValue, $borderBottomAndLeft);
+                                    } else {
+                                        $cell = $table->addCell($cellValue, $cellBottomBorder);
+                                    }
+                                } else if ($i == 0) {
+                                    if ($x == count($finalDistriAccountAmount[$i]) - 1) {
+                                        $cell = $table->addCell($cellValue, $borderTopAndRight);
+                                    } else if ($x == 0) {
+                                        $cell = $table->addCell($cellValue, $borderTopAndLeft);
+                                    } else {
+                                        $cell = $table->addCell($cellValue, $borderTop);
+                                    }
                                 } else {
-                                    $cell = $table->addCell($cellValue, $cellBottomBorder);
-                                }
-                            } else if ($i == 0) {
-                                if ($x == count($finalDistriAccountAmount[$i]) - 1) {
-                                    $cell = $table->addCell($cellValue, $borderTopAndRight);
-                                } else if ($x == 0) {
-                                    $cell = $table->addCell($cellValue, $borderTopAndLeft);
-                                } else {
-                                    $cell = $table->addCell($cellValue, $borderTop);
+                                    if ($x == count($finalDistriAccountAmount[$i]) - 1) {
+                                        $cell = $table->addCell($cellValue, $borderRight);
+                                    } else if ($x == 0) {
+                                        $cell = $table->addCell($cellValue, $borderLeft);
+                                    } else {
+                                        $cell = $table->addCell($cellValue);
+                                    }
                                 }
                             } else {
-                                if ($x == count($finalDistriAccountAmount[$i]) - 1) {
-                                    $cell = $table->addCell($cellValue, $borderRight);
-                                } else if ($x == 0) {
-                                    $cell = $table->addCell($cellValue, $borderLeft);
+                                if ($printCount == 0) {
+                                    $cell = $table->addCell($cellValue, $borderTopLeftRight);
+                                } else if ($printCount == (count($toPrintDistri) - 1)) {
+                                    $cell = $table->addCell($cellValue, $borderLeftRightBottom);
                                 } else {
-                                    $cell = $table->addCell($cellValue);
+                                    $cell = $table->addCell($cellValue, $borderLeftRight);
                                 }
                             }
-                          } else {
-                            if ($printCount == 0){
-                              $cell = $table->addCell($cellValue, $borderTopLeftRight);
-                            } else if ($printCount == (count($toPrintDistri) - 1)){
-                              $cell = $table->addCell($cellValue,$borderLeftRightBottom);
-                            } else {
-                              $cell = $table->addCell($cellValue,$borderLeftRight);
-                            }
-                          }
                         } else {
                             $cell = $table->addCell($cellValue, $allBorders);
                         }
@@ -6268,41 +6277,41 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     $table->addCell($appendixFirstCell)->addText(htmlspecialchars($finalFinanceAccountName[$i]), $fontstyleName, $noSpace);
                     for ($x = 0; $x < count($finalFinanceAccountAmount[$i]); $x++) {
                         if (count($finalFinanceAccountName) > 1) {
-                          if (count($finalFinanceAccountAmount[$i]) > 1) {
-                            if ($i == count($finalFinanceAccountAmount) - 1) {
-                                if ($x == count($finalFinanceAccountAmount[$i]) - 1) {
-                                    $cell = $table->addCell($cellValue, $borderBottomAndRight);
-                                } else if ($x == 0) {
-                                    $cell = $table->addCell($cellValue, $borderBottomAndLeft);
+                            if (count($finalFinanceAccountAmount[$i]) > 1) {
+                                if ($i == count($finalFinanceAccountAmount) - 1) {
+                                    if ($x == count($finalFinanceAccountAmount[$i]) - 1) {
+                                        $cell = $table->addCell($cellValue, $borderBottomAndRight);
+                                    } else if ($x == 0) {
+                                        $cell = $table->addCell($cellValue, $borderBottomAndLeft);
+                                    } else {
+                                        $cell = $table->addCell($cellValue, $cellBottomBorder);
+                                    }
+                                } else if ($i == 0) {
+                                    if ($x == count($finalFinanceAccountAmount[$i]) - 1) {
+                                        $cell = $table->addCell($cellValue, $borderTopAndRight);
+                                    } else if ($x == 0) {
+                                        $cell = $table->addCell($cellValue, $borderTopAndLeft);
+                                    } else {
+                                        $cell = $table->addCell($cellValue, $borderTop);
+                                    }
                                 } else {
-                                    $cell = $table->addCell($cellValue, $cellBottomBorder);
-                                }
-                            } else if ($i == 0) {
-                                if ($x == count($finalFinanceAccountAmount[$i]) - 1) {
-                                    $cell = $table->addCell($cellValue, $borderTopAndRight);
-                                } else if ($x == 0) {
-                                    $cell = $table->addCell($cellValue, $borderTopAndLeft);
-                                } else {
-                                    $cell = $table->addCell($cellValue, $borderTop);
+                                    if ($x == count($finalFinanceAccountAmount[$i]) - 1) {
+                                        $cell = $table->addCell($cellValue, $borderRight);
+                                    } else if ($x == 0) {
+                                        $cell = $table->addCell($cellValue, $borderLeft);
+                                    } else {
+                                        $cell = $table->addCell($cellValue);
+                                    }
                                 }
                             } else {
-                                if ($x == count($finalFinanceAccountAmount[$i]) - 1) {
-                                    $cell = $table->addCell($cellValue, $borderRight);
-                                } else if ($x == 0) {
-                                    $cell = $table->addCell($cellValue, $borderLeft);
+                                if ($printCount == 0) {
+                                    $cell = $table->addCell($cellValue, $borderTopLeftRight);
+                                } else if ($printCount == (count($toPrintFinance) - 1)) {
+                                    $cell = $table->addCell($cellValue, $borderLeftRightBottom);
                                 } else {
-                                    $cell = $table->addCell($cellValue);
+                                    $cell = $table->addCell($cellValue, $borderLeftRight);
                                 }
                             }
-                          } else {
-                            if ($printCount == 0){
-                              $cell = $table->addCell($cellValue, $borderTopLeftRight);
-                            } else if ($printCount == (count($toPrintFinance) - 1)){
-                              $cell = $table->addCell($cellValue,$borderLeftRightBottom);
-                            } else {
-                              $cell = $table->addCell($cellValue,$borderLeftRight);
-                            }
-                          }
                         } else {
                             $cell = $table->addCell($cellValue, $allBorders);
                         }
