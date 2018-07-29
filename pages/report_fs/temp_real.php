@@ -1069,14 +1069,16 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             $table->addRow();
             $table->addCell($firstCellValue)->addText(htmlspecialchars("The Company"), array('underline' => 'single'));
 
-            $table->addRow();
+            
 
             for ($i = 0; $i < $noOfDirectors; $i++) {
-
+                $table->addRow();
                 $table->addCell()->addText($directorName[$i], $fontstyleName);
                 $table->addCell()->addText($directorStartShare[$i], $fontstyleName, $centerAlignment);
                 $table->addCell()->addText($directorEndShare[$i], $fontstyleName, $centerAlignment);
+                   
             }
+            
 
 //Page 2
             $section = $phpWord->createSection();
