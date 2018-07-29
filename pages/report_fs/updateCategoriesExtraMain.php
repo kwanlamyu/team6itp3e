@@ -253,9 +253,14 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         echo "Please choose which Main Category it belongs to! <br><br>";
 
                                         $tempSubArray = array_unique($tempSubArray);
+                                       
+                                        $display = array();
+                                        foreach ($tempSubArray as $value) {
+                                            array_push($display, $value);
+                                        }
                                         
-                                        for ($i = 0; $i < count($tempSubArray); $i++) {
-                                            echo "<b>Current Sub Account: </b>" . $tempSubArray[$i] . "<br>";
+                                        for ($i = 0; $i < count($display); $i++) {
+                                            echo "<b>Current Sub Account: </b>" . $display[$i] . "<br>";
 
                                             $startDataList = "<input id='category" . $i . "' list='category" . $i . "' value='' class='form-control' name='main[]'/>";
                                             $bodyDataList = "<datalist id='category" . $i . "'style='overflow-y:scroll; height:10px;'>";
@@ -268,7 +273,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             echo "<hr>";
                                         }
 
-                                        foreach ($tempSubArray as $v) {
+                                        foreach ($display as $v) {
                                             echo "<input type='hidden' name='subAccount[]' value='" . $v . "'/>";
                                         }
 

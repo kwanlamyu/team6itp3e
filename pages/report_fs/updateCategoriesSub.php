@@ -280,7 +280,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                                             // insert assets
                                             $mainAccount = "Assets";
-                                            $accountNames = "Bank Balances,Deposits,Trade Receivables,Plant and Equipment,Prepayments,Amount owing from a Shareholder";
+                                            $accountNames = "Bank Balances,Deposits,Trade Receivables,Plant and Equipment,Prepayments,Amount owing from a Shareholder,Inventories";
                                             $query->execute();
 
                                             $mainAccount = "Both Liabilities";
@@ -304,7 +304,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $query->execute();
 
                                             $mainAccount = "Expenses";
-                                            $accountNames = "Administrative Expenses,Distribution and Marketing Expenses,Income Tax Expense,Finance Expenses";
+                                            $accountNames = "Administrative Expenses,Distribution and Marketing Expenses,Income Tax Expense,Finance Expenses,Travelling expenses,Website and mailing expenses";
                                             $query->execute();
 
                                             $mainAccount = "Income";
@@ -351,7 +351,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $query->execute();
 
                                             $subAccount = "Administrative Expenses";
-                                            $accountNames = "Accounting fee,Administrative expenses,Business entertainment,Bank Charges,Compilation fee,Depreciation,Entertainment,Freight paid,Director Remuneration,Insurance,Internet expenses,Late Fees Paid,Medical Expenses,Nominee Director Services,Office Supplies,Postage and courier,Professional Fee,Printing and stationery,Rent,Secretarial services,Staff Salaries,Staff cost - employment pass,Secretarial  fee,Taxation services,Skill Development Levy,Wages & Salaries";
+                                            $accountNames = "Accounting fee,Administrative expenses,Business entertainment,Bank Charges,Compilation fee,Depreciation,Entertainment,Freight charges,Freight paid,Director Remuneration,Insurance,Internet expenses,Late Fees Paid,Medical Expenses,Nominee Director Services,Office Supplies,Postage and courier,Professional Fee,Printing and stationery,Rent,Secretarial services,Staff Salaries,Staff cost - employment pass,Secretarial fee,Taxation fee,Taxation service,Registered address service,Subscription charges,Stamp duty,Skill Development Levy,Wages & Salaries";
                                             $query->execute();
 
                                             $subAccount = "Amount owing from a Shareholder";
@@ -359,7 +359,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $query->execute();
 
                                             $subAccount = "Bank Balances";
-                                            $accountNames = "OCBC Bank,OCBC - USD,OCBC - USD Exchange";
+                                            $accountNames = "OCBC Bank,OCBC - USD,OCBC - USD Exchange,OCBC-SGD bank acc,OCBC-USD bank acc,OCBC-USD bank acc Exchange,Cash on hand,Foreign exchange loss,Foreign exchange gain";
                                             $query->execute();
 
                                             $subAccount = "Borrowings";
@@ -379,7 +379,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $query->execute();
 
                                             $subAccount = "Distribution and Marketing Expenses";
-                                            $accountNames = "Telephone,Transport - Taxi fare,Travelling";
+                                            $accountNames = "Telephone expenses,Transport - Taxi fare,Travelling";
                                             $query->execute();
 
                                             $subAccount = "Finance Expenses";
@@ -394,9 +394,13 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $accountNames = "Income tax expense,Income Tax Payables,Income tax expenses";
                                             $query->execute();
 
-                                            // $subAccount = "Other Income";
-                                            // $accountNames = "Unrealised exchange difference";
-                                            // $query->execute();
+                                            $subAccount = "Inventories";
+                                            $accountNames = "Inventory";
+                                            $query->execute();
+
+                                            $subAccount = "Other Income";
+                                            $accountNames = "Foreign exchange gain";
+                                            $query->execute();
 
                                             $subAccount = "Plant and Equipment";
                                             $accountNames = "Office Equipment at Cost,Office Equipment Accum Dep'n,Softwares at Cost,Softwares Accum Dep'n,Computer & servers - cost,Computer and servers - acc dep";
@@ -415,23 +419,27 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $query->execute();
 
                                             $subAccount = "Share Capital";
-                                            $accountNames = "Paid Up Capital";
+                                            $accountNames = "Paid Up Capital,Owner/Sharehldr Capital";
                                             $query->execute();
 
                                             $subAccount = "Trade Payables";
-                                            $accountNames = "Trade Payables,Trade Payables - USD,Trade Payables - USD Exchange";
+                                            $accountNames = "Trade Creditors,Trade Payables,Trade Payables - USD,Trade Payables - USD Exchange";
                                             $query->execute();
 
                                             $subAccount = "Trade Receivables";
-                                            $accountNames = "Trade Receivables,Trade Receivables - USD,Trade Receivables - USD Exchan";
+                                            $accountNames = "Trade Debtors,Trade Receivables,Trade Receivables - USD,Trade Receivables - USD Exchan";
                                             $query->execute();
 
                                             $subAccount = "Amount owing to a Shareholder";
-                                            $accountNames = "Amount owing to directors";
+                                            $accountNames = "Amount owing to directors,Amount due to a shareholder";
                                             $query->execute();
 
-                                            $subAccount = "Telephone Expenses";
-                                            $accountNames = "Telephone charges,Telephone";
+                                            $subAccount = "Travelling expenses";
+                                            $accountNames = "Travelling expenses";
+                                            $query->execute();
+
+                                            $subAccount = "Website and mailing expenses";
+                                            $accountNames = "Website and mailing expenses";
                                             $query->execute();
 
                                             $subAccount = "Exchanges";
@@ -448,11 +456,11 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $query->bindParam(':account_names', $accountNames);
 
                                             $account = "Accounting fee";
-                                            $accountNames = "Accounting fee,Bookkeeping fee";
+                                            $accountNames = "Accounting fee,Accounting Fees,Bookkeeping fee";
                                             $query->execute();
 
                                             $account = "Administrative expenses";
-                                            $accountNames = "Administrative expenses";
+                                            $accountNames = "Administrative expenses,Foreign exchange loss,Preliminary expenses";
                                             $query->execute();
 
                                             $account = "Bank charges";
@@ -460,7 +468,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $query->execute();
 
                                             $account = "Compilation fee";
-                                            $accountNames = "Compilation fee";
+                                            $accountNames = "Compilation fee,Compilation expenses";
                                             $query->execute();
 
                                             $account = "Depreciation";
@@ -487,12 +495,20 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $accountNames = "Freight charges,Freight paid";
                                             $query->execute();
 
+                                            $account = "Foreign exchange gain";
+                                            $accountNames = "Foreign exchange gain";
+                                            $query->execute();
+
                                             $account = "Insurance";
                                             $accountNames = "Insurance,Medical Expenses";
                                             $query->execute();
 
                                             $account = "Internet expenses";
                                             $accountNames = "Internet expenses";
+                                            $query->execute();
+
+                                            $account = "Inventory";
+                                            $accountNames = "Packing materials,Opening stock,Closing stock";
                                             $query->execute();
 
                                             $account = "Late penalty";
@@ -519,6 +535,14 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $accountNames = "Printing and stationery";
                                             $query->execute();
 
+                                            $account = "Purchases";
+                                            $accountNames = "Returns and Allowances";
+                                            $query->execute();
+
+                                            $account = "Registered address service";
+                                            $accountNames = "Registered address service";
+                                            $query->execute();
+
                                             $account = "Rental";
                                             $accountNames = "Rental,Rent";
                                             $query->execute();
@@ -535,8 +559,16 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $accountNames = "Skill Development Levy,Skill development levy & SINDA";
                                             $query->execute();
 
+                                            $account = "Stamp duty";
+                                            $accountNames = "Stamp duty";
+                                            $query->execute();
+
+                                            $account = "Subscription charges";
+                                            $accountNames = "Software subscriptions";
+                                            $query->execute();
+
                                             $account = "Taxation fee";
-                                            $accountNames = "Taxation fee,Taxation services";
+                                            $accountNames = "Taxation fee,Taxation services,Taxation service";
                                             $query->execute();
 
                                             $account = "Travelling expenses";
@@ -554,6 +586,10 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $account = "Interest on bank borrowings";
                                             $accountNames = "Interest on bank borrowings";
                                             $query->execute();
+
+                                            $account = "Website and mailing expenses";
+                                            $accountNames = "Website and mailing expenses";
+                                            $query->execute();
                                         }
 
                                         echo "<span>Company: " . $companyName . "</span><br/>";
@@ -568,6 +604,14 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         $result = $query->setFetchMode(PDO::FETCH_ASSOC);
                                         $result = $query->fetchAll();
 
+                                        $mainQuery = $DB_con->prepare("SELECT * FROM sub_category WHERE company_name =:companyName AND client_company = :clientName");
+                                        $mainQuery->bindParam(':companyName', $companyName);
+                                        $mainQuery->bindParam(':clientName', $clientName);
+                                        $mainQuery->execute();
+
+                                        $mainResult = $mainQuery->setFetchMode(PDO::FETCH_ASSOC);
+                                        $mainResult = $mainQuery->fetchAll();
+
                                         $originalValue = array();
                                         $accountValue = array();
                                         ?>
@@ -576,41 +620,53 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         <form method="post" name="updateCategoryForm" action="updateCategoriesExtraMain.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
                                             <?php
                                             for ($i = 0; $i < count($allAccounts); $i++) {
-                                                echo "<b>Account name: </b> $allAccounts[$i] <br/>";
-                                                echo "<div>";
-                                                $startDataList = "<input list='category" . $i . "' value='' class='form-control' name='category[]'/>";
-                                                $bodyDataList = "<datalist id='category" . $i . "' style='overflow-y:scroll; height:20px;'>";
-                                                $setCat = 0;
-                                                for ($x = 0; $x < count($result); $x++) {
-                                                    $underThisAccount = $result[$x]['account_names'];
-                                                    $underThisAccount = explode(",", $underThisAccount);
-                                                    $subCatResult = "";
-                                                    $foundSubCat = 0;
 
-                                                    if ($setCat == 0) {
-                                                        for ($j = 0; $j < count($underThisAccount); $j++) {
-                                                            if (strcasecmp($underThisAccount[$j], $allAccounts[$i]) === 0) {
-                                                                array_push($originalValue, $result[$x]['sub_account']);
-                                                                array_push($accountValue, $allAccounts[$i]);
+                                                for ($a = 0; $a < count($mainResult); $a++) {
+                                                    $inThisAccount = $mainResult[$a]['account_names'];
+                                                    $inThisAccount = explode(",", $inThisAccount);
 
-                                                                $foundSubCat = 1;
-                                                                $startDataList = "<input list='category" . $i . "' value='" . $result[$x]['sub_account'] . "' class='form-control' name='category[]'/>";
-                                                                break;
+                                                    for ($b = 0; $b < count($inThisAccount); $b++) {
+                                                    if (strcasecmp($inThisAccount[$b], $allAccounts[$i]) === 0) {
+
+                                                            echo "<b>Account name: </b> $allAccounts[$i] <br/>";
+                                                            echo "<div>";
+
+                                                            $startDataList = "<input list='category" . $i . "' value='' class='form-control' name='category[]'/>";
+                                                            $bodyDataList = "<datalist id='category" . $i . "' style='overflow-y:scroll; height:20px;'>";
+                                                            $setCat = 0;
+                                                            for ($x = 0; $x < count($result); $x++) {
+                                                                $underThisAccount = $result[$x]['account_names'];
+                                                                $underThisAccount = explode(",", $underThisAccount);
+                                                                $subCatResult = "";
+                                                                $foundSubCat = 0;
+
+                                                                if ($setCat == 0) {
+                                                                    for ($j = 0; $j < count($underThisAccount); $j++) {
+                                                                        if (strcasecmp($underThisAccount[$j], $allAccounts[$i]) === 0) {
+                                                                            array_push($originalValue, $result[$x]['sub_account']);
+                                                                            array_push($accountValue, $allAccounts[$i]);
+
+                                                                            $foundSubCat = 1;
+                                                                            $startDataList = "<input list='category" . $i . "' value='" . $result[$x]['sub_account'] . "' class='form-control' name='category[]'/>";
+                                                                            break;
+                                                                        }
+                                                                    }
+                                                                }
+                                                                if ($foundSubCat == 1) {
+                                                                    $setCat = 1;
+                                                                }
+                                                                $bodyDataList .= "<option value='" . $result[$x]['sub_account'] . "'>";
                                                             }
+                                                            if ($setCat == 0) {
+                                                                array_push($originalValue, "");
+                                                                array_push($accountValue, $allAccounts[$i]);
+                                                            }
+
+                                                            echo "<label>Choose a category:" . $startDataList . "</label><div>" . $bodyDataList . "</datalist></div>";
+                                                            echo "</div>";
                                                         }
                                                     }
-                                                    if ($foundSubCat == 1) {
-                                                        $setCat = 1;
-                                                    }
-                                                    $bodyDataList .= "<option value='" . $result[$x]['sub_account'] . "'>";
                                                 }
-                                                if ($setCat == 0) {
-                                                    array_push($originalValue, "");
-                                                    array_push($accountValue, $allAccounts[$i]);
-                                                }
-
-                                                echo "<label>Choose a category:" . $startDataList . "</label><div>" . $bodyDataList . "</datalist></div>";
-                                                echo "</div>";
                                             }
                                         } catch (PDOException $e) {
                                             echo 'Error: ' . $e->getMessage();
@@ -672,19 +728,19 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 <script type="text/javascript">
 
     function check() {
-      var inputs = document.getElementsByTagName("input");
-      for (i = 0; i < inputs.length; i++){
-        if (inputs[i].getAttribute("name") == "category[]"){
-          if (inputs[i].value.trim().length == 0){
-            alert("Please fill in all fields");
-            return false;
-          }
-        } else {
-          continue;
+        var inputs = document.getElementsByTagName("input");
+        for (i = 0; i < inputs.length; i++) {
+            if (inputs[i].getAttribute("name") == "category[]") {
+                if (inputs[i].value.trim().length == 0) {
+                    alert("Please fill in all fields");
+                    return false;
+                }
+            } else {
+                continue;
+            }
         }
-      }
-      return true;
-      // return true;
+        return true;
+        // return true;
     }
 
 </script>
