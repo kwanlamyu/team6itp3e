@@ -251,18 +251,18 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     <form method="post" name="updateCategoryForm" action="updateCategoriesMain.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
                                         <?php
                                         echo "Please choose which Main Category it belongs to! <br><br>";
-                                        
+
                                         $tempSubArray = array_unique($tempSubArray);
                                         for ($i = 0; $i < count($tempSubArray); $i++) {
                                             echo "<b>Current Sub Account: </b>" . $tempSubArray[$i] . "<br>";
-                                            
+
                                             $startDataList = "<input id='category" . $i . "' list='category" . $i . "' value='' class='form-control' name='main[]'/>";
                                             $bodyDataList = "<datalist id='category" . $i . "'style='overflow-y:scroll; height:10px;'>";
-                                            
+
                                             for ($j = 0; $j < count($mainAccountArrayDB); $j++) {
                                                 $bodyDataList .= "<option value='" . $mainAccountArrayDB[$j] . "'>";
                                             }
-                                            
+
                                             echo "<label>Choose a category:" . $startDataList . "</label><div>" . $bodyDataList . "</datalist></div>";
                                             echo "<hr>";
                                         }
@@ -289,7 +289,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         ?>
 
                                         <input type="hidden" name="key" value="yes"/>
-                                        
+
                                         <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
                                         <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
                                         <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
@@ -299,7 +299,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                 <?php } else { ?>
                                     <form method="post" id = "categoryForm" name="myForm" action="updateCategoriesMain.php">
                                         <?php
-                                        
+
                                         foreach ($dateStart as $value) {
                                             echo "<input type='hidden' name='dateStart[]' value='" . $value . "'/>";
                                         }

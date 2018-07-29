@@ -351,7 +351,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $query->execute();
 
                                             $subAccount = "Administrative Expenses";
-                                            $accountNames = "Accounting fee,Administrative expenses,Business entertainment,Bank Charges,Compilation fee,Depreciation,Entertainment,Freight paid,Director Remuneration,Insurance,Internet expenses,Late Fees Paid,Nominee Director Services,Office Supplies,Postage and courier,Professional Fee,Printing and stationery,Rent,Secretarial services,Staff Salaries,Staff cost - employment pass,Secretarial  fee,Taxation services,Skill Development Levy,Wages & Salaries";
+                                            $accountNames = "Accounting fee,Administrative expenses,Business entertainment,Bank Charges,Compilation fee,Depreciation,Entertainment,Freight paid,Director Remuneration,Insurance,Internet expenses,Late Fees Paid,Medical Expenses,Nominee Director Services,Office Supplies,Postage and courier,Professional Fee,Printing and stationery,Rent,Secretarial services,Staff Salaries,Staff cost - employment pass,Secretarial  fee,Taxation services,Skill Development Levy,Wages & Salaries";
                                             $query->execute();
 
                                             $subAccount = "Amount owing from a Shareholder";
@@ -387,7 +387,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $query->execute();
 
                                             $subAccount = "GST Payables";
-                                            $accountNames = "GST control";
+                                            $accountNames = "GST control,GST Collected";
                                             $query->execute();
 
                                             $subAccount = "Income Tax Expense";
@@ -419,11 +419,11 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $query->execute();
 
                                             $subAccount = "Trade Payables";
-                                            $accountNames = "Trade Payables - USD,Trade Payables - USD Exchange";
+                                            $accountNames = "Trade Payables,Trade Payables - USD,Trade Payables - USD Exchange";
                                             $query->execute();
 
                                             $subAccount = "Trade Receivables";
-                                            $accountNames = "Trade Receivables - USD,Trade Receivables - USD Exchan";
+                                            $accountNames = "Trade Receivables,Trade Receivables - USD,Trade Receivables - USD Exchan";
                                             $query->execute();
 
                                             $subAccount = "Amount owing to a Shareholder";
@@ -577,10 +577,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             <?php
                                             for ($i = 0; $i < count($allAccounts); $i++) {
                                                 echo "<b>Account name: </b> $allAccounts[$i] <br/>";
-                                                echo "<b>Matching account category: </b>";
                                                 echo "<div>";
-                                                $startDataList = "<input id='category" . $i . "' list='category" . $i . "' value='' class='form-control' name='category[]'/>";
-                                                $bodyDataList = "<datalist id='category" . $i . "'style='overflow-y:scroll; height:20px;'>";
+                                                $startDataList = "<input list='category" . $i . "' value='' class='form-control' name='category[]'/>";
+                                                $bodyDataList = "<datalist id='category" . $i . "' style='overflow-y:scroll; height:20px;'>";
                                                 $setCat = 0;
                                                 for ($x = 0; $x < count($result); $x++) {
                                                     $underThisAccount = $result[$x]['account_names'];
@@ -644,6 +643,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     foreach ($accountValue as $v) {
                                         echo "<input type='hidden' name='accountValue[]' value='" . $v . "'/>";
                                     }
+
                                     foreach ($originalValue as $value) {
                                         echo "<input type='hidden' name='originalValue[]' value='" . $value . "'/>";
                                     }
@@ -672,17 +672,19 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 <script type="text/javascript">
 
     function check() {
-
-        var allAccountCount = <?php echo count($allAccounts); ?>;
-
-        for (i = 0; i < allAccountCount; i++) {
-            if (document.getElementById('category' + i).value === "") {
-                alert('Please fill in all fields.');
-                return false;
-            }
+      var inputs = document.getElementsByTagName("input");
+      for (i = 0; i < inputs.length; i++){
+        if (inputs[i].getAttribute("name") == "category[]"){
+          if (inputs[i].value.trim().length == 0){
+            alert("Please fill in all fields");
+            return false;
+          }
+        } else {
+          continue;
         }
-
-        return true;
+      }
+      return true;
+      // return true;
     }
 
 </script>

@@ -208,7 +208,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         $accountValue = array();
                                         ?>
 
-                                        <form method="post" name="updateCategoryForm" action="updateCategoriesExtraSubAccount.php" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+                                        <form method="post" name="updateCategoryForm" action="updateCategoriesExtraSubAccount.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
                                             <?php
                                             $underAdminExpense = array();
                                             $underDistriExpense = array();
@@ -333,5 +333,25 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 }
 ?>
 
-<?php // include '../general/footer_content.php';    ?>
-<?php // include '../general/footer.php';  ?>
+<?php include '../general/footer_content.php';    ?>
+<?php include '../general/footer.php';  ?>
+
+<script type="text/javascript">
+
+    function check() {
+      var inputs = document.getElementsByTagName("input");
+      for (i = 0; i < inputs.length; i++){
+        if (inputs[i].getAttribute("name") == "category[]"){
+          if (inputs[i].value.trim().length == 0){
+            alert("Please fill in all fields");
+            return false;
+          }
+        } else {
+          continue;
+        }
+      }
+      return true;
+      // return true;
+    }
+
+</script>
