@@ -1369,8 +1369,21 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 array_push($calculatedAdminExpense, round($tempValue));
             }
 
+            $tempExpenseCategory = array();
+            for ($i = 0; $i < count($expenseAmount); $i++) {
+                for ($x = 0; $x < count($expenseAmount[$i]); $x++) {
+                    if (!in_array($expenseAmount[$i][$x][0], $tempExpenseCategory)) {
+                        array_push($tempExpenseCategory, $expenseAmount[$i][$x][0]);
+                    }
+                }
+            }
+
             for ($i = 0; $i < count($calculatedAdminExpense); $i++) {
-                $cell = $table->addCell($cellValue);
+                if (count($distriExpense) == 0 && count($tempExpenseCategory) == 0){
+                  $cell = $table->addCell($cellValue,$cellBottomBorder);
+                } else {
+                  $cell = $table->addCell($cellValue);
+                }
                 if ($calculatedAdminExpense[$i] == 0) {
                     $cell->addText("-", $fontstyleName, $centerAlignment);
                 } else {
@@ -1407,7 +1420,12 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             }
 
             for ($i = 0; $i < count($calculatedDistriExpense); $i++) {
-                $cell = $table->addCell($cellValue);
+                if (count($tempExpenseCategory) == 0){
+                  $cell = $table->addCell($cellValue, $cellBottomBorder);
+                } else {
+                  $cell = $table->addCell($cellValue);
+                }
+
                 if ($calculatedDistriExpense[$i] == 0) {
                     $cell->addText("-", $fontstyleName, $centerAlignment);
                 } else {
@@ -1416,14 +1434,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 $totalExpenses[$i] += $calculatedDistriExpense[$i];
             }
 
-            $tempExpenseCategory = array();
-            for ($i = 0; $i < count($expenseAmount); $i++) {
-                for ($x = 0; $x < count($expenseAmount[$i]); $x++) {
-                    if (!in_array($expenseAmount[$i][$x][0], $tempExpenseCategory)) {
-                        array_push($tempExpenseCategory, $expenseAmount[$i][$x][0]);
-                    }
-                }
-            }
+
 
             $tempExpenseArray = array();
             for ($i = 0; $i < count($tempExpenseCategory); $i++) {
@@ -1515,33 +1526,42 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 }
             }
 
-            $table->addRow();
-            $incomeTaxValues = array();
-            $cell = $table->addCell($firstCellValue);
-            $cell->addText("Income tax expense");
-            $noteNumber = 0;
-            for ($i = 0; $i < count($sequenceCategory); $i++) {
-                if (stripos($sequenceCategory[$i], "income tax") !== false) {
-                    $noteNumber = $i + $defaultNoteNumber;
-                }
+            $incomeTaxSet = 0;
+            for ($i = 0; $i < count($incomeTaxExpense); $i++){
+              if (count($incomeTaxExpense[$i]) > 0){
+                $incomeTaxSet++;
+              }
             }
 
-            $cell = $table->addCell($cellValue);
-            if ($noteNumber != 0) {
-                $cell->addText($noteNumber, $fontstyleName, $centerAlignment);
-            }
+            if ($incomeTaxSet > 0){
+              $table->addRow();
+              $incomeTaxValues = array();
+              $cell = $table->addCell($firstCellValue);
+              $cell->addText("Income tax expense");
+              $noteNumber = 0;
+              for ($i = 0; $i < count($sequenceCategory); $i++) {
+                  if (stripos($sequenceCategory[$i], "income tax") !== false) {
+                      $noteNumber = $i + $defaultNoteNumber;
+                  }
+              }
 
-            for ($i = 0; $i < count($incomeTaxExpense); $i++) {
-                for ($x = 0; $x < count($incomeTaxExpense[$i]); $x++) {
-                    $tempValue = 0 - $incomeTaxExpense[$i][$x][1];
-                    array_push($incomeTaxValues, round($tempValue));
-                }
-            }
+              $cell = $table->addCell($cellValue);
+              if ($noteNumber != 0) {
+                  $cell->addText($noteNumber, $fontstyleName, $centerAlignment);
+              }
 
-            for ($i = 0; $i < count($incomeTaxValues); $i++) {
-                $cell = $table->addCell($cellValue, $cellBottomBorder);
-                $cell->addText("(" . number_format(abs($incomeTaxValues[$i])) . ")", $fontstyleName, $centerAlignment);
-            }
+              for ($i = 0; $i < count($incomeTaxExpense); $i++) {
+                  for ($x = 0; $x < count($incomeTaxExpense[$i]); $x++) {
+                      $tempValue = 0 - $incomeTaxExpense[$i][$x][1];
+                      array_push($incomeTaxValues, round($tempValue));
+                  }
+              }
+
+              for ($i = 0; $i < count($incomeTaxValues); $i++) {
+                  $cell = $table->addCell($cellValue, $cellBottomBorder);
+                  $cell->addText("(" . number_format(abs($incomeTaxValues[$i])) . ")", $fontstyleName, $centerAlignment);
+              }
+          }
 
             $netPandL = array();
             for ($i = 0; $i < count($beforeIncomeTax); $i++) {
@@ -1935,35 +1955,49 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             }
 
             for ($i = 0; $i < count($tempOtherLiabilities); $i++) {
-                $table->addRow();
-                $table->addCell($firstCellValue)->addText($tempOtherLiabilities[$i]);
-                $cell = $table->addCell($cellValue);
-                $noteNumber = 0;
-                for ($x = 0; $x < count($sequenceCategory); $x++) {
-                    if (stripos($sequenceCategory[$x], $tempOtherLiabilities[$i]) !== false) {
-                        $noteNumber = $x + $defaultNoteNumber;
-                    }
-                }
-
-                if ($noteNumber != 0) {
-                    $cell->addText($noteNumber, $fontstyleName, $centerAlignment);
-                }
-
-                if ((stripos($tempOtherLiabilities[$i], "borrowing") !== false) && (isset($borrowingArray['current']) || isset($borrowingArray['non-current']))) {
-                    for ($x = 0; $x < $numberOfSheets; $x++) {
-                        if ($i == (count($tempOtherLiabilities) - 1)) {
-                            $cell = $table->addCell($cellValue, $cellBottomBorder);
-                        } else {
-                            $cell = $table->addCell($cellValue);
-                        }
-
-                        if (isset($borrowingArray['current'][$years[$x]])) {
-                            $cell->addText(number_format($borrowingArray['current'][$years[$x]]), $fontstyleName, $centerAlignment);
-                        } else {
-                            $cell->addText("-", $fontstyleName, $centerAlignment);
+                if (stripos($tempOtherLiabilities[$i], "borrowing") !== false) {
+                  if (isset($borrowingArray['current']) || isset($borrowingArray['non-current'])){
+                    $table->addRow();
+                    $table->addCell($firstCellValue)->addText($tempOtherLiabilities[$i]);
+                    $cell = $table->addCell($cellValue);
+                    $noteNumber = 0;
+                    for ($x = 0; $x < count($sequenceCategory); $x++) {
+                        if (stripos($sequenceCategory[$x], $tempOtherLiabilities[$i]) !== false) {
+                            $noteNumber = $x + $defaultNoteNumber;
                         }
                     }
+
+                    if ($noteNumber != 0) {
+                        $cell->addText($noteNumber, $fontstyleName, $centerAlignment);
+                    }
+                      for ($x = 0; $x < $numberOfSheets; $x++) {
+                          if ($i == (count($tempOtherLiabilities) - 1)) {
+                              $cell = $table->addCell($cellValue, $cellBottomBorder);
+                          } else {
+                              $cell = $table->addCell($cellValue);
+                          }
+
+                          if (isset($borrowingArray['current'][$years[$x]])) {
+                              $cell->addText(number_format($borrowingArray['current'][$years[$x]]), $fontstyleName, $centerAlignment);
+                          } else {
+                              $cell->addText("-", $fontstyleName, $centerAlignment);
+                          }
+                      }
+                  }
                 } else {
+                    $table->addRow();
+                    $table->addCell($firstCellValue)->addText($tempOtherLiabilities[$i]);
+                    $cell = $table->addCell($cellValue);
+                    $noteNumber = 0;
+                    for ($x = 0; $x < count($sequenceCategory); $x++) {
+                        if (stripos($sequenceCategory[$x], $tempOtherLiabilities[$i]) !== false) {
+                            $noteNumber = $x + $defaultNoteNumber;
+                        }
+                    }
+
+                    if ($noteNumber != 0) {
+                        $cell->addText($noteNumber, $fontstyleName, $centerAlignment);
+                    }
                     for ($x = 0; $x < count($otherLiabilitesFinal[$i]); $x++) {
                         if ($i == (count($tempOtherLiabilities) - 1)) {
                             $cell = $table->addCell($cellValue, $cellBottomBorder);
@@ -2020,9 +2054,11 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 }
             }
 
-            $table->addRow();
-            $table->addCell($firstCellValue)->addText("Non-current liabilities", $fontStyleBlack);
+
+            // may use this if have additional non-current liabilities
+            $totalNonCurrentLiabilites = array();
             $hasNonCurrentBorrowing = false;
+            if ($hasNonCurrentBorrowing || count($totalNonCurrentLiabilites) > 0){
             for ($i = 0; $i < $numberOfSheets; $i++) {
                 if (isset($borrowingArray['non-current'][$years[$i]])) {
                     $hasNonCurrentBorrowing = true;
@@ -2031,9 +2067,10 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     continue;
                 }
             }
+            $table->addRow();
+            $table->addCell($firstCellValue)->addText("Non-current liabilities", $fontStyleBlack);
 
-// may use this if have additional non-current liabilities
-            $totalNonCurrentLiabilites = array();
+
 
             if ($hasNonCurrentBorrowing) {
                 $table->addRow();
@@ -2089,6 +2126,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     $cell->addText(number_format($totalLiabilities[$i]), $fontstyleName, $centerAlignment);
                 }
             }
+          }
 
 // change liabilities to negative since the display as positive is no longer required
             for ($i = 0; $i < count($totalLiabilities); $i++) {
@@ -2298,9 +2336,17 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             for ($i = count($retainedProfitsFromTB) - 1; $i >= 0; $i--) {
                 $currentShare;
                 if ($i == count($retainedProfitsFromTB) - 1) {
-                    $currentShare = round($shareCapitalFromTB[$i]);
+                    if (isset($shareCapitalFromTB[$i])){
+                      $currentShare = round($shareCapitalFromTB[$i]);
+                    } else {
+                      $currentShare = 0;
+                    }
                 } else {
-                    $currentShare = round($shareCapitalFromTB[$i + 1]);
+                    if (isset($shareCapitalFromTB[$i + 1])){
+                      $currentShare = round($shareCapitalFromTB[$i + 1]);
+                    } else {
+                      $currentShare = 0;
+                    }
                 }
                 $cell = $table->addCell($cellValue);
                 $cell->addText(number_format($currentShare), $fontstyleName, $centerAlignment);
@@ -2309,8 +2355,12 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 $cell = $table->addCell($cellValue);
                 $cell->addText(number_format(round($currentShare + $retainedProfitsFromTB[$i])), $fontstyleName, $centerAlignment);
                 if ($i < count($retainedProfitsFromTB) - 1) {
-                    if ($shareCapitalFromTB[$i] != $currentShare) {
-                        $issuanceShare = $shareCapitalFromTB[$i] - $currentShare;
+                  $tempAmount = 0;
+                  if (isset($shareCapitalFromTB[$i])){
+                    $tempAmount = $shareCapitalFromTB[$i];
+                  }
+                    if ($tempAmount != $currentShare) {
+                        $issuanceShare = $tempAmount - $currentShare;
                         array_push($issuedShareArray, $issuanceShare);
                         $table->addRow();
                         $cell = $table->addCell($equityFirstCell);
@@ -2342,12 +2392,21 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 $cell->addText("Balance as at " . $yearEndedArray[$i]);
             }
             $cell = $table->addCell($cellValue, array('borderBottomSize' => 18, 'borderBottomColor' => '#000000'));
-            $cell->addText(number_format($shareCapitalFromTB[0]), $fontstyleName, $centerAlignment);
+            $tempCapital = 0;
+            $tempProfit = 0;
+            if (isset($shareCapitalFromTB[0])){
+              $tempCapital = $shareCapitalFromTB[0];
+            }
+            if (isset($calculatedRetainedProfits[0])){
+              $tempProfit = $calculatedRetainedProfits[0];
+            }
+            $cell->addText(number_format($tempCapital), $fontstyleName, $centerAlignment);
             $cell = $table->addCell($cellValue, array('borderBottomSize' => 18, 'borderBottomColor' => '#000000'));
-            $cell->addText(number_format(round($calculatedRetainedProfits[0])), $fontstyleName, $centerAlignment);
+            $cell->addText(number_format(round($tempProfit)), $fontstyleName, $centerAlignment);
             $cell = $table->addCell($cellValue, array('borderBottomSize' => 18, 'borderBottomColor' => '#000000'));
-            $cell->addText(number_format(round($shareCapitalFromTB[0] + $calculatedRetainedProfits[0])), $fontstyleName, $centerAlignment);
-            if (round($totalEquityArray[0]) != round($shareCapitalFromTB[0] + $calculatedRetainedProfits[0])) {
+
+            $cell->addText(number_format(round($tempCapital + $tempProfit)), $fontstyleName, $centerAlignment);
+            if (round($totalEquityArray[0]) != round($tempCapital + $tempProfit)) {
                 echo '<script language="javascript">alert("Value mismatch: total equity in\nStatement of financial position\nAND\nStatement of changes in equity");</script>';
             }
 
@@ -2394,11 +2453,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 }
             }
 
-            $table->addRow();
-            $cell = $table->addCell($cashFlowFirstCell);
-            $cell->addText("Adjustments for:");
-            $adjustmentAccount = array();
-            $adjustmentValues = array();
             for ($i = 0; $i < count($adjustmentsCashFlow); $i++) {
                 for ($x = 0; $x < count($adjustmentsCashFlow[$i]); $x++) {
                     if (!in_array($adjustmentsCashFlow[$i][$x][0], $adjustmentAccount)) {
@@ -2407,38 +2461,47 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 }
             }
 
-            for ($i = 0; $i < count($adjustmentAccount); $i++) {
-                $adjustmentValues[$i] = array();
-                for ($x = 0; $x < count($adjustmentsCashFlow); $x++) {
-                    $tempValue = 0;
-                    for ($j = 0; $j < count($adjustmentsCashFlow[$x]); $j++) {
-                        if (stripos($adjustmentsCashFlow[$x][$j][0], $adjustmentAccount[$i]) !== false) {
-                            $tempValue += $adjustmentsCashFlow[$x][$j][1];
-                        }
-                    }
-                    $adjustmentValues[$i][count($adjustmentValues[$i])] = $tempValue;
-                }
-            }
+            if (count($adjustmentAccount) > 0){
+              $table->addRow();
+              $cell = $table->addCell($cashFlowFirstCell);
+              $cell->addText("Adjustments for:");
+              $adjustmentAccount = array();
+              $adjustmentValues = array();
 
-            for ($i = 0; $i < count($adjustmentAccount); $i++) {
-                $table->addRow();
-                $cell = $table->addCell($cashFlowFirstCell);
-                $cell->addText("\t" . $adjustmentAccount[$i], $fontstyleName, $noSpace);
-                for ($x = 0; $x < count($adjustmentValues[$i]); $x++) {
-                    if ($i == (count($adjustmentAccount) - 1)) {
-                        $cell = $table->addCell($cellValue, $cellBottomBorder);
-                    } else {
-                        $cell = $table->addCell($cellValue);
-                    }
-                    if ($adjustmentValues[$i][$x] == 0) {
-                        $cell->addText("-", $fontstyleName, $centerAlignment);
-                    } else if ($adjustmentValues[$i][$x] < 0) {
-                        $cell->addText("(" . number_format(abs($adjustmentValues[$i][$x])) . ")", $fontstyleName, $centerAlignment);
-                    } else {
-                        $cell->addText(number_format($adjustmentValues[$i][$x]), $fontstyleName, $centerAlignment);
-                    }
-                }
-            }
+
+              for ($i = 0; $i < count($adjustmentAccount); $i++) {
+                  $adjustmentValues[$i] = array();
+                  for ($x = 0; $x < count($adjustmentsCashFlow); $x++) {
+                      $tempValue = 0;
+                      for ($j = 0; $j < count($adjustmentsCashFlow[$x]); $j++) {
+                          if (stripos($adjustmentsCashFlow[$x][$j][0], $adjustmentAccount[$i]) !== false) {
+                              $tempValue += $adjustmentsCashFlow[$x][$j][1];
+                          }
+                      }
+                      $adjustmentValues[$i][count($adjustmentValues[$i])] = $tempValue;
+                  }
+              }
+
+              for ($i = 0; $i < count($adjustmentAccount); $i++) {
+                  $table->addRow();
+                  $cell = $table->addCell($cashFlowFirstCell);
+                  $cell->addText("\t" . $adjustmentAccount[$i], $fontstyleName, $noSpace);
+                  for ($x = 0; $x < count($adjustmentValues[$i]); $x++) {
+                      if ($i == (count($adjustmentAccount) - 1)) {
+                          $cell = $table->addCell($cellValue, $cellBottomBorder);
+                      } else {
+                          $cell = $table->addCell($cellValue);
+                      }
+                      if ($adjustmentValues[$i][$x] == 0) {
+                          $cell->addText("-", $fontstyleName, $centerAlignment);
+                      } else if ($adjustmentValues[$i][$x] < 0) {
+                          $cell->addText("(" . number_format(abs($adjustmentValues[$i][$x])) . ")", $fontstyleName, $centerAlignment);
+                      } else {
+                          $cell->addText(number_format($adjustmentValues[$i][$x]), $fontstyleName, $centerAlignment);
+                      }
+                  }
+              }
+          }
 
             $table->addRow();
             $table->addCell($cashFlowFirstCell);
@@ -2570,29 +2633,39 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 $cell->addText($tempValue, $fontstyleName, $centerAlignment);
             }
 
-            $table->addRow();
-            $cell = $table->addCell($cashFlowFirstCell);
-            $cell->addText("Income tax paid", $fontstyleName);
-            $incomeTaxPaid = array();
-            for ($i = 0; $i < count($years); $i++) {
-                $tempValue = 0;
-                if (isset($incomeTaxArray['income tax paid'][$years[$i]])) {
-                    $tempValue += $incomeTaxArray['income tax paid'][$years[$i]];
-                }
-                array_push($incomeTaxPaid, $tempValue);
+            $incomeTaxSet = 0;
+            for ($i = 0; $i < count($incomeTaxPaid); $i++) {
+              if ($incomeTaxPaid[$i] > 0){
+                $incomeTaxSet++;
+              }
             }
 
-            for ($i = 0; $i < count($incomeTaxPaid); $i++) {
-                $cell = $table->addCell($cellValue, $cellBottomBorder);
-                $tempValue = $incomeTaxPaid[$i];
-                if ($tempValue > 0) {
-                    $tempValue = number_format($tempValue);
-                } else if ($tempValue == 0) {
-                    $tempValue = "-";
-                } else {
-                    $tempValue = "(" . number_format(abs($tempValue)) . ")";
-                }
-                $cell->addText($tempValue, $fontstyleName, $centerAlignment);
+            if ($incomeTaxSet > 0){
+
+              $table->addRow();
+              $cell = $table->addCell($cashFlowFirstCell);
+              $cell->addText("Income tax paid", $fontstyleName);
+              $incomeTaxPaid = array();
+              for ($i = 0; $i < count($years); $i++) {
+                  $tempValue = 0;
+                  if (isset($incomeTaxArray['income tax paid'][$years[$i]])) {
+                      $tempValue += $incomeTaxArray['income tax paid'][$years[$i]];
+                  }
+                  array_push($incomeTaxPaid, $tempValue);
+              }
+
+              for ($i = 0; $i < count($incomeTaxPaid); $i++) {
+                  $cell = $table->addCell($cellValue, $cellBottomBorder);
+                  $tempValue = $incomeTaxPaid[$i];
+                  if ($tempValue > 0) {
+                      $tempValue = number_format($tempValue);
+                  } else if ($tempValue == 0) {
+                      $tempValue = "-";
+                  } else {
+                      $tempValue = "(" . number_format(abs($tempValue)) . ")";
+                  }
+                  $cell->addText($tempValue, $fontstyleName, $centerAlignment);
+              }
             }
 
             $netCashGenerated = array();
@@ -2639,65 +2712,66 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             }
 
             $netCashInvestment = array();
+            if (count($arrayAddition) > 0){
+              $table->addRow();
+              $cell = $table->addCell($cashFlowFirstCell);
+              $cell->addText("Cash flows from investing activities", $fontStyleBlack, $noSpace);
+              $table->addRow();
+              $cell = $table->addCell($cashFlowFirstCell);
+              $cell->addText("Additions to plant and equipment", $fontstyleName);
+              for ($i = count($arrayAddition) - 1; $i >= 0; $i--) {
+                  $tempValue = 0 - $arrayAddition[$i];
+                  $arrayAddition[$i] = $tempValue;
+              }
+              for ($i = count($arrayAddition) - 1; $i >= 0; $i--) {
+                  $cell = $table->addCell($cellValue, $cellBottomBorder);
+                  $tempValue = $arrayAddition[$i];
+                  array_push($netCashInvestment, $tempValue);
+                  if ($tempValue > 0) {
+                      $tempValue = number_format($tempValue);
+                  } else if ($tempValue == 0) {
+                      $tempValue = "-";
+                  } else {
+                      $tempValue = "(" . number_format(abs($tempValue)) . ")";
+                  }
+                  $cell->addText($tempValue, $fontstyleName, $centerAlignment);
+              }
 
-            $table->addRow();
-            $cell = $table->addCell($cashFlowFirstCell);
-            $cell->addText("Cash flows from investing activities", $fontStyleBlack, $noSpace);
-            $table->addRow();
-            $cell = $table->addCell($cashFlowFirstCell);
-            $cell->addText("Additions to plant and equipment", $fontstyleName);
-            for ($i = count($arrayAddition) - 1; $i >= 0; $i--) {
-                $tempValue = 0 - $arrayAddition[$i];
-                $arrayAddition[$i] = $tempValue;
-            }
-            for ($i = count($arrayAddition) - 1; $i >= 0; $i--) {
-                $cell = $table->addCell($cellValue, $cellBottomBorder);
-                $tempValue = $arrayAddition[$i];
-                array_push($netCashInvestment, $tempValue);
-                if ($tempValue > 0) {
-                    $tempValue = number_format($tempValue);
-                } else if ($tempValue == 0) {
-                    $tempValue = "-";
-                } else {
-                    $tempValue = "(" . number_format(abs($tempValue)) . ")";
-                }
-                $cell->addText($tempValue, $fontstyleName, $centerAlignment);
-            }
+              $netCashInvestString = "Net cash ";
+              for ($i = 0; $i < count($netCashInvestment); $i++) {
+                  if ($netCashInvestment[$i] < 0) {
+                      if (stripos($netCashInvestString, "used in") === false) {
+                          if (stripos($netCashInvestString, "generated from") !== false) {
+                              $netCashInvestString .= "/ ";
+                          }
+                          $netCashInvestString .= "(used in) ";
+                      }
+                  } else {
+                      if (stripos($netCashInvestString, "generated from") === false) {
+                          if (stripos($netCashInvestString, "used in") !== false) {
+                              $netCashInvestString .= "/ ";
+                          }
+                          $netCashInvestString .= "generated from ";
+                      }
+                  }
+              }
 
-            $netCashInvestString = "Net cash ";
-            for ($i = 0; $i < count($netCashInvestment); $i++) {
-                if ($netCashInvestment[$i] < 0) {
-                    if (stripos($netCashInvestString, "used in") === false) {
-                        if (stripos($netCashInvestString, "generated from") !== false) {
-                            $netCashInvestString .= "/ ";
-                        }
-                        $netCashInvestString .= "(used in) ";
-                    }
-                } else {
-                    if (stripos($netCashInvestString, "generated from") === false) {
-                        if (stripos($netCashInvestString, "used in") !== false) {
-                            $netCashInvestString .= "/ ";
-                        }
-                        $netCashInvestString .= "generated from ";
-                    }
-                }
-            }
+              $netCashInvestString .= "investing activities";
 
-            $netCashInvestString .= "investing activities";
-
-            $table->addRow();
-            $table->addCell($cashFlowFirstCell)->addText($netCashInvestString, $fontStyleBlack);
-            for ($i = 0; $i < count($netCashInvestment); $i++) {
-                $cell = $table->addCell($cellValue, $cellBottomBorder);
-                $tempValue = $netCashInvestment[$i];
-                if ($tempValue > 0) {
-                    $tempValue = number_format($tempValue);
-                } else if ($tempValue == 0) {
-                    $tempValue = "-";
-                } else {
-                    $tempValue = "(" . number_format(abs($tempValue)) . ")";
-                }
-                $cell->addText($tempValue, $fontstyleName, $centerAlignment);
+              $table->addRow();
+              $table->addCell($cashFlowFirstCell)->addText($netCashInvestString, $fontStyleBlack);
+              for ($i = 0; $i < count($netCashInvestment); $i++) {
+                  $cell = $table->addCell($cellValue, $cellBottomBorder);
+                  $tempValue = $netCashInvestment[$i];
+                  if ($tempValue > 0) {
+                      $tempValue = number_format($tempValue);
+                  } else if ($tempValue == 0) {
+                      $tempValue = "-";
+                  } else {
+                      $tempValue = "(" . number_format(abs($tempValue)) . ")";
+                  }
+                  $cell->addText($tempValue, $fontstyleName, $centerAlignment);
+              }
             }
 
             $table->addRow();

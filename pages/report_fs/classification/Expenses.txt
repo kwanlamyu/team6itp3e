@@ -1,4 +1,0 @@
-Administrative Expenses,
-Distribution and Marketing Expenses,
-Income Tax Expense,
-Finance Expenses

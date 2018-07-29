@@ -1,6 +1,0 @@
-Bank Balances,
-Deposits,
-Trade Receivables,
-Plant and Equipment,
-Prepayments,
-Amount owing from a Shareholder

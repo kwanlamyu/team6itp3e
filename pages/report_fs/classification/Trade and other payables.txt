@@ -1,4 +1,0 @@
-Accruals,
-GST Payables,
-Amount owing to a Shareholder,
-Trade Payables
