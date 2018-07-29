@@ -88,12 +88,12 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 											</label>
 											<br>
                                             <label for='yearStart0'>Financial Year Start:</label>
-                                            <input type='date' class='form-control' id='yearStart0' name='yearStart[]' value=''/>
+                                            <input type='date' class='form-control col-lg-4' id='yearStart0' name='yearStart[]' value=''/>
                                             <label for='yearEnd0'>Financial Year End:</label>
-                                            <input type='date' class='form-control' id='yearEnd0' name='yearEnd[]' value=''/>
+                                            <input type='date' class='form-control col-lg-4' id='yearEnd0' name='yearEnd[]' value=''/>
                                         </div>
                                         <div class="m-form__actions">
-                                            <input type="submit" class="btn btn-success" value="Upload File" name="submit">
+                                            <input type="submit" class="btn btn-success" value="Upload File" name="submit" id='m_alert'>
                                         </div>
                                     
                             </div>
@@ -177,33 +177,58 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         }
                     }
                     if (clientCompany == "" || dateFlag == 1 || fileFlag == 1) {
-                        if (clientCompany == "") {
-                            alert("Company Name must be entered");
+						
+						
+						
+						var popup = {
+					init: function() {
+						$("#m_alert").click(function(e) {
+							console.log('alert');
+							
+							
+							if (clientCompany == "") {
+							swal("Error", "Company Name must be entered", "error");
                         }
                         if (dateFlag == 1) {
-                            alert(dateError);
+							swal("Error", dateError, "error");
                         }
                         if (fileFlag == 1) {
-                            alert(fileError);
+							swal("Error", fileError, "error");
                         }
+							
+							
+						})
+					}
+				};
+				
+				jQuery(document).ready(function() {
+					popup.init()
+				});
+						
+						
+                        
                         submitBtn.disabled = false;
                         return false;
                     } else {
                         return true;
                     }
                 }
-
+				
+				
+				
                 function changeFileUploadForm() {
                     var selectedValue = document.getElementById("tbNumber").value;
                     var currentForm = document.getElementById("formForUploads");
                     currentForm.innerHTML = "";
                     for (i = 0; i < selectedValue; i++) {
-                        currentForm.innerHTML += "<div class='form-group m-form__group'>Select file to upload: <span class='m-input-icon__icon m-input-icon__icon--right'><span><i class='la la-thumb-tack'></i></span></span><div class='m-input-icon m-input-icon--left m-input-icon--right'><input type='file' class='btn btn-secondary' name='trialBalances[]' id='file" + i + "' accept='.xlsx' ></div><br><label for='yearStart" + i + "'>Financial Year Start:</label><input type='date' class='form-control' id='yearStart" + i + "' name='yearStart[]' value=''/><label for='yearEnd" + i + "'>Financial Year End:</label><input type='date' class='form-control' id='yearEnd" + i + "' name='yearEnd[]' value=''/></div>";
+                        currentForm.innerHTML += "<div class='form-group m-form__group'>Select file to upload: <span class='m-input-icon__icon m-input-icon__icon--right'><span><i class='la la-thumb-tack'></i></span></span><div class='m-input-icon m-input-icon--left m-input-icon--right'><input type='file' class='btn btn-secondary' name='trialBalances[]' id='file" + i + "' accept='.xlsx' ></div><br><label for='yearStart" + i + "'>Financial Year Start:</label><input type='date' class='form-control col-lg-4' id='yearStart" + i + "' name='yearStart[]' value=''/><label for='yearEnd" + i + "'>Financial Year End:</label><input type='date' class='form-control col-lg-4' id='yearEnd" + i + "' name='yearEnd[]' value=''/></div>";
                     }
                     currentForm.innerHTML += "<div class='m-form__actions'>\
-                    <input type='submit' class='btn btn-success' value='Upload File' name='submit'>\
+                    <input type='submit' class='btn btn-success' value='Upload File' name='submit' id='m_alert'>\
                     </div>";
                 }
+				
+				
 				
             </script>
             <?php
