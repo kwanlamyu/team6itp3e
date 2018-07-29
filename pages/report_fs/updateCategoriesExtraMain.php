@@ -253,6 +253,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         echo "Please choose which Main Category it belongs to! <br><br>";
 
                                         $tempSubArray = array_unique($tempSubArray);
+                                        
                                         for ($i = 0; $i < count($tempSubArray); $i++) {
                                             echo "<b>Current Sub Account: </b>" . $tempSubArray[$i] . "<br>";
 
