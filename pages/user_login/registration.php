@@ -1,3 +1,12 @@
+<?php 
+/* registration page Front-End
+ * 
+ * Author: Jerome Augustine Rodrigues, Kwan Lam Yu, Singapore Institute of Technology
+ * 
+ * user registration of information for client admin
+ */
+?>
+
 <?php include '../general/header.php'; ?>
 <body class="m--skin- m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default"  >
     <!-- begin:: Page -->

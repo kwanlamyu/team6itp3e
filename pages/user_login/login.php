@@ -1,4 +1,15 @@
+<?php 
+/* front end code of login page
+ * 
+ * Author: Jerome Augustine Rodrigues, Kwan Lam Yu, Singapore Institute of Technology
+ * 
+ * front end code of login page for system
+ */
+?>
+
+<!--page header-->
 <?php include '../general/header.php'; ?>
+<!--End page header-->
 <!-- end::Body -->
 <body  class="m--skin- m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default"  >
     <!-- begin:: Page -->
@@ -11,6 +22,7 @@
                             <img alt="" src="../../assets/app/media/img/logos/logo.png" height="100px"/>
                         </a>
                     </div>
+                    <!--login form-->
                     <div class="m-login__signin">
                         <form class="m-login__form m-form" action="login.php" id="login" name="login" method="POST">
                             <?php include 'login_validation.php';?>
@@ -24,7 +36,8 @@
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                                 <span class="error"><?php echo $passErr; ?></span>
                             </div>
-<!--                            <div class="row m-login__form-sub">
+                            
+                            <!-- <div class="row m-login__form-sub">
                                 <div class="col m--align-left m-login__form-left">
                                     <label class="m-checkbox  m-checkbox--focus">
                                         <input type="checkbox" name="remember">
@@ -46,9 +59,6 @@
                                     LOGIN
                                 </button>
                             </div>
-<!--                            <div class="form-group">
-                                <p>Don't have an account? <a href="registration.php"> Sign-up here</a></p>
-                            </div>-->
 
                         </form>
                     </div>
@@ -60,14 +70,11 @@
                         <a href="registration.php" id="m_login_signup" class="m-link m-link--light m-login__account-link">
                             Sign Up
                         </a>
-<!--                        <a href="javascript:;" id="m_login_signup" class="m-link m-link--light m-login__account-link">
-                            Sign Up
-                        </a>-->
                     </div>
                     
                 </div>
             </div>
         </div>
     </div>
-
+<!--end of login page-->
     <?php include '../general/footer.php'; ?>

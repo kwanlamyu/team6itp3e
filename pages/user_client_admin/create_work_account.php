@@ -1,3 +1,9 @@
+<?php 
+/* 
+ * front end code for creating of work accounts aka clients of the client admin company
+ */
+?>
+
 <?php
 //check for username and role_id
 require_once '../db_connection/db.php';

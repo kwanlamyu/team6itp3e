@@ -1,3 +1,9 @@
+<?php 
+/* 
+ * front-end code for deleting of a company account
+ */
+?>
+
 <?php
 require_once '../db_connection/db.php';
 //check for username and role_id

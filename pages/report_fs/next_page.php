@@ -285,9 +285,9 @@ foreach ($tempUniqueCategoryArray as $insert) {
 
         // Display helping keys
         if (document.getElementById('categoryLooper').value === "Income Taxes") {
-            for (g = 0; g < incomeTaxArray.length; g++) {
-                document.getElementById('incomeTax').innerHTML += "<input type='radio' name='subIncomeTax' id='subIncomeTax" + g + "' value='" + incomeTaxArray[g] + "'> " + incomeTaxArray[g] + "<br>";
-            }
+            // for (g = 0; g < incomeTaxArray.length; g++) {
+            //     document.getElementById('incomeTax').innerHTML += "<input type='radio' name='subIncomeTax' id='subIncomeTax" + g + "' value='" + incomeTaxArray[g] + "'> " + incomeTaxArray[g] + "<br>";
+            // }
 
             for (e = 0; e < incomeTaxKeyWords.length; e++) {
                 document.getElementById('helpingWords').innerHTML += incomeTaxKeyWords[e] + "<br>";
@@ -402,6 +402,7 @@ foreach ($tempUniqueCategoryArray as $insert) {
         submitBtn.disabled = false;
         return false;
       } else {
+        submitBtn.disabled = false;
         return true;
       }
     }

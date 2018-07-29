@@ -1,10 +1,16 @@
+<?php 
+/* 
+ * back-end code for tagging accountants to company accounts
+ */
+?>
+
+
 <?php
 require_once '../db_connection/db.php';
 $uname = $selectuen = $selected= $selectCollaborators="";
 $valid = TRUE; //this var scope ok
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['manageWorkButton'])) {
-//        echo "post reg button <br>";
 
         if (empty($_POST["select_uen"])) {
 
@@ -18,27 +24,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (empty($_POST["select_Collaborator"])) {
             $selected = "";
-            //$valid = FALSE;
 
         } else{
 
-//            $selectCollaborators =$_POST["select_Collaborator"];
             $selectCollaborators = implode(',', $_POST['select_Collaborator']);
-//            $selected="";
-//
-//            foreach($selectCollaborators as $collaborator){
-//                $selected .=$selectCollaborators.",";
-//            }
-//            echo "Manager(s): ".$selectCollaborators."<br>";
         }
 
 
 
         $userID = $_SESSION["username"];
-//        $roleID = $_SESSION["role_id"];
-//        $userID = "Jerome";
-//        echo "username: ".$userID."<br>";
-//        echo gettype($valid).'<br>';
 
         if ($valid == TRUE) {
             try{
@@ -65,9 +59,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo $e->getMessage();
             }
         }
-
-
-//        header('Location: manage_work_account.php');
     }
 }
 ?>

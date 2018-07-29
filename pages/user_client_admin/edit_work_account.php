@@ -1,4 +1,11 @@
 <?php
+/*
+ * front-end code for editing and verifying of an accountant account details
+ */
+?>
+
+
+<?php
 require_once '../db_connection/db.php';
 
 //check for username and role_id
@@ -6,7 +13,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
     include '../general/header.php';
     include '../general/navigation_clientadmin.php';
     ?>
-<!-- <div class="m-grid__item m-grid__item--fluid m-wrapper"> -->
+    <div class="m-grid__item m-grid__item--fluid m-wrapper"> 
 
         <!-- BEGIN: Subheader -->
         <div class="m-subheader ">
@@ -15,33 +22,33 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                     <h3 class="m-subheader__title m-subheader__title--separator">
                         Financial Statement
                     </h3>
-                    <!--                    <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
-                                            <li class="m-nav__item m-nav__item--home">
-                                                <a href="#" class="m-nav__link m-nav__link--icon">
-                                                    <i class="m-nav__link-icon la la-home"></i>
-                                                </a>
-                                            </li>
-                                            <li class="m-nav__separator">
-                                                -
-                                            </li>
-                                            <li class="m-nav__item">
-                                                <a href="" class="m-nav__link">
-                                                    <span class="m-nav__link-text">
-                                                        Generate Report
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li class="m-nav__separator">
-                                                -
-                                            </li>
-                                            <li class="m-nav__item">
-                                                <a href="" class="m-nav__link">
-                                                    <span class="m-nav__link-text">
-                                                        Financial Statement
-                                                    </span>
-                                                </a>
-                                            </li>
-                                        </ul>-->
+                    <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                        <li class="m-nav__item m-nav__item--home">
+                            <a href="#" class="m-nav__link m-nav__link--icon">
+                                <i class="m-nav__link-icon la la-home"></i>
+                            </a>
+                        </li>
+                        <li class="m-nav__separator">
+                            -
+                        </li>
+                        <li class="m-nav__item">
+                            <a href="" class="m-nav__link">
+                                <span class="m-nav__link-text">
+                                    Generate Report
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-nav__separator">
+                            -
+                        </li>
+                        <li class="m-nav__item">
+                            <a href="" class="m-nav__link">
+                                <span class="m-nav__link-text">
+                                    Financial Statement
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
 
                 </div>
             </div>
@@ -68,7 +75,6 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                         <?php
                         if (isset($_GET['editWorkAccount'])) {
                             $accountants = $_GET['editWorkAccount'];
-        //                echo'after post statement';
                         }
                         ?>
                         <div class="table-responsive table-scroll">
@@ -80,12 +86,10 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                 <th>Account Manager(s)</th>
                                 <th>Edit Details</th>
                                 </thead>
-                                <?php // echo'after table head';?>
 
                                 <tbody>
                                     <?php
                                     $userID = $_SESSION["username"];
-        //                            $userID = 'jerome';
                                     $query = "SELECT "
                                             . "account.UEN AS UEN, "
                                             . "account.companyName AS companyName, "
@@ -98,12 +102,9 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                             . "ON "
                                             . "account.UEN = usermanageaccount.account_UEN  "
                                             . "AND usermanageaccount.account_user_username = '$userID'";
-                                    //$query= "SELECT * FROM userManageAccount WHERE account_user_username = '".$userID."'";
                                     $sql = $DB_con->prepare($query);
-        //                            echo'statement prepared';
                                     $sql->execute();
                                     $users = $sql->fetchAll();
-        //                            echo'statement executed';
                                     if (count($users) == 0) {
                                         echo '';
                                         echo '<tr>'
@@ -114,10 +115,8 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                         . '<td>Nil</td>'
                                         . '</tr>';
                                     } else {
-        //                                echo'else condition reached';
                                         $counter = 0;
                                         foreach ($users as $row) {
-        //                                    echo'rows echoed';
                                             echo ""
                                             . "<tr>"
                                             . "<td id='account_uen" . $counter . "'>{$row['UEN']}</td>"
@@ -144,103 +143,14 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                 </div>
             </div>
         </div>
-    <!-- </div> -->
-
-
-<!--    <div class="row">
-        <div class="card">
-            <div class="card-body">
-                                //retrieve table of accountants
-                                //format table with edit button at side
-                                //when button is clicked, modal or redirect to page with accountant's info
-                                //can only edit email. should client-admin be able to change password?
-
-                <?php
-                if (isset($_GET['editWorkAccount'])) {
-                    $accountants = $_GET['editWorkAccount'];
-//                echo'after post statement';
-                }
-                ?>
-                <p><a href="../user_client_admin/client_admin_dashboard.php">Return to dashboard</a></p>
-                <div class="table-responsive table-scroll">
-                    <table class="table table-hover table-room">
-                        <thead>
-                        <th>UEN/ACRA No.</th>
-                        <th>Company Name</th>
-                        <th>File Number</th>
-                        <th>Account Manager(s)</th>
-                        <th>Edit Details</th>
-                        </thead>
-                        <?php // echo'after table head';?>
-
-                        <tbody>
-                            <?php
-                            $userID = $_SESSION["username"];
-//                            $userID = 'jerome';
-                            $query = "SELECT "
-                                    . "account.UEN AS UEN, "
-                                    . "account.companyName AS companyName, "
-                                    . "account.fileNumber AS fileNumber, "
-                                    . "usermanageaccount.user_username AS accountManagers "
-                                    . "FROM "
-                                    . "account "
-                                    . "INNER JOIN "
-                                    . "usermanageaccount "
-                                    . "ON "
-                                    . "account.UEN = usermanageaccount.account_UEN  "
-                                    . "AND usermanageaccount.account_user_username = '$userID'";
-                            //$query= "SELECT * FROM userManageAccount WHERE account_user_username = '".$userID."'";
-                            $sql = $DB_con->prepare($query);
-//                            echo'statement prepared';
-                            $sql->execute();
-                            $users = $sql->fetchAll();
-//                            echo'statement executed';
-                            if (count($users) == 0) {
-                                echo '';
-                                echo '<tr>'
-                                . '<td>Nil</td>'
-                                . '<td>Nil</td>'
-                                . '<td>Nil</td>'
-                                . '<td>Nil</td>'
-                                . '<td>Nil</td>'
-                                . '</tr>';
-                            } else {
-//                                echo'else condition reached';
-                                $counter = 0;
-                                foreach ($users as $row) {
-//                                    echo'rows echoed';
-                                    echo ""
-                                    . "<tr>"
-                                    . "<td id='account_uen" . $counter . "'>{$row['UEN']}</td>"
-                                    . "<td id='account_companyName" . $counter . "'>{$row['companyName']}</td>"
-                                    . "<td id='account_fileNumber" . $counter . "'>{$row['fileNumber']}</td>"
-                                    . "<td id='account_accountManagers" . $counter . "'>{$row['accountManagers']}</td>"
-                                    . "<td id='edit'>"
-                                    . "<button type='button' name='editAccountButton' id='editButton' class='btn btn-success edit_data'data-toggle='modal' data-target='#editModal' onclick='updateUEN(" . $counter . ")'>"
-                                    . "<i class='far fa-edit'></i> Edit "
-                                    . "</button>"
-                                    . "</td>"
-                                    . "</tr>\n";
-                                    $counter++;
-                                }
-                            }
-                            ?>
-
-                        </tbody>
-                    </table>
-                </div>
-                <hr>
-                <p><a href="../user_client_admin/client_admin_dashboard.php">Return to dashboard</a></p>
-            </div>
-        </div>
-    </div>-->
+    </div>
+    </div>
 
     <!-- Modal -->
     <div class="modal fade" id="editModal" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
                     <h4 class="modal-title">Edit Details</h4>
                 </div>
                 <div class="modal-body">
@@ -265,26 +175,19 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                     <th>Accountant</th>
                                     <th>Select</th>
                                     </thead>
-                                    <?php // echo'after table head';?>
-
                                     <tbody>
                                         <?php
-//                            echo'after table body';
                                         $sql = $DB_con->prepare("SELECT username FROM user WHERE role_id = 3 AND companyName='" . $_SESSION['company'] . "';");
-//                            echo'statement prepared';
                                         $sql->execute();
                                         $users = $sql->fetchAll();
-//                            echo'statement executed';
                                         if (count($users) == 0) {
                                             echo '<tr>'
                                             . '<td> </td>'
                                             . '<td> </td>'
                                             . '</tr>';
                                         } else {
-//                                echo'else condition reached';
                                             $counter = 0;
                                             foreach ($users as $row) {
-//                                    echo'rows echoed';
                                                 echo ""
                                                 . "<tr>"
                                                 . "<td id='edit_account_username" . $counter . "'>{$row['username']}</td>"

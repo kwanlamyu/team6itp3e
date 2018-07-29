@@ -1,26 +1,23 @@
 <?php
-require_once '../db_connection/db.php';
+if (isset($_GET['filename'])){
+    $dir = "files generated/";
+    $filename = $_GET['filename'] . ".docx";
+    $file = $dir . $filename;
+    if (file_exists($file)) {
+        $basename = basename($file);
+        $length = sprintf("%u", filesize($file));
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/docx');
+        header('Content-Disposition: attachment; filename="'. $basename .'"');
+        header('Content-Transfer-Encoding: binary');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Pragma: public');
+        header('Content-Length: '.$length);
 
-if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSION['company'])){
-    if ($_SESSION['role_id'] != 2 && $_SESSION['role_id'] != 3){
-      header('Location: ../user_super_admin/userdashboard.php');
-    } else {
-$file = 'preview.docx';
-if (file_exists($file)) {
-    header('Content-Description: File Transfer');
-    header('Content-Type: application/docx');
-    header('Content-Disposition: attachment; filename="'.basename($file).'"');
-    header('Expires: 0');
-    header('Cache-Control: must-revalidate');
-    header('Pragma: public');
-    header('Content-Length: ' . filesize($file));
-    readfile($file);
-    exit;
-} else {
-  echo "<script>alert('NOPE')</script>";
-}
-}
-} else {
-header("Location: ../user_login/login.php");
+        set_time_limit(0);
+        readfile($file);
+        exit;
+    }
 }
 ?>

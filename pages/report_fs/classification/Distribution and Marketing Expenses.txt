@@ -1,3 +1,0 @@
-Telephone Expenses,
-Transport Expenses,
-Travel Expenses

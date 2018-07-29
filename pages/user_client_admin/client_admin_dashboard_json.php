@@ -1,4 +1,8 @@
-
+<?php 
+/* 
+ * SQL and JSON coding to retrieve accountants in the same company as the session user
+ */
+?>
 <?php require_once '../db_connection/db.php';?>
 
 <?php

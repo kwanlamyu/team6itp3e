@@ -23,7 +23,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
             if ($_POST['key'] == "yes") {
                 $inputCategory = $_POST['sub'];
-//                $originalValue = $_POST['originalValue'];
                 $accountValue = $_POST['accountValue'];
 
                 $companyName = $_SESSION['company'];
@@ -40,7 +39,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                 $result = $subQuery->setFetchMode(PDO::FETCH_ASSOC);
                 $result = $subQuery->fetchAll();
-
 
                 $subAccountArrayDB = array();
                 for ($i = 0; $i < count($result); $i++) {
@@ -77,19 +75,19 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         $tempAccountNameArray = array();
                     }
                 }
-
+               
                 if (!empty($tempArray)) {
                     foreach ($tempArray as $category => $array) {
                         if (in_array($category, $subAccountArrayDB)) {
                             $implode = implode(",", $array);
 
-                            $update = "UPDATE main_category SET account_names= '" . $implode . "' WHERE main_account = '" . $category . "' AND company_name = '" . $_SESSION['company'] . "' AND client_company = '" . $_POST['clientCompany'] . "'";
+                            $update = "UPDATE sub_category SET account_names= '" . $implode . "' WHERE sub_account = '" . $category . "' AND company_name = '" . $_SESSION['company'] . "' AND client_company = '" . $_POST['clientCompany'] . "'";
                             $stmt = $DB_con->prepare($update);
                             $stmt->execute();
                         } else {
                             $implode = implode(",", $array);
 
-                            $insert = "INSERT INTO main_category (company_name, client_company, sub_account, account_names)
+                            $insert = "INSERT INTO sub_category (company_name, client_company, sub_account, account_names)
                             VALUES ('" . $_SESSION['company'] . "', '" . $_POST['clientCompany'] . "', '" . $category . "' ,'" . $implode . "')";
                             // use exec() because no results are returned
                             $DB_con->exec($insert);

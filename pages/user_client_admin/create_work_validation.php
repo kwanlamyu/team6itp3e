@@ -1,3 +1,9 @@
+<?php 
+/* 
+ * back-end code to verify registration of a new company account
+ */
+?>
+
 <?php
 require_once '../db_connection/db.php';
 $unameErr = $companynameErr = $uennumberErr = $filenumberErr="";
@@ -11,15 +17,12 @@ function test_input($data) {
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['createWorkButton'])) {
-//        echo "post reg button <br>";
 
         if (empty($_POST["companyname"])) {
             $companynameErr = "* Company Name is required";
             $valid = FALSE;
         } else{
             $companyname =($_POST["companyname"]);
-//            echo "Company Name: ".$companyname."<br>";
-//            echo "Valid: ".$valid."<br>";
         }
 
         $uenregex = '/^(\d{9}[a-zA-Z \-_])|((18|19|20)\d{2}\d{6}[a-zA-z \-_])|((T|S|R)\d{2}(LP|LL|FC|PF|RF|MQ|MM|NB|CC|CS|MB|FM|GS|GA|GB|DP|CP|NR|CM|CD|MD|HS|VH|CH|MH|CL|XL|CX|RP|TU|TC|FB|FN|PA|PB|SS|MC|SM)\d{4}[a-zA-Z \-_])$/';
@@ -35,7 +38,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             }
             $query = "SELECT COUNT(*) FROM account WHERE UEN = '" . $uen . "'";
-            //            echo "pre-query execution <br>";
             $result = $DB_con->query($query);
 
             if ($result->fetchColumn() > 0) {
@@ -56,14 +58,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $valid = FALSE;
             }
 
-//            echo "File: ".$filenumber."<br>";
-//            echo "Valid: ".$valid."<br>";
         }
 
         $uname = $_SESSION["username"];
-//        $uname = "Jerome";
-//        echo "username: ".$uname."<br>";
-//        echo gettype($valid).'<br>';
 
         if ($valid == TRUE) {
 //
@@ -71,29 +68,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $managesql = "INSERT INTO account(UEN, companyName, fileNumber, dateOfCreation, user_username)
                                VALUES ('$uen', '$companyname', '$filenumber', NOW(), '$uname')";
             $accountSql = $DB_con->prepare($managesql);
-//            echo $managesql;
+            
             if ($accountSql->execute()) {
-                //echo "after sql execute";
-//                header('Location: manage_work_account.php');
-                echo '<div class="alert alert-success" role="alert">'
-                        . '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close"></a>'
-                        . ' Account successfully created'
-                    . '</div>';
+                echo '<div class="alert alert-success" role="alert"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close"></a>Account successfully created</div>';
                 echo '<span class="text-success"><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Redirecting Please Wait</span>';
                 echo "<meta http-equiv='refresh' content='3;url=manage_work_account.php'> ";
                 $collaboratorsql = "INSERT INTO userManageAccount(account_UEN, account_user_username, user_username, user_role_id) VALUES ('$uen','$uname','$uname','2');";
                 $insertsql = $DB_con->prepare($collaboratorsql);
                 $insertsql->execute();
-
-
-
+                
             } else {
                 echo '<div class="alert alert-warning mmbsm" role="alert">Error: ' . $sql . '<br>' . $DB_con->error . '</div>';
             }
         }
-
-
-//        header('Location: manage_work_account.php');
     }
 }
 ?>

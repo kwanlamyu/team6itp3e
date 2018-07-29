@@ -1,3 +1,8 @@
+<?php 
+/* front end code for adding an accountant
+ */
+?>
+
 <?php
 require_once '../db_connection/db.php';
 //check for username and role_id
@@ -39,9 +44,9 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                             </div>
                         </div>
                         <!--begin::Form-->
-                        <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="createAccountant" name="createAccountant" action="add_accountant.php" method="POST">
+                        <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="createAccountant" name="createAccountant" action="../user_client_admin/add_accountant.php" method="POST">
 
-                            <?php include('create_accountant_validation.php'); ?>
+                            <?php include('../user_client_admin/create_accountant_validation.php'); ?>
 
                             <?php if (!empty($successMessage)) { ?>
                                 <span class="alert alert-success" ><?php echo $successMessage; ?></span>
@@ -50,8 +55,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                             <?php if (!empty($failMessage)) { ?>
                                 <span class="alert alert-danger" ><?php echo $failMessage; ?></span>
                             <?php } ?>
-
-
+                            <!-- begin::Portlet body-->    
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group row">
                                     <label class="col-lg-2 col-form-label">
@@ -64,12 +68,6 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                         }
                                         ?>>
                                         <span class="error"><?php echo $unameErr; ?></span>
-
-
-
-
-
-
                                     </div>
                                     <label class="col-lg-2 col-form-label">
                                         Email:
@@ -103,10 +101,10 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                         <span class="error"><?php echo $twopassErr; ?></span>
                                     </div>
                                 </div>
-
-
-
+                                
                             </div>
+                            <!--End:: portlet body-->
+                            <!--begin:: portlet footer-->
                             <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
                                 <div class="m-form__actions m-form__actions--solid">
                                     <div class="row">
@@ -124,20 +122,17 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
 
                                 </div>
                             </div>
+                            <!--End::portlet footer-->
                         </form>
                         <!--end::Form-->
                     </div>
                     <!--end::Portlet-->
-
-
                 </div>
             </div>
         </div>
     </div>
     <!-- END: Subheader -->
     </div>
-
-
 
     <?php
     include '../general/footer_content.php';

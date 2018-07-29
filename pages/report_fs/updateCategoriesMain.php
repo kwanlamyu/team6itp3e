@@ -180,9 +180,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                                     for ($i = 0; $i < count($allAccounts); $i++) {
                                         for ($j = 0; $j < count($subResult); $j++) {
-                                            // check TB with sub account's account name 
-                                            // if same, store the sub account into an array 
-                                            // then proceed as per normal 
+                                            // check TB with sub account's account name
+                                            // if same, store the sub account into an array
+                                            // then proceed as per normal
 
                                             $inTB = $subResult[$j]['account_names'];
                                             $inTB = explode(",", $inTB);
@@ -190,23 +190,23 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             for ($k = 0; $k < count($inTB); $k++) {
                                                 if (strcasecmp($allAccounts[$i], $inTB[$k]) === 0) {
                                                     array_push($matchedSubArray, $subResult[$j]['sub_account']);
-                                                    // use $matchSubArray to check with 
+                                                    // use $matchSubArray to check with
                                                 }
                                             }
                                         }
                                     }
-                                    
+
                                     $matchedSubArray = array_unique($matchedSubArray);
                                     $matched = array();
                                     foreach ($matchedSubArray as $value) {
                                         array_push($matched, $value);
                                     }
-                                    
+
                                     for ($k = 0; $k < count($matched); $k++) {
                                         for ($i = 0; $i < count($subResult); $i++) {
+                                          if (strcasecmp($matched[$k],"Exchanges") !== 0) {
                                             if (strcasecmp($subResult[$i]['sub_account'], $matched[$k]) === 0) {
-                                                echo "<b>Account name: </b> " . $matched[$k] . "<br/>";
-                                                echo "<b>Matching account category: </b>";
+                                                echo "<b>Sub category name: </b> " . $matched[$k] . "<br/>";
                                                 echo "<div>";
 
                                                 $startDataList = "<input list='category" . $i . "' value='' class='form-control' name='category[]'/>";
@@ -246,6 +246,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                                 echo "<label>Choose a category:" . $startDataList . "</label>" . $bodyDataList . "</datalist>";
                                                 echo "</div>";
                                             }
+                                          }
                                         }
                                     }
 
@@ -296,4 +297,25 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
 <?php include '../general/footer_content.php'; ?>
 <?php include '../general/footer.php'; ?>
+
+<script type="text/javascript">
+
+    function check() {
+      var inputs = document.getElementsByTagName("input");
+      for (i = 0; i < inputs.length; i++){
+        if (inputs[i].getAttribute("name") == "category[]"){
+          if (inputs[i].value.trim().length == 0){
+            alert("Please fill in all fields");
+            return false;
+          }
+        } else {
+          continue;
+        }
+      }
+      return true;
+      // return true;
+    }
+
+</script>
+
 ?>

@@ -1,8 +1,14 @@
+<?php 
+/* 
+ * front end code for client admin dashboard to display accountants the client admin
+ */
+?>
 <?php
 require_once '../db_connection/db.php';
 //check for username and role_id
 if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
     include '../general/header.php';
+    //client admin navigation
     include '../general/navigation_clientadmin.php';
 
     ?>

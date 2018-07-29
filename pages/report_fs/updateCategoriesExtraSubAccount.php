@@ -57,23 +57,17 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             if ($key == $inputCategory[$i]) {
                                                 array_push($array, $accountValue[$i]);
                                                 $categoryTempArray[$inputCategory[$i]] = $array;
-//                                                print_r($categoryTempArray);
-//                                                echo "<hr>";
                                             }
                                         }
                                     } else {
                                         array_push($tempStoreArray, $result[$j]['account_names']);
                                         array_push($tempStoreArray, $accountValue[$i]);
                                         $categoryTempArray[$inputCategory[$i]] = $tempStoreArray;
-//                                        print_r($categoryTempArray);
-//                                        echo "<hr>";
                                     }
                                 } else {
                                     array_push($tempStoreArray, $result[$j]['account_names']);
                                     array_push($tempStoreArray, $accountValue[$i]);
                                     $categoryTempArray[$inputCategory[$i]] = $tempStoreArray;
-//                                    print_r($categoryTempArray);
-//                                    echo "<hr>";
                                 }
                             }
                         }
@@ -86,23 +80,17 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             if ($key == $inputCategory[$i]) {
                                                 array_push($array, $accountValue[$i]);
                                                 $categoryTempArray[$key] = $array;
-//                                                print_r($categoryTempArray);
-//                                                echo "<hr>";
                                             }
                                         }
                                     } else {
                                         array_push($tempStoreArray, $result[$j]['account_names']);
                                         array_push($tempStoreArray, $accountValue[$i]);
                                         $categoryTempArray[$inputCategory[$i]] = $tempStoreArray;
-//                                        print_r($categoryTempArray);
-//                                                echo "<hr>";
                                     }
                                 } else {
                                     array_push($tempStoreArray, $result[$j]['account_names']);
                                     array_push($tempStoreArray, $accountValue[$i]);
                                     $categoryTempArray[$inputCategory[$i]] = $tempStoreArray;
-//                                    print_r($categoryTempArray);
-//                                                echo "<hr>";
                                 }
                             }
 
@@ -129,8 +117,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 unset($tempStoreArray);
                 $tempStoreArray = array();
             }
-            
-            print_r($tempAccArray);
 
             if (!empty($categoryTempArray)) {
                 foreach ($categoryTempArray as $category => $array) {
@@ -258,17 +244,22 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         array_push($subAccountArrayDB, $result[$i]['sub_account']);
                                     }
 
-                                    echo "Please choose which Sub Category it belongs to! <br><br>";
+                                    echo "Please choose which Sub Account Category it belongs to! <br><br>";
 
                                     $tempAccArray = array_unique($tempAccArray);
 
                                     for ($i = 0; $i < count($tempAccArray); $i++) {
-                                        echo "<b>Current Sub Account: </b>" . $tempAccArray[$i] . "<Br>";
-                                        echo "<select name='sub[]'>";
+                                        echo "<b>Current Detailed Account: </b>" . $tempAccArray[$i] . "<br>";
+
+                                        $startDataList = "<input list='category" . $i . "' value='' class='form-control' name='sub[]'/>";
+                                        $bodyDataList = "<datalist id='category" . $i . "' style='overflow-y:scroll; height:20px;'>";
+
                                         for ($j = 0; $j < count($subAccountArrayDB); $j++) {
-                                            echo "<option value='" . $subAccountArrayDB[$j] . "'>" . $subAccountArrayDB[$j] . "</option>";
+                                            $bodyDataList .= "<option value='" . $subAccountArrayDB[$j] . "'>";
                                         }
-                                        echo "</select>";
+
+                                        echo "<label>Choose a category:" . $startDataList . "</label><div>" . $bodyDataList . "</datalist></div>";
+
                                         echo "<hr>";
                                     }
 

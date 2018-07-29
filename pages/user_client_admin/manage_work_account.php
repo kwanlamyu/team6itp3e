@@ -1,3 +1,10 @@
+<?php 
+/* 
+ * front-end code for tagging accoutnant(s) to a company account
+ */
+?>
+
+
 <?php
 require_once '../db_connection/db.php';
 //check for username and role_id
@@ -39,9 +46,6 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                         <?php
                         if (isset($_GET['createWorkButton'])) {
                             $accountants = $_GET['createWorkButton'];
-                            //                $userID = $_SESSION["username"];
-                            // $userID = "Jerome";
-                            //                echo'after post statement';
                         }
                         ?>
                         <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="manageWorkAccount" name="manageWorkAccount" action="../user_client_admin/manage_work_account.php" method="POST">
@@ -57,7 +61,6 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                             <?php
                                             //get UENs
                                             $uensql = $DB_con->prepare("SELECT UEN FROM account WHERE user_username = '".$_SESSION['username']."'");
-                                            //                            echo'statement prepared';
                                             $uensql->execute();
                                             $uenNum = $uensql->fetchAll();
 
@@ -66,10 +69,8 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                                 echo '<option> </option>';
                                             } else {
                                                 //select UENs
-                                                //
                                                 $counter = 0;
                                                 foreach ($uenNum as $row) {
-                                                    //                                    echo'rows echoed';
 
                                                     echo "<option value='" . $row['UEN'] . "'>" . $row['UEN'] . "</option>";
                                                 }
@@ -92,9 +93,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
 
                                             <tbody>
                                                 <?php
-                                                //                            echo'after table body';
                                                 $sql = $DB_con->prepare("SELECT username FROM user WHERE role_id = 3 and companyName ='".$_SESSION['company']."'");
-                                                //                            echo'statement prepared';
                                                 $sql->execute();
                                                 $users = $sql->fetchAll();
 
@@ -102,18 +101,12 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                                 $alreadyAssignedQuery->execute();
                                                 $alreadyAssignedUser = $alreadyAssignedQuery->fetchAll();
 
-
-
-
-
-                                                //                            echo'statement executed';
                                                 if (count($users) == 0) {
                                                     echo '<tr>'
                                                     . '<td> </td>'
                                                     . '<td> </td>'
                                                     . '</tr>';
                                                 } else {
-                                                    //                                echo'else condition reached';
                                                     $counter = 0;
                                                     foreach ($users as $row) {
                                                       $errFlag = 0;
@@ -124,7 +117,6 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                                         }
                                                       }
                                                       if ($errFlag == 0){
-                                                        //                                    echo'rows echoed';
                                                         echo ""
                                                         . "<tr>"
                                                         . "<td id='accountant_username" . $counter . "'>{$row['username']}</td>"

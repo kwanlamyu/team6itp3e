@@ -1,3 +1,9 @@
+<?php 
+/* 
+ * back-end code to verify deleting of a accountant account
+ */
+?>
+
 <?php
 require_once '../db_connection/db.php';
 $uname = $email = $pass = "";
