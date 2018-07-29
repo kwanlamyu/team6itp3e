@@ -1,8 +1,13 @@
 <?php
+/* front end code of login page
+ * 
+ * front end code of super admin's dashboard
+ */
+?>
+<?php
 require_once '../db_connection/db.php';
 //check for username and role_id
 if (isset($_SESSION['username']) && $_SESSION['role_id'] == '1') {
-
     include '../general/header.php';
     include '../general/navigation_superadmin.php';
     ?>
@@ -81,12 +86,11 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '1') {
             </div>
 
         </div>
-<!-- Edit Modal -->
+        <!-- Edit Modal -->
         <div class="modal fade" id="editModal" role="dialog">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
                         <h4 class="modal-title">Edit Details</h4>
                     </div>
                     <div class="modal-body">
@@ -135,7 +139,6 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '1') {
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
                         <h4 class="modal-title">Delete User</h4>
                     </div>
                     <div class="modal-body">
@@ -171,8 +174,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '1') {
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <!--<button type="submit" name="deleteButton" id="deleteButton" class="btn btn-danger">Delete User</button>-->
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -205,9 +207,12 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '1') {
 }//end of session and role_id checking
 elseif (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
     header('Location: ../user_client_admin/client_admin_dashboard.php');
+    
 } elseif (isset($_SESSION['username']) && $_SESSION['role_id'] == '3') {
     header('Location: ../user_accountant/accountant_dashboard.php');
+    
 } else {
     header('Location: ../user_login/login.php');
+    
 }
 ?>
