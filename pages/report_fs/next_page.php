@@ -84,36 +84,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 <div class="m-subheader ">
                     <div class="d-flex align-items-center">
                         <div class="mr-auto">
-                            <h3 class="m-subheader__title m-subheader__title--separator">
+                            <h3 class="m-subheader__title">
                                 Financial Statement
                             </h3>
-                            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
-                                <li class="m-nav__item m-nav__item--home">
-                                    <a href="#" class="m-nav__link m-nav__link--icon">
-                                        <i class="m-nav__link-icon la la-home"></i>
-                                    </a>
-                                </li>
-                                <li class="m-nav__separator">
-                                    -
-                                </li>
-                                <li class="m-nav__item">
-                                    <a href="" class="m-nav__link">
-                                        <span class="m-nav__link-text">
-                                            Generate Report
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="m-nav__separator">
-                                    -
-                                </li>
-                                <li class="m-nav__item">
-                                    <a href="" class="m-nav__link">
-                                        <span class="m-nav__link-text">
-                                            Financial Statement
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
 
                         </div>
                     </div>
@@ -138,6 +111,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             </div>
             <!-- END: Subheader -->
             </div>
+			<div class="m-portlet__body"> 
 
             <script type="text/javascript">
                 var accountArray = <?php echo json_encode($accountArray); ?>;
@@ -187,7 +161,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 // Creation of form
                 var formElement = "<form id='form' name='passDataForm' method='post' action='temp_real.php' onsubmit='return submitForm()'>\n\
                                 <b>Category:</b> <input type='text' name='category' value='" + categoryArray[counter] + "' id='categoryLooper'>\n\
-                                <button type='button' id='skipBtn'>Skip</button>";
+                                <button type='button' id='skipBtn' class='btn btn-brand'>Skip</button>";
 
                 formElement += "<br><br>\n\
                                 <b>TB Accounts:</b>\n\
@@ -198,7 +172,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 }
 
                 formElement += "<p id='helpingWords'><b>Helping Keys:</b><br></p>\n\
-                                <button type='button' id='addManualBtn'>Add Manual Input Boxes</button><br/><br/>\n\
+                                <button type='button' id='addManualBtn' class='btn btn-brand'>Add Manual Input Boxes</button><br/><br/>\n\
                                 <p id='inputField'> Manual Accounts: <input type='text' id='mAccount0'> \n\
                                 Values: <input type='text' id='mValue0'>";
 
@@ -212,8 +186,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 //    formElement += "</select>";
 
                 formElement += "<br><br></p>\n\
-                                <button type='button' id='nextBtn'>Next</button>\n\
-                                <button type='submit' id='submitBtn'>Submit</button>\n\
+                                <button type='button' id='nextBtn' class='btn btn-success'>Next</button>\n\
+                                <button type='submit' id='submitBtn' class='btn btn-success'>Submit</button>\n\
                                 <input type='hidden' name='passData' value='" + storeCategory + "' id='passData'/>\n\
                                 <input type='hidden' name='years[]' value='" + years + "'/>\n\
                                 <input type='hidden' name='numberOfYears' value='" + numberOfSheets + "'/>\n\
@@ -473,6 +447,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 //------------------------------------------------------------------------------------------
 
             </script>
+			</div>
             <?php
         }
     }

@@ -7,13 +7,12 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSION['company'])) {
     if ($_SESSION['role_id'] != 2 && $_SESSION['role_id'] != 3) {
-        header('Location: ../user_super_admin/userdashboard.php');
+        header('Location: ../user_super_admin/super_admin_dashboard.php');
     } else {
         if (!isset($_POST['companyName'])) {
             header("Location: fs_index.php");
         } else {
             include '../general/header.php';
-            include '../general/navigation_clientadmin.php';
 
             if ($_SESSION['role_id'] == 2) {
                 include '../general/navigation_clientadmin.php';
@@ -108,37 +107,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 <div class="m-subheader ">
                     <div class="d-flex align-items-center">
                         <div class="mr-auto">
-                            <h3 class="m-subheader__title m-subheader__title--separator">
+                            <h3 class="m-subheader__title">
                                 Financial Statement
                             </h3>
-                            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
-                                <li class="m-nav__item m-nav__item--home">
-                                    <a href="#" class="m-nav__link m-nav__link--icon">
-                                        <i class="m-nav__link-icon la la-home"></i>
-                                    </a>
-                                </li>
-                                <li class="m-nav__separator">
-                                    -
-                                </li>
-                                <li class="m-nav__item">
-                                    <a href="" class="m-nav__link">
-                                        <span class="m-nav__link-text">
-                                            Generate Report
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="m-nav__separator">
-                                    -
-                                </li>
-                                <li class="m-nav__item">
-                                    <a href="" class="m-nav__link">
-                                        <span class="m-nav__link-text">
-                                            Financial Statement
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
-
                         </div>
                     </div>
                 </div>
@@ -450,7 +421,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             <input type="hidden" class="form-control" id="yearEnd" name="yearEnd" value="<?php echo date_format($date, "Y-m-d"); ?>"/>
                                         </div>
 
-                                        <button onclick="addDirectorFunction()" type='button' id='addDirector'>Add Director</button>
+                                        <button onclick="addDirectorFunction()" type='button' id='addDirector' class='btn btn-brand'>Add Director</button>
 
                                         <div class="form-group" id='directorFields'>
                                             <label for="directorName0">Director Name: </label>
@@ -626,10 +597,10 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                                             addDirectorFields();
 
-                                            document.getElementById('directorFields').innerHTML += "Director Name: <input type='text' id='directorName" + count + "'> \n\
-                                                                                                                Appointed Date: <input type='date' id='directorNameApptDate" + count + "'> \n\
-                                                                                                                Director's Start Share: <input type='number' id='directorStartShare" + count + "'>\n\
-                                                                                                                Director's End Share: <input type='number' id='directorEndShare" + count + "'> \n\</br> ";
+                                            document.getElementById('directorFields').innerHTML += "Director Name: <input class='form-control' type='text' id='directorName" + count + "'> \n\
+                                                                                                                Appointed Date: <input type='date' class='form-control' id='directorNameApptDate" + count + "'> \n\
+                                                                                                                Director's Start Share: <input type='number' class='form-control' id='directorStartShare" + count + "'>\n\
+                                                                                                                Director's End Share: <input type='number' class='form-control' id='directorEndShare" + count + "'> \n\</br> ";
 
                                             for (i = 0; i < count; i++) {
                                                 document.getElementById('directorName' + i).value = tempDirectorArray[i];

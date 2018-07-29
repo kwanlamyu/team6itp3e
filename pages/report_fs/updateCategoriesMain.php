@@ -103,36 +103,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 <div class="m-subheader ">
                     <div class="d-flex align-items-center">
                         <div class="mr-auto">
-                            <h3 class="m-subheader__title m-subheader__title--separator">
+                            <h3 class="m-subheader__title">
                                 Financial Statement
                             </h3>
-                            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
-                                <li class="m-nav__item m-nav__item--home">
-                                    <a href="#" class="m-nav__link m-nav__link--icon">
-                                        <i class="m-nav__link-icon la la-home"></i>
-                                    </a>
-                                </li>
-                                <li class="m-nav__separator">
-                                    -
-                                </li>
-                                <li class="m-nav__item">
-                                    <a href="" class="m-nav__link">
-                                        <span class="m-nav__link-text">
-                                            Generate Report
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="m-nav__separator">
-                                    -
-                                </li>
-                                <li class="m-nav__item">
-                                    <a href="" class="m-nav__link">
-                                        <span class="m-nav__link-text">
-                                            Financial Statement
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -154,7 +127,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         </div>
                                     </div>
                                 </div>
-
+								<div class="m-portlet__body"> 
                                 <form method="post" name="mainCategory" action="updateCategoriesAccount.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
                                     <?php
                                     $query = $DB_con->prepare("SELECT * FROM main_category WHERE company_name =:companyName AND client_company = :clientName");
@@ -206,7 +179,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         for ($i = 0; $i < count($subResult); $i++) {
                                           if (strcasecmp($matched[$k],"Exchanges") !== 0) {
                                             if (strcasecmp($subResult[$i]['sub_account'], $matched[$k]) === 0) {
-                                                echo "<b>Sub category name: </b> " . $matched[$k] . "<br/>";
+                                                echo "<br><b>Sub category name: </b> " . $matched[$k] . "<br/>";
                                                 echo "<div>";
 
                                                 $startDataList = "<input list='category" . $i . "' value='' class='form-control' name='category[]'/>";
@@ -281,6 +254,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                                     <input type="submit" value="Submit" name="submit" class="btn btn-brand">
                                 </form>
+								</div>
                             </div>
                         </div>
                     </div>
