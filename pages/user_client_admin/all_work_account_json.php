@@ -1,4 +1,8 @@
-
+<?php 
+/* 
+ * SQL and JSON coding to retrieve company UEN, company name, file number and the account mangagers
+ */
+?>
 <?php require_once '../db_connection/db.php';?>
 
 <?php
@@ -21,7 +25,6 @@ $userID= $_SESSION['username'];
 	$uniqueCompanies = array();
 	while ($result = $select->fetch(PDO::FETCH_ASSOC)) {
 		$rows[] = $result;
-		// echo $result['accountManagers'];
 	}
 
 

@@ -1,4 +1,9 @@
 <?php
+/*
+ * front-end code to verify deleting of a accountant account
+ */
+?>
+<?php
 require_once '../db_connection/db.php';
 //check for username and role_id
 if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
@@ -15,33 +20,33 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                     <h3 class="m-subheader__title m-subheader__title--separator">
                         Financial Statement
                     </h3>
-                    <!--                    <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
-                                            <li class="m-nav__item m-nav__item--home">
-                                                <a href="#" class="m-nav__link m-nav__link--icon">
-                                                    <i class="m-nav__link-icon la la-home"></i>
-                                                </a>
-                                            </li>
-                                            <li class="m-nav__separator">
-                                                -
-                                            </li>
-                                            <li class="m-nav__item">
-                                                <a href="" class="m-nav__link">
-                                                    <span class="m-nav__link-text">
-                                                        Generate Report
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li class="m-nav__separator">
-                                                -
-                                            </li>
-                                            <li class="m-nav__item">
-                                                <a href="" class="m-nav__link">
-                                                    <span class="m-nav__link-text">
-                                                        Financial Statement
-                                                    </span>
-                                                </a>
-                                            </li>
-                                        </ul>-->
+                    <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                        <li class="m-nav__item m-nav__item--home">
+                            <a href="#" class="m-nav__link m-nav__link--icon">
+                                <i class="m-nav__link-icon la la-home"></i>
+                            </a>
+                        </li>
+                        <li class="m-nav__separator">
+                            -
+                        </li>
+                        <li class="m-nav__item">
+                            <a href="" class="m-nav__link">
+                                <span class="m-nav__link-text">
+                                    Generate Report
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-nav__separator">
+                            -
+                        </li>
+                        <li class="m-nav__item">
+                            <a href="" class="m-nav__link">
+                                <span class="m-nav__link-text">
+                                    Financial Statement
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
 
                 </div>
             </div>
@@ -68,7 +73,6 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                         <?php
                         if (isset($_GET['deleteAccountant'])) {
                             $accountants = $_GET['deleteAccountant'];
-                            //                echo'after post statement';
                         }
                         ?>
 
@@ -79,16 +83,11 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                 <th>Email</th>
                                 <th>Delete Details</th>
                                 </thead>
-                                <?php // echo'after table head'; ?>
-
                                 <tbody>
                                     <?php
-                                    //                            echo'after table body';
                                     $sql = $DB_con->prepare("SELECT * FROM user WHERE role_id = 3 AND companyName = '" . $_SESSION['company'] . "';");
-                                    //                            echo'statement prepared';
                                     $sql->execute();
                                     $users = $sql->fetchAll();
-                                    //                            echo'statement executed';
                                     if (count($users) == 0) {
                                         echo '<tr>'
                                         . '<td>Nil</td>'
@@ -96,10 +95,8 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                         . '<td>Nil</td>'
                                         . '</tr>';
                                     } else {
-                                        //                                echo'else condition reached';
                                         $counter = 0;
                                         foreach ($users as $row) {
-                                            //                                    echo'rows echoed';
                                             echo ""
                                             . "<tr>"
                                             . "<td id='accountant_username" . $counter . "'>{$row['username']}</td>"
@@ -125,77 +122,10 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
             </div>
         </div>
     </div>
-</div>
-
-
-    <!--    <div class="row">
-            <div class="card">
-                <div class="card-body">
-                    //retrieve table of accountants
-                    //format table with delete button at side
-                    //when button is clicked, modal popup to ask for confirmation
-                    //on confirmation then delete row
+    </div>
 
 
 
-                    <?php
-                    if (isset($_GET['deleteAccountant'])) {
-                        $accountants = $_GET['deleteAccountant'];
-                        //echo'after post statement';
-                    }
-                    ?>
-                    <p><a href="../user_client_admin/client_admin_dashboard.php">Return to dashboard</a></p>
-                    <div class="table-responsive table-scroll">
-                        <table class="table table-hover table-room">
-                            <thead>
-                            <th>User</th>
-                            <th>Email</th>
-                            <th>Delete Details</th>
-                            </thead>
-                    <?php // echo'after table head'; ?>
-
-                            <tbody>
-                    <?php
-                //                            echo'after table body';
-                    $sql = $DB_con->prepare("SELECT * FROM user WHERE role_id = 3 AND companyName = '" . $_SESSION['company'] . "';");
-                //                            echo'statement prepared';
-                    $sql->execute();
-                    $users = $sql->fetchAll();
-                //                            echo'statement executed';
-                    if (count($users) == 0) {
-                        echo '<tr>'
-                        . '<td>Nil</td>'
-                        . '<td>Nil</td>'
-                        . '<td>Nil</td>'
-                        . '</tr>';
-                    } else {
-                //                                echo'else condition reached';
-                        $counter = 0;
-                        foreach ($users as $row) {
-                //                                    echo'rows echoed';
-                            echo ""
-                            . "<tr>"
-                            . "<td id='accountant_username" . $counter . "'>{$row['username']}</td>"
-                            . "<td id='accountant_email" . $counter . "'>{$row['email']}</td>"
-                            . "<td>"
-                            . "<button type='button' name='deleteButton' id='deleteButton' class='btn btn-danger delete_data' data-toggle='modal' data-target='#deleteModal' onclick='updateUsername(" . $counter . ")'>"
-                            . "<i class='fa fa-trash' aria-hidden='true'></i> Delete "
-                            . "</button>"
-                            . "</td>"
-                            . "</tr>\n";
-                            $counter++;
-                        }
-                    }
-                    ?>
-
-                            </tbody>
-                        </table>
-                    </div>
-                    <hr>
-                    <p><a href="../user_client_admin/client_admin_dashboard.php">Return to dashboard</a></p>
-                </div>
-            </div>
-        </div>-->
 
     <!-- Modal -->
     <div class="modal fade" id="deleteModal" role="dialog">
@@ -244,7 +174,6 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <!--<button type="submit" name="deleteButton" id="deleteButton" class="btn btn-danger">Delete User</button>-->
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>

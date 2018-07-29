@@ -1,3 +1,9 @@
+<?php 
+/* front-end code for showing all work (company) accounts
+ * 
+ */
+?>
+
 <?php
 require_once '../db_connection/db.php';
 //check for username and role_id
@@ -92,7 +98,6 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                     <div class="modal-body">
                         <form id="edit" name="edit" action="../user_client_admin/all_work_account.php" method="POST">
                             <?php include('../user_client_admin/edit_work_validation.php'); ?>
-
                             <div class="form-group">
                                 <label for="edituenid">UEN/ACRA No.</label>
                                 <input type="text" class="form-control" id="editviewid" name="editviewid" disabled>
@@ -111,26 +116,20 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                         <th>Accountant</th>
                                         <th>Select</th>
                                         </thead>
-                                        <?php // echo'after table head';?>
 
                                         <tbody>
                                             <?php
-    //                            echo'after table body';
                                             $sql = $DB_con->prepare("SELECT username FROM user WHERE role_id = 3 AND companyName='" . $_SESSION['company'] . "';");
-    //                            echo'statement prepared';
                                             $sql->execute();
                                             $users = $sql->fetchAll();
-    //                            echo'statement executed';
                                             if (count($users) == 0) {
                                                 echo '<tr>'
                                                 . '<td> </td>'
                                                 . '<td> </td>'
                                                 . '</tr>';
                                             } else {
-    //                                echo'else condition reached';
                                                 $counter = 0;
                                                 foreach ($users as $row) {
-    //                                    echo'rows echoed';
                                                     echo ""
                                                     . "<tr>"
                                                     . "<td id='edit_account_username" . $counter . "'>{$row['username']}</td>"
@@ -166,7 +165,6 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
                         <h4 class="modal-title">Delete Account</h4>
                     </div>
                     <div class="modal-body">
@@ -202,7 +200,6 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <!--<button type="submit" name="deleteButton" id="deleteButton" class="btn btn-danger">Delete User</button>-->
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -214,7 +211,6 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
     <script>
 
         function updateUEN(uen) {
-            //var uen = document.getElementById("account_uen" + x).innerHTML;
             document.getElementById('edituenid').value = uen;
             document.getElementById('editviewid').value = uen;
 
@@ -222,12 +218,9 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
         }
 
         function deleteAccount(uen,company,filenumber) {
-            //var uen = document.getElementById("account_uen" + x).innerHTML;
             document.getElementById('deleteviewid').value = uen;
             document.getElementById('deleteuenid').value = uen;
-            //var company = document.getElementById("account_companyName" + x).innerHTML;
             document.getElementById('deleteviewcompany').value = company;
-            //var filenumber = document.getElementById("account_fileNumber" + x).innerHTML;
             document.getElementById('deletefilenumber').value = filenumber;
 
         }

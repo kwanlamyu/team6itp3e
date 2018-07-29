@@ -1,3 +1,8 @@
+<?php 
+/* 
+ * back-end code to verify registration of a new accountant to the session client admin
+ */
+?>
 <?php
 require_once '../db_connection/db.php';
 ob_start();
@@ -14,20 +19,19 @@ function test_input($data) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['createButton'])) {
-
-//        echo "post reg button <br>";
+        
         if (empty($_POST["accountantid"])) {
             $unameErr = '* User name is required';
+            
         } else {
             $uname = ($_POST["accountantid"]);
-            //            echo "else statement <br>";
             $query = "SELECT COUNT(*) FROM user WHERE username = '" . $uname . "'";
-            //            echo "pre-query execution <br>";
             $result = $DB_con->query($query);
 
             if ($result->fetchColumn() > 0) {
                 $unameErr = "* Username has already been used";
                 $valid = FALSE;
+                
             }
         }
 
@@ -66,12 +70,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         if ($pass !== $cpass) {
             $twopassErr = "* Both password must be the same";
-//                    echo"Password: ".$twopassErr."<br>";
             $valid = FALSE;
         }
 
         $companyName = $_SESSION['company'];
-//        $companyName = "jerome pte ltd";
 
         if ($valid == TRUE) {
             
@@ -86,8 +88,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($sql->execute()) {
                 
                 $successMessage = "Accountant has been registered successfully."; 
-                
-                //header('Location: ../user_management/create_accountant.php');
                 echo '<div class="alert alert-success" role="alert">'
                         . '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close"></a>'
                         . ' Accountant successfully created '
@@ -100,7 +100,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             $failMessage = "Failed to register accountant."; 
         }
-//        header('refresh:5;Location: create_accountant.php');
         ob_end_clean();
     }
 }
