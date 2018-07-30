@@ -55,5 +55,11 @@ $spreadsheet->getActiveSheet()
     );
 
 $writer = new Xlsx($spreadsheet);
+
+$writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, "Xlsx");
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment; filename="Company Accounts.xlsx"');
+
 $writer->save('Company Accounts.xlsx');
+$writer->save("php://output");
 ?>

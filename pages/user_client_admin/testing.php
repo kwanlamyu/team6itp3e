@@ -6,42 +6,14 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 //query for data
 $vari = $_POST['generalSearch'];
-$userID= $_SESSION['username'];
-$exportquery = "CREATE VIEW work_clients AS
-            SELECT
-            account.UEN AS UEN,
-            account.companyName AS companyName,
-            account.user_username AS accountManagers,
-            usermanageaccount.user_username AS accountAccountants
-            FROM account
-            INNER JOIN usermanageaccount
-            ON account.UEN = usermanageaccount.account_UEN
-            AND usermanageaccount.account_user_username = '".$userID."'
-            AND usermanageaccount.user_role_id =3;";
+$exportquery = "SELECT username, companyName, email FROM user WHERE role_id=2 AND (username LIKE '%".$vari."%' OR companyName LIKE '%".$vari."%' OR email LIKE '%".$vari."%')";
 $stmt=$DB_con->prepare($exportquery);
 $stmt->execute();
 
-$query = "SELECT UEN,companyName,accountAccountants
-FROM work_clients
-WHERE
-UEN LIKE '%".$vari."%'
-OR companyName LIKE '%".$vari."%'
-OR accountAccountants LIKE '%".$vari."%'";
-$stmt = $DB_con->prepare($query);
-$stmt->execute();
-$rows = array();
-$uniqueCompanies = array();
 while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
   $rows[] = array_values($result);
 }
-
-array_unshift($rows , ['Company UEN','Company Name','Accountant']);
-//echo json_encode($rows);
-
-$dropquery = "DROP VIEW work_clients";
-$dropstmt=$DB_con->prepare($dropquery);
-$dropstmt->execute();
-
+array_unshift($rows , ['Client Username','Company Name','Email']);
 
 //export to xlsx
 $spreadsheet = new Spreadsheet();
@@ -55,5 +27,9 @@ $spreadsheet->getActiveSheet()
     );
 
 $writer = new Xlsx($spreadsheet);
-$writer->save('Company Accounts.xlsx');
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment; filename="Client Accounts.xlsx"');
+
+$writer->save('Client Accounts.xlsx');
+$writer->save("php://output");
 ?>
