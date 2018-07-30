@@ -204,7 +204,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                 }
                             }
 
-                            echo "<br/>";
 
                             $trialBalanceArray = array();
                             $yearlyUndefinedRows = array();
@@ -368,7 +367,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                 <div class="m-portlet__head">
                                     <div class="m-portlet__head-caption">
                                         <div class="m-portlet__head-title">
-                                            <h3 class="m-portlet__head-text"> <?php echo $companyName; ?></h3>
+                                            <h3 class="m-portlet__head-text">About <?php echo $companyName; ?></h3>
                                         </div>
                                     </div>
                                 </div>
@@ -384,14 +383,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     ?>
 
                                     <form name='detailsForm' action="next_page.php" method="post" onsubmit="return validateForm()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
-                                        <div class="m-portlet__body">
-                                            <div class="form-group m-form__group row">
-                                                <div class="col-lg-3">
-                                                    <input class="form-control m-input" type="hidden" id="companyregID" name="companyregID" value="<?php echo $clientUEN; ?>">
-                                                </div>
-                                            </div>
-                                        </div>
-
+                                       <input class="form-control m-input" type="hidden" id="companyregID" name="companyregID" value="<?php echo $clientUEN; ?>">
+                                               
                                         <?php
                                         $month = substr($endedAtArray[0], 0, -5);
                                         $monthInNumber = 0;
@@ -422,7 +415,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         </div>
 
                                         <button onclick="addDirectorFunction()" type='button' id='addDirector' class='btn btn-brand'>Add Director</button>
-
+										<br>
                                         <div class="form-group" id='directorFields'>
                                             Director Name: 
                                             <input type ="text" id="directorName0" class="form-control col-lg-4"/>
@@ -644,6 +637,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     </div>
                 </div>
 
+				</div>
+				</div>
 
 
                 <?php

@@ -91,27 +91,39 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         </div>
                     </div>
                 </div>
+				
+				<div class="m-content">
+						<div class="row">
+							<div class="col-xl-12">
+								<div class="m-portlet m-portlet--mobile ">
+									<div class="m-portlet__head">
+										<div class="m-portlet__head-caption">
+											<div class="m-portlet__head-title">
+												<h3 class="m-portlet__head-text">
+													Select Notes
+												</h3>
+											</div>
+										</div>
+										<div class="m-portlet__head-tools">
+											
+										</div>
+									</div>
 
 
 				<div class="m-portlet__body"> 
-                <!--begin::Portlet-->
-                <div class="m-content">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="m-portlet m-portlet--tab">
 
                                 <p id="data"></p>
                                 <p id="test"></p>
 
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <!--end::Portlet-->
             </div>
 			</div>
             <!-- END: Subheader -->
             </div>
+			</div>
+			</div>
+			</div>
 			
 
             <script type="text/javascript">
@@ -174,14 +186,14 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                 formElement += "<p id='helpingWords'><b>Helping Keys:</b><br></p>\n\
                                 <button type='button' id='addManualBtn' class='btn btn-brand'>Add Manual Input Boxes</button><br/><br/>\n\
-                                <p id='inputField'> Manual Accounts: <input type='text' id='mAccount0'> \n\
-                                Values: <input type='text' id='mValue0'>";
+                                <p id='inputField'> Manual Accounts: <input class='form-control' type='text' id='mAccount0'> \n\
+                                Values: <input class='form-control' type='text' id='mValue0'>";
 
                 //    formElement += "<select id='dropdownYear'>";
 
                 for (var t = 0; t < yearsCount; t++) {
                     //        formElement += "<option value='" + years[t] + "'>" + years[t] + "</option>";
-                    formElement += "<input type='radio' name='0' id='date0" + t + "' value='" + years[t] + "'>" + years[t];
+                    formElement += "<input class='form-control' type='radio' name='0' id='date0" + t + "' value='" + years[t] + "'>" + years[t];
                 }
 
                 //    formElement += "</select>";
