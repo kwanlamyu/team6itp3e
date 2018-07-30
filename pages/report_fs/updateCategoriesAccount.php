@@ -163,7 +163,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                 <?php
                                 if (isset($allAccounts)) {
                                     try {
-                                          echo "<div align='center'><h4>" . $_SESSION['company'] . "</h4><span>Client: " . $clientName . "</span><br></div><br>";
+                                          echo "<div align='center'><h4>" . $clientName . "</h4></div><br>";
                                         $accountQuery = $DB_con->prepare("SELECT * FROM account_category WHERE company_name =:companyName AND client_company = :clientName");
                                         $accountQuery->bindParam(':companyName', $_SESSION['company']);
                                         $accountQuery->bindParam(':clientName', $clientName);

@@ -565,7 +565,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $query->execute();
                                         }
 
-                                        echo "<div align='center'><h4>" . $companyName . "</h4><span>Client: " . $clientName . "</span><br></div><br>";
+                                        echo "<div align='center'><h4>" . $clientName . "</h4></div><br>";
 
                                         // TODO: change to editable
                                         $query = $DB_con->prepare("SELECT * FROM sub_category WHERE company_name =:companyName AND client_company = :clientName");

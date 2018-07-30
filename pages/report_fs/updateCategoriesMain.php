@@ -130,7 +130,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                 <div class="m-portlet__body">
                                     <form method="post" name="mainCategory" action="updateCategoriesAccount.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
                                         <?php
-                                        echo "<div align='center'><h4>" . $_SESSION['company'] . "</h4><span>Client: " . $clientName . "</span><br></div><br>";
+                                        echo "<div align='center'><h4>" . $clientName . "</h4></div><br>";
 
                                         $query = $DB_con->prepare("SELECT * FROM main_category WHERE company_name =:companyName AND client_company = :clientName");
                                         $query->bindParam(':companyName', $_SESSION['company']);
