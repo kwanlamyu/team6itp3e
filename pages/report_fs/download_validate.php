@@ -1,5 +1,16 @@
+
 <?php
 require_once '../db_connection/db.php';
+include '../general/header.php'; ?>
+
+<body  class="m--skin- m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default"  >
+    <!-- begin:: Page -->
+    <div class="m-grid m-grid--hor m-grid--root m-page">
+        <div class="m-grid__item m-grid__item--fluid m-grid m-grid--hor m-login m-login--signin m-login--2 m-login-2--skin-2" id="m_login" style="background-image: url(../../assets/app/media/img/bg/login.jpg);">
+            <div class="m-grid__item m-grid__item--fluid	m-login__wrapper">
+                <div class="m-login__container">
+
+<?php
 if (isset($_GET['filename'])){
     $queryManage = $DB_con->prepare("SELECT * FROM usermanageaccount WHERE user_username = :username");
     $queryManage->bindParam(':username', $_SESSION['username']);
@@ -29,8 +40,8 @@ if (isset($_GET['filename'])){
       $filename = $_GET['filename'];
       echo "<input type='hidden' name='filename' value='" . $filename . "'/>";
       echo "<input type='hidden' name='valid' value='1'/>";
-      echo "<span>Your download should be starting soon...<br/>";
-      echo "<input type='submit' name='submit' value='Download' id='submit'/>";
+      echo "<h2>Your download should be starting soon...</h2><br/>";
+      echo "<div align='center'><input class='btn btn-success' type='submit' name='submit' value='Download' id='submit'/></div>";
       echo "</form>";
       echo "<script>submitBtn = document.getElementById('submit');
       submitBtn.click();
@@ -45,3 +56,7 @@ if (isset($_GET['filename'])){
 }
 
 ?>
+</div>
+        </div>
+    </div>
+<?php include '../general/footer.php'; ?>

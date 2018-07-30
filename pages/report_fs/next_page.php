@@ -173,7 +173,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                 // Creation of form
                 var formElement = "<form id='form' name='passDataForm' method='post' action='temp_real.php' onsubmit='return submitForm()'>\n\
-                                <b>Category: </b><br> <input class='form-control col-lg-3' type='text' name='category' value='" + categoryArray[counter] + "' id='categoryLooper'>\n\
+                                <b>Category: </b><br><br> <input class='form-control col-lg-3' type='text' name='category' value='" + categoryArray[counter] + "' id='categoryLooper'>\n\
                                 <br><button type='button' id='skipBtn' class='btn btn-success'>Skip</button>";
 
                 formElement += "<br><br>\n\
@@ -181,7 +181,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                 <br><br>";
 
                 for (var i = 0; i < accountArrayCount; i++) {
-                    formElement += "<input class='m-checkbox' type='checkbox' id='" + i + "' name='account' value=' " + accountArray[i] + "#" + valueArray[i] + " '> " + accountArray[i].substring(1) + " " + valueArray[i] + "<br><br>";
+                    formElement += "<label class='m-checkbox'><input type='checkbox' id='" + i + "' name='account' value=' " + accountArray[i] + "#" + valueArray[i] + " '><span></span></label> " + accountArray[i].substring(1) + " " + valueArray[i] + "<br><br>";
                 }
 
                 formElement += "<br><p id='helpingWords'><b>Helping Keys:</b><br></p>\n\
@@ -193,7 +193,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                 for (var t = 0; t < yearsCount; t++) {
                     //        formElement += "<option value='" + years[t] + "'>" + years[t] + "</option>";
-                    formElement += "<input class='m-radio' type='radio' name='0' id='date0" + t + "' value='" + years[t] + "'>" + years[t];
+                    formElement += "<label class='m-radio'><input type='radio' name='0' id='date0" + t + "' value='" + years[t] + "'><span></span></label>" + years[t];
                 }
 
                 //    formElement += "</select>";
@@ -257,7 +257,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
 
                     for (t = 0; t < yearsCount; t++) {
-                        document.getElementById('inputField').innerHTML += "<input class='m-radio' type='radio' name='" + c + "' id='date" + (count) + t + "' value='" + years[t] + "'>" + years[t];
+                        document.getElementById('inputField').innerHTML += "<label class='m-radio'><input type='radio' name='" + c + "' id='date" + (count) + t + "' value='" + years[t] + "'><span></span></label>" + years[t];
                     }
                     c++;
 
