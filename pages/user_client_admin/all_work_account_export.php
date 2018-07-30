@@ -3,19 +3,26 @@
 <?php
 $vari = $_POST['generalSearch'];
 $userID= $_SESSION['username'];
-$stmt=$DB_con->prepare("SELECT UEN, companyName,accountManagers 
-FROM (CREATE VIEW work_clients AS
-    SELECT account.UEN AS UEN,
-	account.companyName AS companyName,
-	usermanageaccount.user_username
-	AS accountManagers,
-	usermanageaccount.user_username
-	AS accountAccountants
-	FROM account
-	INNER JOIN usermanageaccount
-	ON account.UEN = usermanageaccount.account_UEN
-	AND usermanageaccount.account_user_username = 'jpjp'
-	AND usermanageaccount.user_role_id =3) WHERE (UEN LIKE '%".$vari."%' OR companyName LIKE '%".$vari."%' OR accountManagers LIKE '%".$vari."%')");
+$exportquery = "CREATE VIEW work_clients AS
+            SELECT 
+            account.UEN AS UEN,
+            account.companyName AS companyName,
+            usermanageaccount.user_username AS accountManagers,
+            usermanageaccount.user_username AS accountAccountants
+            FROM account
+            INNER JOIN usermanageaccount
+            ON account.UEN = usermanageaccount.account_UEN
+            AND usermanageaccount.account_user_username = '".$userID."'
+            AND usermanageaccount.user_role_id =3;
+
+            SELECT UEN,companyName,accountManagers 
+            FROM work_clients 
+            WHERE (
+            UEN LIKE '%".$vari."%'
+            OR companyName LIKE '%".$vari."%'
+            OR accountManagers LIKE '%".$vari."%')";
+
+$stmt=$DB_con->prepare($exportquery);
 	
 $stmt->execute();
  
