@@ -63,15 +63,6 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                         <span class="error"><?php echo $uennumberErr; ?></span>
                                     </div>
                                 </div>
-
-                                <div class="form-group m-form__group row">
-                                    <!-- File Number -->
-                                    <label class="col-lg-2 col-form-label" for="filenumber">File Number</label>
-                                    <div class="col-lg-3">
-                                        <input type="text" class="form-control" id="filenumber" name="filenumber" placeholder="File Number">
-                                        <span class="error"><?php echo $filenumberErr; ?></span>
-                                    </div>
-                                </div>
                             </div>
 
                             <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">

@@ -9,7 +9,6 @@
 $userID= $_SESSION['username'];
 	$select = $DB_con->prepare("SELECT account.UEN AS UEN,
 	account.companyName AS companyName,
-	account.fileNumber AS fileNumber,
 	usermanageaccount.user_username
 	AS accountManagers,
 	usermanageaccount.user_username
@@ -39,7 +38,7 @@ $userID= $_SESSION['username'];
 		$accountants = "";
 		$uenNo;
 		$nameCompany;
-		$fileNo;
+//		$fileNo;
 		for ($x = 0; $x < count($rows); $x++){
 			if (strcasecmp($rows[$x]['UEN'],$uniqueCompanies[$i]) === 0){
 				if (strlen($accountants) > 0){
@@ -48,14 +47,14 @@ $userID= $_SESSION['username'];
 				$accountants .= $rows[$x]['accountAccountants'];
 				$uenNo = $rows[$x]['UEN'];
 				$nameCompany = $rows[$x]['companyName'];
-				$fileNo = $rows[$x]['fileNumber'];
+//				$fileNo = $rows[$x]['fileNumber'];
 			}
 
 		}
 		$finalData[$i]['UEN'] = $uenNo;
 		$finalData[$i]['companyName'] = $nameCompany;
 		$finalData[$i]['accountManagers'] = $accountants;
-		$finalData[$i]['fileNumber'] = $fileNo;
+//		$finalData[$i]['fileNumber'] = $fileNo;
 
 	}
 	$userID = $_SESSION['username'];

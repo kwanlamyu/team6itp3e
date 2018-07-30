@@ -60,7 +60,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                             <option>--- Select UEN ---</option>
                                             <?php
                                             //get UENs
-                                            $uensql = $DB_con->prepare("SELECT UEN FROM account WHERE user_username = '".$_SESSION['username']."'");
+                                            $uensql = $DB_con->prepare("SELECT UEN, companyName FROM account WHERE user_username = '".$_SESSION['username']."'");
                                             $uensql->execute();
                                             $uenNum = $uensql->fetchAll();
 
@@ -72,7 +72,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                                 $counter = 0;
                                                 foreach ($uenNum as $row) {
 
-                                                    echo "<option value='" . $row['UEN'] . "'>" . $row['UEN'] . "</option>";
+                                                    echo "<option value='" . $row['UEN'] . "'>" . $row['UEN'] ." - " . $row['companyName'] . "</option>";
                                                 }
                                             }
                                             ?>
