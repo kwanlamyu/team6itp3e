@@ -20,6 +20,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             } else {
                 include '../general/navigation_accountant.php';
             }
+            $companyName = $_POST['companyName'];
+            $mismatchName = $companyName . " Values Mismatch.txt";
+            $mismatchFile = fopen("files generated/" . $mismatchName, "w") or die("Unable to create file!");
             //require_once 'C:\xampp\htdocs\phpWordsItp\vendor\autoload.php';
             $phpWord = new \PhpOffice\PhpWord\PhpWord();
             //Default font style
@@ -142,7 +145,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             $numberOfSheets = $_POST['numberOfYears'];
             $years = $_POST['years'];
             $yearsString = $_POST['years']; // Phoebe usage only
-            $companyName = $_POST['companyName'];
 
 // =============================================================================
 // YOKYEE
@@ -564,7 +566,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 }
             }
 
-            for ($i = 0; $i < count($displayedCategory); $i++) {
+             for ($i = 0; $i < count($displayedCategory); $i++) {
                 if (strcasecmp($displayedCategory[$i], "share capital") === 0) {
                     array_push($sequenceCategory, $displayedCategory[$i]);
                 }
@@ -2502,6 +2504,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             $cell->addText(number_format(round($tempCapital + $tempProfit)), $fontstyleName, $centerAlignment);
             if (round($totalEquityArray[0]) != round($tempCapital + $tempProfit)) {
                 echo '<script language="javascript">alert("Value mismatch: total equity in\nStatement of financial position\nAND\nStatement of changes in equity");</script>';
+                $mismatchTxt = "Value mismatch: total equity in Statement of financial position AND Statement of changes in equity" . PHP_EOL;
+                fwrite($mismatchFile,$mismatchTxt);
             }
 
             // Cash flow statements
@@ -3237,6 +3241,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 $cell->addText($tempValue, $fontstyleName, $centerAlignment);
                 if ($totalCashFlow[$i] !== $bankArray[$i]) {
                     echo '<script language="javascript">alert("Value mismatch: Cash and cash equivalents at end of financial year\nAND\nBank balances");</script>';
+                    $mismatchTxt = "Value mismatch: Cash and cash equivalents at end of financial year AND Bank balances" . PHP_EOL;
+                    fwrite($mismatchFile,$mismatchTxt);
                 }
             }
 
@@ -3984,6 +3990,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         if ($key1 == $key2) {
                             if ($value1 != $value2) {
                                 echo "Value mismatch: (a) Income Taxes - " . $key1 . " does not match <br>";
+                                $mismatchTxt = "Value mismatch: (a) Income Taxes - " . $key1 . " does not match" . PHP_EOL;
+                                fwrite($mismatchFile,$mismatchTxt);
                             }
                         }
                     }
@@ -4137,6 +4145,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         if ($key1 == $key2) {
                             if ($value1 != $value2) {
                                 echo "Value mismatch: (a) Tax expense - " . $key1 . " does not match <br>";
+                                $mismatchTxt = "Value mismatch: (a) Tax expense - " . $key1 . " does not match" . PHP_EOL;
+                                fwrite($mismatchFile,$mismatchTxt);
                             }
                         }
                     }
@@ -4385,6 +4395,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         if ($key1 == $key2) {
                             if ($value1 != $value2) {
                                 echo "Value mismatch: (b) Movement in current income tax liabilities - " . $key1 . " does not match <br>";
+                                $mismatchTxt = "Value mismatch: (b) Movement in current income tax liabilities - " . $key1 . " does not match" . PHP_EOL;
+                                fwrite($mismatchFile,$mismatchTxt);
                             }
                         }
                     }
@@ -4589,6 +4601,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         if ($key1 == $key2) {
                             if ($value1 != $value2) {
                                 echo "Value mismatch: Trade and other payables (Other payables) - " . $key1 . " does not match <br>";
+                                $mismatchTxt = "Value mismatch: Trade and other payables (Other payables) - " . $key1 . " does not match" . PHP_EOL;
+                                fwrite($mismatchFile,$mismatchTxt);
                             }
                         }
                     }
@@ -4785,6 +4799,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         if ($key1 == $key2) {
                             if ($value1 != $value2) {
                                 echo "Value mismatch: Trade and other payables (Other payables) - " . $key1 . " does not match <br>";
+                                $mismatchTxt = "Value mismatch: Trade and other payables (Other payables) - " . $key1 . " does not match" . PHP_EOL;
+                                fwrite($mismatchFile,$mismatchTxt);
                             }
                         }
                     }
@@ -5001,6 +5017,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         if ($key1 == $key2) {
                             if ($value1 != $value2) {
                                 echo "Value mismatch: Borrowing (top) - " . $key1 . " does not match <br>";
+                                $mismatchTxt = "Value mismatch: Borrowing (top) - " . $key1 . " does not match" . PHP_EOL;
+                                fwrite($mismatchFile,$mismatchTxt);
                             }
                         }
                     }
@@ -5160,6 +5178,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                             if ($key1 == $key2) {
                                 if ($value1 != $value2) {
                                     echo "Value mismatch: Borrowing (current/non-current) - " . $key1 . " does not match <br>";
+                                    $mismatchTxt = "Value mismatch: Borrowing (current/non-current) - " . $key1 . " does not match" . PHP_EOL;
+                                    fwrite($mismatchFile,$mismatchTxt);
                                 }
                             }
                         }
@@ -6468,6 +6488,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 // Saving the document as OOXML file
             $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
             try {
+                fclose($mismatchFile);
                 $objWriter->save("./files generated/" . $companyName . '.docx');
             } catch (Exception $e) {
                 echo "<script>alert(" . $e . ");</script>";
