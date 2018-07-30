@@ -6028,7 +6028,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         } else {
                             $cell = $table->addCell($cellValue, $allBorders);
                         }
-                        $printCount++;
                         $tempValue = $finalAdminAccountAmount[$i][$x];
                         if ($tempValue == 0) {
                             $tempValue = "-";
@@ -6039,6 +6038,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         }
                         $cell->addText($tempValue, $fontstyleName, $centerAlignment);
                     }
+                    $printCount++;
                 }
             }
 
@@ -6125,8 +6125,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 }
             }
 
+            $printCount = 0;
             for ($i = 0; $i < count($finalDistriAccountAmount); $i++) {
-                $printCount = 0;
                 if (in_array($i, $toPrintDistri)) {
                     $table->addRow();
                     $table->addCell($appendixFirstCell)->addText(htmlspecialchars($finalDistriAccountName[$i]), $fontstyleName, $noSpace);
@@ -6181,10 +6181,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         }
                         $cell->addText($tempValue, $fontstyleName, $centerAlignment);
                     }
+                    $printCount++;
                 }
             }
-
-            $printCount++;
 
             for ($i = 0; $i < count($calculatedDistriExpense); $i++) {
                 $calculatedDistriExpense[$i] = 0 - $calculatedDistriExpense[$i];
@@ -6267,9 +6266,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     }
                 }
             }
-
+            
+            $printCount = 0;
             for ($i = 0; $i < count($finalFinanceAccountAmount); $i++) {
-                $printCount = 0;
                 if (in_array($i, $toPrintFinance)) {
                     $table->addRow();
                     $table->addCell($appendixFirstCell)->addText(htmlspecialchars($finalFinanceAccountName[$i]), $fontstyleName, $noSpace);
@@ -6313,7 +6312,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         } else {
                             $cell = $table->addCell($cellValue, $allBorders);
                         }
-                        $printCount++;
+
                         $tempValue = $finalFinanceAccountAmount[$i][$x];
                         if ($tempValue == 0) {
                             $tempValue = "-";
@@ -6324,6 +6323,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         }
                         $cell->addText($tempValue, $fontstyleName, $centerAlignment);
                     }
+                    $printCount++;
                 }
             }
 
