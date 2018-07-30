@@ -1,6 +1,6 @@
-<?php 
+<?php
 /* front-end code for showing all work (company) accounts
- * 
+ *
  */
 ?>
 
@@ -64,8 +64,8 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                     <div class="col-xl-4 order-1 order-xl-2 m--align-right">
                                         <form method="post" action="../user_client_admin/all_work_account_export.php" id="csvForm">
 											<input type="submit" class="btn btn-accent m-btn m-btn--custom m-btn--pill m-btn--icon m-btn--air" name="export" value="Export Table"/>
-											
-										</form> 
+
+										</form>
                                         <div class="m-separator m-separator--dashed d-xl-none"></div>
                                     </div>
                                 </div>
