@@ -508,70 +508,70 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
             $sequenceCategory = array();
 
-            
+
             //------------------------------------------------------------------
             for ($i = 0; $i < count($displayNormally); $i++) {
                 if (strcasecmp($displayNormally[$i], "other income") === 0) {
                     array_push($sequenceCategory, $displayNormally[$i]);
                 }
             }
-            
+
             for ($i = 0; $i < count($displayedCategory); $i++) {
                 if (strcasecmp($displayedCategory[$i], "profit before income tax") === 0) {
                     array_push($sequenceCategory, $displayedCategory[$i]);
                 }
             }
-            
+
             for ($i = 0; $i < count($displayNormally); $i++) {
                 if (strcasecmp($displayNormally[$i], "Finance expense") === 0) {
                     array_push($sequenceCategory, $displayNormally[$i]);
                 }
             }
-            
+
             for ($i = 0; $i < count($displayNormally); $i++) {
                 if (strcasecmp($displayNormally[$i], "employee compensation") === 0) {
                     array_push($sequenceCategory, $displayNormally[$i]);
                 }
             }
-            
+
             for ($i = 0; $i < count($displayedCategory); $i++) {
                 if (strcasecmp($displayedCategory[$i], "income taxes") === 0) {
                     array_push($sequenceCategory, $displayedCategory[$i]);
                 }
             }
-            
+
             for ($i = 0; $i < count($displayedCategory); $i++) {
                 if (strcasecmp($displayedCategory[$i], "trade and other receivables") === 0) {
                     array_push($sequenceCategory, $displayedCategory[$i]);
                 }
             }
-            
+
             for ($i = 0; $i < count($displayedCategory); $i++) {
                 if (strcasecmp($displayedCategory[$i], "plant and equipment") === 0) {
                     array_push($sequenceCategory, $displayedCategory[$i]);
                 }
             }
-            
+
             for ($i = 0; $i < count($displayedCategory); $i++) {
                 if (strcasecmp($displayedCategory[$i], "trade and other payables") === 0) {
                     array_push($sequenceCategory, $displayedCategory[$i]);
                 }
             }
-            
+
             for ($i = 0; $i < count($displayedCategory); $i++) {
                 if (strcasecmp($displayedCategory[$i], "borrowings") === 0) {
                     array_push($sequenceCategory, $displayedCategory[$i]);
                 }
             }
-            
-             for ($i = 0; $i < count($displayedCategory); $i++) {
+
+            for ($i = 0; $i < count($displayedCategory); $i++) {
                 if (strcasecmp($displayedCategory[$i], "share capital") === 0) {
                     array_push($sequenceCategory, $displayedCategory[$i]);
                 }
             }
-           
+
             //------------------------------------------------------------------
-            
+
             $arrayAddition = array();
 
 // Phoebe Calculation
@@ -2044,39 +2044,39 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                             }
                         }
                     } else {
-                      $table->addRow();
-                      $table->addCell($firstCellValue)->addText($tempOtherLiabilities[$i]);
-                      $cell = $table->addCell($cellValue);
-                      $noteNumber = 0;
-                      for ($x = 0; $x < count($sequenceCategory); $x++) {
-                          if (stripos($sequenceCategory[$x], $tempOtherLiabilities[$i]) !== false) {
-                              $noteNumber = $x + $defaultNoteNumber;
-                          }
-                      }
-
-                      if ($noteNumber != 0) {
-                          $cell->addText($noteNumber, $fontstyleName, $centerAlignment);
-                      }
-                      for ($x = 0; $x < $numberOfSheets; $x++) {
-                          if ($i == (count($tempOtherLiabilities) - 1)) {
-                              $cell = $table->addCell($cellValue, $cellBottomBorder);
-                          } else {
-                              $cell = $table->addCell($cellValue);
-                          }
-
-                          $tempValue = 0;
-                          for ($j = 0; $j < count($bothLiabilitiesAmount[$x]); $j++){
-                            if (stripos($bothLiabilitiesAmount[$x][$j][0],$tempOtherLiabilities[$i]) !== false){
-                              $tempValue = $bothLiabilitiesAmount[$x][$j][1];
+                        $table->addRow();
+                        $table->addCell($firstCellValue)->addText($tempOtherLiabilities[$i]);
+                        $cell = $table->addCell($cellValue);
+                        $noteNumber = 0;
+                        for ($x = 0; $x < count($sequenceCategory); $x++) {
+                            if (stripos($sequenceCategory[$x], $tempOtherLiabilities[$i]) !== false) {
+                                $noteNumber = $x + $defaultNoteNumber;
                             }
-                          }
+                        }
 
-                          if ($tempValue != 0) {
-                              $cell->addText(number_format($tempValue), $fontstyleName, $centerAlignment);
-                          } else {
-                              $cell->addText("-", $fontstyleName, $centerAlignment);
-                          }
-                      }
+                        if ($noteNumber != 0) {
+                            $cell->addText($noteNumber, $fontstyleName, $centerAlignment);
+                        }
+                        for ($x = 0; $x < $numberOfSheets; $x++) {
+                            if ($i == (count($tempOtherLiabilities) - 1)) {
+                                $cell = $table->addCell($cellValue, $cellBottomBorder);
+                            } else {
+                                $cell = $table->addCell($cellValue);
+                            }
+
+                            $tempValue = 0;
+                            for ($j = 0; $j < count($bothLiabilitiesAmount[$x]); $j++) {
+                                if (stripos($bothLiabilitiesAmount[$x][$j][0], $tempOtherLiabilities[$i]) !== false) {
+                                    $tempValue = $bothLiabilitiesAmount[$x][$j][1];
+                                }
+                            }
+
+                            if ($tempValue != 0) {
+                                $cell->addText(number_format($tempValue), $fontstyleName, $centerAlignment);
+                            } else {
+                                $cell->addText("-", $fontstyleName, $centerAlignment);
+                            }
+                        }
                     }
                 } else {
                     $table->addRow();
@@ -2725,10 +2725,10 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             $table->addCell($cashFlowFirstCell)->addText($cashGeneratedString, $fontstyleName);
 
             for ($i = 0; $i < count($cashGenerated); $i++) {
-                if ($incomeTaxSet > 0){
-                  $cell = $table->addCell($cellValue,$cellBottomBorder);
+                if ($incomeTaxSet > 0) {
+                    $cell = $table->addCell($cellValue, $cellBottomBorder);
                 } else {
-                  $cell = $table->addCell($cellValue);
+                    $cell = $table->addCell($cellValue);
                 }
                 $tempValue = $cashGenerated[$i];
                 if ($tempValue < 0) {
@@ -3576,6 +3576,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 $firstCellValueNotes += $cellValueNotes;
             }
 
+
 // Display normally
             foreach ($fullArray as $key1 => $value1) { // [ Bank Balances] => Array of values
                 if ($key1 !== "profit before income tax") {
@@ -3612,6 +3613,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         }
 
                                         array_push($displayedCategory, $key1);
+
+//                                        $total1 = count($value1);
+//                                        $counter1 = 0;
 
                                         foreach ($value1 as $key2 => $value2) { // [OCBC Bank] => Array ( [December 2015] => 54684.19 )
                                             // Display the category heading
@@ -3668,31 +3672,49 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         $table1->addRow();
                                         $table1->addCell($firstCellValueNotes);
 
-                                        foreach ($totalArray as $key => $value) {
-                                            $cellNotes = $table1->addCell($cellValue, $topAndBottom);
-                                            if ($value < 0) {
-                                                $cellNotes->addText("(" . number_format(ceil($value)) . ")", $fontstyleName, $centerAlignment);
-                                            } else if ($value == 0) {
-                                                $cellNotes->addText("-", $fontstyleName, $centerAlignment);
-                                            } else {
-                                                $cellNotes->addText(number_format(ceil($value)), $fontstyleName, $centerAlignment);
+                                        if (count($totalArray) == $numberOfSheets) {
+                                            foreach ($totalArray as $key => $value) {
+                                                $cellNotes = $table1->addCell($cellValue, $topAndBottom);
+                                                if ($value < 0) {
+                                                    $cellNotes->addText("(" . number_format(ceil($value)) . ")", $fontstyleName, $centerAlignment);
+                                                } else if ($value == 0) {
+                                                    $cellNotes->addText("-", $fontstyleName, $centerAlignment);
+                                                } else {
+                                                    $cellNotes->addText(number_format(ceil($value)), $fontstyleName, $centerAlignment);
+                                                }
+                                            }
+                                        } else {
+                                            foreach ($totalArray as $key => $value) {
+                                                for ($h = 0; $h < count($years); $h++) {
+                                                    if ($key == $years[$h]) {
+                                                        $cellNotes = $table1->addCell($cellValue, $topAndBottom);
+                                                        if ($value < 0) {
+                                                            $cellNotes->addText("(" . number_format(ceil($value)) . ")", $fontstyleName, $centerAlignment);
+                                                        } else if ($value == 0) {
+                                                            $cellNotes->addText("-", $fontstyleName, $centerAlignment);
+                                                        } else {
+                                                            $cellNotes->addText(number_format(ceil($value)), $fontstyleName, $centerAlignment);
+                                                        }
+                                                    } else {
+                                                        $cellNotes = $table1->addCell($cellValue, $topAndBottom);
+                                                        $cellNotes->addText("-", $fontstyleName, $centerAlignment);
+                                                    }
+                                                }
                                             }
                                         }
 
                                         $table1->addRow();
                                         $table1->addCell($firstCellValueNotes);
-                                        
-//                                        unset($totalArray);
-//                                        $totalArray = array();
-                                        
                                     }
                                 }
                             }
                         }
                     }
                 }
+                unset($totalArray);
+                $totalArray = array();
             }
-
+            
             if (!empty($profitBeforeIncomeTaxArray)) {
 
                 // Display the category heading
@@ -5148,7 +5170,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 $table1->addCell($firstCellValue);
             }
 
-            
+
             if (in_array("plant and equipment", $categoryArray)) {
 
                 array_push($displayedCategory, "Plant and Equipment");
@@ -5414,7 +5436,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     }
                 }
             }
-            
+
             if (in_array("share capital", $categoryArray)) {
 
                 $beginningArray = array();
