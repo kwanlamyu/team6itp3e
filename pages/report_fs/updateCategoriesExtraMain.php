@@ -340,7 +340,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
         for (i = 0; i < allAccountCount; i++) {
             if (document.getElementById('category' + i).value === "") {
-                swar('Please fill in all fields.');
+                swal('Please fill in all fields.');
                 return false;
             }
         }

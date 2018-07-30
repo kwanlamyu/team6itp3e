@@ -91,7 +91,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         </div>
                     </div>
                 </div>
-				
+
 				<div class="m-content">
 						<div class="row">
 							<div class="col-xl-12">
@@ -105,12 +105,12 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 											</div>
 										</div>
 										<div class="m-portlet__head-tools">
-											
+
 										</div>
 									</div>
 
 
-				<div class="m-portlet__body"> 
+				<div class="m-portlet__body">
 
                                 <p id="data"></p>
                                 <p id="test"></p>
@@ -124,7 +124,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 			</div>
 			</div>
 			</div>
-			
+
 
             <script type="text/javascript">
                 var accountArray = <?php echo json_encode($accountArray); ?>;
@@ -173,19 +173,19 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                 // Creation of form
                 var formElement = "<form id='form' name='passDataForm' method='post' action='temp_real.php' onsubmit='return submitForm()'>\n\
-                                <b>Category:</b> <input type='text' name='category' value='" + categoryArray[counter] + "' id='categoryLooper'>\n\
-                                <button type='button' id='skipBtn' class='btn btn-brand'>Skip</button>";
+                                <b>Category: </b><br> <input class='form-control col-lg-3' type='text' name='category' value='" + categoryArray[counter] + "' id='categoryLooper'>\n\
+                                <br><button type='button' id='skipBtn' class='btn btn-success'>Skip</button>";
 
                 formElement += "<br><br>\n\
-                                <b>TB Accounts:</b>\n\
-                                <br>";
+                                <b>TB Accounts: </b>\n\
+                                <br><br>";
 
                 for (var i = 0; i < accountArrayCount; i++) {
-                    formElement += "<input type='checkbox' id='" + i + "' name='account' value=' " + accountArray[i] + "#" + valueArray[i] + " '> " + accountArray[i].substring(1) + " " + valueArray[i] + "<br><br>";
+                    formElement += "<input class='m-checkbox' type='checkbox' id='" + i + "' name='account' value=' " + accountArray[i] + "#" + valueArray[i] + " '> " + accountArray[i].substring(1) + " " + valueArray[i] + "<br><br>";
                 }
 
-                formElement += "<p id='helpingWords'><b>Helping Keys:</b><br></p>\n\
-                                <button type='button' id='addManualBtn' class='btn btn-brand'>Add Manual Input Boxes</button><br/><br/>\n\
+                formElement += "<br><p id='helpingWords'><b>Helping Keys:</b><br></p>\n\
+                                <button type='button' id='addManualBtn' class='btn btn-success'>Add Manual Input Boxes</button><br/><br/>\n\
                                 <p id='inputField'> Manual Accounts: <input class='form-control' type='text' id='mAccount0'> \n\
                                 Values: <input class='form-control' type='text' id='mValue0'>";
 
@@ -193,14 +193,14 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                 for (var t = 0; t < yearsCount; t++) {
                     //        formElement += "<option value='" + years[t] + "'>" + years[t] + "</option>";
-                    formElement += "<input class='form-control' type='radio' name='0' id='date0" + t + "' value='" + years[t] + "'>" + years[t];
+                    formElement += "<input class='m-radio' type='radio' name='0' id='date0" + t + "' value='" + years[t] + "'>" + years[t];
                 }
 
                 //    formElement += "</select>";
 
                 formElement += "<br><br></p>\n\
-                                <button type='button' id='nextBtn' class='btn btn-success'>Next</button>\n\
-                                <button type='submit' id='submitBtn' class='btn btn-success'>Submit</button>\n\
+                                <div align='center'><button type='button' id='nextBtn' class='btn btn-success'>Next</button>\n\
+                                <button type='submit' id='submitBtn' class='btn btn-success'>Submit</button></div>\n\
                                 <input type='hidden' name='passData' value='" + storeCategory + "' id='passData'/>\n\
                                 <input type='hidden' name='years[]' value='" + years + "'/>\n\
                                 <input type='hidden' name='numberOfYears' value='" + numberOfSheets + "'/>\n\
@@ -252,12 +252,12 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         }
                     }
 
-                    document.getElementById('inputField').innerHTML += "Manual Accounts: <input type='text' id='mAccount" + count + "'> \n\
-                                                                        Values: <input type='text' id='mValue" + count + "'> ";
+                    document.getElementById('inputField').innerHTML += "Manual Accounts: <input class='form-control' type='text' id='mAccount" + count + "'> \n\
+                                                                        Values: <input class='form-control' type='text' id='mValue" + count + "'> ";
 
 
                     for (t = 0; t < yearsCount; t++) {
-                        document.getElementById('inputField').innerHTML += "<input type='radio' name='" + c + "' id='date" + (count) + t + "' value='" + years[t] + "'>" + years[t];
+                        document.getElementById('inputField').innerHTML += "<input class='m-radio' type='radio' name='" + c + "' id='date" + (count) + t + "' value='" + years[t] + "'>" + years[t];
                     }
                     c++;
 
@@ -322,10 +322,10 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                 return true;
                             } else {
                                 if (manualError != "") {
-                                    alert(manualError);
+                                    swal(manualError);
                                 }
                                 if (checkBoxError != "") {
-                                    alert(checkBoxError);
+                                    swal(checkBoxError);
                                 }
                                 return false;
                             }
@@ -334,10 +334,10 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         return true;
                     } else {
                         if (resultCheck == 2) {
-                            alert(manualError);
+                            swal(manualError);
                             return false;
                         } else if (resultCheck == 1) {
-                            alert(checkBoxError);
+                            swal(checkBoxError);
                             return false;
                         } else {
                             dataStore();

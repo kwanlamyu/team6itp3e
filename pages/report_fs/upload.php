@@ -74,7 +74,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         $tempAccountNameArray = array();
                     }
                 }
-               
+
                 if (!empty($tempArray)) {
                     foreach ($tempArray as $category => $array) {
                         if (in_array($category, $subAccountArrayDB)) {
@@ -362,7 +362,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                             // end loop here
                             //begin::Company Name
                             ?>
-                            <!--begin::Portlet--> 
+                            <!--begin::Portlet-->
                             <div class="m-portlet m-portlet--full-height">
                                 <div class="m-portlet__head">
                                     <div class="m-portlet__head-caption">
@@ -371,7 +371,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="m-portlet__body">
                                     <?php
                                     for ($x = 0; $x < count($endedAtArray); $x++) {
@@ -384,7 +384,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                                     <form name='detailsForm' action="next_page.php" method="post" onsubmit="return validateForm()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
                                        <input class="form-control m-input" type="hidden" id="companyregID" name="companyregID" value="<?php echo $clientUEN; ?>">
-                                               
+
                                         <?php
                                         $month = substr($endedAtArray[0], 0, -5);
                                         $monthInNumber = 0;
@@ -408,64 +408,59 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         $separatedDate = explode("-", $today);
                                         $todayObject = date_create("$separatedDate[0]-$separatedDate[1]-$separatedDate[2]");
                                         ?>
- 
-                                        <div class="form-group">
+
+                                        <div class="form-group" style="display: hide;">
                                             <!-- <label for="yearEnd">Financial Year Ended: </label> -->
                                             <input type="hidden" class="form-control" id="yearEnd" name="yearEnd" value="<?php echo date_format($date, "Y-m-d"); ?>"/>
                                         </div>
 
-                                        <button onclick="addDirectorFunction()" type='button' id='addDirector' class='btn btn-brand'>Add Director</button>
+                                        <button onclick="addDirectorFunction()" type='button' id='addDirector' class='btn btn-success'>Add Director</button>
 										<br>
+                    <br>
                                         <div class="form-group" id='directorFields'>
-                                            Director Name: 
-                                            <input type ="text" id="directorName0" class="form-control col-lg-4"/>
+                                          <div class="row">
+                                          <label class="col-lg-2 col-form-label">
+                                            Director Name:</label>
+                                            <div class="col-lg-4"><input type ="text" id="directorName0" class="form-control"/></div>
                                             <input type="hidden" id="tempDirectorArray" name="tempDirectorArray" value="" />
-											<br>
-											Appointed Date:
-											<br>
-                                            <input type ="date" id="directorNameApptDate0" class="form-control col-lg-4"/>
+											<label class="col-lg-2 col-form-label">
+											Appointed Date:</label>
+                                          <div class="col-lg-4"><input type ="date" id="directorNameApptDate0" class="form-control"/></div>
                                             <input type="hidden" id="tempDateArray" name="tempDateArray" value=""/>
-											<br>
+											</div><br>
+  <div class="row">
+                                            <label class="col-lg-2 col-form-label">Director's Start Share:</label>
 
-                                            Director's Start Share:
-											<br>
-                                            <input type ="number" id="directorStartShare0" class="form-control col-lg-4"/>
+                                            <div class="col-lg-4"><input type ="number" id="directorStartShare0" class="form-control"/></div>
                                             <input type="hidden" id="tempStartShareArray" name="tempStartShareArray" value=""/>
-											<br>
 
-                                            Director's End Share:
-											<br>
-                                            <input type ="number" id="directorEndShare0" class="form-control col-lg-4"/>
+                                          <label class="col-lg-2 col-form-label">Director's End Share:</label>
+                                            <div class="col-lg-4"><input type ="number" id="directorEndShare0" class="form-control"/></div>
                                             <input type="hidden" id="tempEndShareArray" name="tempEndShareArray" value="" />
                                             <br>
                                         </div>
-
+</div>
                                         <input type="hidden" class="form-control" id="todayDate" name="todayDate" value="<?php echo date("Y-m-d"); ?>"/>
 
                                         <input type="hidden" class="form-control" id="secondBalanceDate" name="secondBalanceDate" value="<?php echo date_format($previousdate, "Y-m-d"); ?>"/>
 
                                         <input type="hidden" class="form-control" id="thirdBalanceDate" name="thirdBalanceDate" value="<?php echo date_format($date, "Y-m-d"); ?>"/>
+<hr>
+                                        <div class="form-group row">
+                                            <label class="col-lg-2 col-form-label" for="companyPA">Company's principal activities: </label>
+                                            <div class="col-lg-4"><input type="textarea" class="form-control " id="companyPA" name="companyPA"/></div>
 
-                                        <div class="form-group">
-                                            <label for="companyPA">Company's principal activities: </label>
-                                            <input type="textarea" class="form-control " id="companyPA" name="companyPA"/>
+                                            <label class="col-lg-2 col-form-label" for="companyAddress">Company's address: </label>
+                                            <div class="col-lg-4"><input type="text" class="form-control" id="companyAddress" name="companyAddress"/></div>
                                         </div>
 
-                                        <div class="form-group">
-                                            <label for="companyAddress">Company's address: </label>
-                                            <input type="text" class="form-control" id="companyAddress" name="companyAddress"/>
-                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-2 col-form-label" for="frsDate">Date Company Adopted FRS: </label>
+                                            <div class="col-lg-4"><input type="date" class="form-control" id="frsDate" name="frsDate"/></div>
 
-                                        <div class="form-group">
-                                            <label for="frsDate">Date Company Adopted FRS: </label>
-                                            <input type="date" class="form-control" id="frsDate" name="frsDate"/>
+                                            <label class="col-lg-2 col-form-label" for="currency">Currency: </label>
+                                            <div class="col-lg-4"><input type="text" class="form-control" id="currency" name="currency" placeholder='E.g. Singapore Dollar' value="Singapore Dollar"/></div>
                                         </div>
-
-                                        <div class="form-group">
-                                            <label for="currency">Currency: </label>
-                                            <input type="text" class="form-control" id="currency" name="currency" placeholder='E.g. Singapore Dollar' value="Singapore Dollar"/>
-                                        </div>
-
                                         <?php
                                         echo "<input type='hidden' name='companyName' value='" . $clientName . "'/>";
                                         echo "<input type='hidden' name='numberOfYears' value='" . count($fileArray) . "'/>";
@@ -488,7 +483,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         //   }
                                         // }
                                         ?>
-                                        <input name="submit" type="submit" value="Submit" class="btn btn-success">
+                                        <div align="center"><input name="submit" type="submit" value="Submit" class="btn btn-success"></div>
                                     </form>
 
 
@@ -552,22 +547,22 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             }
                                             if (companyUEN == "" || directorFlag == 1 || companyPrincipalActivities == "" || companyAdd == "" || frsFlag == 1 || currency == "") {
                                                 if (companyUEN == "") {
-                                                    alert("Company UEN must be entered");
+                                                    swal("Company UEN must be entered");
                                                 }
                                                 if (directorFlag == 1) {
-                                                    alert(directorError);
+                                                    swal(directorError);
                                                 }
                                                 if (companyPrincipalActivities == "") {
-                                                    alert("Company Principal Activities must be entered");
+                                                    swal("Company Principal Activities must be entered");
                                                 }
                                                 if (companyAdd == "") {
-                                                    alert("Company address must be entered");
+                                                    swal("Company address must be entered");
                                                 }
                                                 if (frsFlag == 1) {
-                                                    alert(frsError);
+                                                    swal(frsError);
                                                 }
                                                 if (currency == "") {
-                                                    alert("Currency must be entered");
+                                                    swal("Currency must be entered");
                                                 }
                                                 submitBtn.disabled = false;
                                                 return false;
@@ -580,10 +575,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                                             addDirectorFields();
 
-                                            document.getElementById('directorFields').innerHTML += "Director Name: <input class='form-control col-lg-4' type='text' id='directorName" + count + "'><br>\
-                                                                                                                Appointed Date: <input type='date' class='form-control col-lg-4' id='directorNameApptDate" + count + "'><br>\
-                                                                                                                Director's Start Share: <input type='number' class='form-control col-lg-4' id='directorStartShare" + count + "'><br>\
-                                                                                                                Director's End Share: <input type='number' class='form-control col-lg-4' id='directorEndShare" + count + "'>\</br> ";
+                                            document.getElementById('directorFields').innerHTML += "<br><div class='row'><label class='col-lg-2 col-form-label'>Director Name:</label><div class='col-lg-4'><input class='form-control' type='text' id='directorName" + count + "'></div><label class='col-lg-2 col-form-label'>Appointed Date:</label><div class='col-lg-4'><input type='date' class='form-control' id='directorNameApptDate" + count + "'></div></div><br><div class='row'><label class='col-lg-2 col-form-label'>Director's Start Share:</label><div class='col-lg-4'><input type='number' class='form-control' id='directorStartShare" + count + "'></div><label class='col-lg-2 col-form-label'>Director's End Share:</label><div class='col-lg-4'><input type='number' class='form-control' id='directorEndShare" + count + "'></div><br></div></div>";
 
                                             for (i = 0; i < count; i++) {
                                                 document.getElementById('directorName' + i).value = tempDirectorArray[i];
