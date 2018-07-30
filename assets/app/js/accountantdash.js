@@ -47,10 +47,6 @@ var DefaultDatatableDemoAccountant = function() {
                     field: "companyName",
                     title: "Company Name",
                     sortable: "asc"
-                },{
-                    field: "fileNumber",
-                    title: "File Number",
-                    sortable: "asc"
                 }]
             }), $("#m_datatable_clear").on("click", function() {
                 $("#m_datatable_console").html("")

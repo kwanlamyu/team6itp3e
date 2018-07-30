@@ -4,8 +4,7 @@
 <?php
 $userID= $_SESSION['username'];
 	$select = $DB_con->prepare("SELECT account.UEN AS UEN, 
-	account.companyName AS companyName,  
-	account.fileNumber AS fileNumber, 
+	account.companyName AS companyName,
 	usermanageaccount.user_username 
 	AS accountManagers 
 	FROM account 
