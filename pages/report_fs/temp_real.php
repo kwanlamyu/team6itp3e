@@ -3720,7 +3720,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 unset($totalArray);
                 $totalArray = array();
             }
-            
+
             if (!empty($profitBeforeIncomeTaxArray)) {
 
                 // Display the category heading
@@ -5927,6 +5927,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     } else {
                         $cell = $table->addCell($cellValue);
                     }
+                } else {
+                  $cell = $table->addCell($cellValue,$allBorders);
                 }
 
                 $tempValue = $calculatedDistriExpense[$i];
