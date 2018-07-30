@@ -3,10 +3,10 @@
 <?php
 $vari = $_POST['generalSearch'];
 $userID= $_SESSION['username'];
-$stmt=$DB_con->prepare("SELECT UEN, companyName,fileNumber,accountManagers 
-FROM (account.UEN AS UEN,
+$stmt=$DB_con->prepare("SELECT UEN, companyName,accountManagers 
+FROM (CREATE VIEW work_clients AS
+    SELECT account.UEN AS UEN,
 	account.companyName AS companyName,
-	account.fileNumber AS fileNumber,
 	usermanageaccount.user_username
 	AS accountManagers,
 	usermanageaccount.user_username
@@ -14,14 +14,14 @@ FROM (account.UEN AS UEN,
 	FROM account
 	INNER JOIN usermanageaccount
 	ON account.UEN = usermanageaccount.account_UEN
-	AND usermanageaccount.account_user_username = '$userID'
-	AND usermanageaccount.user_role_id =3) AND (UEN LIKE '%".$vari."%' OR companyName LIKE '%".$vari."%' OR fileNumber LIKE '%".$vari."%' OR accountManagers LIKE '%".$vari."%')");
+	AND usermanageaccount.account_user_username = 'jpjp'
+	AND usermanageaccount.user_role_id =3) WHERE (UEN LIKE '%".$vari."%' OR companyName LIKE '%".$vari."%' OR accountManagers LIKE '%".$vari."%')");
 	
 $stmt->execute();
  
  
 $columnHeader ='';
-$columnHeader = "Company UEN"."\t"."Company Name"."\t"."File Number"."\t"."Account Manager(s)"."\t";
+$columnHeader = "Company UEN"."\t"."Company Name"."\t"."Account Manager(s)"."\t";
  
  
 $setData='';
@@ -39,7 +39,7 @@ while($rec =$stmt->FETCH(PDO::FETCH_ASSOC))
  
  
 header("Content-type: application/octet-stream");
-header("Content-Disposition: attachment; filename=CompanyAccounts.xlsx");
+header("Content-Disposition: attachment; filename=CompanyAccounts.xls");
 header("Pragma: no-cache");
 header("Expires: 0");
  

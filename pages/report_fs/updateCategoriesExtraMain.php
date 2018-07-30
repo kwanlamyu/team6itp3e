@@ -196,36 +196,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 <div class="m-subheader ">
                     <div class="d-flex align-items-center">
                         <div class="mr-auto">
-                            <h3 class="m-subheader__title m-subheader__title--separator">
+                            <h3 class="m-subheader__title">
                                 Financial Statement
                             </h3>
-                            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
-                                <li class="m-nav__item m-nav__item--home">
-                                    <a href="#" class="m-nav__link m-nav__link--icon">
-                                        <i class="m-nav__link-icon la la-home"></i>
-                                    </a>
-                                </li>
-                                <li class="m-nav__separator">
-                                    -
-                                </li>
-                                <li class="m-nav__item">
-                                    <a href="" class="m-nav__link">
-                                        <span class="m-nav__link-text">
-                                            Generate Report
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="m-nav__separator">
-                                    -
-                                </li>
-                                <li class="m-nav__item">
-                                    <a href="" class="m-nav__link">
-                                        <span class="m-nav__link-text">
-                                            Financial Statement
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -247,7 +220,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         </div>
                                     </div>
                                 </div>
+								 
                                 <?php if (!empty($tempSubArray)) { ?>
+								<div class="m-portlet__body">
                                     <form method="post" name="updateCategoryForm" action="updateCategoriesMain.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
                                         <?php
                                         echo "Please choose which Main Category it belongs to! <br><br>";
@@ -299,10 +274,11 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
                                         <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
                                         <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
-
-                                        <input type="submit" value="Submit" name="submit" class="btn btn-brand">
-                                    </form>
+										<br>
+                                        <input type="submit" value="Submit" name="submit" class="btn btn-success">
+                                    </form></div>
                                 <?php } else { ?>
+								<div class="m-portlet__body">
                                     <form method="post" id = "categoryForm" name="myForm" action="updateCategoriesMain.php">
                                         <?php
 
@@ -328,9 +304,10 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
 
                                         <input type="hidden" name="key" value="no"/>
-
-                                        <input type="submit" value="Submit" name="s" class="btn btn-brand">
+										<br>
+                                        <input type="submit" value="Submit" name="s" class="btn btn-success">
                                     </form>
+									</div>
 
                                     <script>
                                         document.getElementById('categoryForm').submit();

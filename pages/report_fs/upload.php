@@ -424,20 +424,25 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         <button onclick="addDirectorFunction()" type='button' id='addDirector' class='btn btn-brand'>Add Director</button>
 
                                         <div class="form-group" id='directorFields'>
-                                            <label for="directorName0">Director Name: </label>
-                                            <input type ="text" id="directorName0" />
+                                            Director Name: 
+                                            <input type ="text" id="directorName0" class="form-control col-lg-4"/>
                                             <input type="hidden" id="tempDirectorArray" name="tempDirectorArray" value="" />
+											<br>
+											Appointed Date:
+											<br>
+                                            <input type ="date" id="directorNameApptDate0" class="form-control col-lg-4"/>
+                                            <input type="hidden" id="tempDateArray" name="tempDateArray" value=""/>
+											<br>
 
-                                            <label for="directorName0">Appointed Date:</label>
-                                            <input type ="date" id="directorNameApptDate0" />
-                                            <input type="hidden" id="tempDateArray" name="tempDateArray" value="" />
+                                            Director's Start Share:
+											<br>
+                                            <input type ="number" id="directorStartShare0" class="form-control col-lg-4"/>
+                                            <input type="hidden" id="tempStartShareArray" name="tempStartShareArray" value=""/>
+											<br>
 
-                                            <label for="directorShare0">Director's Start Share:</label>
-                                            <input type ="number" id="directorStartShare0" />
-                                            <input type="hidden" id="tempStartShareArray" name="tempStartShareArray" value="" />
-
-                                            <label for="directorShare0">Director's End Share:</label>
-                                            <input type ="number" id="directorEndShare0" />
+                                            Director's End Share:
+											<br>
+                                            <input type ="number" id="directorEndShare0" class="form-control col-lg-4"/>
                                             <input type="hidden" id="tempEndShareArray" name="tempEndShareArray" value="" />
                                             <br>
                                         </div>
@@ -450,7 +455,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                                         <div class="form-group">
                                             <label for="companyPA">Company's principal activities: </label>
-                                            <input type="textarea" class="form-control" id="companyPA" name="companyPA"/>
+                                            <input type="textarea" class="form-control " id="companyPA" name="companyPA"/>
                                         </div>
 
                                         <div class="form-group">
@@ -490,7 +495,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         //   }
                                         // }
                                         ?>
-                                        <input name="submit" type="submit" value="Submit" class="btn btn-brand">
+                                        <input name="submit" type="submit" value="Submit" class="btn btn-success">
                                     </form>
 
 
@@ -597,10 +602,10 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                                             addDirectorFields();
 
-                                            document.getElementById('directorFields').innerHTML += "Director Name: <input class='form-control' type='text' id='directorName" + count + "'> \n\
-                                                                                                                Appointed Date: <input type='date' class='form-control' id='directorNameApptDate" + count + "'> \n\
-                                                                                                                Director's Start Share: <input type='number' class='form-control' id='directorStartShare" + count + "'>\n\
-                                                                                                                Director's End Share: <input type='number' class='form-control' id='directorEndShare" + count + "'> \n\</br> ";
+                                            document.getElementById('directorFields').innerHTML += "Director Name: <input class='form-control col-lg-4' type='text' id='directorName" + count + "'><br>\
+                                                                                                                Appointed Date: <input type='date' class='form-control col-lg-4' id='directorNameApptDate" + count + "'><br>\
+                                                                                                                Director's Start Share: <input type='number' class='form-control col-lg-4' id='directorStartShare" + count + "'><br>\
+                                                                                                                Director's End Share: <input type='number' class='form-control col-lg-4' id='directorEndShare" + count + "'>\</br> ";
 
                                             for (i = 0; i < count; i++) {
                                                 document.getElementById('directorName' + i).value = tempDirectorArray[i];

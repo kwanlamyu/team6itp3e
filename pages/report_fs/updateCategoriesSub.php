@@ -601,7 +601,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                                     for ($b = 0; $b < count($inThisAccount); $b++) {
                                                     if (strcasecmp($inThisAccount[$b], $allAccounts[$i]) === 0) {
 
-                                                            echo "<b>Account name: </b> $allAccounts[$i] <br/>";
+                                                            echo "<br><b>Account name: </b>$allAccounts[$i]<br/>";
                                                             echo "<div>";
 
                                                             $startDataList = "<input list='category" . $i . "' value='' class='form-control' name='category[]'/>";
@@ -677,8 +677,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         echo "<input type='hidden' name='originalValue[]' value='" . $value . "'/>";
                                     }
                                     ?>
-
-                                    <input type="submit" value="Submit" name="submit" class="btn btn-brand">
+									<br>
+                                    <input type="submit" value="Submit" name="submit" class="btn btn-success">
                                 </form>
                             </div>
 							</div>

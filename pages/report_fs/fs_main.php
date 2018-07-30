@@ -76,8 +76,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                                 <span>
                                                     <i class="la la-thumb-tack"></i>
                                                 </span>
-                                            </span>
-											Select files to upload:
+                                            </span> Select file to upload: <br>
 											<label class="btn btn-secondary">
                                             
 
@@ -110,12 +109,13 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             </div>
 
             <script>
+			
                 // reset the dropdown box and form when user presses back
                 document.getElementById("tbNumber").selectedIndex = 0;
                 document.forms['uploadForm'].reset();
-
                 // validation to ensure all input are not null and are of valid input
                 function validateForm() {
+					
                     var submitBtn = document.forms['uploadForm']['submit'];
                     submitBtn.disabled = true;
                     var clientCompany = document.forms['uploadForm']['clientCompany'].value;
@@ -177,36 +177,18 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         }
                     }
                     if (clientCompany == "" || dateFlag == 1 || fileFlag == 1) {
-						
-						
-						
-						var popup = {
-					init: function() {
-						$("#m_alert").click(function(e) {
-							console.log('alert');
-							
-							
-							if (clientCompany == "") {
+                        if (clientCompany == "") {
+                            //alert("Company Name must be entered");
 							swal("Error", "Company Name must be entered", "error");
                         }
                         if (dateFlag == 1) {
 							swal("Error", dateError, "error");
+                            //alert(dateError);
                         }
                         if (fileFlag == 1) {
 							swal("Error", fileError, "error");
+                            //alert(fileError);
                         }
-							
-							
-						})
-					}
-				};
-				
-				jQuery(document).ready(function() {
-					popup.init()
-				});
-						
-						
-                        
                         submitBtn.disabled = false;
                         return false;
                     } else {
@@ -221,7 +203,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     var currentForm = document.getElementById("formForUploads");
                     currentForm.innerHTML = "";
                     for (i = 0; i < selectedValue; i++) {
-                        currentForm.innerHTML += "<div class='form-group m-form__group'>Select file to upload: <span class='m-input-icon__icon m-input-icon__icon--right'><span><i class='la la-thumb-tack'></i></span></span><div class='m-input-icon m-input-icon--left m-input-icon--right'><input type='file' class='btn btn-secondary' name='trialBalances[]' id='file" + i + "' accept='.xlsx' ></div><br><label for='yearStart" + i + "'>Financial Year Start:</label><input type='date' class='form-control col-lg-4' id='yearStart" + i + "' name='yearStart[]' value=''/><label for='yearEnd" + i + "'>Financial Year End:</label><input type='date' class='form-control col-lg-4' id='yearEnd" + i + "' name='yearEnd[]' value=''/></div>";
+                        currentForm.innerHTML += "<div class='form-group m-form__group'><span class='m-input-icon__icon m-input-icon__icon--right'><span><i class='la la-thumb-tack'></i></span></span> Select file to upload: <div class='m-input-icon m-input-icon--left m-input-icon--right'><input type='file' class='btn btn-secondary' name='trialBalances[]' id='file" + i + "' accept='.xlsx' ></div><br><label for='yearStart" + i + "'>Financial Year Start:</label><input type='date' class='form-control col-lg-4' id='yearStart" + i + "' name='yearStart[]' value=''/><label for='yearEnd" + i + "'>Financial Year End:</label><input type='date' class='form-control col-lg-4' id='yearEnd" + i + "' name='yearEnd[]' value=''/></div>";
                     }
                     currentForm.innerHTML += "<div class='m-form__actions'>\
                     <input type='submit' class='btn btn-success' value='Upload File' name='submit' id='m_alert'>\

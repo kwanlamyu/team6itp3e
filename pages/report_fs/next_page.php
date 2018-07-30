@@ -3,7 +3,7 @@ require_once '../db_connection/db.php';
 
 if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSION['company'])) {
     if ($_SESSION['role_id'] != 2 && $_SESSION['role_id'] != 3) {
-        header('Location: ../user_super_admin/userdashboard.php');
+        header('Location: ../user_super_admin/super_admin_dashboard.php');
     } else {
         if (!isset($_POST['companyName'])) {
             header("Location: fs_index.php");
@@ -93,7 +93,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 </div>
 
 
-
+				<div class="m-portlet__body"> 
                 <!--begin::Portlet-->
                 <div class="m-content">
                     <div class="row">
@@ -109,9 +109,10 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 </div>
                 <!--end::Portlet-->
             </div>
+			</div>
             <!-- END: Subheader -->
             </div>
-			<div class="m-portlet__body"> 
+			
 
             <script type="text/javascript">
                 var accountArray = <?php echo json_encode($accountArray); ?>;
@@ -447,7 +448,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 //------------------------------------------------------------------------------------------
 
             </script>
-			</div>
             <?php
         }
     }

@@ -289,7 +289,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
                                     <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
 
-                                    <input type="submit" value="Submit" name="submit" class="btn btn-brand">
+									<br>
+                                    <input type="submit" value="Submit" name="submit" class="btn btn-success">
                                 </form>
 								</div>
                             </div>

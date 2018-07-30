@@ -55,6 +55,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '3') {
 											</div>
 										</div>
 										<div class="col-xl-4 order-1 order-xl-2 m--align-right">
+										<!--
 											<a href="#" class="btn btn-accent m-btn m-btn--custom m-btn--pill m-btn--icon m-btn--air">
 												<span>
 													<i class="la la-file-excel-o"></i>
@@ -62,7 +63,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '3') {
 														Export
 													</span>
 												</span>
-											</a>
+											</a> -->
 											<div class="m-separator m-separator--dashed d-xl-none"></div>
 										</div>
 									</div>

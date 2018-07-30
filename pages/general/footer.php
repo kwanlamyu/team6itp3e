@@ -21,6 +21,7 @@
 		<script src="../../assets/app/js/login.js" type="text/javascript"></script>
 		<script src="../../assets/app/js/dropzone.js" type="text/javascript"></script>
 		<script src="../../assets/app/js/select2.js" type="text/javascript"></script>
+		<script src="../../assets/app/js/sweetalert2.js" type="text/javascript"></script>
 		<!--end::Page Snippets -->
 	</body>
 	<!-- end::Body -->
