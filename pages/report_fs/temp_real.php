@@ -1995,6 +1995,40 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                 $cell->addText("-", $fontstyleName, $centerAlignment);
                             }
                         }
+                    } else {
+                      $table->addRow();
+                      $table->addCell($firstCellValue)->addText($tempOtherLiabilities[$i]);
+                      $cell = $table->addCell($cellValue);
+                      $noteNumber = 0;
+                      for ($x = 0; $x < count($sequenceCategory); $x++) {
+                          if (stripos($sequenceCategory[$x], $tempOtherLiabilities[$i]) !== false) {
+                              $noteNumber = $x + $defaultNoteNumber;
+                          }
+                      }
+
+                      if ($noteNumber != 0) {
+                          $cell->addText($noteNumber, $fontstyleName, $centerAlignment);
+                      }
+                      for ($x = 0; $x < $numberOfSheets; $x++) {
+                          if ($i == (count($tempOtherLiabilities) - 1)) {
+                              $cell = $table->addCell($cellValue, $cellBottomBorder);
+                          } else {
+                              $cell = $table->addCell($cellValue);
+                          }
+
+                          $tempValue = 0;
+                          for ($j = 0; $j < count($bothLiabilitiesAmount[$x]); $j++){
+                            if (stripos($bothLiabilitiesAmount[$x][$j][0],$tempOtherLiabilities[$i]) !== false){
+                              $tempValue = $bothLiabilitiesAmount[$x][$j][1];
+                            }
+                          }
+
+                          if ($tempValue != 0) {
+                              $cell->addText(number_format($tempValue), $fontstyleName, $centerAlignment);
+                          } else {
+                              $cell->addText("-", $fontstyleName, $centerAlignment);
+                          }
+                      }
                     }
                 } else {
                     $table->addRow();
@@ -2465,6 +2499,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 }
             }
 
+
+            $adjustmentAccount = array();
+
             for ($i = 0; $i < count($adjustmentsCashFlow); $i++) {
                 for ($x = 0; $x < count($adjustmentsCashFlow[$i]); $x++) {
                     if (!in_array($adjustmentsCashFlow[$i][$x][0], $adjustmentAccount)) {
@@ -2477,7 +2514,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 $table->addRow();
                 $cell = $table->addCell($cashFlowFirstCell);
                 $cell->addText("Adjustments for:");
-                $adjustmentAccount = array();
                 $adjustmentValues = array();
 
 
@@ -2630,11 +2666,22 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
             $cashGeneratedString .= "operations";
 
+            $incomeTaxSet = 0;
+            for ($i = 0; $i < count($incomeTaxPaid); $i++) {
+                if ($incomeTaxPaid[$i] > 0) {
+                    $incomeTaxSet++;
+                }
+            }
+
             $table->addRow();
             $table->addCell($cashFlowFirstCell)->addText($cashGeneratedString, $fontstyleName);
 
             for ($i = 0; $i < count($cashGenerated); $i++) {
-                $cell = $table->addCell($cellValue);
+                if ($incomeTaxSet > 0){
+                  $cell = $table->addCell($cellValue,$cellBottomBorder);
+                } else {
+                  $cell = $table->addCell($cellValue);
+                }
                 $tempValue = $cashGenerated[$i];
                 if ($tempValue < 0) {
                     $tempValue = "(" . number_format(abs($cashGenerated[$i])) . ")";
@@ -2643,13 +2690,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 }
 
                 $cell->addText($tempValue, $fontstyleName, $centerAlignment);
-            }
-
-            $incomeTaxSet = 0;
-            for ($i = 0; $i < count($incomeTaxPaid); $i++) {
-                if ($incomeTaxPaid[$i] > 0) {
-                    $incomeTaxSet++;
-                }
             }
 
             if ($incomeTaxSet > 0) {
@@ -6266,7 +6306,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     }
                 }
             }
-            
+
             $printCount = 0;
             for ($i = 0; $i < count($finalFinanceAccountAmount); $i++) {
                 if (in_array($i, $toPrintFinance)) {
@@ -6359,7 +6399,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 echo "<script>alert(" . $e . ");</script>";
             }
 
-            header("Location: " . URL . "download.php?filename=" . $companyName); /* Redirect browser */
+            header("Location: " . URL . "download_validate.php?filename=" . $companyName); /* Redirect browser */
             ob_end_flush();
         }
     }
