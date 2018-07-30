@@ -1,5 +1,9 @@
 <?php
 require_once '../db_connection/db.php';
+// use this when live
+// define('URL', 'https://3ecomply.com/');
+define('URL', '');
+ob_start();
 require_once __DIR__ . '\..\..\vendor\autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -57,9 +61,8 @@ $spreadsheet->getActiveSheet()
 $writer = new Xlsx($spreadsheet);
 
 $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, "Xlsx");
-header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment; filename="Company Accounts.xlsx"');
-
 $writer->save('Company Accounts.xlsx');
 $writer->save("php://output");
+header("Location: " . URL . "download_export.php"); /* Redirect browser */
+ob_end_flush();
 ?>
