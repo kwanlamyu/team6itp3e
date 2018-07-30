@@ -229,7 +229,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                                             array_push($originalValue, "");
                                                             array_push($accountValue, $subResult[$i]['sub_account']);
                                                         }
-echo "<td>";
+                                                            echo "<td>";
                                                         echo "<label>" . $startDataList . "</label>" . $bodyDataList . "</datalist>";
                                                       echo "</td></tr>";
                                                     }

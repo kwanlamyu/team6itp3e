@@ -137,7 +137,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 }
             } else {
                 ?>
-				<div class="m-portlet__body"> 
+				<div class="m-portlet__body">
                 <form method="post" id = "categoryForm" name="myForm" action="upload.php">
                     <?php
                     foreach ($tempAccArray as $v) {
@@ -167,7 +167,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                     <input type="hidden" name="key" value="no"/>
 
-                    <input type="submit" value="Submit" name="s" class="btn btn-brand">
+                    <div align="center"><input type="submit" value="Submit" name="s" class="btn btn-success"></div>
                 </form>
 				</div>
 
@@ -203,9 +203,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             </h3>
                                         </div>
                                     </div>
-									
+
                                 </div>
-								<div class="m-portlet__body"> 
+								<div class="m-portlet__body">
                                 <form method="post" name="updateCategoryForm" action="upload.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
                                     <?php
                                     $query = $DB_con->prepare("SELECT * FROM sub_category WHERE company_name =:companyName AND client_company = :clientName");
@@ -235,7 +235,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $bodyDataList .= "<option value='" . $subAccountArrayDB[$j] . "'>";
                                         }
 
-                                        echo "<label>Choose a category:" . $startDataList . "</label><div>" . $bodyDataList . "</datalist></div>";
+                                        echo "<br><label>Choose a category:" . $startDataList . "</label><div>" . $bodyDataList . "</datalist></div>";
 
                                         echo "<hr>";
                                     }
@@ -268,7 +268,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     <input type="hidden" name="key" value="yes"/>
 									<br>
 
-                                    <input type="submit" value="Submit" name="submit" class="btn btn-success">
+                                    <div align="center"><input type="submit" value="Submit" name="submit" class="btn btn-success"></div>
                                 </form>
 								</div>
                             </div>

@@ -220,7 +220,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         </div>
                                     </div>
                                 </div>
-								 
+
                                 <?php if (!empty($tempSubArray)) { ?>
 								<div class="m-portlet__body">
                                     <form method="post" name="updateCategoryForm" action="updateCategoriesMain.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
@@ -228,12 +228,12 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         echo "Please choose which Main Category it belongs to! <br><br>";
 
                                         $tempSubArray = array_unique($tempSubArray);
-                                       
+
                                         $display = array();
                                         foreach ($tempSubArray as $value) {
                                             array_push($display, $value);
                                         }
-                                        
+
                                         for ($i = 0; $i < count($display); $i++) {
                                             echo "<b>Current Sub Account: </b>" . $display[$i] . "<br>";
 
@@ -244,7 +244,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                                 $bodyDataList .= "<option value='" . $mainAccountArrayDB[$j] . "'>";
                                             }
 
-                                            echo "<label>Choose a category:" . $startDataList . "</label><div>" . $bodyDataList . "</datalist></div>";
+                                            echo "<br><label>Choose a category:" . $startDataList . "</label><div>" . $bodyDataList . "</datalist></div>";
                                             echo "<hr>";
                                         }
 
@@ -275,7 +275,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
                                         <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
 										<br>
-                                        <input type="submit" value="Submit" name="submit" class="btn btn-success">
+                                        <div align="center"><input type="submit" value="Submit" name="submit" class="btn btn-success"></div>
                                     </form></div>
                                 <?php } else { ?>
 								<div class="m-portlet__body">
@@ -305,7 +305,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                                         <input type="hidden" name="key" value="no"/>
 										<br>
-                                        <input type="submit" value="Submit" name="s" class="btn btn-success">
+                                        <div align="center"><input type="submit" value="Submit" name="s" class="btn btn-success"></div>
                                     </form>
 									</div>
 
@@ -340,7 +340,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
         for (i = 0; i < allAccountCount; i++) {
             if (document.getElementById('category' + i).value === "") {
-                alert('Please fill in all fields.');
+                swar('Please fill in all fields.');
                 return false;
             }
         }
