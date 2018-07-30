@@ -501,21 +501,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                                     <script type="text/javascript">
 
-                                        function updateCategory() {
-                                            var numberOfYears = <?php echo count($trialBalanceArray); ?>;
-                                            var undefinedArray = <?php echo json_encode($yearlyUndefinedRows); ?>;
-                                            for (var j = 0; j < numberOfYears; j++) {
-                                                var undefinedCounter = undefinedArray[j][1].length;
-                                                for (var i = 0; i < undefinedCounter; i++) {
-                                                    var selectOption = document.getElementById("catUpdate" + j + i);
-                                                    // alert(document.getElementById("catUpdate"+undefinedRows[i]).value);
-                                                    document.getElementById("formData" + j + undefinedArray[j][1][i] + "2").value = selectOption.options[selectOption.selectedIndex].text;
-                                                }
-                                            }
-                                            // after update of category, update directors
-                                            updateDirectors();
-                                        }
-
                                         var count = 1;
                                         var tempDirectorArray = [];
                                         var tempDateArray = [];
@@ -525,7 +510,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         function validateForm() {
                                             var submitBtn = document.forms['detailsForm']['submit'];
                                             submitBtn.disabled = true;
-                                            updateCategory();
+                                            updateDirectors();
                                             // tempDirectorArray, tempDateArray, tempStartShareArray,tempEndShareArray are taken from updateDirectors()
                                             var today = new Date();
                                             var companyUEN = document.forms['detailsForm']["companyregID"].value;

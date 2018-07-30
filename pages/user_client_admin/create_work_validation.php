@@ -47,26 +47,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         }
 
-        $fileregex = '/^([a-zA-Z0-9])/';
-        if (empty($_POST["filenumber"])) {
-            $filenumberErr = "* File No. is required";
-            $valid = FALSE;
-        } else{
-            $filenumber = ($_POST["filenumber"]);
-            if (!preg_match($fileregex, $filenumber)){
-                $filenumberErr = "* Invalid File format/number";
-                $valid = FALSE;
-            }
-
-        }
-
         $uname = $_SESSION["username"];
 
         if ($valid == TRUE) {
 //
             //prepare statement to insert into DB company name and UEN to
             $managesql = "INSERT INTO account(UEN, companyName, fileNumber, dateOfCreation, user_username)
-                               VALUES ('$uen', '$companyname', '$filenumber', NOW(), '$uname')";
+                               VALUES ('$uen', '$companyname', '000000', NOW(), '$uname')";
             $accountSql = $DB_con->prepare($managesql);
             
             if ($accountSql->execute()) {

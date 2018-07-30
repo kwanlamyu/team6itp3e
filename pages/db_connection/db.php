@@ -1,7 +1,7 @@
 <?php
-// // /*
- // // * Jerome local DB
- // // */
+ /*
+  * Jerome local DB
+  */
 // session_start();
 //
 // $DBHOST = 'localhost';
