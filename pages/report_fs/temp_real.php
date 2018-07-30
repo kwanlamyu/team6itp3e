@@ -355,7 +355,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             $borrowingArray = array();
             $shareCapitalArray = array();
 
-// Storing those specially display de
+            // Storing those specially display de
             foreach ($fullArray as $key => $value) {
 
                 if ($key === "profit before income tax") {
@@ -507,23 +507,71 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             }
 
             $sequenceCategory = array();
-            for ($i = 0; $i < count($defaultArray); $i++) {
-                for ($j = 0; $j < count($displayedCategory); $j++) {
-                    if (strcasecmp($displayedCategory[$j], $defaultArray[$i]) === 0) {
-                        if (!in_array($displayedCategory[$j], $sequenceCategory)) {
-                            array_push($sequenceCategory, $displayedCategory[$j]);
-                        }
-                    }
-                }
-            }
 
-            for ($k = 0; $k < count($defaultArray); $k++) {
-                for ($l = 0; $l < count($displayNormally); $l++) {
-                    if (!in_array($displayNormally[$l], $sequenceCategory)) {
-                        array_push($sequenceCategory, $displayNormally[$l]);
-                    }
+            
+            //------------------------------------------------------------------
+            for ($i = 0; $i < count($displayNormally); $i++) {
+                if (strcasecmp($displayNormally[$i], "other income") === 0) {
+                    array_push($sequenceCategory, $displayNormally[$i]);
                 }
             }
+            
+            for ($i = 0; $i < count($displayedCategory); $i++) {
+                if (strcasecmp($displayedCategory[$i], "profit before income tax") === 0) {
+                    array_push($sequenceCategory, $displayedCategory[$i]);
+                }
+            }
+            
+            for ($i = 0; $i < count($displayNormally); $i++) {
+                if (strcasecmp($displayNormally[$i], "Finance expense") === 0) {
+                    array_push($sequenceCategory, $displayNormally[$i]);
+                }
+            }
+            
+            for ($i = 0; $i < count($displayNormally); $i++) {
+                if (strcasecmp($displayNormally[$i], "employee compensation") === 0) {
+                    array_push($sequenceCategory, $displayNormally[$i]);
+                }
+            }
+            
+            for ($i = 0; $i < count($displayedCategory); $i++) {
+                if (strcasecmp($displayedCategory[$i], "income taxes") === 0) {
+                    array_push($sequenceCategory, $displayedCategory[$i]);
+                }
+            }
+            
+            for ($i = 0; $i < count($displayedCategory); $i++) {
+                if (strcasecmp($displayedCategory[$i], "trade and other receivables") === 0) {
+                    array_push($sequenceCategory, $displayedCategory[$i]);
+                }
+            }
+            
+            for ($i = 0; $i < count($displayedCategory); $i++) {
+                if (strcasecmp($displayedCategory[$i], "plant and equipment") === 0) {
+                    array_push($sequenceCategory, $displayedCategory[$i]);
+                }
+            }
+            
+            for ($i = 0; $i < count($displayedCategory); $i++) {
+                if (strcasecmp($displayedCategory[$i], "trade and other payables") === 0) {
+                    array_push($sequenceCategory, $displayedCategory[$i]);
+                }
+            }
+            
+            for ($i = 0; $i < count($displayedCategory); $i++) {
+                if (strcasecmp($displayedCategory[$i], "borrowings") === 0) {
+                    array_push($sequenceCategory, $displayedCategory[$i]);
+                }
+            }
+            
+             for ($i = 0; $i < count($displayedCategory); $i++) {
+                if (strcasecmp($displayedCategory[$i], "share capital") === 0) {
+                    array_push($sequenceCategory, $displayedCategory[$i]);
+                }
+            }
+           
+            //------------------------------------------------------------------
+            
             $arrayAddition = array();
 
 // Phoebe Calculation
@@ -3544,7 +3592,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         // create notes table
                                         $table1->addRow();
 
-//                            $table1->addListItem(htmlspecialchars(strtoupper($key1)), 0, null, $nestedListStyle);
                                         // Displaying the heading
                                         $table1->addCell($firstCellValueNotes);
                                         $cellNotes = $table1->addCell($cellValueNotes);
@@ -3634,6 +3681,10 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                                         $table1->addRow();
                                         $table1->addCell($firstCellValueNotes);
+                                        
+//                                        unset($totalArray);
+//                                        $totalArray = array();
+                                        
                                     }
                                 }
                             }
@@ -5097,145 +5148,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 $table1->addCell($firstCellValue);
             }
 
-            if (in_array("share capital", $categoryArray)) {
-
-                $beginningArray = array();
-
-                array_push($displayedCategory, "Share Capital");
-
-                $section = $phpWord->addSection();
-                $table2 = $section->addTable();
-
-                $table2->addRow();
-                $table2->addCell($firstCellValue)->addListItem(htmlspecialchars('SHARE CAPITAL'), 0, null, $nestedListStyle);
-
-                // Create another row
-                $table2->addRow();
-                $table2->addCell($firstCellValue);
-                for ($i = 0; $i < count($shareCapital); $i++) {
-                    $cellNotes = $table2->addCell($cellValue);
-                    $cellNotes->addText("Number of ordinary shares", $fontstyleName, $centerAlignment);
-                    $cellNotes = $table2->addCell($cellValue);
-                    $cellNotes->addText("$", $fontstyleName, $centerAlignment);
-                }
-
-                $table2->addRow();
-                $table2->addCell($firstCellValue)->addText("Issued and fully paid:");
-
-                $table2->addRow();
-                $table2->addCell($firstCellValue)->addText("At beginning of financial year");
-
-                // If only one year of TB inserted
-                if (count($shareCapital) == 1) {
-                    for ($j = 0; $j < 2; $j++) {
-                        if ($shareCapital[0] < 0) {
-                            $cellNotes = $table2->addCell($cellValue);
-                            $cellNotes->addText("(" . number_format($shareCapital[0]) . ")", $fontstyleName, $centerAlignment);
-                        } else if ($shareCapital[0] > 0) {
-                            $cellNotes = $table2->addCell($cellValue);
-                            $cellNotes->addText(number_format($shareCapital[0]), $fontstyleName, $centerAlignment);
-                        }
-                    }
-                    array_push($beginningArray, $shareCapital[0]);
-                }
-                // More than 1 TB inserted
-                else {
-                    for ($i = 1; $i <= count($shareCapital); $i++) {
-                        for ($j = 0; $j < 2; $j++) {
-                            if ($i == count($shareCapital)) {
-                                if ($shareCapital[$i - 1] < 0) {
-                                    $cellNotes = $table2->addCell($cellValue);
-                                    $cellNotes->addText("(" . number_format($shareCapital[$i - 1]) . ")", $fontstyleName, $centerAlignment);
-                                } else if ($shareCapital[$i - 1] > 0) {
-                                    $cellNotes = $table2->addCell($cellValue);
-                                    $cellNotes->addText(number_format($shareCapital[$i - 1]), $fontstyleName, $centerAlignment);
-                                }
-                            } else {
-                                if ($shareCapital[$i] < 0) {
-                                    $cellNotes = $table2->addCell($cellValue);
-                                    $cellNotes->addText("(" . number_format($shareCapital[$i]) . ")", $fontstyleName, $centerAlignment);
-                                } else if ($shareCapital[$i] > 0) {
-                                    $cellNotes = $table2->addCell($cellValue);
-                                    $cellNotes->addText(number_format($shareCapital[$i]), $fontstyleName, $centerAlignment);
-                                }
-                            }
-                        }
-
-                        if ($i == count($shareCapital)) {
-                            array_push($beginningArray, $shareCapital[$i - 1]);
-                        } else {
-                            array_push($beginningArray, $shareCapital[$i]);
-                        }
-                    }
-                }
-
-                $table2->addRow();
-                $table2->addCell($firstCellValue)->addText("Issuance of ordinary shares");
-
-                // If only one year of TB inserted
-                if (count($shareCapital) == 1) {
-                    $issuance = $shareCapital[0] - $beginningArray[0];
-                    $cellNotes = $table2->addCell($cellValue);
-
-                    if ($issuance <= 0) {
-                        $cellNotes->addText("-", $fontstyleName, $centerAlignment);
-                    } else {
-                        $cellNotes->addText(number_format($issuance), $fontstyleName, $centerAlignment);
-                    }
-                } else {
-                    for ($i = 0; $i < count($shareCapital); $i++) {
-                        for ($j = 0; $j < 2; $j++) {
-                            $cellNotes = $table2->addCell($cellValue);
-                            $issuance = $shareCapital[$i] - $beginningArray[$i];
-
-                            if ($issuance <= 0) {
-                                $cellNotes->addText("-", $fontstyleName, $centerAlignment);
-                            } else {
-                                $cellNotes->addText(number_format($issuance), $fontstyleName, $centerAlignment);
-                            }
-                        }
-                    }
-                }
-
-                $table2->addRow();
-                $table2->addCell($firstCellValue)->addText("At end of financial year/period");
-
-                // If only one year of TB inserted
-                if (count($shareCapital) == 1) {
-                    for ($j = 0; $j < 2; $j++) {
-                        if ($shareCapital[0] < 0) {
-                            $cellNotes = $table2->addCell($cellValue);
-                            $cellNotes->addText("(" . number_format($shareCapital[0]) . ")", $fontstyleName, $centerAlignment);
-                        } else if ($shareCapital[0] > 0) {
-                            $cellNotes = $table2->addCell($cellValue);
-                            $cellNotes->addText(number_format($shareCapital[0]), $fontstyleName, $centerAlignment);
-                        }
-                    }
-                }
-                // More than 1 TB inserted
-                else {
-                    for ($i = 0; $i < count($shareCapital); $i++) {
-                        for ($j = 0; $j < 2; $j++) {
-
-                            if ($shareCapital[$i] < 0) {
-                                $cellNotes = $table2->addCell($cellValue, $topAndBottom);
-                                $cellNotes->addText("(" . number_format($shareCapital[$i]) . ")", $fontstyleName, $centerAlignment);
-                            } else if ($shareCapital[$i] > 0) {
-                                $cellNotes = $table2->addCell($cellValue, $topAndBottom);
-                                $cellNotes->addText(number_format($shareCapital[$i]), $fontstyleName, $centerAlignment);
-                            }
-                        }
-                    }
-                }
-
-                $table2->addRow();
-                $table2->addCell($firstCellValue);
-
-                $table2->addRow();
-                $table2->addCell($cellValue * 5, array('gridSpan' => 5))->addText("All issued ordinary shares are fully paid. The newly issued shares rank pari passu in all respects with the previously issued shares. "
-                        . "There is no par value for the ordinary share. The holder of the ordinary share is entitled to receive dividends as end when declared by the Company.", $paragraphStyle);
-            }
-
+            
             if (in_array("plant and equipment", $categoryArray)) {
 
                 array_push($displayedCategory, "Plant and Equipment");
@@ -5500,6 +5413,145 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         $cellNotes->addText("-", $fontstyleName, $centerAlignment);
                     }
                 }
+            }
+            
+            if (in_array("share capital", $categoryArray)) {
+
+                $beginningArray = array();
+
+                array_push($displayedCategory, "Share Capital");
+
+                $section = $phpWord->addSection();
+                $table2 = $section->addTable();
+
+                $table2->addRow();
+                $table2->addCell($firstCellValue)->addListItem(htmlspecialchars('SHARE CAPITAL'), 0, null, $nestedListStyle);
+
+                // Create another row
+                $table2->addRow();
+                $table2->addCell($firstCellValue);
+                for ($i = 0; $i < count($shareCapital); $i++) {
+                    $cellNotes = $table2->addCell($cellValue);
+                    $cellNotes->addText("Number of ordinary shares", $fontstyleName, $centerAlignment);
+                    $cellNotes = $table2->addCell($cellValue);
+                    $cellNotes->addText("$", $fontstyleName, $centerAlignment);
+                }
+
+                $table2->addRow();
+                $table2->addCell($firstCellValue)->addText("Issued and fully paid:");
+
+                $table2->addRow();
+                $table2->addCell($firstCellValue)->addText("At beginning of financial year");
+
+                // If only one year of TB inserted
+                if (count($shareCapital) == 1) {
+                    for ($j = 0; $j < 2; $j++) {
+                        if ($shareCapital[0] < 0) {
+                            $cellNotes = $table2->addCell($cellValue);
+                            $cellNotes->addText("(" . number_format($shareCapital[0]) . ")", $fontstyleName, $centerAlignment);
+                        } else if ($shareCapital[0] > 0) {
+                            $cellNotes = $table2->addCell($cellValue);
+                            $cellNotes->addText(number_format($shareCapital[0]), $fontstyleName, $centerAlignment);
+                        }
+                    }
+                    array_push($beginningArray, $shareCapital[0]);
+                }
+                // More than 1 TB inserted
+                else {
+                    for ($i = 1; $i <= count($shareCapital); $i++) {
+                        for ($j = 0; $j < 2; $j++) {
+                            if ($i == count($shareCapital)) {
+                                if ($shareCapital[$i - 1] < 0) {
+                                    $cellNotes = $table2->addCell($cellValue);
+                                    $cellNotes->addText("(" . number_format($shareCapital[$i - 1]) . ")", $fontstyleName, $centerAlignment);
+                                } else if ($shareCapital[$i - 1] > 0) {
+                                    $cellNotes = $table2->addCell($cellValue);
+                                    $cellNotes->addText(number_format($shareCapital[$i - 1]), $fontstyleName, $centerAlignment);
+                                }
+                            } else {
+                                if ($shareCapital[$i] < 0) {
+                                    $cellNotes = $table2->addCell($cellValue);
+                                    $cellNotes->addText("(" . number_format($shareCapital[$i]) . ")", $fontstyleName, $centerAlignment);
+                                } else if ($shareCapital[$i] > 0) {
+                                    $cellNotes = $table2->addCell($cellValue);
+                                    $cellNotes->addText(number_format($shareCapital[$i]), $fontstyleName, $centerAlignment);
+                                }
+                            }
+                        }
+
+                        if ($i == count($shareCapital)) {
+                            array_push($beginningArray, $shareCapital[$i - 1]);
+                        } else {
+                            array_push($beginningArray, $shareCapital[$i]);
+                        }
+                    }
+                }
+
+                $table2->addRow();
+                $table2->addCell($firstCellValue)->addText("Issuance of ordinary shares");
+
+                // If only one year of TB inserted
+                if (count($shareCapital) == 1) {
+                    $issuance = $shareCapital[0] - $beginningArray[0];
+                    $cellNotes = $table2->addCell($cellValue);
+
+                    if ($issuance <= 0) {
+                        $cellNotes->addText("-", $fontstyleName, $centerAlignment);
+                    } else {
+                        $cellNotes->addText(number_format($issuance), $fontstyleName, $centerAlignment);
+                    }
+                } else {
+                    for ($i = 0; $i < count($shareCapital); $i++) {
+                        for ($j = 0; $j < 2; $j++) {
+                            $cellNotes = $table2->addCell($cellValue);
+                            $issuance = $shareCapital[$i] - $beginningArray[$i];
+
+                            if ($issuance <= 0) {
+                                $cellNotes->addText("-", $fontstyleName, $centerAlignment);
+                            } else {
+                                $cellNotes->addText(number_format($issuance), $fontstyleName, $centerAlignment);
+                            }
+                        }
+                    }
+                }
+
+                $table2->addRow();
+                $table2->addCell($firstCellValue)->addText("At end of financial year/period");
+
+                // If only one year of TB inserted
+                if (count($shareCapital) == 1) {
+                    for ($j = 0; $j < 2; $j++) {
+                        if ($shareCapital[0] < 0) {
+                            $cellNotes = $table2->addCell($cellValue);
+                            $cellNotes->addText("(" . number_format($shareCapital[0]) . ")", $fontstyleName, $centerAlignment);
+                        } else if ($shareCapital[0] > 0) {
+                            $cellNotes = $table2->addCell($cellValue);
+                            $cellNotes->addText(number_format($shareCapital[0]), $fontstyleName, $centerAlignment);
+                        }
+                    }
+                }
+                // More than 1 TB inserted
+                else {
+                    for ($i = 0; $i < count($shareCapital); $i++) {
+                        for ($j = 0; $j < 2; $j++) {
+
+                            if ($shareCapital[$i] < 0) {
+                                $cellNotes = $table2->addCell($cellValue, $topAndBottom);
+                                $cellNotes->addText("(" . number_format($shareCapital[$i]) . ")", $fontstyleName, $centerAlignment);
+                            } else if ($shareCapital[$i] > 0) {
+                                $cellNotes = $table2->addCell($cellValue, $topAndBottom);
+                                $cellNotes->addText(number_format($shareCapital[$i]), $fontstyleName, $centerAlignment);
+                            }
+                        }
+                    }
+                }
+
+                $table2->addRow();
+                $table2->addCell($firstCellValue);
+
+                $table2->addRow();
+                $table2->addCell($cellValue * 5, array('gridSpan' => 5))->addText("All issued ordinary shares are fully paid. The newly issued shares rank pari passu in all respects with the previously issued shares. "
+                        . "There is no par value for the ordinary share. The holder of the ordinary share is entitled to receive dividends as end when declared by the Company.", $paragraphStyle);
             }
 
 //Page 19
