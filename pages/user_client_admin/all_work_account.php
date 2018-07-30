@@ -183,11 +183,6 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                             </div>
 
                             <div class="form-group">
-                                <label for="deletefilenumber">File No.</label>
-                                <input type="text" class="form-control" id="deletefilenumber" name="deletefilenumber" disabled>
-                            </div>
-
-                            <div class="form-group">
                                 <button type="submit" name="deleteAccountButton" id="deleteButton" class="btn btn-danger">
                                     <i class='fa fa-trash' aria-hidden='true'></i>Delete User
                                 </button>
@@ -213,11 +208,10 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
 
         }
 
-        function deleteAccount(uen,company,filenumber) {
+        function deleteAccount(uen,company) {
             document.getElementById('deleteviewid').value = uen;
             document.getElementById('deleteuenid').value = uen;
             document.getElementById('deleteviewcompany').value = company;
-            document.getElementById('deletefilenumber').value = filenumber;
 
         }
 
