@@ -15,12 +15,12 @@ $exportquery = "CREATE VIEW work_clients AS
             AND usermanageaccount.account_user_username = '".$userID."'
             AND usermanageaccount.user_role_id =3;
 
-            SELECT UEN,companyName,accountManagers,accountAccountants 
+            SELECT UEN,companyName,accountAccountants 
             FROM work_clients 
             WHERE (
             UEN LIKE '%".$vari."%'
             OR companyName LIKE '%".$vari."%'
-            OR accountManagers LIKE '%".$vari."%')";
+            OR accountAccountants LIKE '%".$vari."%')";
 
 $stmt=$DB_con->prepare($exportquery);
 	
