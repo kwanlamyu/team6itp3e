@@ -20,10 +20,7 @@ $exportquery = "CREATE VIEW work_clients AS
 $stmt=$DB_con->prepare($exportquery);
 
 $stmt->execute();
-
-
-$columnHeader ='';
-$columnHeader = "Company UEN"."\t"."Company Name"."\t"."Account Manager(s)"."\t";
+$columnHeader = "<table border='1'><tr><th align='left'>Company UEN</th><th align='left'>Company Name</th><th align='left'>Account Manager(s)</th></tr>";
 
 $query = "SELECT UEN,companyName,accountAccountants
 FROM work_clients
@@ -38,20 +35,27 @@ $setData='';
 
 while($rec =$stmt->FETCH(PDO::FETCH_ASSOC))
 {
-  $rowData = '';
+  $rowData = "<tr>";
   foreach($rec as $value)
   {
-    $value = '"' . $value . '"' . "\t";
-    $rowData .= $value;
+    $rowData .= "<td align='left'>" . $value . "</td>";
   }
-  $setData .= trim($rowData)."\n";
+  $rowData .= "</tr>";
 }
 
-echo ucwords($columnHeader)."\n".$setData."\n";
-header("Content-type: application/octet-stream");
-header("Content-Disposition: attachment; filename=CompanyAccounts.xls");
-header("Pragma: no-cache");
+echo $columnHeader;
+$rowData .= "</table>";
+
+header("Pragma: public");
 header("Expires: 0");
+header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+header("Content-Type: application/force-download");
+header("Content-Type: application/octet-stream");
+header("Content-Type: application/download");;
+header("Content-Disposition: attachment;filename=CompanyAccounts.xlsx");
+header("Content-Transfer-Encoding: binary ");
+
+echo $rowData;
 
 $dropquery = "DROP VIEW work_clients";
 $dropstmt=$DB_con->prepare($dropquery);
