@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $accountSql = $DB_con->prepare($managesql);
             
             if ($accountSql->execute()) {
-                echo '<div class="alert alert-success" role="alert"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close"></a>Account successfully created</div>';
+                $successMessage = "Account has been registered successfully."; 
                 echo '<span class="text-success"><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Redirecting Please Wait</span>';
                 echo "<meta http-equiv='refresh' content='3;url=manage_work_account.php'> ";
                 $collaboratorsql = "INSERT INTO userManageAccount(account_UEN, account_user_username, user_username, user_role_id) VALUES ('$uen','$uname','$uname','2');";

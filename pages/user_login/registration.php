@@ -41,13 +41,13 @@
                                 echo "value=\"" . $_POST["fullname"] . "\"";
                             }
                             ?>>
-                            <span class="error"><?php echo $unameErr; ?></span>
+                            <span class="error" style="color: red;"><?php echo $unameErr; ?></span>
                         </div>
 
                         <div class="form-group m-form__group">
                             <!--<label for="companyname">Company Name</label>-->
                             <input type="text" class="form-control m-input" id="companyname" name="companyname" placeholder="Company Name">
-                            <span class="error"><?php echo $companynameErr; ?></span>
+                            <span class="error" style="color: red;"><?php echo $companynameErr; ?></span>
                         </div>
                         
                         <div class="form-group m-form__group">
@@ -57,21 +57,21 @@
                                 echo "value=\"" . $_POST["email"] . "\"";
                             }
                             ?>>
-                            <span class="error"><?php echo $emailErr; ?></span>
+                            <span class="error" style="color: red;"><?php echo $emailErr; ?></span>
                         </div>
 
                         <div class="form-group m-form__group">
                             <!--<label for="regpassword">Password</label>-->
                             <input type="password" class="form-control m-input" id="regpassword" name="regpassword" placeholder="Password">
-                            <span class="error"><?php echo $passErr; ?></span>
-                            <span class="error"><?php echo $twopassErr; ?></span>
+                            <span class="error" style="color: red;"><?php echo $passErr; ?></span>
+                            <span class="error" style="color: red;"><?php echo $twopassErr; ?></span>
                         </div>
 
                         <div class="form-group m-form__group">
                             <!--<label for="regcpassword">Confirm Password</label>-->
                             <input type="password" class="form-control m-input" id="regcpassword" name="regcpassword" placeholder="Retype Password">
-                            <span class="error"><?php echo $cpassErr; ?></span>
-                            <span class="error"><?php echo $twopassErr; ?></span>
+                            <span class="error" style="color: red;"><?php echo $cpassErr; ?></span>
+                            <span class="error" style="color: red;"><?php echo $twopassErr; ?></span>
                         </div>
 
                         <!--                        <div class="form-group">

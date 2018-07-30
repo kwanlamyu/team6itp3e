@@ -44,16 +44,12 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                             </div>
                         </div>
                         <!--begin::Form-->
-                        <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="createAccountant" name="createAccountant" action="../user_client_admin/add_accountant.php" method="POST">
+                        <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="createAccountant" name="createAccountant" action="add_accountant.php" method="POST">
 
-                            <?php include('../user_client_admin/create_accountant_validation.php'); ?>
+                            <?php include('create_accountant_validation.php'); ?>
 
                             <?php if (!empty($successMessage)) { ?>
-                                <span class="alert alert-success" ><?php echo $successMessage; ?></span>
-                            <?php } ?>
-
-                            <?php if (!empty($failMessage)) { ?>
-                                <span class="alert alert-danger" ><?php echo $failMessage; ?></span>
+                                <div class="alert alert-success" role="alert"><?php echo $successMessage; ?></div>
                             <?php } ?>
 
                             <!-- begin::Portlet body-->
@@ -68,7 +64,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                             echo "value=\"" . $_POST["accountantid"] . "\"";
                                         }
                                         ?>>
-                                        <span class="error"><?php echo $unameErr; ?></span>
+                                        <span class="error" style="color: red;"><?php echo $unameErr; ?></span>
                                     </div>
                                     <label class="col-lg-2 col-form-label">
                                         Email:
@@ -79,7 +75,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                             echo "value=\"" . $_POST["email"] . "\"";
                                         }
                                         ?>>
-                                        <span class="error"><?php echo $emailErr; ?></span>
+                                        <span class="error" style="color: red;"><?php echo $emailErr; ?></span>
                                     </div>
                                 </div>
 
@@ -89,8 +85,8 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                     </label>
                                     <div class="col-lg-3">
                                         <input type="password" class="form-control" id="accountantpassword" name="accountantpassword" placeholder="Password">
-                                        <span class="error"><?php echo $passErr; ?></span>
-                                        <span class="error"><?php echo $twopassErr; ?></span>
+                                        <span class="error" style="color: red;"><?php echo $passErr; ?></span>
+                                        <span class="error" style="color: red;"><?php echo $twopassErr; ?></span>
 
                                     </div>
                                     <label class="col-lg-2 col-form-label">
@@ -98,8 +94,8 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                     </label>
                                     <div class="col-lg-3">
                                         <input type="password" class="form-control" id="accountantcpassword" name="accountantcpassword" placeholder="Confirm Password">
-                                        <span class="error"><?php echo $cpassErr; ?></span>
-                                        <span class="error"><?php echo $twopassErr; ?></span>
+                                        <span class="error" style="color: red;"><?php echo $cpassErr; ?></span>
+                                        <span class="error" style="color: red;"><?php echo $twopassErr; ?></span>
                                     </div>
                                 </div>
 

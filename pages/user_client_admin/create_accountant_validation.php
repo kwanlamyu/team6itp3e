@@ -88,10 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($sql->execute()) {
                 
                 $successMessage = "Accountant has been registered successfully."; 
-                echo '<div class="alert alert-success" role="alert">'
-                        . '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close"></a>'
-                        . ' Accountant successfully created '
-                    . '</div>';
+//                echo '<div class="alert alert-success" role="alert"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close"></a>Accountant has been registered successfully</div>';
 
             } else {
                 

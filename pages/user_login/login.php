@@ -29,12 +29,12 @@
                             <div class="form-group m-form__group">
                                 <!--<label for="userid">Username</label>-->
                                 <input type="text" class="form-control" id="userid" name="username" placeholder="Username" autocomplete="off">
-                                <span class="error"><?php echo $unameErr; ?></span>
+                                <span class="error" style="color: red;"><?php echo $unameErr; ?></span>
                             </div>
                             <div class="form-group m-form__group">
                                 <!--<label for="password">Password</label>-->
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-                                <span class="error"><?php echo $passErr; ?></span>
+                                <span class="error" style="color: red;"><?php echo $passErr; ?></span>
                             </div>
                             
                             <!-- <div class="row m-login__form-sub">
