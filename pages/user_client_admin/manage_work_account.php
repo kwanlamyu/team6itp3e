@@ -1,5 +1,5 @@
-<?php 
-/* 
+<?php
+/*
  * front-end code for tagging accoutnant(s) to a company account
  */
 ?>
@@ -51,7 +51,8 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                         <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="manageWorkAccount" name="manageWorkAccount" action="../user_client_admin/manage_work_account.php" method="POST">
                             <?php include('../user_client_admin/manage_work_validation.php'); ?>
                             <?php if (!empty($successMessage)) { ?>
-                                <div class="alert alert-success" role="alert"><?php echo $successMessage; ?></div>
+                              <br>
+                                <div align="center"><div class="alert alert-success col-lg-5" role="alert"><?php echo $successMessage; ?></div></div>
                             <?php } ?>
 
                             <div class="m-portlet__body">
@@ -124,7 +125,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                                         . "<tr>"
                                                         . "<td id='accountant_username" . $counter . "'>{$row['username']}</td>"
                                                         . "<td id='select_users'>"
-                                                        . "<input type='checkbox' name='select_Collaborator[]' id='select_Collaborator" . $counter . "' value='" . $row['username'] . "'>"
+                                                        . "<label class='m-checkbox'><input type='checkbox' name='select_Collaborator[]' id='select_Collaborator" . $counter . "' value='" . $row['username'] . "'><span></span></label>"
                                                         . "</td>"
                                                         . "</tr>\n";
                                                         $counter++;

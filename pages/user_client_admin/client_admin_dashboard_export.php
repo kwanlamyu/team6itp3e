@@ -1,5 +1,7 @@
 <?php
 require_once '../db_connection/db.php';
+define('URL', '');
+ob_start();
 require_once __DIR__ . '\..\..\vendor\autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -33,4 +35,6 @@ header('Content-Disposition: attachment; filename="All Accountants.xlsx"');
 
 $writer->save('All Accountants.xlsx');
 $writer->save("php://output");
+header("Location: " . URL . "download_export_client_dash.php"); /* Redirect browser */
+ob_end_flush();
 ?>
