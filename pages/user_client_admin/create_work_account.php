@@ -1,5 +1,5 @@
-<?php 
-/* 
+<?php
+/*
  * front end code for creating of work accounts aka clients of the client admin company
  */
 ?>
@@ -46,7 +46,8 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                         <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="createWorkAccount" name="createWorkAccount" action="create_work_account.php" method="POST">
                             <?php include('create_work_validation.php'); ?>
                             <?php if (!empty($successMessage)) { ?>
-                                <div class="alert alert-success" role="alert"><?php echo $successMessage; ?></div>
+                              <br>
+                                <div align="center"><div class="alert alert-success col-lg-5"" role="alert"><?php echo $successMessage; ?></div></div>
                             <?php } ?>
 
                             <div class="m-portlet__body">

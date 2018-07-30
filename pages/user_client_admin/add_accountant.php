@@ -49,7 +49,8 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                             <?php include('create_accountant_validation.php'); ?>
 
                             <?php if (!empty($successMessage)) { ?>
-                                <div class="alert alert-success" role="alert"><?php echo $successMessage; ?></div>
+                              <br>
+                                <div align="center"><div class="alert alert-success col-lg-5" role="alert"><?php echo $successMessage; ?></div></div>
                             <?php } ?>
 
                             <!-- begin::Portlet body-->
