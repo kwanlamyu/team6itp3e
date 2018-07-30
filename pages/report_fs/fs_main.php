@@ -51,7 +51,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 								<div class="m-portlet__body"> 
                                 <!--begin::Form-->
                                 <div>
-                                    <span>Select number of trial balances to upload</span>
+                                    <span><label>Select number of trial balances to upload</label></span>
                                     <select name="numberOfTB" onchange="changeFileUploadForm()" id="tbNumber" class="form-control col-lg-1">
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -76,7 +76,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                                 <span>
                                                     <i class="la la-thumb-tack"></i>
                                                 </span>
-                                            </span> Select file to upload: <br>
+                                            </span><label> Select file to upload: </label><br>
 											<label class="btn btn-secondary">
                                             
 
@@ -203,7 +203,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     var currentForm = document.getElementById("formForUploads");
                     currentForm.innerHTML = "";
                     for (i = 0; i < selectedValue; i++) {
-                        currentForm.innerHTML += "<div class='form-group m-form__group'><span class='m-input-icon__icon m-input-icon__icon--right'><span><i class='la la-thumb-tack'></i></span></span> Select file to upload: <div class='m-input-icon m-input-icon--left m-input-icon--right'><input type='file' class='btn btn-secondary' name='trialBalances[]' id='file" + i + "' accept='.xlsx' ></div><br><label for='yearStart" + i + "'>Financial Year Start:</label><input type='date' class='form-control col-lg-4' id='yearStart" + i + "' name='yearStart[]' value=''/><label for='yearEnd" + i + "'>Financial Year End:</label><input type='date' class='form-control col-lg-4' id='yearEnd" + i + "' name='yearEnd[]' value=''/></div>";
+                        currentForm.innerHTML += "<div class='form-group m-form__group'><span class='m-input-icon__icon m-input-icon__icon--right'><span><i class='la la-thumb-tack'></i></span></span><label> Select file to upload: </label><div class='m-input-icon m-input-icon--left m-input-icon--right'><input type='file' class='btn btn-secondary' name='trialBalances[]' id='file" + i + "' accept='.xlsx' ></div><label for='yearStart" + i + "'>Financial Year Start:</label><input type='date' class='form-control col-lg-4' id='yearStart" + i + "' name='yearStart[]' value=''/><label for='yearEnd" + i + "'>Financial Year End:</label><input type='date' class='form-control col-lg-4' id='yearEnd" + i + "' name='yearEnd[]' value=''/></div>";
                     }
                     currentForm.innerHTML += "<div class='m-form__actions'>\
                     <input type='submit' class='btn btn-success' value='Upload File' name='submit' id='m_alert'>\

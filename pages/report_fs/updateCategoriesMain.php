@@ -250,8 +250,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             echo "<input type='hidden' name='allAccounts[]' value='" . $v . "'/>";
                                         }
                                         ?>
-
-<<<<<<< HEAD
                                     <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
                                     <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
                                     <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
@@ -259,15 +257,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     <input type="submit" value="Submit" name="submit" class="btn btn-success">
                                 </form>
 								</div>
-=======
-                                        <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
-                                        <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
-                                        <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
-
-                                        <input type="submit" value="Submit" name="submit" class="btn btn-brand">
-                                    </form>
-                                </div>
->>>>>>> 35ee0fc6ab52379a23d0f343fa9ff53f9a0d7806
                             </div>
                         </div>
                     </div>

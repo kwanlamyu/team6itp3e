@@ -73,7 +73,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                           if (count($allUEN) != 0){
                           ?>
                             <form name='companyUEN' method='post' action='fs_main.php' enctype="multipart/form-data" class="m-form m-form--fit m-form--label-align-right">
-                            <select id='companyValue' onchange='setUEN()' name="companyValue" class="form-control">
+                            <select id='companyValue' onchange='setUEN()' name="companyValue" class="form-control col-lg-4">
                               <?php
                               $tempUEN = "";
                               $tempCompany = "";
