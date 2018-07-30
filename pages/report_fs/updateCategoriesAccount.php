@@ -226,7 +226,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                                 }
                                                 if ($validAccount == 1) {
                                                     echo "<br><b>Account name: </b> $allAccounts[$i] <br/>";
-                                                    echo "<b>Matching account category: </b>";
                                                     echo "<div>";
                                                     $startDataList = "<input list='category" . $i . "' value='' class='form-control' name='category[]'/>";
                                                     $bodyDataList = "<datalist id='category" . $i . "'style='overflow-y:scroll; height:10px;'>";

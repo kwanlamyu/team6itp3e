@@ -127,147 +127,151 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         </div>
                                     </div>
                                 </div>
-								<div class="m-portlet__body"> 
-                                <form method="post" name="mainCategory" action="updateCategoriesAccount.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
-                                    <?php
-                                    $query = $DB_con->prepare("SELECT * FROM main_category WHERE company_name =:companyName AND client_company = :clientName");
-                                    $query->bindParam(':companyName', $_SESSION['company']);
-                                    $query->bindParam(':clientName', $_POST['clientCompany']);
-                                    $query->execute();
+                                <div class="m-portlet__body"> 
+                                    <form method="post" name="mainCategory" action="updateCategoriesAccount.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+                                        <?php
+                                        echo "<span>Company: " . $_SESSION['company'] . "</span><br/>";
+                                        echo "<span>Client: " . $clientName . "</span><br/> <hr/>";
+                                        
+                                        $query = $DB_con->prepare("SELECT * FROM main_category WHERE company_name =:companyName AND client_company = :clientName");
+                                        $query->bindParam(':companyName', $_SESSION['company']);
+                                        $query->bindParam(':clientName', $_POST['clientCompany']);
+                                        $query->execute();
 
-                                    $result = $query->setFetchMode(PDO::FETCH_ASSOC);
-                                    $result = $query->fetchAll();
+                                        $result = $query->setFetchMode(PDO::FETCH_ASSOC);
+                                        $result = $query->fetchAll();
 
-                                    $subQuery = $DB_con->prepare("SELECT * FROM sub_category WHERE company_name =:companyName AND client_company = :clientName");
-                                    $subQuery->bindParam(':companyName', $_SESSION['company']);
-                                    $subQuery->bindParam(':clientName', $_POST['clientCompany']);
-                                    $subQuery->execute();
+                                        $subQuery = $DB_con->prepare("SELECT * FROM sub_category WHERE company_name =:companyName AND client_company = :clientName");
+                                        $subQuery->bindParam(':companyName', $_SESSION['company']);
+                                        $subQuery->bindParam(':clientName', $_POST['clientCompany']);
+                                        $subQuery->execute();
 
-                                    $subResult = $subQuery->setFetchMode(PDO::FETCH_ASSOC);
-                                    $subResult = $subQuery->fetchAll();
+                                        $subResult = $subQuery->setFetchMode(PDO::FETCH_ASSOC);
+                                        $subResult = $subQuery->fetchAll();
 
-                                    $originalValue = array();
-                                    $accountValue = array();
+                                        $originalValue = array();
+                                        $accountValue = array();
 
-                                    $matchedSubArray = array();
+                                        $matchedSubArray = array();
 
-                                    for ($i = 0; $i < count($allAccounts); $i++) {
-                                        for ($j = 0; $j < count($subResult); $j++) {
-                                            // check TB with sub account's account name
-                                            // if same, store the sub account into an array
-                                            // then proceed as per normal
+                                        for ($i = 0; $i < count($allAccounts); $i++) {
+                                            for ($j = 0; $j < count($subResult); $j++) {
+                                                // check TB with sub account's account name
+                                                // if same, store the sub account into an array
+                                                // then proceed as per normal
 
-                                            $inTB = $subResult[$j]['account_names'];
-                                            $inTB = explode(",", $inTB);
+                                                $inTB = $subResult[$j]['account_names'];
+                                                $inTB = explode(",", $inTB);
 
-                                            for ($k = 0; $k < count($inTB); $k++) {
-                                                if (strcasecmp($allAccounts[$i], $inTB[$k]) === 0) {
-                                                    array_push($matchedSubArray, $subResult[$j]['sub_account']);
-                                                    // use $matchSubArray to check with
+                                                for ($k = 0; $k < count($inTB); $k++) {
+                                                    if (strcasecmp($allAccounts[$i], $inTB[$k]) === 0) {
+                                                        array_push($matchedSubArray, $subResult[$j]['sub_account']);
+                                                        // use $matchSubArray to check with
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
 
-                                    $matchedSubArray = array_unique($matchedSubArray);
-                                    $matched = array();
-                                    foreach ($matchedSubArray as $value) {
-                                        array_push($matched, $value);
-                                    }
+                                        $matchedSubArray = array_unique($matchedSubArray);
+                                        $matched = array();
+                                        foreach ($matchedSubArray as $value) {
+                                            array_push($matched, $value);
+                                        }
 
-                                    for ($k = 0; $k < count($matched); $k++) {
-                                        for ($i = 0; $i < count($subResult); $i++) {
-                                          if (strcasecmp($matched[$k],"Exchanges") !== 0) {
-                                            if (strcasecmp($subResult[$i]['sub_account'], $matched[$k]) === 0) {
-                                                echo "<br><b>Sub category name: </b> " . $matched[$k] . "<br/>";
-                                                echo "<div>";
+                                        for ($k = 0; $k < count($matched); $k++) {
+                                            for ($i = 0; $i < count($subResult); $i++) {
+                                                if (strcasecmp($matched[$k], "Exchanges") !== 0) {
+                                                    if (strcasecmp($subResult[$i]['sub_account'], $matched[$k]) === 0) {
+                                                        echo "<br><b>Sub category name: </b> " . $matched[$k] . "<br/>";
+                                                        echo "<div>";
 
-                                                $startDataList = "<input list='category" . $i . "' value='' class='form-control' name='category[]'/>";
-                                                $bodyDataList = "<datalist id='category" . $i . "'>";
+                                                        $startDataList = "<input list='category" . $i . "' value='' class='form-control' name='category[]'/>";
+                                                        $bodyDataList = "<datalist id='category" . $i . "'>";
 
-                                                $setCat = 0;
-                                                for ($a = 0; $a < count($result); $a++) {
-                                                    $underThisAccount = $result[$a]['account_names'];
-                                                    $underThisAccount = explode(",", $underThisAccount);
+                                                        $setCat = 0;
+                                                        for ($a = 0; $a < count($result); $a++) {
+                                                            $underThisAccount = $result[$a]['account_names'];
+                                                            $underThisAccount = explode(",", $underThisAccount);
 
-                                                    $foundSubCat = 0;
-                                                    if ($setCat == 0) {
-                                                        for ($b = 0; $b < count($underThisAccount); $b++) {
-                                                            if (strcasecmp($underThisAccount[$b], $subResult[$i]['sub_account']) === 0) {
-                                                                array_push($originalValue, $result[$a]['main_account']);
-                                                                array_push($accountValue, $subResult[$i]['sub_account']);
+                                                            $foundSubCat = 0;
+                                                            if ($setCat == 0) {
+                                                                for ($b = 0; $b < count($underThisAccount); $b++) {
+                                                                    if (strcasecmp($underThisAccount[$b], $subResult[$i]['sub_account']) === 0) {
+                                                                        array_push($originalValue, $result[$a]['main_account']);
+                                                                        array_push($accountValue, $subResult[$i]['sub_account']);
 
-                                                                $foundSubCat = 1;
-                                                                $startDataList = "<input list='category" . $i . "' value='" . $result[$a]['main_account'] . "' class='form-control' name='category[]'/>";
-                                                                break;
+                                                                        $foundSubCat = 1;
+                                                                        $startDataList = "<input list='category" . $i . "' value='" . $result[$a]['main_account'] . "' class='form-control' name='category[]'/>";
+                                                                        break;
+                                                                    }
+                                                                }
                                                             }
+
+                                                            if ($foundSubCat == 1) {
+                                                                $setCat = 1;
+                                                            }
+
+                                                            $bodyDataList .= "<option value='" . $result[$a]['main_account'] . "'>";
                                                         }
+
+                                                        if ($setCat == 0) {
+                                                            array_push($originalValue, "");
+                                                            array_push($accountValue, $subResult[$i]['sub_account']);
+                                                        }
+
+                                                        echo "<label>Choose a category:" . $startDataList . "</label>" . $bodyDataList . "</datalist>";
+                                                        echo "</div>";
                                                     }
-
-                                                    if ($foundSubCat == 1) {
-                                                        $setCat = 1;
-                                                    }
-
-                                                    $bodyDataList .= "<option value='" . $result[$a]['main_account'] . "'>";
                                                 }
-
-                                                if ($setCat == 0) {
-                                                    array_push($originalValue, "");
-                                                    array_push($accountValue, $subResult[$i]['sub_account']);
-                                                }
-
-                                                echo "<label>Choose a category:" . $startDataList . "</label>" . $bodyDataList . "</datalist>";
-                                                echo "</div>";
                                             }
-                                          }
                                         }
-                                    }
 
-                                    foreach ($dateStart as $value) {
-                                        echo "<input type='hidden' name='dateStart[]' value='" . $value . "'/>";
-                                    }
+                                        foreach ($dateStart as $value) {
+                                            echo "<input type='hidden' name='dateStart[]' value='" . $value . "'/>";
+                                        }
 
-                                    foreach ($dateEnd as $value) {
-                                        echo "<input type='hidden' name='dateEnd[]' value='" . $value . "'/>";
-                                    }
+                                        foreach ($dateEnd as $value) {
+                                            echo "<input type='hidden' name='dateEnd[]' value='" . $value . "'/>";
+                                        }
 
-                                    foreach ($fileArray as $value) {
-                                        echo "<input type='hidden' name='fileArray[]' value='" . $value . "'/>";
-                                    }
+                                        foreach ($fileArray as $value) {
+                                            echo "<input type='hidden' name='fileArray[]' value='" . $value . "'/>";
+                                        }
 
-                                    foreach ($originalValue as $value) {
-                                        echo "<input type='hidden' name='originalValue[]' value='" . $value . "'/>";
-                                    }
+                                        foreach ($originalValue as $value) {
+                                            echo "<input type='hidden' name='originalValue[]' value='" . $value . "'/>";
+                                        }
 
-                                    foreach ($accountValue as $v) {
-                                        echo "<input type='hidden' name='accountValue[]' value='" . $v . "'/>";
-                                    }
+                                        foreach ($accountValue as $v) {
+                                            echo "<input type='hidden' name='accountValue[]' value='" . $v . "'/>";
+                                        }
 
-                                    foreach ($allAccounts as $v) {
-                                        echo "<input type='hidden' name='allAccounts[]' value='" . $v . "'/>";
-                                    }
-                                    ?>
+                                        foreach ($allAccounts as $v) {
+                                            echo "<input type='hidden' name='allAccounts[]' value='" . $v . "'/>";
+                                        }
+                                        ?>
 
-                                    <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
-                                    <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
-                                    <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
+                                        <input type="hidden" name="clientCompany" value="<?php echo $clientName; ?>"/>
+                                        <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
+                                        <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
 
-                                    <input type="submit" value="Submit" name="submit" class="btn btn-brand">
-                                </form>
-								</div>
+                                        <input type="submit" value="Submit" name="submit" class="btn btn-brand">
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-</div>
+            </div>
             <!--end::Portlet-->
             <?php
         }
     }
 } else {
     header("Location: ../user_login/login.php");
-} ?>
+}
+?>
 
 <?php include '../general/footer_content.php'; ?>
 <?php include '../general/footer.php'; ?>
@@ -275,19 +279,19 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 <script type="text/javascript">
 
     function check() {
-      var inputs = document.getElementsByTagName("input");
-      for (i = 0; i < inputs.length; i++){
-        if (inputs[i].getAttribute("name") == "category[]"){
-          if (inputs[i].value.trim().length == 0){
-            alert("Please fill in all fields");
-            return false;
-          }
-        } else {
-          continue;
+        var inputs = document.getElementsByTagName("input");
+        for (i = 0; i < inputs.length; i++) {
+            if (inputs[i].getAttribute("name") == "category[]") {
+                if (inputs[i].value.trim().length == 0) {
+                    alert("Please fill in all fields");
+                    return false;
+                }
+            } else {
+                continue;
+            }
         }
-      }
-      return true;
-      // return true;
+        return true;
+        // return true;
     }
 
 </script>

@@ -77,7 +77,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     array('format' => 'lowerLetter', 'text' => '(%5)', 'left' => 360, 'hanging' => 360, 'tabPos' => 720),
                     array('format' => 'lowerLetter', 'text' => '(%6)', 'left' => 360, 'hanging' => 360, 'tabPos' => 720),
                     array('format' => 'lowerLetter', 'text' => '(%7)', 'left' => 360, 'hanging' => 360, 'tabPos' => 720, 'start' => 14),
-                    array('format' => 'lowerLetter', 'text' => '(%8)', 'left' => 360, 'hanging' => 360, 'tabPos' => 720, 'start' => 9)
+                    array('format' => 'lowerLetter', 'text' => '(%8)', 'left' => 360, 'hanging' => 360, 'tabPos' => 720, 'start' => 9),
+                    array('format' => 'lowerLetter', 'text' => '(%9)', 'left' => 360, 'hanging' => 360, 'tabPos' => 720)
                 )
                     )
             );
@@ -154,9 +155,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             $tempStartShareArray = $_POST['tempStartShareArray'];
             $tempEndShareArray = $_POST['tempEndShareArray'];
             $todayDate = $_POST["todayDate"];
-// $firstBalanceDate = $_POST["firstBalanceDate"];
-// $secondBalanceDate = $_POST["secondBalanceDate"];
-// $thirdBalanceDate = $_POST["thirdBalanceDate"];
             $companyPA = $_POST["companyPA"];
             $companyAddress = $_POST["companyAddress"];
             $frsDate = $_POST['frsDate'];
@@ -3705,11 +3703,11 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 $provisionKey = ['under provision in prior year'];
 
                 // Display the category heading
-                $section->addListItem(htmlspecialchars('INCOME TAXES'), 0, null, 'multilevel');
+                $section->addListItem(htmlspecialchars('INCOME TAXES'), 0, null, $nestedListStyle);
                 $table1 = $section->addTable();
 
                 $table1->addRow();
-                $table1->addCell($firstCellValue)->addListItem(htmlspecialchars('Income tax expense'), 1, null, $nestedListStyle);
+                $table1->addCell($firstCellValue)->addListItem(htmlspecialchars('Income tax expense'), 8, null, $listingStyle);
                 // Create another row
                 $table1->addRow();
                 $table1->addCell($firstCellValue);
@@ -4034,7 +4032,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 $table1->addRow();
                 $table1->addCell($firstCellValue);
                 $table1->addRow();
-                $table1->addCell($firstCellValue)->addListItem(htmlspecialchars('Movement in current income tax liabilities:'), 1, null, 'multilevel');
+                $table1->addCell($firstCellValue)->addListItem(htmlspecialchars('Movement in current income tax liabilities:'), 8, null, $listingStyle);
 
                 // Create another row
                 $table1->addRow();
@@ -5476,7 +5474,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             $textrun->addText("\t");
             $textrun->addText(htmlspecialchars("Currency risk"), array('underline' => 'single'));
 
-            $section->addText("\tThe Company’s exposure to foreign exchange risk is minimal as transactions are \tpredominantly denominated in " . $currency . ", being the functional currency of the Company."
+            $section->addText("\tThe Company’s exposure to foreign exchange risk is minimal as transactions are \tpredominantly denominated in " . $currency . ", being the functional currency of the \tCompany."
                     , $fontstyleName, $paragraphStyle);
 
             $textrun = $section->addTextRun();
