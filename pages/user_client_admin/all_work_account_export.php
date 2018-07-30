@@ -7,7 +7,7 @@ $exportquery = "CREATE VIEW work_clients AS
             SELECT 
             account.UEN AS UEN,
             account.companyName AS companyName,
-            usermanageaccount.user_username AS accountManagers,
+            account.user_username AS accountManagers,
             usermanageaccount.user_username AS accountAccountants
             FROM account
             INNER JOIN usermanageaccount
@@ -15,7 +15,7 @@ $exportquery = "CREATE VIEW work_clients AS
             AND usermanageaccount.account_user_username = '".$userID."'
             AND usermanageaccount.user_role_id =3;
 
-            SELECT UEN,companyName,accountManagers 
+            SELECT UEN,companyName,accountManagers,accountAccountants 
             FROM work_clients 
             WHERE (
             UEN LIKE '%".$vari."%'
@@ -51,5 +51,9 @@ header("Pragma: no-cache");
 header("Expires: 0");
  
 echo ucwords($columnHeader)."\n".$setData."\n";
+
+$dropquery = "DROP VIEW work_clients";
+$dropstmt=$DB_con->prepare($dropquery);
+$dropstmt->execute();
  
 ?>

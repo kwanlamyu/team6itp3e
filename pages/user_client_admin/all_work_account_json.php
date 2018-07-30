@@ -9,7 +9,7 @@
 $userID= $_SESSION['username'];
 	$select = $DB_con->prepare("SELECT account.UEN AS UEN,
 	account.companyName AS companyName,
-	usermanageaccount.user_username
+	account.user_username
 	AS accountManagers,
 	usermanageaccount.user_username
 	AS accountAccountants
