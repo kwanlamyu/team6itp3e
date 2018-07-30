@@ -50,6 +50,9 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                         ?>
                         <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="manageWorkAccount" name="manageWorkAccount" action="../user_client_admin/manage_work_account.php" method="POST">
                             <?php include('../user_client_admin/manage_work_validation.php'); ?>
+                            <?php if (!empty($successMessage)) { ?>
+                                <div class="alert alert-success" role="alert"><?php echo $successMessage; ?></div>
+                            <?php } ?>
 
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group row">

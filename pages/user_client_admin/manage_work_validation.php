@@ -48,11 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $collaboratorsql .= ";";
                 $insertsql = $DB_con->prepare($collaboratorsql);
                 $insertsql->execute();
-
-                echo '<div class="alert alert-success" role="alert">'
-                        . '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close"></a>'
-                        . ' Account Manager(s) successfully added'
-                    . '</div>';
+                $successMessage = "Account Manager(s) successfully added";
                 echo '<span class="text-success"><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Redirecting please wait</span>';
                 echo "<meta http-equiv='refresh' content='3;url=../user_client_admin/client_admin_dashboard.php'> ";
             }catch (PDOException $e) {

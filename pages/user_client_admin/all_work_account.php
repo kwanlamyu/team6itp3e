@@ -94,6 +94,10 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                     <div class="modal-body">
                         <form id="edit" name="edit" action="../user_client_admin/all_work_account.php" method="POST">
                             <?php include('../user_client_admin/edit_work_validation.php'); ?>
+                            
+                            <?php if (!empty($successMessage)) { ?>
+                                <div class="alert alert-success" role="alert"><?php echo $successMessage; ?></div>
+                            <?php } ?>
                             <div class="form-group">
                                 <label for="edituenid">UEN/ACRA No.</label>
                                 <input type="text" class="form-control" id="editviewid" name="editviewid" disabled>
@@ -167,6 +171,9 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                         <p> Are you sure you want to delete this user</p>
                         <form id="delete" name="delete" action="../user_client_admin/all_work_account.php" method="POST">
                             <?php include('../user_client_admin/delete_work_validation.php'); ?>
+                            <?php if (!empty($successMessage)) { ?>
+                                <div class="alert alert-success" role="alert"><?php echo $successMessage; ?></div>
+                            <?php } ?>
                             <div class="form-group">
                                 <label for="deleteviewid">UEN/ACRA No.</label>
                                 <input type="text" class="form-control" id="deleteviewid" name="deleteviewid" disabled>

@@ -75,7 +75,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                 </div>
                             </div>
                             <!--end: Search Form -->
-
+                            
                             <!--begin: Datatable -->
                             <div class="client_dash_table" id="client_dash_table"></div>
                             <textarea id="m_datatable_console_client" class="form-control m--margin-top-30" style="display: none;"cols="100" rows="10" title="Console" readonly="readonly"></textarea>
@@ -98,6 +98,9 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                     <div class="modal-body">
                         <form id="edit" name="edit" action="../user_client_admin/client_admin_dashboard.php" method="POST">
                             <?php include('../user_client_admin/edit_accountant_validation.php'); ?>
+                            <?php if (!empty($successMessage)) { ?>
+                                <div class="alert alert-success" role="alert"><?php echo $successMessage; ?></div>
+                            <?php } ?>
 
                             <div class="form-group" style="display: none;">
                                 <label for="editaccountantid">Username</label>
@@ -107,20 +110,20 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                             <div class="form-group">
                                 <label for="editaccountantemail">Email</label>
                                 <input type="email" class="form-control" id="editaccountantemail" name="editaccountantemail">
-                                <span class="error"><?php echo $emailErr; ?></span>
+                                <span class="error" style="color: red;"><?php echo $emailErr; ?></span>
                             </div>
 
                             <div class="form-group">
                                 <label for="accountantpassword">Password</label>
                                 <input type="password" class="form-control" id="editaccountantpassword" name="editaccountantpassword" placeholder="Password">
-                                <span class="error"><?php echo $passErr; ?></span>
+                                <span class="error" style="color: red;"><?php echo $passErr; ?></span>
                             </div>
 
                             <div class="form-group">
                                 <label for="editaccountantcpassword">Confirm Password</label>
                                 <input type="password" class="form-control" id="editaccountantcpassword" name="editaccountantcpassword" placeholder="Retype Password">
-                                <span class="error"><?php echo $cpassErr; ?></span>
-                                <span class="error"><?php echo $twopassErr; ?></span>
+                                <span class="error" style="color: red;"><?php echo $cpassErr; ?></span>
+                                <span class="error" style="color: red;"><?php echo $twopassErr; ?></span>
                             </div>
 
                             <div class="form-group">
@@ -148,6 +151,9 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                         <p> Are you sure you want to delete this user</p>
                         <form id="delete" name="delete" action="../user_client_admin/client_admin_dashboard.php" method="POST">
                             <?php include('../user_client_admin/delete_accountant_validation.php'); ?>
+                            <?php if (!empty($successMessage)) { ?>
+                                <div class="alert alert-success" role="alert"><?php echo $successMessage; ?></div>
+                            <?php } ?>
                             <div class="form-group">
                                 <label for="deleteaccountantid">Username</label>
                                 <input type="text" class="form-control" id="viewid" name="viewid" disabled>

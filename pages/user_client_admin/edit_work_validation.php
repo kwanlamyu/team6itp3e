@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 }
                 
-                $successMessage = "Account has been tagged successfully.";
+                $successMessage = "Account has been edited successfully.";
                 echo "<meta http-equiv='refresh' content='3;url=../user_client_admin/all_work_account.php'> ";
             } catch (PDOException $e) {
 //                echo $e->getMessage();

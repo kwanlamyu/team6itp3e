@@ -31,7 +31,6 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                     <!--begin::Portlet-->
                     <div class="m-portlet">
                         <div class="m-portlet__head">
-                            <div class="m-portlet__head">
                             <div class="m-portlet__head-caption">
                                 <div class="m-portlet__head-title">
                                     <span class="m-portlet__head-icon m--hide">
@@ -43,10 +42,12 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                 </div>
                             </div>
                         </div>
-                        </div>
                         <!--begin::Form-->
                         <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="createWorkAccount" name="createWorkAccount" action="create_work_account.php" method="POST">
                             <?php include('create_work_validation.php'); ?>
+                            <?php if (!empty($successMessage)) { ?>
+                                <div class="alert alert-success" role="alert"><?php echo $successMessage; ?></div>
+                            <?php } ?>
 
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group row">
@@ -54,13 +55,13 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                     <label class="col-lg-2 col-form-label" for="companyname">Company Name</label>
                                     <div class="col-lg-3">
                                         <input type="text" class="form-control" id="companyname" name="companyname" placeholder="Company Name">
-                                        <span class="error"><?php echo $companynameErr; ?></span>
+                                        <span class="error" style="color: red;"><?php echo $companynameErr; ?></span>
                                     </div>
                                     <!-- UEN/ACRA Number -->
                                     <label class="col-lg-2 col-form-label" for="uennumber">UEN/ACRA Number</label>
                                     <div class="col-lg-3">
                                         <input type="text" class="form-control" id="uennumber" name="uennumber" placeholder="UEN Number">
-                                        <span class="error"><?php echo $uennumberErr; ?></span>
+                                        <span class="error" style="color: red;"><?php echo $uennumberErr; ?></span>
                                     </div>
                                 </div>
                             </div>

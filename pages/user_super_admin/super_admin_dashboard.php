@@ -93,6 +93,9 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '1') {
                     <div class="modal-body">
                         <form id="edit" name="edit" action="../user_super_admin/super_admin_dashboard.php" method="POST">
                             <?php include('../user_super_admin/edit_client_validation.php'); ?>
+                            <?php if (!empty($successMessage)) { ?>
+                                <div class="alert alert-success" role="alert"><?php echo $successMessage; ?></div>
+                            <?php } ?>
 
                             <div class="form-group" style="display: none;">
                                 <label for="editclientid">Username</label>
@@ -102,20 +105,20 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '1') {
                             <div class="form-group">
                                 <label for="editclientemail">Email</label>
                                 <input type="email" class="form-control" id="editclientemail" name="editclientemail">
-                                <span class="error"><?php echo $emailErr; ?></span>
+                                <span class="error" style="color: red;"><?php echo $emailErr; ?></span>
                             </div>
 
                             <div class="form-group">
                                 <label for="editclientpassword">Password</label>
                                 <input type="password" class="form-control" id="editclientpassword" name="editclientpassword" placeholder="Password">
-                                <span class="error"><?php echo $passErr; ?></span>
+                                <span class="error" style="color: red;"><?php echo $passErr; ?></span>
                             </div>
 
                             <div class="form-group">
                                 <label for="editclientcpassword">Confirm Password</label>
                                 <input type="password" class="form-control" id="editclientcpassword" name="editclientcpassword" placeholder="Retype Password">
-                                <span class="error"><?php echo $cpassErr; ?></span>
-                                <span class="error"><?php echo $twopassErr; ?></span>
+                                <span class="error" style="color: red;"><?php echo $cpassErr; ?></span>
+                                <span class="error" style="color: red;"><?php echo $twopassErr; ?></span>
                             </div>
 
                             <div class="form-group">
