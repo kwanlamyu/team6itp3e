@@ -1,4 +1,4 @@
-<?php 
+<?php
 /* front end code for adding an accountant
  */
 ?>
@@ -55,7 +55,8 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                             <?php if (!empty($failMessage)) { ?>
                                 <span class="alert alert-danger" ><?php echo $failMessage; ?></span>
                             <?php } ?>
-                            <!-- begin::Portlet body-->    
+
+                            <!-- begin::Portlet body-->
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group row">
                                     <label class="col-lg-2 col-form-label">
@@ -82,7 +83,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                     </div>
                                 </div>
 
-                                <div class="form-group m-form__group row">
+                                  <div class="form-group m-form__group row">
                                     <label class="col-lg-2 col-form-label">
                                         Password:
                                     </label>
@@ -101,7 +102,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                         <span class="error"><?php echo $twopassErr; ?></span>
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <!--End:: portlet body-->
                             <!--begin:: portlet footer-->

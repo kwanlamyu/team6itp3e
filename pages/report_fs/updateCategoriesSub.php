@@ -54,7 +54,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         </div>
                                     </div>
                                 </div>
-								<div class="m-portlet__body"> 
+								<div class="m-portlet__body">
 
                                 <?php
                                 $fileArray = array();
@@ -565,8 +565,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $query->execute();
                                         }
 
-                                        echo "<span>Company: " . $companyName . "</span><br/>";
-                                        echo "<span>Client: " . $clientName . "</span><br/> <hr/>";
+                                        echo "<div align='center'><h4>" . $companyName . "</h4><span>Client: " . $clientName . "</span><br></div><br>";
 
                                         // TODO: change to editable
                                         $query = $DB_con->prepare("SELECT * FROM sub_category WHERE company_name =:companyName AND client_company = :clientName");
@@ -592,6 +591,17 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                                         <form method="post" name="updateCategoryForm" action="updateCategoriesExtraMain.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
                                             <?php
+                                            echo "<table class='table m-table m-table--head-bg-success'><thead>
+        <tr>
+          <th>
+            Account Name
+          </th>
+          <th>
+            Choose Category
+          </th>
+        </tr>
+      </thead>
+      <tbody>";
                                             for ($i = 0; $i < count($allAccounts); $i++) {
 
                                                 for ($a = 0; $a < count($mainResult); $a++) {
@@ -600,10 +610,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                                                     for ($b = 0; $b < count($inThisAccount); $b++) {
                                                     if (strcasecmp($inThisAccount[$b], $allAccounts[$i]) === 0) {
-
-                                                            echo "<br><b>Account name: </b>$allAccounts[$i]<br/>";
-                                                            echo "<div>";
-
+echo "<tr><td>";
+                                                            echo "$allAccounts[$i]";
+                      echo "</td>";
                                                             $startDataList = "<input list='category" . $i . "' value='' class='form-control' name='category[]'/>";
                                                             $bodyDataList = "<datalist id='category" . $i . "' style='overflow-y:scroll; height:20px;'>";
                                                             $setCat = 0;
@@ -634,13 +643,16 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                                                 array_push($originalValue, "");
                                                                 array_push($accountValue, $allAccounts[$i]);
                                                             }
+                  echo "<td>";
+                                                            echo "<label>" . $startDataList . "</label>" . $bodyDataList . "</datalist>";
 
-                                                            echo "<label>Choose a category:" . $startDataList . "</label><div>" . $bodyDataList . "</datalist></div>";
-                                                            echo "</div>";
+                  echo "</td></tr>";
+
                                                         }
                                                     }
                                                 }
                                             }
+                                            echo "</tbody></table>";
                                         } catch (PDOException $e) {
                                             echo 'Error: ' . $e->getMessage();
                                         }
@@ -677,8 +689,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         echo "<input type='hidden' name='originalValue[]' value='" . $value . "'/>";
                                     }
                                     ?>
-									<br>
-                                    <input type="submit" value="Submit" name="submit" class="btn btn-success">
+                                    <div align="center"><input type="submit" value="Submit" name="submit" class="btn btn-success"></div>
                                 </form>
                             </div>
 							</div>
@@ -703,7 +714,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
         for (i = 0; i < inputs.length; i++) {
             if (inputs[i].getAttribute("name") == "category[]") {
                 if (inputs[i].value.trim().length == 0) {
-                    alert("Please fill in all fields");
+                    //alert("Please fill in all fields");
+                    swal("Please fill in all fields");
                     return false;
                 }
             } else {
@@ -717,5 +729,3 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
 <?php include '../general/footer_content.php'; ?>
 <?php include '../general/footer.php'; ?>
-
-

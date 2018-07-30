@@ -127,12 +127,11 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         </div>
                                     </div>
                                 </div>
-                                <div class="m-portlet__body"> 
+                                <div class="m-portlet__body">
                                     <form method="post" name="mainCategory" action="updateCategoriesAccount.php" onsubmit="return check()" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
                                         <?php
-                                        echo "<span>Company: " . $_SESSION['company'] . "</span><br/>";
-                                        echo "<span>Client: " . $clientName . "</span><br/> <hr/>";
-                                        
+                                        echo "<div align='center'><h4>" . $_SESSION['company'] . "</h4><span>Client: " . $clientName . "</span><br></div><br>";
+
                                         $query = $DB_con->prepare("SELECT * FROM main_category WHERE company_name =:companyName AND client_company = :clientName");
                                         $query->bindParam(':companyName', $_SESSION['company']);
                                         $query->bindParam(':clientName', $_POST['clientCompany']);
@@ -178,13 +177,25 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             array_push($matched, $value);
                                         }
 
+                                        echo "<table class='table m-table m-table--head-bg-success'><thead>
+    <tr>
+      <th>
+        Sub Category Name
+      </th>
+      <th>
+        Choose Category
+      </th>
+    </tr>
+  </thead>
+  <tbody>";
+
                                         for ($k = 0; $k < count($matched); $k++) {
                                             for ($i = 0; $i < count($subResult); $i++) {
                                                 if (strcasecmp($matched[$k], "Exchanges") !== 0) {
                                                     if (strcasecmp($subResult[$i]['sub_account'], $matched[$k]) === 0) {
-                                                        echo "<br><b>Sub category name: </b> " . $matched[$k] . "<br/>";
-                                                        echo "<div>";
-
+                                                      echo "<tr><td>";
+                                                        echo " $matched[$k]";
+                                                            echo "</td>";
                                                         $startDataList = "<input list='category" . $i . "' value='' class='form-control' name='category[]'/>";
                                                         $bodyDataList = "<datalist id='category" . $i . "'>";
 
@@ -218,14 +229,14 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                                             array_push($originalValue, "");
                                                             array_push($accountValue, $subResult[$i]['sub_account']);
                                                         }
-
-                                                        echo "<label>Choose a category:" . $startDataList . "</label>" . $bodyDataList . "</datalist>";
-                                                        echo "</div>";
+echo "<td>";
+                                                        echo "<label>" . $startDataList . "</label>" . $bodyDataList . "</datalist>";
+                                                      echo "</td></tr>";
                                                     }
                                                 }
                                             }
                                         }
-
+  echo "</tbody></table>";
                                         foreach ($dateStart as $value) {
                                             echo "<input type='hidden' name='dateStart[]' value='" . $value . "'/>";
                                         }
@@ -254,7 +265,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     <input type="hidden" name="companyName" value="<?php echo $companyName; ?>"/>
                                     <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
 									<br>
-                                    <input type="submit" value="Submit" name="submit" class="btn btn-success">
+                                    <div align="center"><input type="submit" value="Submit" name="submit" class="btn btn-success"></div>
                                 </form>
 								</div>
                             </div>
@@ -282,7 +293,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
         for (i = 0; i < inputs.length; i++) {
             if (inputs[i].getAttribute("name") == "category[]") {
                 if (inputs[i].value.trim().length == 0) {
-                    alert("Please fill in all fields");
+                  //  alert("Please fill in all fields");
+                    swal("Please fill in all fields");
                     return false;
                 }
             } else {

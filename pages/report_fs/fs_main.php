@@ -48,9 +48,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         </div>
                                     </div>
                                 </div>
-								<div class="m-portlet__body"> 
+								<div class="m-portlet__body">
                                 <!--begin::Form-->
-                                <div>
                                     <span><label>Select number of trial balances to upload</label></span>
                                     <select name="numberOfTB" onchange="changeFileUploadForm()" id="tbNumber" class="form-control col-lg-1">
                                         <option value="1">1</option>
@@ -59,8 +58,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         <option value="4">4</option>
                                         <option value="5">5</option>
                                     </select>
-                                    <span><br/>For multiple files: Please upload latest to oldest in sequence</span>
-                                </div>
+
+                                    <span><br/>*For multiple files: Please upload latest to oldest in sequence</span>
                                 <br>
                                 <form name='uploadForm' action="updateCategoriesSub.php" method="post" enctype="multipart/form-data" class="m-form m-form--fit m-form--label-align-right" onsubmit="return validateForm()">
                                     <div class="col-lg-3">
@@ -71,30 +70,30 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                         </span> -->
                                     </div>
                                     <div id="formForUploads">
-                                        <div class="form-group m-form__group">
-                                            <span class="m-input-icon__icon m-input-icon__icon--right">
-                                                <span>
-                                                    <i class="la la-thumb-tack"></i>
-                                                </span>
-                                            </span><label> Select file to upload: </label><br>
-											<label class="btn btn-secondary">
-                                            
-
-                                            <div class="m-input-icon m-input-icon--left m-input-icon--right">
+                                        <br><div><label class="col-lg-3 col-form-label"><i class="la la-thumb-tack"></i>  Select file to upload: </label>
+                                          <br>
+											<label class="btn btn-secondary" style="height: 100px;">
+  <div class="col-lg-9">
                                                 <input type="file" name="trialBalances[]" id="file0" accept=".xlsx">
-												
+
                                             </div>
 											</label>
-											<br>
-                                            <label for='yearStart0'>Financial Year Start:</label>
-                                            <input type='date' class='form-control col-lg-4' id='yearStart0' name='yearStart[]' value=''/>
-                                            <label for='yearEnd0'>Financial Year End:</label>
-                                            <input type='date' class='form-control col-lg-4' id='yearEnd0' name='yearEnd[]' value=''/>
+                    </div>
+                    <br>
+                    <div class="row">
+                                            <label class="col-lg-2 col-form-label" for='yearStart0'>Financial Year Start:</label>
+                                            <div class="col-lg-4">
+                                            <input type='date' class='form-control' id='yearStart0' name='yearStart[]' value=''/>
+                                          </div>
+                                            <label class="col-lg-2 col-form-label" for='yearEnd0'>Financial Year End:</label>
+                                            <div class="col-lg-4">
+                                            <input type='date' class='form-control' id='yearEnd0' name='yearEnd[]' value=''/>
+                                          </div>
                                         </div>
-                                        <div class="m-form__actions">
+                                        <div class="m-form__actions" align="center">
                                             <input type="submit" class="btn btn-success" value="Upload File" name="submit" id='m_alert'>
                                         </div>
-                                    
+
                             </div>
                             </form>
 							</div>
@@ -109,13 +108,13 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             </div>
 
             <script>
-			
+
                 // reset the dropdown box and form when user presses back
                 document.getElementById("tbNumber").selectedIndex = 0;
                 document.forms['uploadForm'].reset();
                 // validation to ensure all input are not null and are of valid input
                 function validateForm() {
-					
+
                     var submitBtn = document.forms['uploadForm']['submit'];
                     submitBtn.disabled = true;
                     var clientCompany = document.forms['uploadForm']['clientCompany'].value;
@@ -195,23 +194,21 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         return true;
                     }
                 }
-				
-				
-				
+
+
+
                 function changeFileUploadForm() {
                     var selectedValue = document.getElementById("tbNumber").value;
                     var currentForm = document.getElementById("formForUploads");
                     currentForm.innerHTML = "";
                     for (i = 0; i < selectedValue; i++) {
-                        currentForm.innerHTML += "<div class='form-group m-form__group'><span class='m-input-icon__icon m-input-icon__icon--right'><span><i class='la la-thumb-tack'></i></span></span><label> Select file to upload: </label><div class='m-input-icon m-input-icon--left m-input-icon--right'><input type='file' class='btn btn-secondary' name='trialBalances[]' id='file" + i + "' accept='.xlsx' ></div><label for='yearStart" + i + "'>Financial Year Start:</label><input type='date' class='form-control col-lg-4' id='yearStart" + i + "' name='yearStart[]' value=''/><label for='yearEnd" + i + "'>Financial Year End:</label><input type='date' class='form-control col-lg-4' id='yearEnd" + i + "' name='yearEnd[]' value=''/></div>";
+                        currentForm.innerHTML += "<br><div><label class='col-lg-3 col-form-label'><i class='la la-thumb-tack'></i>  Select file to upload: </label><br><label class='btn btn-secondary' style='height: 100px;'><div class='col-lg-9'><input type='file' name='trialBalances[]' id='file" + i + "' accept='.xlsx'></div></label></div><br><div class='row'><label class='col-lg-2 col-form-label' for='yearStart" + i + "'>Financial Year Start:</label><div class='col-lg-4'><input type='date' class='form-control' id='yearStart" + i + "' name='yearStart[]' value=''/></div><label class='col-lg-2 col-form-label' for='yearEnd" + i + "'>Financial Year End:</label><div class='col-lg-4'><input type='date' class='form-control' id='yearEnd" + i + "' name='yearEnd[]' value=''/></div></div><br>";
                     }
-                    currentForm.innerHTML += "<div class='m-form__actions'>\
-                    <input type='submit' class='btn btn-success' value='Upload File' name='submit' id='m_alert'>\
-                    </div>";
+                    currentForm.innerHTML += "<div class='m-form__actions' align='center'><input type='submit' class='btn btn-success' value='Upload File' name='submit' id='m_alert'></div>";
                 }
-				
-				
-				
+
+
+
             </script>
             <?php
         }

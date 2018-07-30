@@ -163,8 +163,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                 <?php
                                 if (isset($allAccounts)) {
                                     try {
-                                        echo "<span>Company: " . $_SESSION['company'] . "</span><br/>";
-                                        echo "<span>Client: " . $clientName . "</span><br/> <hr/>";
+                                          echo "<div align='center'><h4>" . $_SESSION['company'] . "</h4><span>Client: " . $clientName . "</span><br></div><br>";
                                         $accountQuery = $DB_con->prepare("SELECT * FROM account_category WHERE company_name =:companyName AND client_company = :clientName");
                                         $accountQuery->bindParam(':companyName', $_SESSION['company']);
                                         $accountQuery->bindParam(':clientName', $clientName);
@@ -200,6 +199,18 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                             $underAdminExpense = explode(",", $underAdminExpense);
                                             $underDistriExpense = explode(",", $underDistriExpense);
                                             $underFinanceExpense = explode(",", $underFinanceExpense);
+
+                                            echo "<table class='table m-table m-table--head-bg-success'><thead>
+        <tr>
+          <th>
+            Account Name
+          </th>
+          <th>
+            Choose Category
+          </th>
+        </tr>
+      </thead>
+      <tbody>";
                                             for ($i = 0; $i < count($allAccounts); $i++) {
                                                 $validAccount = 0;
                                                 for ($k = 0; $k < count($underAdminExpense); $k++) {
@@ -225,8 +236,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                                     }
                                                 }
                                                 if ($validAccount == 1) {
-                                                    echo "<br><b>Account name: </b> $allAccounts[$i] <br/>";
-                                                    echo "<div>";
+                                                  echo "<tr><td>";
+                                                    echo "$allAccounts[$i]";
+                                                    echo "</td>";
                                                     $startDataList = "<input list='category" . $i . "' value='' class='form-control' name='category[]'/>";
                                                     $bodyDataList = "<datalist id='category" . $i . "'style='overflow-y:scroll; height:10px;'>";
                                                     $setCat = 0;
@@ -255,10 +267,12 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                                         array_push($originalValue, "");
                                                         array_push($accountValue, $allAccounts[$i]);
                                                     }
-                                                    echo "<label>Choose a category:" . $startDataList . "</label><div>" . $bodyDataList . "</datalist></div>";
-                                                    echo "</div>";
+                                                      echo "<td>";
+                                                    echo "<label>" . $startDataList . "</label>" . $bodyDataList . "</datalist>";
+                                                  echo "</td></tr>";
                                                 }
                                             }
+                                            echo "</tbody></table>";
                                         } catch (PDOException $e) {
                                             echo 'Error: ' . $e->getMessage();
                                         }
@@ -289,7 +303,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                     <input type="hidden" name="clientUEN" value="<?php echo $clientUEN; ?>"/>
 
 									<br>
-                                    <input type="submit" value="Submit" name="submit" class="btn btn-success">
+                                    <div align="center"><input type="submit" value="Submit" name="submit" class="btn btn-success"></div>
                                 </form>
 								</div>
                             </div>
@@ -317,7 +331,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
       for (i = 0; i < inputs.length; i++){
         if (inputs[i].getAttribute("name") == "category[]"){
           if (inputs[i].value.trim().length == 0){
-            alert("Please fill in all fields");
+            swal("Please fill in all fields");
             return false;
           }
         } else {
