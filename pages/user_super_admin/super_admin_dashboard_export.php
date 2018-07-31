@@ -11,7 +11,7 @@ $vari = $_POST['generalSearch'];
 $exportquery = "SELECT username, companyName, email FROM user WHERE role_id=2 AND (username LIKE '%".$vari."%' OR companyName LIKE '%".$vari."%' OR email LIKE '%".$vari."%')";
 $stmt=$DB_con->prepare($exportquery);
 $stmt->execute();
-
+$rows = array();
 while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
   $rows[] = array_values($result);
 }

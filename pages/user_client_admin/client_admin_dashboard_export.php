@@ -12,7 +12,7 @@ $userID= $_SESSION['username'];
 $exportquery = "SELECT username, email FROM user WHERE role_id=3 AND companyName ='".$_SESSION['company']."' AND (username LIKE '%".$vari."%' OR email LIKE '%".$vari."%')";
 $stmt=$DB_con->prepare($exportquery);
 $stmt->execute();
-
+$rows = array();
 while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
   $rows[] = array_values($result);
 }
