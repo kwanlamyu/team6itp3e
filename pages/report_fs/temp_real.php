@@ -23,121 +23,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             $companyName = $_POST['companyName'];
             $mismatchName = $companyName . " Values Mismatch.txt";
             $mismatchFile = fopen("files generated/" . $mismatchName, "w") or die("Unable to create file!");
-            //require_once 'C:\xampp\htdocs\phpWordsItp\vendor\autoload.php';
-            $phpWord = new \PhpOffice\PhpWord\PhpWord();
-            //Default font style
-            $phpWord->setDefaultFontName('Arial');
-            $phpWord->setDefaultFontSize(11);
 
-            //Create font style
-            $fontStyleBigBlack = 'ArialBlack14';
-            $fontStyleBlack = 'ArialBlack11';
-            $fontstyleName = 'Arial11';
-            $fontstyleUnderline = 'Arial11Underline';
-            $fontstyleBottomUnderline = 'TableUnderline';
-            $fontStyleItalic = 'Arial11Italic';
-
-            $phpWord->addFontStyle($fontStyleBigBlack, array('name' => 'Arial', 'size' => 14, 'bold' => true)
-            );
-            $phpWord->addFontStyle($fontStyleBlack, array('name' => 'Arial', 'size' => 11, 'bold' => true)
-            );
-            $phpWord->addFontStyle($fontstyleName, array('name' => 'Arial', 'size' => 11, 'bold' => false)
-            );
-            $phpWord->addFontStyle($fontstyleBottomUnderline, array('name' => 'Arial', 'size' => 11, 'bold' => false, 'underline' => 'single')
-            );
-            $phpWord->addFontStyle($fontStyleItalic, array('name' => 'Arial', 'size' => 11, 'bold' => false, 'italic' => true));
-
-
-            $centerAlignment = array('align' => 'center', 'spaceAfter' => 0);
-            $noSpace = array('spaceAfter' => 0);
-            $cellBottomBorder = array('borderBottomSize' => '1', 'borderBottomColor' => '000000');
-            $cellThickBottomBorder = array('borderBottomSize' => '18', 'borderBottomColor' => '000000');
-            $cellTopBorder = array('borderTopSize' => '1', 'borderBottomColor' => '000000');
-            $topAndBottom = array('borderTopSize' => '1', 'borderTopColor' => '#000000', 'borderBottomSize' => '18', 'borderBottomColor' => '#000000');
-            $cellTopAndBottomNormal = array('borderTopSize' => '1', 'borderTopColor' => '#000000', 'borderBottomSize' => '1', 'borderBottomColor' => '#000000');
-            $borderTopAndLeft = array('borderTopSize' => 1, 'borderTopColor' => '#000000', 'borderLeftSize' => 1, 'borderLeftColor' => '#000000');
-            $borderTopAndRight = array('borderTopSize' => 1, 'borderTopColor' => '#000000', 'borderRightSize' => 1, 'borderRightColor' => '#000000');
-            $borderTop = array('borderTopSize' => 1, 'borderTopColor' => '#000000');
-            $borderLeft = array('borderLeftSize' => 1, 'borderLeftColor' => '#000000');
-            $borderRight = array('borderRightSize' => 1, 'borderRightColor' => '#000000');
-            $borderBottomAndLeft = array('borderBottomSize' => 1, 'borderBottomColor' => '#000000', 'borderLeftSize' => 1, 'borderLeftColor' => '#000000');
-            $borderBottomAndRight = array('borderBottomSize' => 1, 'borderBottomColor' => '#000000', 'borderRightSize' => 1, 'borderRightColor' => '#000000');
-            $allBorders = array('borderTopSize' => 1, 'borderTopColor' => '#000000', 'borderLeftSize' => 1, 'borderLeftColor' => '#000000', 'borderRightSize' => 1, 'borderRightColor' => '#000000', 'borderBottomSize' => 1, 'borderBottomColor' => '#000000');
-            $borderTopLeftRight = array('borderTopSize' => 1, 'borderTopColor' => '#000000', 'borderLeftSize' => 1, 'borderLeftColor' => '#000000', 'borderRightColor' => '#000000', 'borderRightSize' => 1);
-            $borderLeftRight = array('borderLeftSize' => 1, 'borderLeftColor' => '#000000', 'borderRightSize' => 1, 'borderRightColor' => '#000000');
-            $borderLeftRightBottom = array('borderBottomSize' => 1, 'borderBottomColor' => '#000000', 'borderLeftSize' => 1, 'borderLeftColor' => '#000000', 'borderRightColor' => '#000000', 'borderRightSize' => 1);
-
-            //Create listing style
-            $listingStyle = 'multilevel';
-            $phpWord->addNumberingStyle(
-                    $listingStyle, array(
-                'type' => 'multilevel',
-                'levels' => array(
-                    array('format' => 'decimal', 'text' => '%1.', 'left' => 360, 'hanging' => 360, 'tabPos' => 360),
-                    array('format' => 'lowerRoman', 'text' => '(%2)', 'left' => 1000, 'hanging' => 360, 'tabPos' => 720),
-                    array('format' => 'lowerLetter', 'text' => '%3)', 'left' => 360, 'hanging' => 360, 'tabPos' => 720),
-                    array('format' => 'lowerLetter', 'text' => '(%4)', 'left' => 360, 'hanging' => 360, 'tabPos' => 720),
-                    array('format' => 'lowerLetter', 'text' => '(%5)', 'left' => 360, 'hanging' => 360, 'tabPos' => 720),
-                    array('format' => 'lowerLetter', 'text' => '(%6)', 'left' => 360, 'hanging' => 360, 'tabPos' => 720),
-                    array('format' => 'lowerLetter', 'text' => '(%7)', 'left' => 360, 'hanging' => 360, 'tabPos' => 720, 'start' => 14),
-                    array('format' => 'lowerLetter', 'text' => '(%8)', 'left' => 360, 'hanging' => 360, 'tabPos' => 720, 'start' => 9),
-                    array('format' => 'lowerLetter', 'text' => '(%9)', 'left' => 360, 'hanging' => 360, 'tabPos' => 720)
-                )
-                    )
-            );
-
-            $nestedListStyle = 'nestedlevel';
-            $phpWord->addNumberingStyle(
-                    $nestedListStyle, array(
-                'type' => 'multilevel',
-                'levels' => array(
-                    array('format' => 'decimal', 'text' => '%1.', 'left' => 360, 'hanging' => 360, 'tabPos' => 360, 'start' => 1),
-                    array('format' => 'decimal', 'text' => '%1.%2', 'left' => 360, 'hanging' => 360, 'tabPos' => 360),
-                    array('format' => 'decimal', 'text' => '%1.%2', 'left' => 360, 'hanging' => 360, 'tabPos' => 360, 'start' => 2),
-                    array('format' => 'decimal', 'text' => '%1.%2', 'left' => 360, 'hanging' => 360, 'tabPos' => 360, 'start' => 2),
-                    array('format' => 'decimal', 'text' => '%1.%2', 'left' => 360, 'hanging' => 360, 'tabPos' => 360, 'start' => 2),
-                    array('format' => 'decimal', 'text' => '%1.%2', 'left' => 360, 'hanging' => 360, 'tabPos' => 360, 'start' => 2),
-                    array('format' => 'decimal', 'text' => '%1.%2', 'left' => 360, 'hanging' => 360, 'tabPos' => 360, 'start' => 2),
-                    array('format' => 'decimal', 'text' => '%1.%2', 'left' => 360, 'hanging' => 360, 'tabPos' => 360, 'start' => 2),
-                    array('format' => 'decimal', 'text' => '%1.%2', 'left' => 360, 'hanging' => 360, 'tabPos' => 360, 'start' => 2),
-                )
-                    )
-            );
-
-            $romanListingStyle = 'romanlevel';
-            $phpWord->addNumberingStyle(
-                    $romanListingStyle, array(
-                'type' => 'multilevel',
-                'levels' => array(
-                    array('format' => 'lowerRoman', 'text' => '(%1)', 'left' => 1000, 'hanging' => 360, 'tabPos' => 720),
-                    array('format' => 'lowerRoman', 'text' => '(%2)', 'left' => 1000, 'hanging' => 360, 'tabPos' => 720),
-                    array('format' => 'lowerRoman', 'text' => '(%3)', 'left' => 1000, 'hanging' => 360, 'tabPos' => 720),
-                    array('format' => 'lowerRoman', 'text' => '(%4)', 'left' => 1000, 'hanging' => 360, 'tabPos' => 720),
-                    array('format' => 'lowerRoman', 'text' => '(%5)', 'left' => 1000, 'hanging' => 360, 'tabPos' => 720),
-                    array('format' => 'lowerRoman', 'text' => '(%6)', 'left' => 1000, 'hanging' => 360, 'tabPos' => 720),
-                    array('format' => 'lowerRoman', 'text' => '(%7)', 'left' => 1000, 'hanging' => 360, 'tabPos' => 720),
-                )
-                    )
-            );
-
-// Phoebe's style
-            $phpWord->addFontStyle('myOwnStyle', array('color' => 'FF0000'));
-            $phpWord->addParagraphStyle('P-Style', array('spaceAfter' => 95));
-            $phpWord->addNumberingStyle(
-                    'multilevel', array(
-                'type' => 'multilevel',
-                'levels' => array(
-                    array('format' => 'decimal', 'text' => '%8.', 'left' => 360, 'hanging' => 360, 'tabPos' => 360),
-                    array('format' => 'upperLetter', 'text' => '%9.', 'left' => 720, 'hanging' => 360, 'tabPos' => 720),
-                ),
-                    )
-            );
-            $predefinedMultilevel = array('listType' => \PhpOffice\PhpWord\Style\ListItem::TYPE_NUMBER_NESTED);
-
-//Create Paragraph style
-            $paragraphStyle = 'justifiedParagraph';
-            $phpWord->addParagraphStyle($paragraphStyle, array('align' => 'both', 'spaceAfter' => 100));
-
+            include "phpwordFormats.php";
 // =============================================================================
 // KOKHOE
 // =============================================================================
@@ -145,6 +32,16 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             $numberOfSheets = $_POST['numberOfYears'];
             $years = $_POST['years'];
             $yearsString = $_POST['years']; // Phoebe usage only
+
+            function printValue($tempValue){
+              if ($tempValue == 0) {
+                  return "-";
+              } else if ($tempValue > 0) {
+                  return number_format($tempValue);
+              } else {
+                  return "(" . number_format(abs($tempValue)) . ")";
+              }
+            }
 
 // =============================================================================
 // YOKYEE
@@ -689,24 +586,25 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 $checkArray[$years[$i]] = 0;
             }
 
-// =============================================================================
-// KOKHOE
-// =============================================================================
-// retrieval and sorting of data
-// variable clash, client name refers to the client this FS is for
+            // =============================================================================
+            // KOKHOE
+            // =============================================================================
+            // retrieval and sorting of data
+            // variable clash, client name refers to the client this FS is for
             $clientName = $companyName;
-// service provider is the company name of the accountant/ client admin
+            // service provider is the company name of the accountant/ client admin
             $serviceProvider = $_SESSION['company'];
-// retrieve from database the categories
+            // retrieve from database the categories
             $query = $DB_con->prepare("SELECT * FROM main_category WHERE company_name = :companyName AND client_company = :clientName");
             $query->bindParam(':companyName', $serviceProvider);
             $query->bindParam(':clientName', $clientName);
-// company name from session is the account/client admin's company name
-// company name from post is the client's company name (The company this FS is for)
+            // company name from session is the account/client admin's company name
+            // company name from post is the client's company name (The company this FS is for)
 
             $query->execute();
             $result = $query->setFetchMode(PDO::FETCH_ASSOC);
             $result = $query->fetchAll();
+            // these are the arrays that store the main categories that are required for calculations
             $accountAndCategory = array();
             $assetsArray = array();
             $capitalArray = array();
@@ -757,9 +655,10 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 $accountAndCategory[$mainAccountName] = $individualAccountNames;
             }
 
+            // arrays based on classifications
+
             $amountToShareholder = array();
             $amountFromShareholder = array();
-// arrays based on classifications
             $assetsDebit = array();
             $assetsCredit = array();
             $capitalAmount = array();
@@ -813,6 +712,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                                 }
                             }
                         }
+                        // data are stored in the format $i = year, $x = the rows, $j = the columns
+                        // $j = 0 means account name, $j = 1 is the amount, $j = 2 is the categories identified, $j = 3 is the debit or credit identifier
                         if ($j == 2) {
                             $amount = $data[$i][$x][$j - 1];
                             // category cross check with list in txt file
@@ -882,7 +783,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 }
             }
 
-// start adding assets classifcations on debit column
+            // start adding assets classifcations on debit column
             for ($i = 0; $i < $numberOfSheets; $i++) {
                 $tempCategoryArray = array();
                 $tempValueArray = array();
@@ -905,8 +806,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 $consolidatedAssetsDebit[$i] = array($tempCategoryArray, $tempValueArray);
             }
 
-// end debit column for assets
-// start credit column for assets
+            // end debit column for assets
+            // start credit column for assets
 
             for ($i = 0; $i < $numberOfSheets; $i++) {
                 $tempCategoryArray = array();
@@ -929,8 +830,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 }
                 $consolidatedAssetsCredit[$i] = array($tempCategoryArray, $tempValueArray);
             }
-// end credit column for assets
-// take the assets on debit side, deduct off the corresponding credit side
+
+            // end credit column for assets
+            // take the assets on debit side, deduct off the corresponding credit side
             $calculatedAssets = array();
             for ($i = 0; $i < count($consolidatedAssetsDebit); $i++) {
                 $tempArray = array();
@@ -946,18 +848,19 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 array_push($calculatedAssets, $tempArray);
             }
 
-// number of columns for each statement, 1 column heading, 1 for notes, maximum 5 years allowed. 7 + 1 for array end point therefore 8
+            // number of columns for each statement, 1 column heading, 1 for notes, maximum 5 years allowed. 7 + 1 for array end point therefore 8
             $maxColumns = 7;
             $cellValue = 1750;
             $firstCellValue = 0;
-// check number of unused columns.
-// max columns - number of years + 1 column for Notes
-// merge the number of unused columns for the first cell.
+            // check number of unused columns.
+            // max columns - number of years + 1 column for Notes
+            // merge the number of unused columns for the first cell.
             for ($i = 0; $i < ($maxColumns - ($numberOfSheets + 1)); $i++) {
                 $firstCellValue += $cellValue;
             }
             $defaultNoteNumber = 4;
 
+            // a array to identify the months
             $monthIdentifier = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
             $formatedDate = array();
@@ -1663,7 +1566,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 // no notes, add blank column
             $table->addCell($cellValue);
             for ($i = 0; $i < count($netPandL); $i++) {
-                $cell = $table->addCell($cellValue, array('borderBottomSize' => '18', 'borderBottomColor' => '#000000'));
+                $cell = $table->addCell($cellValue, $cellThickBottomBorder);
                 if ($netPandL[$i] < 0) {
                     $cell->addText("(" . number_format(abs($netPandL[$i])) . ")", $fontstyleName, $centerAlignment);
                 } else {
@@ -2224,7 +2127,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 }
             }
 
-// change liabilities to negative since the display as positive is no longer required
+            // change liabilities to negative since the display as positive is no longer required
             for ($i = 0; $i < count($totalLiabilities); $i++) {
                 $totalLiabilities[$i] = 0 - $totalLiabilities[$i];
             }
@@ -2259,7 +2162,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             $cell->addText($bsNetString, $fontStyleBlack);
             $table->addCell($cellValue);
             for ($i = 0; $i < count($netValue); $i++) {
-                $cell = $table->addCell($cellValue, array('borderBottomSize' => 18, 'borderBottomColor' => '#000000'));
+                $cell = $table->addCell($cellValue, $cellThickBottomBorder);
                 if ($netValue[$i] < 0) {
                     $cell->addText("(" . number_format(abs($netValue[$i])) . ")", $fontstyleName, $centerAlignment);
                 } else if ($netValue[$i] == 0) {
@@ -2395,7 +2298,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 }
                 $tempValue = round($tempValue);
                 array_push($totalEquityArray, $tempValue);
-                $cell = $table->addCell($cellValue, array('borderBottomSize' => 18, 'borderBottomColor' => '#000000'));
+                $cell = $table->addCell($cellValue, $cellThickBottomBorder);
                 if ($tempValue == 0) {
                     $cell->addText("-", $fontstyleName, $centerAlignment);
                 } else {
@@ -2403,7 +2306,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 }
             }
 
-// Equity statement
+            // Equity statement
             $section = $phpWord->createSection();
             $header = $section->createHeader();
             $header->addText(strtoupper($companyName), $fontStyleBlack);
@@ -2487,7 +2390,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 $cell = $table->addCell($equityFirstCell);
                 $cell->addText("Balance as at " . $yearEndedArray[$i]);
             }
-            $cell = $table->addCell($cellValue, array('borderBottomSize' => 18, 'borderBottomColor' => '#000000'));
+            $cell = $table->addCell($cellValue,$cellThickBottomBorder);
             $tempCapital = 0;
             $tempProfit = 0;
             if (isset($shareCapitalFromTB[0])) {
@@ -2497,9 +2400,9 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 $tempProfit = $calculatedRetainedProfits[0];
             }
             $cell->addText(number_format($tempCapital), $fontstyleName, $centerAlignment);
-            $cell = $table->addCell($cellValue, array('borderBottomSize' => 18, 'borderBottomColor' => '#000000'));
+            $cell = $table->addCell($cellValue, $cellThickBottomBorder);
             $cell->addText(number_format(round($tempProfit)), $fontstyleName, $centerAlignment);
-            $cell = $table->addCell($cellValue, array('borderBottomSize' => 18, 'borderBottomColor' => '#000000'));
+            $cell = $table->addCell($cellValue, $cellThickBottomBorder);
 
             $cell->addText(number_format(round($tempCapital + $tempProfit)), $fontstyleName, $centerAlignment);
             if (round($totalEquityArray[0]) != round($tempCapital + $tempProfit)) {
@@ -2894,13 +2797,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             for ($i = 0; $i < count($fixedIssuedShare); $i++) {
                 $cell = $table->addCell($cellValue);
                 $tempValue = $fixedIssuedShare[$i];
-                if ($tempValue == 0) {
-                    $tempValue = "-";
-                } else if ($tempValue > 0) {
-                    $tempValue = number_format($tempValue);
-                } else {
-                    $tempValue = "(" . number_format(abs($tempValue)) . ")";
-                }
+                $tempValue = printValue($tempValue);
                 $cell->addText($tempValue, $fontstyleName, $centerAlignment);
             }
 
@@ -2922,13 +2819,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             for ($i = 0; $i < count($advanceRepaymentShareholder); $i++) {
                 $cell = $table->addCell($cellValue);
                 $tempValue = $advanceRepaymentShareholder[$i];
-                if ($tempValue == 0) {
-                    $tempValue = "-";
-                } else if ($tempValue > 0) {
-                    $tempValue = number_format($tempValue);
-                } else {
-                    $tempValue = "(" . number_format(abs($tempValue)) . ")";
-                }
+                $tempValue = printValue($tempValue);
                 $cell->addText($tempValue, $fontstyleName, $centerAlignment);
             }
 
@@ -2944,59 +2835,11 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         if (isset($borrowingArray[$key][$years[$i]])) {
                             $tempValue += $borrowingArray[$key][$years[$i]];
                         }
-                        if ($tempValue == 0) {
-                            $tempValue = "-";
-                        } else if ($tempValue > 0) {
-                            $tempValue = number_format($tempValue);
-                        } else {
-                            $tempValue = "(" . number_format(abs($tempValue)) . ")";
-                        }
+                        $tempValue = printValue($tempValue);
                         $cell->addText($tempValue, $fontstyleName, $centerAlignment);
                     }
                 }
             }
-
-// if (isset($borrowingArray['proceeds from borrowings'])) {
-//     $table->addRow();
-//     $table->addCell($cashFlowFirstCell)->addText("Proceeds from borrowings", $fontstyleName, $noSpace);
-//     for ($i = 0; $i < count($years); $i++) {
-//         $cell = $table->addCell($cellValue);
-//         if (isset($borrowingArray['proceeds from borrowings'][$years[$i]])) {
-//             $tempValue = $borrowingArray['proceeds from borrowings'][$years[$i]];
-//             if ($tempValue > 0) {
-//                 $tempValue = number_format($tempValue);
-//             } else if ($tempValue == 0) {
-//                 $tempValue = "-";
-//             } else {
-//                 $tempValue = "(" . number_format(abs($tempValue)) . ")";
-//             }
-//             $cell->addText($tempValue, $fontstyleName, $centerAlignment);
-//         } else {
-//             $cell->addText("-", $fontstyleName, $centerAlignment);
-//         }
-//     }
-// }
-//
-// if (isset($borrowingArray['repayments of borrowings'])) {
-//     $table->addRow();
-//     $table->addCell($cashFlowFirstCell)->addText("Repayments of borrowings", $fontstyleName, $noSpace);
-//     for ($i = 0; $i < count($years); $i++) {
-//         $cell = $table->addCell($cellValue);
-//         if (isset($borrowingArray['repayments of borrowings'][$years[$i]])) {
-//             $tempValue = $borrowingArray['repayments of borrowings'][$years[$i]];
-//             if ($tempValue > 0) {
-//                 $tempValue = number_format($tempValue);
-//             } else if ($tempValue == 0) {
-//                 $tempValue = "-";
-//             } else {
-//                 $tempValue = "(" . number_format(abs($tempValue)) . ")";
-//             }
-//             $cell->addText($tempValue, $fontstyleName, $centerAlignment);
-//         } else {
-//             $cell->addText("-", $fontstyleName, $centerAlignment);
-//         }
-//     }
-// }
 
             $calculatedFinanceExpense = array();
             for ($i = 0; $i < count($financeExpenseArray); $i++) {
@@ -3076,13 +2919,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         $cell = $table->addCell($cellValue);
                     }
                     $tempValue = $finalFinanceArray[$i][$x];
-                    if ($tempValue == 0) {
-                        $tempValue = "-";
-                    } else if ($tempValue > 0) {
-                        $tempValue = number_format($tempValue);
-                    } else {
-                        $tempValue = "(" . number_format(abs($tempValue)) . ")";
-                    }
+                    $tempValue = printValue($tempValue);
                     $cell->addText($tempValue, $fontstyleName, $centerAlignment);
                 }
             }
@@ -3092,12 +2929,6 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             for ($i = 0; $i < count($years); $i++) {
                 $tempValue = $fixedIssuedShare[$i];
                 $tempValue += $advanceRepaymentShareholder[$i];
-                // if (isset($borrowingArray['proceeds from borrowings'][$years[$i]])) {
-                //     $tempValue += $borrowingArray['proceeds from borrowings'][$years[$i]];
-                // }
-                // if (isset($borrowingArray['repayments of borrowings'][$years[$i]])) {
-                //     $tempValue += $borrowingArray['repayments of borrowings'][$years[$i]];
-                // }
                 foreach ($borrowingArray as $key => $value) {
                     if (stripos($key, "current") !== false) {
                         continue;
@@ -3138,13 +2969,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             for ($i = 0; $i < count($netCashFinancing); $i++) {
                 $cell = $table->addCell($cellValue, $cellBottomBorder);
                 $tempValue = $netCashFinancing[$i];
-                if ($tempValue == 0) {
-                    $tempValue = "-";
-                } else if ($tempValue > 0) {
-                    $tempValue = number_format($tempValue);
-                } else {
-                    $tempValue = "(" . number_format(abs($tempValue)) . ")";
-                }
+                $tempValue = printValue($tempValue);
                 $cell->addText($tempValue, $fontstyleName, $centerAlignment);
             }
 
@@ -3184,13 +3009,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             for ($i = 0; $i < count($netCashEquivalent); $i++) {
                 $cell = $table->addCell($cellValue);
                 $tempValue = $netCashEquivalent[$i];
-                if ($tempValue == 0) {
-                    $tempValue = "-";
-                } else if ($tempValue > 0) {
-                    $tempValue = number_format($tempValue);
-                } else {
-                    $tempValue = "(" . number_format(abs($tempValue)) . ")";
-                }
+                $tempValue = printValue($tempValue);
                 $cell->addText($tempValue, $fontstyleName, $centerAlignment);
             }
 
@@ -3246,8 +3065,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 }
             }
 
-// End of 4 STATEMENTS
-// Page 7
+            // End of 4 STATEMENTS
+            // Page 7
             $section = $phpWord->createSection();
             $header = $section->createHeader();
             $header->addText(strtoupper($companyName), $fontStyleBlack);
@@ -3289,7 +3108,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             $section->addText("\tOn " . date('F d Y', strtotime($frsDate)) . " the Company adopted the new or amended FRS and \tInterpretations to FRS (“INT FRS”) that are mandatory for application for the financial \tyear. The adoption of these new or amended FRS and INT FRS did not result \tinsubstantial changes of the Company’s accounting policies and had no material \teffect on the amounts reported for the current or prior financial period."
                     , $fontstyleName, $paragraphStyle);
 
-//Page 8
+            //Page 8
             $section = $phpWord->addSection();
 
             $section->addListItem("\tSummary of significant accounting policies", 1, $fontstyleName, $nestedListStyle);
@@ -3333,7 +3152,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
             $section->addText("\tContingent rents are recognised as an expense in profit or loss when incurred.", $fontstyleName, $paragraphStyle);
 
-//Page 9
+            //Page 9
             $section = $phpWord->addSection();
 
             $section->addListItem("\tSummary of significant accounting policies ", 3, $fontstyleName, $nestedListStyle);
@@ -3370,7 +3189,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             $section->addText("\tInventories are carried at the lower of cost and net realisable value. Cost is \tdetermined using the first-in, first-out method. Net realisable value is the estimated \tselling price in the ordinary course of business, less applicable variable selling \texpenses."
                     , $fontstyleName, $paragraphStyle);
 
-//Page 10
+            //Page 10
             $section = $phpWord->addSection();
 
             $section->addListItem("\tSummary of significant accounting policies", 4, $fontstyleName, $nestedListStyle);
@@ -3409,7 +3228,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                     , $fontstyleName, $paragraphStyle);
 
 
-//Page 11
+            //Page 11
             $section = $phpWord->addSection();
 
             $section->addListItem("\tSummary of significant accounting policies", 5, $fontstyleName, $nestedListStyle);
@@ -3446,7 +3265,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             $section->addText("\tLoans and receivables are non-derivative financial assets with fixed or determinable \tpayments that are not quoted in an active market. They are presented as current \tassets,except for those maturing later than 12 months after the end of financial \treporting date which are presented as non-current assets. Loans and receivables are \tpresented as “trade receivables” and “cash and bank balances” on the statement of \tfinancial position."
                     , $fontstyleName);
 
-//Page 12
+            //Page 12
             $section = $phpWord->addSection();
 
             $section->addListItem("\tSummary of significant accounting policies", 6, $fontstyleName, $nestedListStyle);
@@ -3487,7 +3306,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             $section->addText("\tThe allowance for impairment loss account is reduced through the profit or loss in a \tsubsequent period when the amount of impairment loss decreases and the related \tdecrease can be objectively measured. The carrying amount of the asset previously \timpaired is increased to the extent that the new carrying amount does not exceed the \tamortised cost, had no impairment been recognised in prior periods."
                     , $fontstyleName, $paragraphStyle);
 
-//Page 13
+            //Page 13
             $section = $phpWord->addSection();
 
             $section->addListItem("\tSummary of significant accounting policies", 7, $fontstyleName, $nestedListStyle);
@@ -3522,7 +3341,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             $section->addText("\tItems included in the financial statements of the Company are measured using the \tcurrency of the primary economic environment in which the Company operates (‘the \tfunctional currency’).The financial statements are presented in Singapore Dollar, \twhich is the Company’s functional and presentation currency"
                     , $fontstyleName, $paragraphStyle);
 
-// Page 14
+            // Page 14
             $section = $phpWord->addSection();
 
             $section->addListItem("\tSummary of significant accounting policies", 8, $fontstyleName, $nestedListStyle);
@@ -3555,13 +3374,13 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             $section->addText("\tIn the process of applying the Company’s accounting policies, the directors are of the \topinion that there is no application of critical judgement on the amounts recognised in \tthe financial statements."
                     , $fontstyleName, $paragraphStyle);
 
-//==============================================================================
-// PHOEBE START HERE
-//==============================================================================
-// number of columns for each statement,
-// 1 column heading, maximum 5 years allowed.
+            //==============================================================================
+            // PHOEBE START HERE
+            //==============================================================================
+            // number of columns for each statement,
+            // 1 column heading, maximum 5 years allowed.
             $maxColumnsNotes = 6;
-// 1 column heading, 4 column extra.
+            // 1 column heading, 4 column extra.
             $maxColumnsNotesException = 5;
 
             $cellValueNotes = 1750;
@@ -3575,15 +3394,15 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
             $table1 = $section->addTable();
 
-// check number of unused columns.
-// max columns - number of years + 1 column for Notes
-// merge the number of unused columns for the first cell.
+            // check number of unused columns.
+            // max columns - number of years + 1 column for Notes
+            // merge the number of unused columns for the first cell.
             for ($i = 0; $i < ($maxColumnsNotes - ($numberOfSheets + 1)); $i++) {
                 $firstCellValueNotes += $cellValueNotes;
             }
 
 
-// Display normally
+            // Display normally
             foreach ($fullArray as $key1 => $value1) { // [ Bank Balances] => Array of values
                 if ($key1 !== "profit before income tax") {
                     if ($key1 !== "trade and other receivables") {
@@ -4552,25 +4371,25 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
                 $finalReceivables = array();
 
-// For adding manually
-//    foreach ($totalArray as $key => $value) {
-//        foreach ($totalReceivablesArray as $keyReceivables => $valueReceivables) {
-//            if ($key == $keyReceivables) {
-//                $finalReceivables = (float) $value + (float) $valueReceivables;
-//
-//                if ($finalReceivables == 0) {
-//                    $cellNotes = $table1->addCell($cellValue, $topAndBottom);
-//                    $cellNotes->addText("-", $fontstyleName, $centerAlignment);
-//                } else if ($finalReceivables < 0) {
-//                    $cellNotes = $table1->addCell($cellValue, $topAndBottom);
-//                    $cellNotes->addText("(" . number_format(ceil($finalReceivables)) . ")", $fontstyleName, $centerAlignment);
-//                } else {
-//                    $cellNotes = $table1->addCell($cellValue, $topAndBottom);
-//                    $cellNotes->addText(number_format(ceil($finalReceivables)), $fontstyleName, $centerAlignment);
-//                }
-//            }
-//        }
-//    }
+                // For adding manually
+                //    foreach ($totalArray as $key => $value) {
+                //        foreach ($totalReceivablesArray as $keyReceivables => $valueReceivables) {
+                //            if ($key == $keyReceivables) {
+                //                $finalReceivables = (float) $value + (float) $valueReceivables;
+                //
+                //                if ($finalReceivables == 0) {
+                //                    $cellNotes = $table1->addCell($cellValue, $topAndBottom);
+                //                    $cellNotes->addText("-", $fontstyleName, $centerAlignment);
+                //                } else if ($finalReceivables < 0) {
+                //                    $cellNotes = $table1->addCell($cellValue, $topAndBottom);
+                //                    $cellNotes->addText("(" . number_format(ceil($finalReceivables)) . ")", $fontstyleName, $centerAlignment);
+                //                } else {
+                //                    $cellNotes = $table1->addCell($cellValue, $topAndBottom);
+                //                    $cellNotes->addText(number_format(ceil($finalReceivables)), $fontstyleName, $centerAlignment);
+                //                }
+                //            }
+                //        }
+                //    }
 
                 $array = array();
                 // Getting values from financial statement
@@ -5719,8 +5538,8 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
 
             $section->addText("----------------------------------- End of unaudited financial statements -----------------------------------", $fontstyleName, $paragraphStyle);
 
-// Start of Appendix
-// Appendix 1
+            // Start of Appendix
+            // Appendix 1
             $section = $phpWord->createSection();
             $header = $section->createHeader();
             $header->addText(strtoupper($companyName), $fontStyleBlack, $centerAlignment);
@@ -5751,13 +5570,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             for ($i = 0; $i < count($revenueFinal); $i++) {
                 $cell = $table->addCell($cellValue);
                 $tempValue = $revenueFinal[$i];
-                if ($tempValue == 0) {
-                    $tempValue = "-";
-                } else if ($tempValue > 0) {
-                    $tempValue = number_format($tempValue);
-                } else {
-                    $tempValue = "(" . number_format(abs($tempValue)) . ")";
-                }
+                $tempValue = printValue($tempValue);
                 $cell->addText($tempValue, $fontstyleName, $centerAlignment);
             }
 
@@ -5770,13 +5583,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             for ($i = 0; $i < count($cosFinal); $i++) {
                 $cell = $table->addCell($cellValue, $cellBottomBorder);
                 $tempValue = $cosFinal[$i];
-                if ($tempValue == 0) {
-                    $tempValue = "-";
-                } else if ($tempValue > 0) {
-                    $tempValue = number_format($tempValue);
-                } else {
-                    $tempValue = "(" . number_format(abs($tempValue)) . ")";
-                }
+                $tempValue = printValue($tempValue);
                 $cell->addText($tempValue, $fontstyleName, $centerAlignment);
             }
 
@@ -5785,13 +5592,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             for ($i = 0; $i < count($profitAmount); $i++) {
                 $cell = $table->addCell($cellValue);
                 $tempValue = $profitAmount[$i];
-                if ($tempValue == 0) {
-                    $tempValue = "-";
-                } else if ($tempValue > 0) {
-                    $tempValue = number_format($tempValue);
-                } else {
-                    $tempValue = "(" . number_format(abs($tempValue)) . ")";
-                }
+                $tempValue = printValue($tempValue);
                 $cell->addText($tempValue, $fontstyleName, $centerAlignment);
             }
 
@@ -5833,13 +5634,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 }
 
                 $tempValue = $finalTradeGain[$i];
-                if ($tempValue == 0) {
-                    $tempValue = "-";
-                } else if ($tempValue > 0) {
-                    $tempValue = number_format($tempValue);
-                } else {
-                    $tempValue = "(" . number_format(abs($tempValue)) . ")";
-                }
+                $tempValue = printValue($tempValue);
                 $cell->addText($tempValue, $fontstyleName, $centerAlignment);
             }
 
@@ -5859,13 +5654,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                 }
 
                 $tempValue = $finalNonTradeGain[$i];
-                if ($tempValue == 0) {
-                    $tempValue = "-";
-                } else if ($tempValue > 0) {
-                    $tempValue = number_format($tempValue);
-                } else {
-                    $tempValue = "(" . number_format(abs($tempValue)) . ")";
-                }
+                $tempValue = printValue($tempValue);
                 $cell->addText($tempValue, $fontstyleName, $centerAlignment);
             }
 
@@ -5874,13 +5663,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             for ($i = 0; $i < count($otherIncome); $i++) {
                 $cell = $table->addCell($cellValue);
                 $tempValue = $otherIncome[$i];
-                if ($tempValue == 0) {
-                    $tempValue = "-";
-                } else if ($tempValue > 0) {
-                    $tempValue = number_format($tempValue);
-                } else {
-                    $tempValue = "(" . number_format(abs($tempValue)) . ")";
-                }
+                $tempValue = printValue($tempValue);
                 $cell->addText($tempValue, $fontstyleName, $centerAlignment);
             }
 
@@ -5994,28 +5777,16 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             for ($i = 0; $i < count($totalExpenses); $i++) {
                 $cell = $table->addCell($cellValue, $cellBottomBorder);
                 $tempValue = $totalExpenses[$i];
-                if ($tempValue == 0) {
-                    $tempValue = "-";
-                } else if ($tempValue > 0) {
-                    $tempValue = number_format($tempValue);
-                } else {
-                    $tempValue = "(" . number_format(abs($tempValue)) . ")";
-                }
+                $tempValue = printValue($tempValue);
                 $cell->addText($tempValue, $fontstyleName, $centerAlignment);
             }
 
             $table->addRow();
             $table->addCell($appendixFirstCell)->addText($beforeTaxString, $fontStyleBlack);
             for ($i = 0; $i < count($beforeIncomeTax); $i++) {
-                $cell = $table->addCell($cellValue, array('borderBottomSize' => 18, 'borderBottomColor' => '#000000'));
+                $cell = $table->addCell($cellValue, $cellThickBottomBorder);
                 $tempValue = $beforeIncomeTax[$i];
-                if ($tempValue == 0) {
-                    $tempValue = "-";
-                } else if ($tempValue > 0) {
-                    $tempValue = number_format($tempValue);
-                } else {
-                    $tempValue = "(" . number_format(abs($tempValue)) . ")";
-                }
+                $tempValue = printValue($tempValue);
                 $cell->addText($tempValue, $fontstyleName, $centerAlignment);
             }
 
@@ -6165,13 +5936,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                             $cell = $table->addCell($cellValue, $allBorders);
                         }
                         $tempValue = $finalAdminAccountAmount[$i][$x];
-                        if ($tempValue == 0) {
-                            $tempValue = "-";
-                        } else if ($tempValue > 0) {
-                            $tempValue = number_format($tempValue);
-                        } else {
-                            $tempValue = "(" . number_format(abs($tempValue)) . ")";
-                        }
+                        $tempValue = printValue($tempValue);
                         $cell->addText($tempValue, $fontstyleName, $centerAlignment);
                     }
                     $printCount++;
@@ -6308,13 +6073,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         }
 
                         $tempValue = $finalDistriAccountAmount[$i][$x];
-                        if ($tempValue == 0) {
-                            $tempValue = "-";
-                        } else if ($tempValue > 0) {
-                            $tempValue = number_format($tempValue);
-                        } else {
-                            $tempValue = "(" . number_format(abs($tempValue)) . ")";
-                        }
+                        $tempValue = printValue($tempValue);
                         $cell->addText($tempValue, $fontstyleName, $centerAlignment);
                     }
                     $printCount++;
@@ -6450,13 +6209,7 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
                         }
 
                         $tempValue = $finalFinanceAccountAmount[$i][$x];
-                        if ($tempValue == 0) {
-                            $tempValue = "-";
-                        } else if ($tempValue > 0) {
-                            $tempValue = number_format($tempValue);
-                        } else {
-                            $tempValue = "(" . number_format(abs($tempValue)) . ")";
-                        }
+                        $tempValue = printValue($tempValue);
                         $cell->addText($tempValue, $fontstyleName, $centerAlignment);
                     }
                     $printCount++;
@@ -6476,18 +6229,11 @@ if (isset($_SESSION['username']) || isset($_SESSION['role_id']) || isset($_SESSI
             for ($i = 0; $i < count($finalFinanceExpense); $i++) {
                 $cell = $table->addCell($cellValue);
                 $tempValue = $finalFinanceExpense[$i];
-                if ($tempValue == 0) {
-                    $tempValue = "-";
-                } else if ($tempValue > 0) {
-                    $tempValue = number_format($tempValue);
-                } else {
-                    $tempValue = "(" . number_format(abs($tempValue)) . ")";
-                }
+                $tempValue = printValue($tempValue);
                 $cell->addText($tempValue, $fontstyleName, $centerAlignment);
             }
 
-//include 'footer.php';
-// Saving the document as OOXML file
+            // Saving the document as OOXML file
             $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
             try {
                 fclose($mismatchFile);
