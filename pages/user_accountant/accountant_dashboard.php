@@ -79,9 +79,9 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '3') {
     include '../general/footer.php';
 }//end of session and role_id checking
 elseif (isset($_SESSION['username']) && $_SESSION['role_id'] === '1') {
-    header('Location: ../user_super_admin/super_admin_dahsboard.php');
+    header('Location: ../user_super_admin/super_admin_dashboard.php');
 }elseif (isset($_SESSION['username']) && $_SESSION['role_id'] === '2') {
-    header('Location: ../user_client_admin/client_admin_dahsboard.php');
+    header('Location: ../user_client_admin/client_admin_dashboard.php');
 }
  else {
     header('Location: ../user_login/login.php');

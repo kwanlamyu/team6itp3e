@@ -6,7 +6,8 @@
  * function to load current session and destroy cookies saved.
  */
 session_start();
-
 session_destroy();
-header('Location: ../user_login/login.php');
+echo "<meta http-equiv='refresh' content='3;url=../user_login/login.php'>";
+//header("Location: ../user_login/login.php");
+
 exit;

@@ -204,7 +204,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
 elseif (isset($_SESSION['username']) && $_SESSION['role_id'] === '1') {
     header('Location: ../user_super_admin/super_admin_dashboard.php');
 } elseif (isset($_SESSION['username']) && $_SESSION['role_id'] === '3') {
-    header('Location: ../user_accountant/accountantdashboard.php');
+    header('Location: ../user_accountant/accountant_dashboard.php');
 } else {
     header('Location: ../user_login/login.php');
 }
