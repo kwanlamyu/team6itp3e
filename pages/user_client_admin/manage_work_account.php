@@ -51,9 +51,13 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                         <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="manageWorkAccount" name="manageWorkAccount" action="../user_client_admin/manage_work_account.php" method="POST">
                             <?php include('../user_client_admin/manage_work_validation.php'); ?>
                             <?php if (!empty($successMessage)) { ?>
-                              <br>
+                                <br>
                                 <div align="center"><div class="alert alert-success col-lg-5" role="alert"><?php echo $successMessage; ?></div></div>
                             <?php } ?>
+                            <?php if (!empty($errorMessage)) { ?>
+                                <br>
+                                <div align="center"><div class="alert alert-danger col-lg-5" role="alert"><?php echo $errorMessage; ?></div></div>
+                          <?php } ?>
 
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group row">
@@ -61,7 +65,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                     <label class="col-lg-2 col-form-label" for="select_uen">Account UEN</label>
                                     <div class="col-lg-7">
                                         <select  class="form-control" id="select_uen" name="select_uen">
-                                            <option>--- Select UEN ---</option>
+                                            <option value=''>--- Select UEN ---</option>
                                             <?php
                                             //get UENs
                                             $uensql = $DB_con->prepare("SELECT UEN, companyName FROM account WHERE user_username = '".$_SESSION['username']."'");
@@ -70,7 +74,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
 
                                             if (count($uenNum) == 0) {
                                                 //selection blank
-                                                echo '<option> </option>';
+                                                echo '<option value=""> </option>';
                                             } else {
                                                 //select UENs
                                                 $counter = 0;
@@ -125,7 +129,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                                         . "<tr>"
                                                         . "<td id='accountant_username" . $counter . "'>{$row['username']}</td>"
                                                         . "<td id='select_users'>"
-                                                        . "<label class='m-checkbox'><input type='checkbox' name='select_Collaborator[]' id='select_Collaborator" . $counter . "' value='" . $row['username'] . "'><span></span></label>"
+                                                        . "<label class='m-checkbox'><input type='checkbox' name='select_Collaborator[]' id='select_Collaborator" . $counter . "' value='" . $row['username'] . "' onClick='updateProperty(" . $counter . ")'><span></span></label>"
                                                         . "</td>"
                                                         . "</tr>\n";
                                                         $counter++;
@@ -145,7 +149,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                                     <div class="row">
                                         <div class="col-lg-5"></div>
                                         <div class="col-lg-7">
-                                            <button type="submit" name="manageWorkButton" id="manageWorkButton" class="btn btn-success">
+                                            <button type="submit" name="manageWorkButton" id="manageWorkButton" class="btn btn-success" disabled>
                                                 Submit
                                             </button>
                                             <button type="reset" class="btn btn-danger">
@@ -157,6 +161,7 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
                             </div>
 
                         </form>
+                        <scfip
                         <!--END: Table-->
                     </div>
                     <!--end::Portlet-->
@@ -165,6 +170,21 @@ if (isset($_SESSION['username']) && $_SESSION['role_id'] == '2') {
         </div>
     </div>
     </div>
+    
+    <script>
+        
+        function updateProperty(x){
+            if(document.getElementById('select_Collaborator'+x).checked){
+                document.getElementById("manageWorkButton").disabled = false;
+            }
+            else{
+                document.getElementById("manageWorkButton").disabled = true;
+            }          
+            
+        }
+    
+
+</script>
 
     <?php
     include '../general/footer_content.php';

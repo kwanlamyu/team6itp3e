@@ -12,7 +12,7 @@ $valid = TRUE; //this var scope ok
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['manageWorkButton'])) {
 
-        if (empty($_POST["select_uen"])) {
+        if (empty($_POST["select_uen"]) OR ($_POST["select_uen"] == "--- Select UEN ---")) {
 
             $valid = FALSE;
 
@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         if (empty($_POST["select_Collaborator"])) {
-            $selected = "";
+            $selectCollaborators = "";
 
         } else{
 
@@ -36,21 +36,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($valid == TRUE) {
             try{
+                
                 $seperatedCollaborators = explode(',', $selectCollaborators);
-                $collaboratorsql = "INSERT INTO userManageAccount(account_UEN, account_user_username, user_username, user_role_id) VALUES ";
-                for ($i = 0; $i < count($seperatedCollaborators); $i++){
-                    //prepare statement to insert into DB company name and UEN to
-                    if ($i > 0){
-                      $collaboratorsql .= " , ";
+                
+                    
+                    $collaboratorsql = "INSERT INTO usermanageaccount(account_UEN, account_user_username, user_username, user_role_id) VALUES ";
+                    for ($i = 0; $i < count($seperatedCollaborators); $i++){
+                        //prepare statement to insert into DB company name and UEN to
+                        if ($i > 0){
+                          $collaboratorsql .= " , ";
+                        }
+                        $collaboratorsql .= "('".$selectuen."','".$userID."','".$seperatedCollaborators[$i]."','3')";
                     }
-                    $collaboratorsql .= "('".$selectuen."','".$userID."','".$seperatedCollaborators[$i]."','3')";
-                }
-                $collaboratorsql .= ";";
-                $insertsql = $DB_con->prepare($collaboratorsql);
-                $insertsql->execute();
-                $successMessage = "Account Manager(s) successfully added";
-                echo '<span class="text-success"><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Redirecting please wait</span>';
-                echo "<meta http-equiv='refresh' content='3;url=../user_client_admin/client_admin_dashboard.php'> ";
+                    $collaboratorsql .= ";";
+                    $insertsql = $DB_con->prepare($collaboratorsql);
+                    $insertsql->execute();
+                    
+                    $successMessage = "Account Manager(s) successfully added";
+                    echo '<span class="text-success"><span class="fa fa-pulse fa-spinner fa-spin fa-fw fa-lg" aria-hidden="true"></span> Redirecting please wait</span>';
+                    echo "<meta http-equiv='refresh' content='3;url=../user_client_admin/client_admin_dashboard.php'> ";
+                    
+                
+                
+                
             }catch (PDOException $e) {
                 echo $e->getMessage();
             }
